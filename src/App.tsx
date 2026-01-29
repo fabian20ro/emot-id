@@ -64,7 +64,10 @@ export default function App() {
           const spawns = emotion.spawns || []
           for (const spawnId of spawns) {
             if (allEmotions[spawnId] && !selections.find((s) => s.id === spawnId)) {
-              newMap.set(spawnId, newGen)
+              // Only add if not already visible (don't overwrite existing generation)
+              if (!newMap.has(spawnId)) {
+                newMap.set(spawnId, newGen)
+              }
             }
           }
 
