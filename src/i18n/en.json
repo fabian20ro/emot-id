@@ -1,0 +1,37 @@
+{
+  "app": {
+    "title": "Emot-ID",
+    "subtitle": "Identify your emotions"
+  },
+  "header": {
+    "language": "Language"
+  },
+  "menu": {
+    "settings": "Settings",
+    "language": "Language"
+  },
+  "bubbleField": {
+    "instruction": "Tap the bubbles that resonate with you the most right now",
+    "empty": "Start by selecting an emotion"
+  },
+  "selectionBar": {
+    "title": "Your selections",
+    "empty": "No selection",
+    "clear": "Clear all"
+  },
+  "analyze": {
+    "button": "Analyze",
+    "buttonDisabled": "Select at least one emotion",
+    "resultPrefix": "Your selections",
+    "resultSuffix": "describe the emotion",
+    "exploreAI": "Explore with AI",
+    "aiPrompt": "describe emotion",
+    "aiPromptMultiple": "how do the emotions interconnect"
+  },
+  "modal": {
+    "close": "Close",
+    "title": "Analysis result",
+    "noCombinations": "No combinations found from your selections",
+    "combinationsFound": "Found combinations"
+  }
+}

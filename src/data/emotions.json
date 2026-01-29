@@ -1,0 +1,479 @@
+{
+  "joy": {
+    "id": "joy",
+    "label": { "ro": "bucurie", "en": "joy" },
+    "category": "primary",
+    "color": "#FFE66D",
+    "intensity": 0.5,
+    "opposite": "sadness",
+    "spawns": ["serenity", "ecstasy", "love", "optimism"]
+  },
+  "serenity": {
+    "id": "serenity",
+    "label": { "ro": "seninătate", "en": "serenity" },
+    "category": "intensity",
+    "color": "#FFF59D",
+    "intensity": 0.3,
+    "opposite": "pensiveness",
+    "spawns": ["joy", "acceptance", "love"]
+  },
+  "ecstasy": {
+    "id": "ecstasy",
+    "label": { "ro": "extaz", "en": "ecstasy" },
+    "category": "intensity",
+    "color": "#FFD700",
+    "intensity": 0.8,
+    "opposite": "grief",
+    "spawns": ["joy", "admiration", "optimism"]
+  },
+  "trust": {
+    "id": "trust",
+    "label": { "ro": "încredere", "en": "trust" },
+    "category": "primary",
+    "color": "#A8E6CF",
+    "intensity": 0.5,
+    "opposite": "disgust",
+    "spawns": ["acceptance", "admiration", "love", "submission"]
+  },
+  "acceptance": {
+    "id": "acceptance",
+    "label": { "ro": "acceptare", "en": "acceptance" },
+    "category": "intensity",
+    "color": "#C8F7DC",
+    "intensity": 0.3,
+    "opposite": "boredom",
+    "spawns": ["trust", "serenity", "submission"]
+  },
+  "admiration": {
+    "id": "admiration",
+    "label": { "ro": "admirație", "en": "admiration" },
+    "category": "intensity",
+    "color": "#7DD9A8",
+    "intensity": 0.8,
+    "opposite": "loathing",
+    "spawns": ["trust", "ecstasy", "love"]
+  },
+  "fear": {
+    "id": "fear",
+    "label": { "ro": "frică", "en": "fear" },
+    "category": "primary",
+    "color": "#88D8B0",
+    "intensity": 0.5,
+    "opposite": "anger",
+    "spawns": ["apprehension", "terror", "submission", "awe"]
+  },
+  "apprehension": {
+    "id": "apprehension",
+    "label": { "ro": "îngrijorare", "en": "apprehension" },
+    "category": "intensity",
+    "color": "#A8E8C8",
+    "intensity": 0.3,
+    "opposite": "annoyance",
+    "spawns": ["fear", "acceptance", "awe"]
+  },
+  "terror": {
+    "id": "terror",
+    "label": { "ro": "teroare", "en": "terror" },
+    "category": "intensity",
+    "color": "#68C898",
+    "intensity": 0.8,
+    "opposite": "rage",
+    "spawns": ["fear", "amazement", "submission"]
+  },
+  "surprise": {
+    "id": "surprise",
+    "label": { "ro": "surprindere", "en": "surprise" },
+    "category": "primary",
+    "color": "#7FDBFF",
+    "intensity": 0.5,
+    "opposite": "anticipation",
+    "spawns": ["distraction", "amazement", "awe", "disapproval"]
+  },
+  "distraction": {
+    "id": "distraction",
+    "label": { "ro": "distragere", "en": "distraction" },
+    "category": "intensity",
+    "color": "#A8E8FF",
+    "intensity": 0.3,
+    "opposite": "interest",
+    "spawns": ["surprise", "apprehension", "disapproval"]
+  },
+  "amazement": {
+    "id": "amazement",
+    "label": { "ro": "uimire", "en": "amazement" },
+    "category": "intensity",
+    "color": "#5FC8E8",
+    "intensity": 0.8,
+    "opposite": "vigilance",
+    "spawns": ["surprise", "terror", "awe"]
+  },
+  "sadness": {
+    "id": "sadness",
+    "label": { "ro": "tristețe", "en": "sadness" },
+    "category": "primary",
+    "color": "#5DADE2",
+    "intensity": 0.5,
+    "opposite": "joy",
+    "spawns": ["pensiveness", "grief", "disapproval", "remorse"]
+  },
+  "pensiveness": {
+    "id": "pensiveness",
+    "label": { "ro": "melancolie", "en": "pensiveness" },
+    "category": "intensity",
+    "color": "#85C1E9",
+    "intensity": 0.3,
+    "opposite": "serenity",
+    "spawns": ["sadness", "distraction", "remorse"]
+  },
+  "grief": {
+    "id": "grief",
+    "label": { "ro": "durere", "en": "grief" },
+    "category": "intensity",
+    "color": "#3498DB",
+    "intensity": 0.8,
+    "opposite": "ecstasy",
+    "spawns": ["sadness", "loathing", "disapproval"]
+  },
+  "disgust": {
+    "id": "disgust",
+    "label": { "ro": "dezgust", "en": "disgust" },
+    "category": "primary",
+    "color": "#BB8FCE",
+    "intensity": 0.5,
+    "opposite": "trust",
+    "spawns": ["boredom", "loathing", "remorse", "contempt"]
+  },
+  "boredom": {
+    "id": "boredom",
+    "label": { "ro": "plictiseală", "en": "boredom" },
+    "category": "intensity",
+    "color": "#D2B4DE",
+    "intensity": 0.3,
+    "opposite": "acceptance",
+    "spawns": ["disgust", "pensiveness", "contempt"]
+  },
+  "loathing": {
+    "id": "loathing",
+    "label": { "ro": "scârbă", "en": "loathing" },
+    "category": "intensity",
+    "color": "#9B59B6",
+    "intensity": 0.8,
+    "opposite": "admiration",
+    "spawns": ["disgust", "grief", "remorse"]
+  },
+  "anger": {
+    "id": "anger",
+    "label": { "ro": "furie", "en": "anger" },
+    "category": "primary",
+    "color": "#FF6B6B",
+    "intensity": 0.5,
+    "opposite": "fear",
+    "spawns": ["annoyance", "rage", "contempt", "aggression"]
+  },
+  "annoyance": {
+    "id": "annoyance",
+    "label": { "ro": "iritare", "en": "annoyance" },
+    "category": "intensity",
+    "color": "#FF9999",
+    "intensity": 0.3,
+    "opposite": "apprehension",
+    "spawns": ["anger", "boredom", "aggression"]
+  },
+  "rage": {
+    "id": "rage",
+    "label": { "ro": "mânie", "en": "rage" },
+    "category": "intensity",
+    "color": "#E74C3C",
+    "intensity": 0.8,
+    "opposite": "terror",
+    "spawns": ["anger", "vigilance", "contempt"]
+  },
+  "anticipation": {
+    "id": "anticipation",
+    "label": { "ro": "anticipare", "en": "anticipation" },
+    "category": "primary",
+    "color": "#FFAB76",
+    "intensity": 0.5,
+    "opposite": "surprise",
+    "spawns": ["interest", "vigilance", "aggression", "optimism"]
+  },
+  "interest": {
+    "id": "interest",
+    "label": { "ro": "interes", "en": "interest" },
+    "category": "intensity",
+    "color": "#FFC8A0",
+    "intensity": 0.3,
+    "opposite": "distraction",
+    "spawns": ["anticipation", "serenity", "optimism"]
+  },
+  "vigilance": {
+    "id": "vigilance",
+    "label": { "ro": "vigilență", "en": "vigilance" },
+    "category": "intensity",
+    "color": "#FF8C42",
+    "intensity": 0.8,
+    "opposite": "amazement",
+    "spawns": ["anticipation", "rage", "aggression"]
+  },
+  "love": {
+    "id": "love",
+    "label": { "ro": "iubire", "en": "love" },
+    "category": "dyad",
+    "color": "#FFD1DC",
+    "intensity": 0.6,
+    "components": ["joy", "trust"],
+    "spawns": ["joy", "trust", "serenity", "admiration"]
+  },
+  "submission": {
+    "id": "submission",
+    "label": { "ro": "supunere", "en": "submission" },
+    "category": "dyad",
+    "color": "#98E8C8",
+    "intensity": 0.6,
+    "components": ["trust", "fear"],
+    "spawns": ["trust", "fear", "acceptance", "apprehension"]
+  },
+  "awe": {
+    "id": "awe",
+    "label": { "ro": "venerație", "en": "awe" },
+    "category": "dyad",
+    "color": "#7FD8D8",
+    "intensity": 0.6,
+    "components": ["fear", "surprise"],
+    "spawns": ["fear", "surprise", "amazement", "terror"]
+  },
+  "disapproval": {
+    "id": "disapproval",
+    "label": { "ro": "dezaprobare", "en": "disapproval" },
+    "category": "dyad",
+    "color": "#7BB8E8",
+    "intensity": 0.6,
+    "components": ["surprise", "sadness"],
+    "spawns": ["surprise", "sadness", "pensiveness", "distraction"]
+  },
+  "remorse": {
+    "id": "remorse",
+    "label": { "ro": "remușcare", "en": "remorse" },
+    "category": "dyad",
+    "color": "#9B8DC8",
+    "intensity": 0.6,
+    "components": ["sadness", "disgust"],
+    "spawns": ["sadness", "disgust", "grief", "loathing"]
+  },
+  "contempt": {
+    "id": "contempt",
+    "label": { "ro": "dispreț", "en": "contempt" },
+    "category": "dyad",
+    "color": "#D88090",
+    "intensity": 0.6,
+    "components": ["disgust", "anger"],
+    "spawns": ["disgust", "anger", "loathing", "rage"]
+  },
+  "aggression": {
+    "id": "aggression",
+    "label": { "ro": "agresivitate", "en": "aggression" },
+    "category": "dyad",
+    "color": "#FF8860",
+    "intensity": 0.6,
+    "components": ["anger", "anticipation"],
+    "spawns": ["anger", "anticipation", "rage", "vigilance"]
+  },
+  "optimism": {
+    "id": "optimism",
+    "label": { "ro": "optimism", "en": "optimism" },
+    "category": "dyad",
+    "color": "#FFD080",
+    "intensity": 0.6,
+    "components": ["anticipation", "joy"],
+    "spawns": ["anticipation", "joy", "interest", "ecstasy"]
+  },
+  "guilt": {
+    "id": "guilt",
+    "label": { "ro": "vinovăție", "en": "guilt" },
+    "category": "secondary_dyad",
+    "color": "#C8D888",
+    "intensity": 0.5,
+    "components": ["joy", "fear"],
+    "spawns": ["joy", "fear", "serenity", "apprehension"]
+  },
+  "bittersweetness": {
+    "id": "bittersweetness",
+    "label": { "ro": "dulce-amărui", "en": "bittersweetness" },
+    "category": "secondary_dyad",
+    "color": "#C8A8D8",
+    "intensity": 0.5,
+    "components": ["joy", "sadness"],
+    "spawns": ["joy", "sadness", "serenity", "pensiveness"]
+  },
+  "curiosity": {
+    "id": "curiosity",
+    "label": { "ro": "curiozitate", "en": "curiosity" },
+    "category": "secondary_dyad",
+    "color": "#88D8D8",
+    "intensity": 0.5,
+    "components": ["trust", "surprise"],
+    "spawns": ["trust", "surprise", "acceptance", "amazement"]
+  },
+  "shame": {
+    "id": "shame",
+    "label": { "ro": "rușine", "en": "shame" },
+    "category": "secondary_dyad",
+    "color": "#90C8A8",
+    "intensity": 0.5,
+    "components": ["fear", "disgust"],
+    "spawns": ["fear", "disgust", "apprehension", "boredom"]
+  },
+  "outrage": {
+    "id": "outrage",
+    "label": { "ro": "indignare", "en": "outrage" },
+    "category": "secondary_dyad",
+    "color": "#E87878",
+    "intensity": 0.5,
+    "components": ["surprise", "anger"],
+    "spawns": ["surprise", "anger", "amazement", "rage"]
+  },
+  "envy": {
+    "id": "envy",
+    "label": { "ro": "invidie", "en": "envy" },
+    "category": "secondary_dyad",
+    "color": "#7898C8",
+    "intensity": 0.5,
+    "components": ["sadness", "anger"],
+    "spawns": ["sadness", "anger", "grief", "annoyance"]
+  },
+  "cynicism": {
+    "id": "cynicism",
+    "label": { "ro": "cinism", "en": "cynicism" },
+    "category": "secondary_dyad",
+    "color": "#C898A8",
+    "intensity": 0.5,
+    "components": ["disgust", "anticipation"],
+    "spawns": ["disgust", "anticipation", "boredom", "interest"]
+  },
+  "pride": {
+    "id": "pride",
+    "label": { "ro": "mândrie", "en": "pride" },
+    "category": "secondary_dyad",
+    "color": "#FFB868",
+    "intensity": 0.5,
+    "components": ["anger", "joy"],
+    "spawns": ["anger", "joy", "ecstasy", "annoyance"]
+  },
+  "hope": {
+    "id": "hope",
+    "label": { "ro": "speranță", "en": "hope" },
+    "category": "dyad",
+    "color": "#C8E8A8",
+    "intensity": 0.6,
+    "components": ["anticipation", "trust"],
+    "spawns": ["anticipation", "trust", "interest", "acceptance"]
+  },
+  "anxiety": {
+    "id": "anxiety",
+    "label": { "ro": "anxietate", "en": "anxiety" },
+    "category": "dyad",
+    "color": "#A8D8A0",
+    "intensity": 0.6,
+    "components": ["anticipation", "fear"],
+    "spawns": ["anticipation", "fear", "interest", "apprehension"]
+  },
+  "sentimentality": {
+    "id": "sentimentality",
+    "label": { "ro": "sentimentalism", "en": "sentimentality" },
+    "category": "secondary_dyad",
+    "color": "#A8C8D8",
+    "intensity": 0.5,
+    "components": ["trust", "sadness"],
+    "spawns": ["trust", "sadness", "acceptance", "pensiveness"]
+  },
+  "despair": {
+    "id": "despair",
+    "label": { "ro": "disperare", "en": "despair" },
+    "category": "secondary_dyad",
+    "color": "#68A8B8",
+    "intensity": 0.5,
+    "components": ["fear", "sadness"],
+    "spawns": ["fear", "sadness", "apprehension", "grief"]
+  },
+  "dominance": {
+    "id": "dominance",
+    "label": { "ro": "dominanță", "en": "dominance" },
+    "category": "secondary_dyad",
+    "color": "#D89888",
+    "intensity": 0.5,
+    "components": ["anger", "trust"],
+    "spawns": ["anger", "trust", "annoyance", "admiration"]
+  },
+  "delight": {
+    "id": "delight",
+    "label": { "ro": "încântare", "en": "delight" },
+    "category": "secondary_dyad",
+    "color": "#FFE898",
+    "intensity": 0.5,
+    "components": ["joy", "surprise"],
+    "spawns": ["joy", "surprise", "serenity", "amazement"]
+  },
+  "pessimism": {
+    "id": "pessimism",
+    "label": { "ro": "pesimism", "en": "pessimism" },
+    "category": "secondary_dyad",
+    "color": "#8898C8",
+    "intensity": 0.5,
+    "components": ["sadness", "anticipation"],
+    "spawns": ["sadness", "anticipation", "pensiveness", "interest"]
+  },
+  "morbidness": {
+    "id": "morbidness",
+    "label": { "ro": "morbiditate", "en": "morbidness" },
+    "category": "tertiary_dyad",
+    "color": "#C8A0C8",
+    "intensity": 0.4,
+    "components": ["disgust", "joy"],
+    "spawns": ["disgust", "joy", "boredom", "serenity"]
+  },
+  "unbelief": {
+    "id": "unbelief",
+    "label": { "ro": "neîncredere", "en": "unbelief" },
+    "category": "tertiary_dyad",
+    "color": "#A898C8",
+    "intensity": 0.4,
+    "components": ["surprise", "disgust"],
+    "spawns": ["surprise", "disgust", "distraction", "boredom"]
+  },
+  "ambivalence": {
+    "id": "ambivalence",
+    "label": { "ro": "ambivalență", "en": "ambivalence" },
+    "category": "opposite_dyad",
+    "color": "#B8C8A8",
+    "intensity": 0.4,
+    "components": ["trust", "disgust"],
+    "spawns": ["trust", "disgust", "acceptance", "boredom"]
+  },
+  "frozenness": {
+    "id": "frozenness",
+    "label": { "ro": "înghețare", "en": "frozenness" },
+    "category": "opposite_dyad",
+    "color": "#78B898",
+    "intensity": 0.4,
+    "components": ["fear", "anger"],
+    "spawns": ["fear", "anger", "apprehension", "annoyance"]
+  },
+  "confusion": {
+    "id": "confusion",
+    "label": { "ro": "confuzie", "en": "confusion" },
+    "category": "opposite_dyad",
+    "color": "#98C8D8",
+    "intensity": 0.4,
+    "components": ["surprise", "anticipation"],
+    "spawns": ["surprise", "anticipation", "distraction", "interest"]
+  },
+  "aggressiveness": {
+    "id": "aggressiveness",
+    "label": { "ro": "agresivitate intensă", "en": "aggressiveness" },
+    "category": "tertiary_dyad",
+    "color": "#FF7850",
+    "intensity": 0.7,
+    "components": ["anger", "anticipation"],
+    "spawns": ["anger", "anticipation", "rage", "vigilance"]
+  }
+}

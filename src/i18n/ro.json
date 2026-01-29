@@ -1,0 +1,37 @@
+{
+  "app": {
+    "title": "Emot-ID",
+    "subtitle": "Identifica-ti emotiile"
+  },
+  "header": {
+    "language": "Limba"
+  },
+  "menu": {
+    "settings": "Setari",
+    "language": "Limba"
+  },
+  "bubbleField": {
+    "instruction": "Atinge bulele care rezoneaza cel mai mult cu tine acum",
+    "empty": "Incepe prin a selecta o emotie"
+  },
+  "selectionBar": {
+    "title": "Selectiile tale",
+    "empty": "Nicio selectie",
+    "clear": "Sterge tot"
+  },
+  "analyze": {
+    "button": "Analizeaza",
+    "buttonDisabled": "Selecteaza cel putin o emotie",
+    "resultPrefix": "Selectiile tale",
+    "resultSuffix": "descriu emotia",
+    "exploreAI": "Exploreaza cu AI",
+    "aiPrompt": "descrie emotia",
+    "aiPromptMultiple": "cum se interconecteaza emotiile"
+  },
+  "modal": {
+    "close": "Inchide",
+    "title": "Rezultatul analizei",
+    "noCombinations": "Nu s-au gasit combinatii din selectiile tale",
+    "combinationsFound": "Combinatii gasite"
+  }
+}
