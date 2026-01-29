@@ -3,30 +3,26 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BubbleField } from '../components/BubbleField'
 import { LanguageProvider } from '../context/LanguageContext'
-import type { Emotion } from '../components/Bubble'
+import type { BaseEmotion } from '../models/types'
 
-const mockEmotions: Emotion[] = [
+const mockEmotions: BaseEmotion[] = [
   {
     id: 'joy',
     label: { ro: 'bucurie', en: 'joy' },
-    category: 'primary',
     color: '#FFE66D',
     intensity: 0.5,
-    spawns: ['serenity', 'ecstasy'],
   },
   {
     id: 'sadness',
     label: { ro: 'tristețe', en: 'sadness' },
-    category: 'primary',
     color: '#5DADE2',
     intensity: 0.5,
-    spawns: ['pensiveness', 'grief'],
   },
 ]
 
-const mockGenerations = new Map([
-  ['joy', 0],
-  ['sadness', 0],
+const mockSizes = new Map<string, 'small' | 'medium' | 'large'>([
+  ['joy', 'large'],
+  ['sadness', 'large'],
 ])
 
 function renderWithProviders(ui: React.ReactElement) {
@@ -40,8 +36,7 @@ describe('BubbleField', () => {
       <BubbleField
         emotions={mockEmotions}
         onSelect={onSelect}
-        emotionGenerations={mockGenerations}
-        currentGeneration={0}
+        sizes={mockSizes}
       />
     )
 
@@ -55,8 +50,7 @@ describe('BubbleField', () => {
       <BubbleField
         emotions={mockEmotions}
         onSelect={onSelect}
-        emotionGenerations={mockGenerations}
-        currentGeneration={0}
+        sizes={mockSizes}
       />
     )
 
@@ -69,8 +63,7 @@ describe('BubbleField', () => {
       <BubbleField
         emotions={[]}
         onSelect={onSelect}
-        emotionGenerations={new Map()}
-        currentGeneration={0}
+        sizes={new Map()}
       />
     )
 
@@ -84,8 +77,7 @@ describe('BubbleField', () => {
       <BubbleField
         emotions={mockEmotions}
         onSelect={onSelect}
-        emotionGenerations={mockGenerations}
-        currentGeneration={0}
+        sizes={mockSizes}
       />
     )
 

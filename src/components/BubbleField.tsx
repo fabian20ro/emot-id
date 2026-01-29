@@ -1,32 +1,20 @@
 import { useRef, useState, useEffect, useMemo } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import { Bubble, type Emotion } from './Bubble'
+import { Bubble } from './Bubble'
 import { useLanguage } from '../context/LanguageContext'
+import type { BaseEmotion } from '../models/types'
 
 interface BubbleFieldProps {
-  emotions: Emotion[]
-  onSelect: (emotion: Emotion) => void
-  emotionGenerations: Map<string, number>
-  currentGeneration: number
-}
-
-function getSize(
-  emotionId: string,
-  emotionGenerations: Map<string, number>,
-  currentGeneration: number
-): 'small' | 'medium' | 'large' {
-  const gen = emotionGenerations.get(emotionId) ?? 0
-  const diff = currentGeneration - gen
-  if (diff === 0) return 'large'
-  if (diff === 1) return 'medium'
-  return 'small'
+  emotions: BaseEmotion[]
+  onSelect: (emotion: BaseEmotion) => void
+  sizes: Map<string, 'small' | 'medium' | 'large'>
 }
 
 const sizePixels = { small: 80, medium: 100, large: 120 }
 const bubbleHeight = 40
 
 function calculatePositionsForNewEmotions(
-  newEmotions: Emotion[],
+  newEmotions: BaseEmotion[],
   containerWidth: number,
   containerHeight: number,
   sizes: Map<string, 'small' | 'medium' | 'large'>,
@@ -87,8 +75,7 @@ function calculatePositionsForNewEmotions(
 export function BubbleField({
   emotions,
   onSelect,
-  emotionGenerations,
-  currentGeneration,
+  sizes,
 }: BubbleFieldProps) {
   const { t } = useLanguage()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -113,15 +100,6 @@ export function BubbleField({
     observer.observe(container)
     return () => observer.disconnect()
   }, [])
-
-  // Calculate sizes for all emotions
-  const sizes = useMemo(() => {
-    const map = new Map<string, 'small' | 'medium' | 'large'>()
-    for (const emotion of emotions) {
-      map.set(emotion.id, getSize(emotion.id, emotionGenerations, currentGeneration))
-    }
-    return map
-  }, [emotions, emotionGenerations, currentGeneration])
 
   // Update positions when emotions change or container resizes
   useEffect(() => {
@@ -193,6 +171,9 @@ export function BubbleField({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [emotions, containerSize.width, containerSize.height])
 
+  // Memoize sorted emotions for stable rendering
+  const sortedEmotions = useMemo(() => [...emotions], [emotions])
+
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-4">
       <p className="text-gray-400 mb-4 text-center">
@@ -203,7 +184,7 @@ export function BubbleField({
         className="relative w-full max-w-2xl flex-1 min-h-[200px]"
       >
         <AnimatePresence mode="popLayout">
-          {emotions.map((emotion, index) => (
+          {sortedEmotions.map((emotion, index) => (
             <Bubble
               key={emotion.id}
               emotion={emotion}

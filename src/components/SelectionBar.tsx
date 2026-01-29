@@ -1,10 +1,10 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
-import type { Emotion } from './Bubble'
+import type { BaseEmotion } from '../models/types'
 
 interface SelectionBarProps {
-  selections: Emotion[]
-  onDeselect: (emotion: Emotion) => void
+  selections: BaseEmotion[]
+  onDeselect: (emotion: BaseEmotion) => void
   onClear: () => void
 }
 

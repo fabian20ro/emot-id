@@ -1,17 +1,15 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Bubble, type Emotion } from '../components/Bubble'
+import { Bubble } from '../components/Bubble'
+import type { BaseEmotion } from '../models/types'
 import { LanguageProvider } from '../context/LanguageContext'
 
-const mockEmotion: Emotion = {
+const mockEmotion: BaseEmotion = {
   id: 'joy',
   label: { ro: 'bucurie', en: 'joy' },
-  category: 'primary',
   color: '#FFE66D',
   intensity: 0.5,
-  opposite: 'sadness',
-  spawns: ['serenity', 'ecstasy', 'love', 'optimism'],
 }
 
 function renderWithProviders(ui: React.ReactElement) {

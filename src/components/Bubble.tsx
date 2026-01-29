@@ -1,20 +1,12 @@
 import { motion } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import type { BaseEmotion } from '../models/types'
 
-export interface Emotion {
-  id: string
-  label: { ro: string; en: string }
-  category: string
-  color: string
-  intensity: number
-  opposite?: string
-  spawns: string[]
-  components?: string[]
-}
+export type Emotion = BaseEmotion
 
 interface BubbleProps {
-  emotion: Emotion
-  onClick: (emotion: Emotion) => void
+  emotion: BaseEmotion
+  onClick: (emotion: BaseEmotion) => void
   size?: 'small' | 'medium' | 'large'
   index?: number
   position?: { x: number; y: number }

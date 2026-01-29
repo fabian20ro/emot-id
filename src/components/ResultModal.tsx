@@ -1,12 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
-import type { Emotion } from './Bubble'
+import type { BaseEmotion, AnalysisResult } from '../models/types'
 
 interface ResultModalProps {
   isOpen: boolean
   onClose: () => void
-  selections: Emotion[]
-  results: Emotion[]
+  selections: BaseEmotion[]
+  results: AnalysisResult[]
 }
 
 export function ResultModal({ isOpen, onClose, selections, results }: ResultModalProps) {
@@ -66,7 +66,7 @@ export function ResultModal({ isOpen, onClose, selections, results }: ResultModa
               {results.length > 0 ? (
                 <div className="space-y-3">
                   {/* Only show "combinations found" label for dyad results */}
-                  {results.some((r) => r.components) && (
+                  {results.some((r) => r.componentLabels) && (
                     <p className="text-sm text-gray-400 font-medium">
                       {t.modal.combinationsFound}:
                     </p>
@@ -86,13 +86,10 @@ export function ResultModal({ isOpen, onClose, selections, results }: ResultModa
                       >
                         {result.label[language]}
                       </span>
-                      {result.components && (
+                      {result.componentLabels && (
                         <span className="text-sm text-gray-300 mt-1 block">
-                          = {result.components
-                            .map((cId) => {
-                              const comp = selections.find((s) => s.id === cId)
-                              return comp ? comp.label[language] : cId
-                            })
+                          = {result.componentLabels
+                            .map((label) => label[language])
                             .join(' + ')}
                         </span>
                       )}

@@ -3,24 +3,20 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { SelectionBar } from '../components/SelectionBar'
 import { LanguageProvider } from '../context/LanguageContext'
-import type { Emotion } from '../components/Bubble'
+import type { BaseEmotion } from '../models/types'
 
-const mockEmotions: Emotion[] = [
+const mockEmotions: BaseEmotion[] = [
   {
     id: 'joy',
     label: { ro: 'bucurie', en: 'joy' },
-    category: 'primary',
     color: '#FFE66D',
     intensity: 0.5,
-    spawns: [],
   },
   {
     id: 'sadness',
     label: { ro: 'tristețe', en: 'sadness' },
-    category: 'primary',
     color: '#5DADE2',
     intensity: 0.5,
-    spawns: [],
   },
 ]
 
