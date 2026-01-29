@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import type { Emotion } from './Bubble'
@@ -11,9 +10,6 @@ interface SelectionBarProps {
 
 export function SelectionBar({ selections, onDeselect, onClear }: SelectionBarProps) {
   const { language, t } = useLanguage()
-
-  // Memoize to avoid unnecessary re-renders
-  const selectionsList = useMemo(() => selections, [selections])
 
   return (
     <div className="bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-3 py-2 sm:p-3">
@@ -33,7 +29,7 @@ export function SelectionBar({ selections, onDeselect, onClear }: SelectionBarPr
       </div>
       <div className="flex flex-wrap gap-2 min-h-[32px]">
         <AnimatePresence mode="popLayout">
-          {selectionsList.length === 0 ? (
+          {selections.length === 0 ? (
             <motion.span
               key="empty"
               initial={{ opacity: 0 }}
@@ -44,7 +40,7 @@ export function SelectionBar({ selections, onDeselect, onClear }: SelectionBarPr
               {t.selectionBar.empty}
             </motion.span>
           ) : (
-            selectionsList.map((emotion) => (
+            selections.map((emotion) => (
               <motion.button
                 key={emotion.id}
                 layout

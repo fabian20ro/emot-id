@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useMemo } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { Bubble, type Emotion } from './Bubble'
 import { useLanguage } from '../context/LanguageContext'
@@ -115,10 +115,13 @@ export function BubbleField({
   }, [])
 
   // Calculate sizes for all emotions
-  const sizes = new Map<string, 'small' | 'medium' | 'large'>()
-  for (const emotion of emotions) {
-    sizes.set(emotion.id, getSize(emotion.id, emotionGenerations, currentGeneration))
-  }
+  const sizes = useMemo(() => {
+    const map = new Map<string, 'small' | 'medium' | 'large'>()
+    for (const emotion of emotions) {
+      map.set(emotion.id, getSize(emotion.id, emotionGenerations, currentGeneration))
+    }
+    return map
+  }, [emotions, emotionGenerations, currentGeneration])
 
   // Update positions when emotions change or container resizes
   useEffect(() => {

@@ -22,8 +22,12 @@ const strings: Record<Language, Strings> = {
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('emot-id-language')
-      if (saved === 'ro' || saved === 'en') return saved
+      try {
+        const saved = localStorage.getItem('emot-id-language')
+        if (saved === 'ro' || saved === 'en') return saved
+      } catch {
+        // localStorage may be unavailable in private browsing
+      }
       // Detect browser language
       const browserLang = navigator.language
       if (browserLang.startsWith('ro')) return 'ro'
@@ -32,7 +36,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   })
 
   useEffect(() => {
-    localStorage.setItem('emot-id-language', language)
+    try {
+      localStorage.setItem('emot-id-language', language)
+    } catch {
+      // localStorage may be unavailable in private browsing
+    }
   }, [language])
 
   const setLanguage = (lang: Language) => {

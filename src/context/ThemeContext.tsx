@@ -1,4 +1,4 @@
-import { createContext, useEffect, useContext, type ReactNode } from 'react'
+import { createContext, useEffect, type ReactNode } from 'react'
 
 interface ThemeContextType {
   theme: 'dark'
@@ -16,13 +16,4 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       {children}
     </ThemeContext.Provider>
   )
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export function useTheme() {
-  const context = useContext(ThemeContext)
-  if (!context) {
-    throw new Error('useTheme must be used within ThemeProvider')
-  }
-  return context
 }

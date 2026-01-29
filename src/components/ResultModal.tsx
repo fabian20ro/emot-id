@@ -49,6 +49,7 @@ export function ResultModal({ isOpen, onClose, selections, results }: ResultModa
               <button
                 onClick={onClose}
                 className="text-gray-400 hover:text-gray-200 text-2xl leading-none"
+                aria-label={t.modal.close}
               >
                 &times;
               </button>
