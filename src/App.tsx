@@ -53,24 +53,28 @@ export default function App() {
         return [...prev, emotion]
       })
 
-      const newGen = currentGeneration + 1
-      setCurrentGeneration(newGen)
+      // Use functional update to avoid stale closure issues
+      setCurrentGeneration((prevGen) => {
+        const newGen = prevGen + 1
 
-      setEmotionGenerations((prev) => {
-        const newMap = new Map(prev)
-        newMap.delete(emotion.id)
+        setEmotionGenerations((prevEmotions) => {
+          const newMap = new Map(prevEmotions)
+          newMap.delete(emotion.id)
 
-        const spawns = emotion.spawns || []
-        for (const spawnId of spawns) {
-          if (allEmotions[spawnId] && !selections.find((s) => s.id === spawnId)) {
-            newMap.set(spawnId, newGen)
+          const spawns = emotion.spawns || []
+          for (const spawnId of spawns) {
+            if (allEmotions[spawnId] && !selections.find((s) => s.id === spawnId)) {
+              newMap.set(spawnId, newGen)
+            }
           }
-        }
 
-        return newMap
+          return newMap
+        })
+
+        return newGen
       })
     },
-    [playSound, selections, currentGeneration]
+    [playSound, selections]
   )
 
   const handleDeselect = useCallback(
@@ -79,21 +83,25 @@ export default function App() {
       setSelections((prev) => prev.filter((e) => e.id !== emotion.id))
 
       // Return emotion to pool with current generation (so it appears large)
-      setEmotionGenerations((prev) => {
-        const newMap = new Map(prev)
-        if (emotion.components) {
-          // Combined emotion: return components to pool
-          emotion.components.forEach((id) => {
-            if (allEmotions[id]) newMap.set(id, currentGeneration)
-          })
-        } else {
-          // Basic emotion: return to pool
-          newMap.set(emotion.id, currentGeneration)
-        }
-        return newMap
+      // Use functional update to get the latest generation value
+      setCurrentGeneration((currentGen) => {
+        setEmotionGenerations((prev) => {
+          const newMap = new Map(prev)
+          if (emotion.components) {
+            // Combined emotion: return components to pool
+            emotion.components.forEach((id) => {
+              if (allEmotions[id]) newMap.set(id, currentGen)
+            })
+          } else {
+            // Basic emotion: return to pool
+            newMap.set(emotion.id, currentGen)
+          }
+          return newMap
+        })
+        return currentGen // Don't change generation on deselect
       })
     },
-    [playSound, currentGeneration]
+    [playSound]
   )
 
   const handleClear = useCallback(() => {
