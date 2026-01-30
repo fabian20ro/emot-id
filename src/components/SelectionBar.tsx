@@ -13,7 +13,7 @@ export function SelectionBar({ selections, combos, onDeselect, onClear }: Select
   const { language, t } = useLanguage()
 
   return (
-    <div className="bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-3 py-2 sm:p-3">
+    <div className="bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-3 py-2 sm:p-3 max-h-[30vh] overflow-y-auto">
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-sm font-medium text-gray-300">
           {t.selectionBar.title}

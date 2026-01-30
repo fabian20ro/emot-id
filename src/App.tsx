@@ -56,7 +56,7 @@ export default function App() {
   }, [selections, analyze])
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="h-screen overflow-hidden flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
       <Header modelId={modelId} onModelChange={setModelId} />
 
       <div className="px-4 pt-4 max-w-md mx-auto w-full">

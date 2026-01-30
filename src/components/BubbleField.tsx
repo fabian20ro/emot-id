@@ -135,10 +135,10 @@ export function BubbleField({
   }, [emotions, sizes, containerSize.width, containerSize.height])
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-4">
+    <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-4">
       <div
         ref={containerRef}
-        className="relative w-full max-w-2xl flex-1 min-h-[200px]"
+        className="relative w-full max-w-2xl flex-1 min-h-[120px]"
       >
         <AnimatePresence mode="popLayout">
           {emotions.map((emotion, index) => (

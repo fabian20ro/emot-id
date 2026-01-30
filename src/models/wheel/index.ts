@@ -26,11 +26,12 @@ export const wheelModel: EmotionModel<WheelEmotion> = {
     }
   },
 
-  onSelect(emotion: WheelEmotion, state: ModelState): SelectionEffect {
+  onSelect(emotion: WheelEmotion, state: ModelState, selections: WheelEmotion[]): SelectionEffect {
     const newGen = state.currentGeneration + 1
 
     if (emotion.children?.length) {
       // Has children: drill down — show children, hide current level
+      // Don't add branch node to selections
       const newMap = new Map<string, number>()
       for (const childId of emotion.children) {
         newMap.set(childId, newGen)
@@ -40,10 +41,11 @@ export const wheelModel: EmotionModel<WheelEmotion> = {
           visibleEmotionIds: newMap,
           currentGeneration: newGen,
         },
+        newSelections: selections,
       }
     }
 
-    // Leaf node: keep current visible set
+    // Leaf node: keep current visible set, let default selection behavior add it
     return { newState: state }
   },
 

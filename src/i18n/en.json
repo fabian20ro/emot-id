@@ -22,8 +22,8 @@
     "resultPrefix": "Your selections",
     "resultSuffix": "describe the emotion",
     "exploreAI": "Explore with AI",
-    "aiPrompt": "describe emotion",
-    "aiPromptMultiple": "how do the emotions interconnect"
+    "aiPrompt": "I am feeling {emotions}. What does this emotion mean and how can I understand it better?",
+    "aiPromptMultiple": "I am feeling a combination of {emotions}. How do these emotions relate and what might this mean?"
   },
   "modal": {
     "close": "Close",

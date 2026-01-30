@@ -13,14 +13,17 @@ export function ResultModal({ isOpen, onClose, selections, results }: ResultModa
   const { language, t } = useLanguage()
 
   const getAILink = () => {
-    if (selections.length === 0) return '#'
-    const emotionNames = selections.map((s) => s.label[language]).join(' + ')
+    if (results.length === 0) return '#'
+    const names = results.map((r) => r.label[language])
+    const conjunction = language === 'ro' ? ' si ' : ' and '
+    const emotionStr =
+      names.length <= 1
+        ? names[0]
+        : names.slice(0, -1).join(', ') + conjunction + names[names.length - 1]
 
-    // Different prompt for 2+ emotions
-    const prompt =
-      selections.length >= 2 ? t.analyze.aiPromptMultiple : t.analyze.aiPrompt
-
-    const query = encodeURIComponent(`${prompt}: ${emotionNames}`)
+    const template =
+      results.length >= 2 ? t.analyze.aiPromptMultiple : t.analyze.aiPrompt
+    const query = encodeURIComponent(template.replace('{emotions}', emotionStr))
     return `https://www.google.com/search?udm=50&q=${query}`
   }
 

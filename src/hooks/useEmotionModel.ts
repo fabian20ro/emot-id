@@ -33,13 +33,18 @@ export function useEmotionModel(modelId: string = defaultModelId) {
 
   const handleSelect = useCallback(
     (emotion: BaseEmotion) => {
-      setSelections((prev) => {
-        if (prev.find((e) => e.id === emotion.id)) return prev
-        return [...prev, emotion]
-      })
-
       setModelState((prevState) => {
         const effect = model.onSelect(emotion, prevState, selectionsRef.current)
+
+        if (effect.newSelections !== undefined) {
+          setSelections(effect.newSelections)
+        } else {
+          setSelections((prev) => {
+            if (prev.find((e) => e.id === emotion.id)) return prev
+            return [...prev, emotion]
+          })
+        }
+
         return effect.newState
       })
     },

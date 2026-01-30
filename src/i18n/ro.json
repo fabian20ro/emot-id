@@ -22,8 +22,8 @@
     "resultPrefix": "Selectiile tale",
     "resultSuffix": "descriu emotia",
     "exploreAI": "Exploreaza cu AI",
-    "aiPrompt": "descrie emotia",
-    "aiPromptMultiple": "cum se interconecteaza emotiile"
+    "aiPrompt": "Simt {emotions}. Ce inseamna aceasta emotie si cum o pot intelege mai bine?",
+    "aiPromptMultiple": "Simt o combinatie de {emotions}. Cum se leaga aceste emotii si ce ar putea insemna?"
   },
   "modal": {
     "close": "Inchide",
