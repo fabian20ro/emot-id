@@ -1,0 +1,959 @@
+{
+  "happy": {
+    "id": "happy",
+    "label": { "ro": "Fericit", "en": "Happy" },
+    "color": "#FFE066",
+    "level": 0,
+    "children": ["playful", "content", "interested", "proud", "accepted", "powerful", "peaceful", "trusting", "optimistic"]
+  },
+  "playful": {
+    "id": "playful",
+    "label": { "ro": "Jucaus", "en": "Playful" },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": ["aroused", "cheeky"]
+  },
+  "content": {
+    "id": "content",
+    "label": { "ro": "Multumit", "en": "Content" },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": ["free", "joyful"]
+  },
+  "interested": {
+    "id": "interested",
+    "label": { "ro": "Interesat", "en": "Interested" },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": ["curious", "inquisitive"]
+  },
+  "proud": {
+    "id": "proud",
+    "label": { "ro": "Mandru", "en": "Proud" },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": ["successful", "confident"]
+  },
+  "accepted": {
+    "id": "accepted",
+    "label": { "ro": "Acceptat", "en": "Accepted" },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": ["respected", "valued"]
+  },
+  "powerful": {
+    "id": "powerful",
+    "label": { "ro": "Puternic", "en": "Powerful" },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": ["courageous", "creative"]
+  },
+  "peaceful": {
+    "id": "peaceful",
+    "label": { "ro": "Pasnic", "en": "Peaceful" },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": ["loving", "thankful"]
+  },
+  "trusting": {
+    "id": "trusting",
+    "label": { "ro": "Incredere", "en": "Trusting" },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": ["sensitive", "intimate"]
+  },
+  "optimistic": {
+    "id": "optimistic",
+    "label": { "ro": "Optimist", "en": "Optimistic" },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": ["inspired", "open"]
+  },
+  "aroused": {
+    "id": "aroused",
+    "label": { "ro": "Entuziasmat", "en": "Aroused" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "playful"
+  },
+  "cheeky": {
+    "id": "cheeky",
+    "label": { "ro": "Obraznic", "en": "Cheeky" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "playful"
+  },
+  "free": {
+    "id": "free",
+    "label": { "ro": "Liber", "en": "Free" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "content"
+  },
+  "joyful": {
+    "id": "joyful",
+    "label": { "ro": "Bucuros", "en": "Joyful" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "content"
+  },
+  "curious": {
+    "id": "curious",
+    "label": { "ro": "Curios", "en": "Curious" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "interested"
+  },
+  "inquisitive": {
+    "id": "inquisitive",
+    "label": { "ro": "Iscoditor", "en": "Inquisitive" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "interested"
+  },
+  "successful": {
+    "id": "successful",
+    "label": { "ro": "De succes", "en": "Successful" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "proud"
+  },
+  "confident": {
+    "id": "confident",
+    "label": { "ro": "Increzator", "en": "Confident" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "proud"
+  },
+  "respected": {
+    "id": "respected",
+    "label": { "ro": "Respectat", "en": "Respected" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "accepted"
+  },
+  "valued": {
+    "id": "valued",
+    "label": { "ro": "Valorizat", "en": "Valued" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "accepted"
+  },
+  "courageous": {
+    "id": "courageous",
+    "label": { "ro": "Curajos", "en": "Courageous" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "powerful"
+  },
+  "creative": {
+    "id": "creative",
+    "label": { "ro": "Creativ", "en": "Creative" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "powerful"
+  },
+  "loving": {
+    "id": "loving",
+    "label": { "ro": "Iubitor", "en": "Loving" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "peaceful"
+  },
+  "thankful": {
+    "id": "thankful",
+    "label": { "ro": "Recunoscator", "en": "Thankful" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "peaceful"
+  },
+  "sensitive": {
+    "id": "sensitive",
+    "label": { "ro": "Sensibil", "en": "Sensitive" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "trusting"
+  },
+  "intimate": {
+    "id": "intimate",
+    "label": { "ro": "Intim", "en": "Intimate" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "trusting"
+  },
+  "inspired": {
+    "id": "inspired",
+    "label": { "ro": "Inspirat", "en": "Inspired" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "optimistic"
+  },
+  "open": {
+    "id": "open",
+    "label": { "ro": "Deschis", "en": "Open" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "optimistic"
+  },
+
+  "surprised": {
+    "id": "surprised",
+    "label": { "ro": "Surprins", "en": "Surprised" },
+    "color": "#A8D8B0",
+    "level": 0,
+    "children": ["startled", "confused", "amazed", "excited"]
+  },
+  "startled": {
+    "id": "startled",
+    "label": { "ro": "Tresarit", "en": "Startled" },
+    "color": "#B8E0BE",
+    "level": 1,
+    "parent": "surprised",
+    "children": ["shocked", "dismayed"]
+  },
+  "confused": {
+    "id": "confused",
+    "label": { "ro": "Confuz", "en": "Confused" },
+    "color": "#B8E0BE",
+    "level": 1,
+    "parent": "surprised",
+    "children": ["disillusioned", "perplexed"]
+  },
+  "amazed": {
+    "id": "amazed",
+    "label": { "ro": "Uimit", "en": "Amazed" },
+    "color": "#B8E0BE",
+    "level": 1,
+    "parent": "surprised",
+    "children": ["astonished", "awe"]
+  },
+  "excited": {
+    "id": "excited",
+    "label": { "ro": "Entuziasmat", "en": "Excited" },
+    "color": "#B8E0BE",
+    "level": 1,
+    "parent": "surprised",
+    "children": ["eager", "energetic"]
+  },
+  "shocked": {
+    "id": "shocked",
+    "label": { "ro": "Socat", "en": "Shocked" },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "startled"
+  },
+  "dismayed": {
+    "id": "dismayed",
+    "label": { "ro": "Consternat", "en": "Dismayed" },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "startled"
+  },
+  "disillusioned": {
+    "id": "disillusioned",
+    "label": { "ro": "Deziluzionat", "en": "Disillusioned" },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "confused"
+  },
+  "perplexed": {
+    "id": "perplexed",
+    "label": { "ro": "Perplex", "en": "Perplexed" },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "confused"
+  },
+  "astonished": {
+    "id": "astonished",
+    "label": { "ro": "Stupefiat", "en": "Astonished" },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "amazed"
+  },
+  "awe": {
+    "id": "awe",
+    "label": { "ro": "Veneratie", "en": "Awe" },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "amazed"
+  },
+  "eager": {
+    "id": "eager",
+    "label": { "ro": "Nerabdator", "en": "Eager" },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "excited"
+  },
+  "energetic": {
+    "id": "energetic",
+    "label": { "ro": "Energic", "en": "Energetic" },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "excited"
+  },
+
+  "bad": {
+    "id": "bad",
+    "label": { "ro": "Rau", "en": "Bad" },
+    "color": "#B8C0C8",
+    "level": 0,
+    "children": ["tired", "stressed", "busy", "bored"]
+  },
+  "tired": {
+    "id": "tired",
+    "label": { "ro": "Obosit", "en": "Tired" },
+    "color": "#C4CCD4",
+    "level": 1,
+    "parent": "bad",
+    "children": ["sleepy", "unfocused"]
+  },
+  "stressed": {
+    "id": "stressed",
+    "label": { "ro": "Stresat", "en": "Stressed" },
+    "color": "#C4CCD4",
+    "level": 1,
+    "parent": "bad",
+    "children": ["overwhelmed_bad", "out_of_control"]
+  },
+  "busy": {
+    "id": "busy",
+    "label": { "ro": "Ocupat", "en": "Busy" },
+    "color": "#C4CCD4",
+    "level": 1,
+    "parent": "bad",
+    "children": ["pressured", "rushed"]
+  },
+  "bored": {
+    "id": "bored",
+    "label": { "ro": "Plictisit", "en": "Bored" },
+    "color": "#C4CCD4",
+    "level": 1,
+    "parent": "bad",
+    "children": ["indifferent", "apathetic"]
+  },
+  "sleepy": {
+    "id": "sleepy",
+    "label": { "ro": "Somnoros", "en": "Sleepy" },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "tired"
+  },
+  "unfocused": {
+    "id": "unfocused",
+    "label": { "ro": "Neconcentrat", "en": "Unfocused" },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "tired"
+  },
+  "overwhelmed_bad": {
+    "id": "overwhelmed_bad",
+    "label": { "ro": "Coplesit", "en": "Overwhelmed" },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "stressed"
+  },
+  "out_of_control": {
+    "id": "out_of_control",
+    "label": { "ro": "Scapat de sub control", "en": "Out of control" },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "stressed"
+  },
+  "pressured": {
+    "id": "pressured",
+    "label": { "ro": "Presat", "en": "Pressured" },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "busy"
+  },
+  "rushed": {
+    "id": "rushed",
+    "label": { "ro": "Grabit", "en": "Rushed" },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "busy"
+  },
+  "indifferent": {
+    "id": "indifferent",
+    "label": { "ro": "Indiferent", "en": "Indifferent" },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "bored"
+  },
+  "apathetic": {
+    "id": "apathetic",
+    "label": { "ro": "Apatic", "en": "Apathetic" },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "bored"
+  },
+
+  "fearful": {
+    "id": "fearful",
+    "label": { "ro": "Temator", "en": "Fearful" },
+    "color": "#88C8A0",
+    "level": 0,
+    "children": ["scared", "anxious", "insecure", "weak", "rejected", "threatened"]
+  },
+  "scared": {
+    "id": "scared",
+    "label": { "ro": "Speriat", "en": "Scared" },
+    "color": "#9CD4B0",
+    "level": 1,
+    "parent": "fearful",
+    "children": ["helpless", "frightened"]
+  },
+  "anxious": {
+    "id": "anxious",
+    "label": { "ro": "Anxios", "en": "Anxious" },
+    "color": "#9CD4B0",
+    "level": 1,
+    "parent": "fearful",
+    "children": ["overwhelmed_fear", "worried"]
+  },
+  "insecure": {
+    "id": "insecure",
+    "label": { "ro": "Nesigur", "en": "Insecure" },
+    "color": "#9CD4B0",
+    "level": 1,
+    "parent": "fearful",
+    "children": ["inadequate", "inferior_fear"]
+  },
+  "weak": {
+    "id": "weak",
+    "label": { "ro": "Slab", "en": "Weak" },
+    "color": "#9CD4B0",
+    "level": 1,
+    "parent": "fearful",
+    "children": ["worthless", "insignificant"]
+  },
+  "rejected": {
+    "id": "rejected",
+    "label": { "ro": "Respins", "en": "Rejected" },
+    "color": "#9CD4B0",
+    "level": 1,
+    "parent": "fearful",
+    "children": ["excluded", "persecuted"]
+  },
+  "threatened": {
+    "id": "threatened",
+    "label": { "ro": "Amenintat", "en": "Threatened" },
+    "color": "#9CD4B0",
+    "level": 1,
+    "parent": "fearful",
+    "children": ["nervous", "exposed"]
+  },
+  "helpless": {
+    "id": "helpless",
+    "label": { "ro": "Neajutorat", "en": "Helpless" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "scared"
+  },
+  "frightened": {
+    "id": "frightened",
+    "label": { "ro": "Infricosat", "en": "Frightened" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "scared"
+  },
+  "overwhelmed_fear": {
+    "id": "overwhelmed_fear",
+    "label": { "ro": "Coplesit", "en": "Overwhelmed" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "anxious"
+  },
+  "worried": {
+    "id": "worried",
+    "label": { "ro": "Ingrijorat", "en": "Worried" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "anxious"
+  },
+  "inadequate": {
+    "id": "inadequate",
+    "label": { "ro": "Inadecvat", "en": "Inadequate" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "insecure"
+  },
+  "inferior_fear": {
+    "id": "inferior_fear",
+    "label": { "ro": "Inferior", "en": "Inferior" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "insecure"
+  },
+  "worthless": {
+    "id": "worthless",
+    "label": { "ro": "Lipsit de valoare", "en": "Worthless" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "weak"
+  },
+  "insignificant": {
+    "id": "insignificant",
+    "label": { "ro": "Nesemnificativ", "en": "Insignificant" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "weak"
+  },
+  "excluded": {
+    "id": "excluded",
+    "label": { "ro": "Exclus", "en": "Excluded" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "rejected"
+  },
+  "persecuted": {
+    "id": "persecuted",
+    "label": { "ro": "Persecutat", "en": "Persecuted" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "rejected"
+  },
+  "nervous": {
+    "id": "nervous",
+    "label": { "ro": "Nervos", "en": "Nervous" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "threatened"
+  },
+  "exposed": {
+    "id": "exposed",
+    "label": { "ro": "Expus", "en": "Exposed" },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "threatened"
+  },
+
+  "angry": {
+    "id": "angry",
+    "label": { "ro": "Furios", "en": "Angry" },
+    "color": "#E88888",
+    "level": 0,
+    "children": ["let_down", "humiliated", "bitter", "mad", "aggressive", "frustrated", "distant", "critical"]
+  },
+  "let_down": {
+    "id": "let_down",
+    "label": { "ro": "Dezamagit", "en": "Let down" },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": ["betrayed", "resentful"]
+  },
+  "humiliated": {
+    "id": "humiliated",
+    "label": { "ro": "Umilit", "en": "Humiliated" },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": ["disrespected", "ridiculed"]
+  },
+  "bitter": {
+    "id": "bitter",
+    "label": { "ro": "Amarât", "en": "Bitter" },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": ["indignant", "violated"]
+  },
+  "mad": {
+    "id": "mad",
+    "label": { "ro": "Nebun de furie", "en": "Mad" },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": ["furious", "jealous"]
+  },
+  "aggressive": {
+    "id": "aggressive",
+    "label": { "ro": "Agresiv", "en": "Aggressive" },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": ["provoked", "hostile"]
+  },
+  "frustrated": {
+    "id": "frustrated",
+    "label": { "ro": "Frustrat", "en": "Frustrated" },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": ["infuriated", "annoyed"]
+  },
+  "distant": {
+    "id": "distant",
+    "label": { "ro": "Distant", "en": "Distant" },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": ["withdrawn", "numb"]
+  },
+  "critical": {
+    "id": "critical",
+    "label": { "ro": "Critic", "en": "Critical" },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": ["skeptical", "dismissive"]
+  },
+  "betrayed": {
+    "id": "betrayed",
+    "label": { "ro": "Tradat", "en": "Betrayed" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "let_down"
+  },
+  "resentful": {
+    "id": "resentful",
+    "label": { "ro": "Plin de resentimente", "en": "Resentful" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "let_down"
+  },
+  "disrespected": {
+    "id": "disrespected",
+    "label": { "ro": "Lipsa de respect", "en": "Disrespected" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "humiliated"
+  },
+  "ridiculed": {
+    "id": "ridiculed",
+    "label": { "ro": "Ridiculizat", "en": "Ridiculed" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "humiliated"
+  },
+  "indignant": {
+    "id": "indignant",
+    "label": { "ro": "Indignat", "en": "Indignant" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "bitter"
+  },
+  "violated": {
+    "id": "violated",
+    "label": { "ro": "Violat", "en": "Violated" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "bitter"
+  },
+  "furious": {
+    "id": "furious",
+    "label": { "ro": "Furibund", "en": "Furious" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "mad"
+  },
+  "jealous": {
+    "id": "jealous",
+    "label": { "ro": "Gelos", "en": "Jealous" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "mad"
+  },
+  "provoked": {
+    "id": "provoked",
+    "label": { "ro": "Provocat", "en": "Provoked" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "aggressive"
+  },
+  "hostile": {
+    "id": "hostile",
+    "label": { "ro": "Ostil", "en": "Hostile" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "aggressive"
+  },
+  "infuriated": {
+    "id": "infuriated",
+    "label": { "ro": "Infuriat", "en": "Infuriated" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "frustrated"
+  },
+  "annoyed": {
+    "id": "annoyed",
+    "label": { "ro": "Enervat", "en": "Annoyed" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "frustrated"
+  },
+  "withdrawn": {
+    "id": "withdrawn",
+    "label": { "ro": "Retras", "en": "Withdrawn" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "distant"
+  },
+  "numb": {
+    "id": "numb",
+    "label": { "ro": "Amorțit", "en": "Numb" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "distant"
+  },
+  "skeptical": {
+    "id": "skeptical",
+    "label": { "ro": "Sceptic", "en": "Skeptical" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "critical"
+  },
+  "dismissive": {
+    "id": "dismissive",
+    "label": { "ro": "Disprețuitor", "en": "Dismissive" },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "critical"
+  },
+
+  "disgusted": {
+    "id": "disgusted",
+    "label": { "ro": "Dezgustat", "en": "Disgusted" },
+    "color": "#C888B8",
+    "level": 0,
+    "children": ["disapproving", "disappointed_disg", "awful", "repelled"]
+  },
+  "disapproving": {
+    "id": "disapproving",
+    "label": { "ro": "Dezaprobator", "en": "Disapproving" },
+    "color": "#D49ECA",
+    "level": 1,
+    "parent": "disgusted",
+    "children": ["judgmental", "embarrassed_disg"]
+  },
+  "disappointed_disg": {
+    "id": "disappointed_disg",
+    "label": { "ro": "Dezamagit", "en": "Disappointed" },
+    "color": "#D49ECA",
+    "level": 1,
+    "parent": "disgusted",
+    "children": ["appalled", "revolted"]
+  },
+  "awful": {
+    "id": "awful",
+    "label": { "ro": "Groaznic", "en": "Awful" },
+    "color": "#D49ECA",
+    "level": 1,
+    "parent": "disgusted",
+    "children": ["nauseated", "detestable"]
+  },
+  "repelled": {
+    "id": "repelled",
+    "label": { "ro": "Respins", "en": "Repelled" },
+    "color": "#D49ECA",
+    "level": 1,
+    "parent": "disgusted",
+    "children": ["hesitant", "horrified"]
+  },
+  "judgmental": {
+    "id": "judgmental",
+    "label": { "ro": "Critic", "en": "Judgmental" },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disapproving"
+  },
+  "embarrassed_disg": {
+    "id": "embarrassed_disg",
+    "label": { "ro": "Jenat", "en": "Embarrassed" },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disapproving"
+  },
+  "appalled": {
+    "id": "appalled",
+    "label": { "ro": "Ingrozit", "en": "Appalled" },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disappointed_disg"
+  },
+  "revolted": {
+    "id": "revolted",
+    "label": { "ro": "Revoltat", "en": "Revolted" },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disappointed_disg"
+  },
+  "nauseated": {
+    "id": "nauseated",
+    "label": { "ro": "Greata", "en": "Nauseated" },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "awful"
+  },
+  "detestable": {
+    "id": "detestable",
+    "label": { "ro": "Detestabil", "en": "Detestable" },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "awful"
+  },
+  "hesitant": {
+    "id": "hesitant",
+    "label": { "ro": "Ezitant", "en": "Hesitant" },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "repelled"
+  },
+  "horrified": {
+    "id": "horrified",
+    "label": { "ro": "Oripilat", "en": "Horrified" },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "repelled"
+  },
+
+  "sad": {
+    "id": "sad",
+    "label": { "ro": "Trist", "en": "Sad" },
+    "color": "#88A8D0",
+    "level": 0,
+    "children": ["hurt", "depressed", "guilty", "despair", "vulnerable", "lonely"]
+  },
+  "hurt": {
+    "id": "hurt",
+    "label": { "ro": "Ranit", "en": "Hurt" },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": ["embarrassed_sad", "disappointed_sad"]
+  },
+  "depressed": {
+    "id": "depressed",
+    "label": { "ro": "Deprimat", "en": "Depressed" },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": ["empty", "inferior_sad"]
+  },
+  "guilty": {
+    "id": "guilty",
+    "label": { "ro": "Vinovat", "en": "Guilty" },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": ["remorseful", "ashamed"]
+  },
+  "despair": {
+    "id": "despair",
+    "label": { "ro": "Disperare", "en": "Despair" },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": ["grief", "powerless"]
+  },
+  "vulnerable": {
+    "id": "vulnerable",
+    "label": { "ro": "Vulnerabil", "en": "Vulnerable" },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": ["fragile", "victimized"]
+  },
+  "lonely": {
+    "id": "lonely",
+    "label": { "ro": "Singur", "en": "Lonely" },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": ["abandoned", "isolated"]
+  },
+  "embarrassed_sad": {
+    "id": "embarrassed_sad",
+    "label": { "ro": "Jenat", "en": "Embarrassed" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "hurt"
+  },
+  "disappointed_sad": {
+    "id": "disappointed_sad",
+    "label": { "ro": "Dezamagit", "en": "Disappointed" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "hurt"
+  },
+  "empty": {
+    "id": "empty",
+    "label": { "ro": "Gol", "en": "Empty" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "depressed"
+  },
+  "inferior_sad": {
+    "id": "inferior_sad",
+    "label": { "ro": "Inferior", "en": "Inferior" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "depressed"
+  },
+  "remorseful": {
+    "id": "remorseful",
+    "label": { "ro": "Plin de remuscari", "en": "Remorseful" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "guilty"
+  },
+  "ashamed": {
+    "id": "ashamed",
+    "label": { "ro": "Rusinat", "en": "Ashamed" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "guilty"
+  },
+  "grief": {
+    "id": "grief",
+    "label": { "ro": "Doliu", "en": "Grief" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "despair"
+  },
+  "powerless": {
+    "id": "powerless",
+    "label": { "ro": "Neputincios", "en": "Powerless" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "despair"
+  },
+  "fragile": {
+    "id": "fragile",
+    "label": { "ro": "Fragil", "en": "Fragile" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "vulnerable"
+  },
+  "victimized": {
+    "id": "victimized",
+    "label": { "ro": "Victimizat", "en": "Victimized" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "vulnerable"
+  },
+  "abandoned": {
+    "id": "abandoned",
+    "label": { "ro": "Abandonat", "en": "Abandoned" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "lonely"
+  },
+  "isolated": {
+    "id": "isolated",
+    "label": { "ro": "Izolat", "en": "Isolated" },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "lonely"
+  }
+}

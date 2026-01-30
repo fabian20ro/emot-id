@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect, useMemo } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { Bubble } from './Bubble'
-import { useLanguage } from '../context/LanguageContext'
 import type { BaseEmotion } from '../models/types'
 
 interface BubbleFieldProps {
@@ -77,7 +76,6 @@ export function BubbleField({
   onSelect,
   sizes,
 }: BubbleFieldProps) {
-  const { t } = useLanguage()
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
   const [positions, setPositions] = useState<Map<string, { x: number; y: number }>>(new Map())
@@ -176,9 +174,6 @@ export function BubbleField({
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-4">
-      <p className="text-gray-400 mb-4 text-center">
-        {emotions.length > 0 ? t.bubbleField.instruction : t.bubbleField.empty}
-      </p>
       <div
         ref={containerRef}
         className="relative w-full max-w-2xl flex-1 min-h-[200px]"

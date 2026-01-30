@@ -1,13 +1,17 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { getAvailableModels } from '../models/registry'
 
 interface SettingsMenuProps {
   isOpen: boolean
   onClose: () => void
+  modelId: string
+  onModelChange: (id: string) => void
 }
 
-export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
-  const { language, setLanguage } = useLanguage()
+export function SettingsMenu({ isOpen, onClose, modelId, onModelChange }: SettingsMenuProps) {
+  const { language, setLanguage, t } = useLanguage()
+  const availableModels = getAvailableModels()
 
   return (
     <AnimatePresence>
@@ -58,6 +62,28 @@ export function SettingsMenu({ isOpen, onClose }: SettingsMenuProps) {
                 >
                   English
                 </button>
+              </div>
+
+              {/* Model Section */}
+              <div className="px-3 py-2">
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                  {t.menu.model}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1 px-2 pb-2">
+                {availableModels.map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => onModelChange(m.id)}
+                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-left ${
+                      modelId === m.id
+                        ? 'bg-purple-500 text-white'
+                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    }`}
+                  >
+                    {m.name}
+                  </button>
+                ))}
               </div>
             </div>
           </motion.div>

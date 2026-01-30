@@ -3,7 +3,12 @@ import { useLanguage } from '../context/LanguageContext'
 import { MenuButton } from './MenuButton'
 import { SettingsMenu } from './SettingsMenu'
 
-export function Header() {
+interface HeaderProps {
+  modelId: string
+  onModelChange: (id: string) => void
+}
+
+export function Header({ modelId, onModelChange }: HeaderProps) {
   const { t } = useLanguage()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -19,6 +24,8 @@ export function Header() {
             <SettingsMenu
               isOpen={menuOpen}
               onClose={() => setMenuOpen(false)}
+              modelId={modelId}
+              onModelChange={onModelChange}
             />
           </div>
           <div>

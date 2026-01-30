@@ -1,8 +1,10 @@
 import type { EmotionModel, BaseEmotion } from './types'
 import { plutchikModel } from './plutchik'
+import { wheelModel } from './wheel'
 
 const models: Record<string, EmotionModel<BaseEmotion>> = {
   plutchik: plutchikModel as EmotionModel<BaseEmotion>,
+  wheel: wheelModel as EmotionModel<BaseEmotion>,
 }
 
 export const defaultModelId = 'plutchik'

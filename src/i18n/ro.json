@@ -8,11 +8,8 @@
   },
   "menu": {
     "settings": "Setari",
-    "language": "Limba"
-  },
-  "bubbleField": {
-    "instruction": "Atinge bulele care rezoneaza cel mai mult cu tine acum",
-    "empty": "Incepe prin a selecta o emotie"
+    "language": "Limba",
+    "model": "Model"
   },
   "selectionBar": {
     "title": "Selectiile tale",
@@ -21,7 +18,7 @@
   },
   "analyze": {
     "button": "Analizeaza",
-    "buttonDisabled": "Selecteaza cel putin o emotie",
+    "buttonDisabled": "Selecteaza o bula de emotie care rezoneaza cel mai mult cu tine acum",
     "resultPrefix": "Selectiile tale",
     "resultSuffix": "descriu emotia",
     "exploreAI": "Exploreaza cu AI",

@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useEffect } from 'react'
 import type { BaseEmotion, AnalysisResult, ModelState } from '../models/types'
 import { getModel, defaultModelId } from '../models/registry'
 
@@ -7,6 +7,12 @@ export function useEmotionModel(modelId: string = defaultModelId) {
 
   const [selections, setSelections] = useState<BaseEmotion[]>([])
   const [modelState, setModelState] = useState<ModelState>(() => model.initialState)
+
+  // Reset when model changes
+  useEffect(() => {
+    setSelections([])
+    setModelState(model.initialState)
+  }, [modelId, model])
 
   const visibleEmotions = useMemo(() => {
     const ids = Array.from(modelState.visibleEmotionIds.keys())
@@ -31,8 +37,6 @@ export function useEmotionModel(modelId: string = defaultModelId) {
       })
 
       setModelState((prevState) => {
-        // Get current selections for spawn filtering
-        // Note: we read from the state updater to avoid stale closure
         const effect = model.onSelect(emotion, prevState, [] as BaseEmotion[])
         return effect.newState
       })
@@ -42,10 +46,15 @@ export function useEmotionModel(modelId: string = defaultModelId) {
 
   const handleDeselect = useCallback(
     (emotion: BaseEmotion) => {
-      setSelections((prev) => prev.filter((e) => e.id !== emotion.id))
-
       setModelState((prevState) => {
         const effect = model.onDeselect(emotion, prevState)
+
+        if (effect.newSelections !== undefined) {
+          setSelections(effect.newSelections)
+        } else {
+          setSelections((prev) => prev.filter((e) => e.id !== emotion.id))
+        }
+
         return effect.newState
       })
     },

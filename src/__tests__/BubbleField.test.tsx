@@ -44,32 +44,6 @@ describe('BubbleField', () => {
     expect(screen.getByRole('button', { name: /sadness/i })).toBeInTheDocument()
   })
 
-  it('shows instruction text when emotions are present', () => {
-    const onSelect = vi.fn()
-    renderWithProviders(
-      <BubbleField
-        emotions={mockEmotions}
-        onSelect={onSelect}
-        sizes={mockSizes}
-      />
-    )
-
-    expect(screen.getByText(/tap the bubbles/i)).toBeInTheDocument()
-  })
-
-  it('shows empty state text when no emotions', () => {
-    const onSelect = vi.fn()
-    renderWithProviders(
-      <BubbleField
-        emotions={[]}
-        onSelect={onSelect}
-        sizes={new Map()}
-      />
-    )
-
-    expect(screen.getByText(/start by selecting/i)).toBeInTheDocument()
-  })
-
   it('calls onSelect when a bubble is clicked', async () => {
     const user = userEvent.setup()
     const onSelect = vi.fn()

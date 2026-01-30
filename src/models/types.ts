@@ -20,6 +20,7 @@ export interface ModelState {
 
 export interface SelectionEffect {
   newState: ModelState
+  newSelections?: BaseEmotion[]
 }
 
 export interface EmotionModel<E extends BaseEmotion = BaseEmotion> {

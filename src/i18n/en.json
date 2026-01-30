@@ -8,11 +8,8 @@
   },
   "menu": {
     "settings": "Settings",
-    "language": "Language"
-  },
-  "bubbleField": {
-    "instruction": "Tap the bubbles that resonate with you the most right now",
-    "empty": "Start by selecting an emotion"
+    "language": "Language",
+    "model": "Model"
   },
   "selectionBar": {
     "title": "Your selections",
@@ -21,7 +18,7 @@
   },
   "analyze": {
     "button": "Analyze",
-    "buttonDisabled": "Select at least one emotion",
+    "buttonDisabled": "Select an emotion bubble that resonates with you the most right now",
     "resultPrefix": "Your selections",
     "resultSuffix": "describe the emotion",
     "exploreAI": "Explore with AI",

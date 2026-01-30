@@ -6,9 +6,12 @@ import { AnalyzeButton } from './components/AnalyzeButton'
 import { ResultModal } from './components/ResultModal'
 import { useSound } from './hooks/useSound'
 import { useEmotionModel } from './hooks/useEmotionModel'
+import { defaultModelId } from './models/registry'
 import type { BaseEmotion, AnalysisResult } from './models/types'
 
 export default function App() {
+  const [modelId, setModelId] = useState(defaultModelId)
+
   const {
     selections,
     visibleEmotions,
@@ -17,7 +20,7 @@ export default function App() {
     handleDeselect: modelDeselect,
     handleClear: modelClear,
     analyze,
-  } = useEmotionModel()
+  } = useEmotionModel(modelId)
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [analysisResults, setAnalysisResults] = useState<AnalysisResult[]>([])
@@ -53,12 +56,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
-      <Header />
-      <SelectionBar
-        selections={selections}
-        onDeselect={handleDeselect}
-        onClear={handleClear}
-      />
+      <Header modelId={modelId} onModelChange={setModelId} />
 
       <div className="px-4 pt-4 max-w-md mx-auto w-full">
         <AnalyzeButton
@@ -66,6 +64,12 @@ export default function App() {
           onClick={analyzeEmotions}
         />
       </div>
+
+      <SelectionBar
+        selections={selections}
+        onDeselect={handleDeselect}
+        onClear={handleClear}
+      />
 
       <BubbleField
         emotions={visibleEmotions}
