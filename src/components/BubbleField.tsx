@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useMemo } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { Bubble } from './Bubble'
 import type { BaseEmotion } from '../models/types'
@@ -101,40 +101,13 @@ export function BubbleField({
 
   // Update positions when emotions change or container resizes
   useEffect(() => {
-    if (containerSize.width === 0 || containerSize.height === 0) {
-      return
-    }
+    if (containerSize.width === 0 || containerSize.height === 0) return
 
     setPositions(prevPositions => {
       const currentIds = new Set(emotions.map(e => e.id))
-
-      // Find emotions that don't have positions yet
       const newEmotions = emotions.filter(e => !prevPositions.has(e.id))
 
-      // If no changes needed, return same reference
-      if (newEmotions.length === 0) {
-        // Check if we need to clean up removed emotions
-        let hasRemoved = false
-        for (const id of prevPositions.keys()) {
-          if (!currentIds.has(id)) {
-            hasRemoved = true
-            break
-          }
-        }
-        if (!hasRemoved) {
-          return prevPositions
-        }
-        // Clean up positions for removed emotions
-        const cleaned = new Map<string, { x: number; y: number }>()
-        for (const [id, pos] of prevPositions) {
-          if (currentIds.has(id)) {
-            cleaned.set(id, pos)
-          }
-        }
-        return cleaned
-      }
-
-      // Build existing positions array for collision detection
+      // Build existing rects for collision detection
       const existingRects: { x: number; y: number; w: number; h: number }[] = []
       for (const emotion of emotions) {
         const pos = prevPositions.get(emotion.id)
@@ -144,33 +117,22 @@ export function BubbleField({
         }
       }
 
-      // Calculate positions only for new emotions
+      // Calculate positions for new emotions
       const newPositions = calculatePositionsForNewEmotions(
-        newEmotions,
-        containerSize.width,
-        containerSize.height,
-        sizes,
-        existingRects
+        newEmotions, containerSize.width, containerSize.height, sizes, existingRects
       )
 
-      // Merge: start with existing, add new, filter out removed
+      // Merge: keep existing, add new, drop removed
       const merged = new Map<string, { x: number; y: number }>()
       for (const [id, pos] of prevPositions) {
-        if (currentIds.has(id)) {
-          merged.set(id, pos)
-        }
+        if (currentIds.has(id)) merged.set(id, pos)
       }
       for (const [id, pos] of newPositions) {
         merged.set(id, pos)
       }
-
       return merged
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [emotions, containerSize.width, containerSize.height])
-
-  // Memoize sorted emotions for stable rendering
-  const sortedEmotions = useMemo(() => [...emotions], [emotions])
+  }, [emotions, sizes, containerSize.width, containerSize.height])
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-4">
@@ -179,7 +141,7 @@ export function BubbleField({
         className="relative w-full max-w-2xl flex-1 min-h-[200px]"
       >
         <AnimatePresence mode="popLayout">
-          {sortedEmotions.map((emotion, index) => (
+          {emotions.map((emotion, index) => (
             <Bubble
               key={emotion.id}
               emotion={emotion}

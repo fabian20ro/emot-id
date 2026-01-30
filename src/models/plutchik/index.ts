@@ -110,7 +110,6 @@ export const plutchikModel: EmotionModel<PlutchikEmotion> = {
     const gen = state.visibleEmotionIds.get(emotionId) ?? 0
     const diff = state.currentGeneration - gen
     if (diff === 0) return 'large'
-    if (diff === 1) return 'medium'
     return 'small'
   },
 }

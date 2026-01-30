@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from 'react'
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import type { BaseEmotion, AnalysisResult, ModelState } from '../models/types'
 import { getModel, defaultModelId } from '../models/registry'
 
@@ -7,6 +7,8 @@ export function useEmotionModel(modelId: string = defaultModelId) {
 
   const [selections, setSelections] = useState<BaseEmotion[]>([])
   const [modelState, setModelState] = useState<ModelState>(() => model.initialState)
+  const selectionsRef = useRef(selections)
+  selectionsRef.current = selections
 
   // Reset when model changes
   useEffect(() => {
@@ -37,7 +39,7 @@ export function useEmotionModel(modelId: string = defaultModelId) {
       })
 
       setModelState((prevState) => {
-        const effect = model.onSelect(emotion, prevState, [] as BaseEmotion[])
+        const effect = model.onSelect(emotion, prevState, selectionsRef.current)
         return effect.newState
       })
     },
@@ -66,6 +68,11 @@ export function useEmotionModel(modelId: string = defaultModelId) {
     setModelState(model.onClear())
   }, [model])
 
+  const combos = useMemo(() => {
+    if (selections.length < 2) return []
+    return model.analyze(selections).filter((r) => r.componentLabels)
+  }, [model, selections])
+
   const analyze = useCallback((): AnalysisResult[] => {
     return model.analyze(selections)
   }, [model, selections])
@@ -74,6 +81,7 @@ export function useEmotionModel(modelId: string = defaultModelId) {
     selections,
     visibleEmotions,
     sizes,
+    combos,
     handleSelect,
     handleDeselect,
     handleClear,

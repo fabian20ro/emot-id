@@ -16,6 +16,7 @@ export default function App() {
     selections,
     visibleEmotions,
     sizes,
+    combos,
     handleSelect: modelSelect,
     handleDeselect: modelDeselect,
     handleClear: modelClear,
@@ -67,6 +68,7 @@ export default function App() {
 
       <SelectionBar
         selections={selections}
+        combos={combos}
         onDeselect={handleDeselect}
         onClear={handleClear}
       />

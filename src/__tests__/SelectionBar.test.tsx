@@ -29,7 +29,7 @@ describe('SelectionBar', () => {
     const onDeselect = vi.fn()
     const onClear = vi.fn()
     renderWithProviders(
-      <SelectionBar selections={[]} onDeselect={onDeselect} onClear={onClear} />
+      <SelectionBar selections={[]} combos={[]} onDeselect={onDeselect} onClear={onClear} />
     )
 
     expect(screen.getByText(/no selection/i)).toBeInTheDocument()
@@ -39,7 +39,7 @@ describe('SelectionBar', () => {
     const onDeselect = vi.fn()
     const onClear = vi.fn()
     renderWithProviders(
-      <SelectionBar selections={mockEmotions} onDeselect={onDeselect} onClear={onClear} />
+      <SelectionBar selections={mockEmotions} combos={[]} onDeselect={onDeselect} onClear={onClear} />
     )
 
     expect(screen.getByRole('button', { name: /joy/i })).toBeInTheDocument()
@@ -51,7 +51,7 @@ describe('SelectionBar', () => {
     const onDeselect = vi.fn()
     const onClear = vi.fn()
     renderWithProviders(
-      <SelectionBar selections={mockEmotions} onDeselect={onDeselect} onClear={onClear} />
+      <SelectionBar selections={mockEmotions} combos={[]} onDeselect={onDeselect} onClear={onClear} />
     )
 
     const joyChip = screen.getByRole('button', { name: /joy/i })
@@ -65,7 +65,7 @@ describe('SelectionBar', () => {
     const onDeselect = vi.fn()
     const onClear = vi.fn()
     renderWithProviders(
-      <SelectionBar selections={mockEmotions} onDeselect={onDeselect} onClear={onClear} />
+      <SelectionBar selections={mockEmotions} combos={[]} onDeselect={onDeselect} onClear={onClear} />
     )
 
     expect(screen.getByRole('button', { name: /clear all/i })).toBeInTheDocument()
@@ -76,7 +76,7 @@ describe('SelectionBar', () => {
     const onDeselect = vi.fn()
     const onClear = vi.fn()
     renderWithProviders(
-      <SelectionBar selections={mockEmotions} onDeselect={onDeselect} onClear={onClear} />
+      <SelectionBar selections={mockEmotions} combos={[]} onDeselect={onDeselect} onClear={onClear} />
     )
 
     const clearButton = screen.getByRole('button', { name: /clear all/i })

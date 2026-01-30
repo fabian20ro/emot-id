@@ -1,14 +1,15 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
-import type { BaseEmotion } from '../models/types'
+import type { BaseEmotion, AnalysisResult } from '../models/types'
 
 interface SelectionBarProps {
   selections: BaseEmotion[]
+  combos: AnalysisResult[]
   onDeselect: (emotion: BaseEmotion) => void
   onClear: () => void
 }
 
-export function SelectionBar({ selections, onDeselect, onClear }: SelectionBarProps) {
+export function SelectionBar({ selections, combos, onDeselect, onClear }: SelectionBarProps) {
   const { language, t } = useLanguage()
 
   return (
@@ -65,6 +66,30 @@ export function SelectionBar({ selections, onDeselect, onClear }: SelectionBarPr
           )}
         </AnimatePresence>
       </div>
+      <AnimatePresence>
+        {combos.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="flex flex-wrap gap-2 mt-2"
+          >
+            {combos.map((combo) => (
+              <span
+                key={combo.id}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm font-medium"
+                style={{
+                  backgroundColor: `${combo.color}30`,
+                  color: combo.color,
+                  border: `1px solid ${combo.color}60`,
+                }}
+              >
+                = {combo.label[language]}
+              </span>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
