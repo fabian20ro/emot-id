@@ -43,7 +43,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange }: Settin
               </div>
               <div className="flex gap-1 px-2 pb-2">
                 <button
-                  onClick={() => setLanguage('ro')}
+                  onClick={() => { setLanguage('ro'); onClose() }}
                   className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     language === 'ro'
                       ? 'bg-purple-500 text-white'
@@ -53,7 +53,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange }: Settin
                   Romana
                 </button>
                 <button
-                  onClick={() => setLanguage('en')}
+                  onClick={() => { setLanguage('en'); onClose() }}
                   className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     language === 'en'
                       ? 'bg-purple-500 text-white'
@@ -74,7 +74,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange }: Settin
                 {availableModels.map((m) => (
                   <button
                     key={m.id}
-                    onClick={() => onModelChange(m.id)}
+                    onClick={() => { onModelChange(m.id); onClose() }}
                     className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-left ${
                       modelId === m.id
                         ? 'bg-purple-500 text-white'
