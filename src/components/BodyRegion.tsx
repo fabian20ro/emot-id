@@ -4,11 +4,13 @@ import type { SensationType } from '../models/somatic/types'
 interface BodyRegionProps {
   id: string
   d: string
+  /** Enlarged invisible hit area path for small regions */
+  hitD?: string
   isSelected: boolean
   isHighlighted: boolean
   sensation?: SensationType
   intensity?: 1 | 2 | 3
-  onClick: (regionId: string, event: React.MouseEvent) => void
+  onClick: (regionId: string) => void
 }
 
 const SENSATION_COLORS: Record<SensationType, string> = {
@@ -28,6 +30,7 @@ const HIGHLIGHT_COLOR = '#6b7280'
 export function BodyRegion({
   id,
   d,
+  hitD,
   isSelected,
   isHighlighted,
   sensation,
@@ -47,26 +50,36 @@ export function BodyRegion({
       : 0.3
 
   return (
-    <motion.path
-      d={d}
-      data-region={id}
-      fill={fillColor}
-      fillOpacity={fillOpacity}
-      stroke={isSelected ? fillColor : '#6b7280'}
-      strokeWidth={isSelected ? 1.5 : 0.5}
-      strokeOpacity={isSelected ? 0.8 : 0.3}
-      style={{ cursor: 'pointer' }}
-      whileHover={{
-        fillOpacity: Math.min(fillOpacity + 0.15, 0.95),
-        strokeOpacity: 0.6,
-      }}
-      whileTap={{ scale: 0.97 }}
-      animate={{
-        fillOpacity,
-        fill: fillColor,
-      }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      onClick={(e) => onClick(id, e as unknown as React.MouseEvent)}
-    />
+    <g style={{ cursor: 'pointer' }} onClick={() => onClick(id)}>
+      {/* Invisible expanded hit area for small regions */}
+      {hitD && (
+        <path
+          d={hitD}
+          fill="transparent"
+          stroke="none"
+          data-region={`${id}-hit`}
+        />
+      )}
+      <motion.path
+        d={d}
+        data-region={id}
+        fill={fillColor}
+        fillOpacity={fillOpacity}
+        stroke={isSelected ? fillColor : '#6b7280'}
+        strokeWidth={isSelected ? 1.5 : 0.5}
+        strokeOpacity={isSelected ? 0.8 : 0.3}
+        style={{ pointerEvents: hitD ? 'none' : 'auto' }}
+        whileHover={{
+          fillOpacity: Math.min(fillOpacity + 0.15, 0.95),
+          strokeOpacity: 0.6,
+        }}
+        whileTap={{ scale: 0.97 }}
+        animate={{
+          fillOpacity,
+          fill: fillColor,
+        }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      />
+    </g>
   )
 }

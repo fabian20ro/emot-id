@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import { SENSATION_CONFIG } from './SensationPicker'
+import { IntensityPicker } from './IntensityPicker'
 import type { SomaticRegion, SensationType } from '../models/somatic/types'
 
 /** Body groups with their region IDs, ordered head-to-feet */
@@ -287,38 +288,13 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
 
             {/* Intensity picker after selecting a sensation */}
             {selectedSensation && (
-              <div className="mb-3">
-                <div className="text-sm text-gray-400 mb-2">
-                  {SENSATION_CONFIG[selectedSensation].icon}{' '}
-                  {SENSATION_CONFIG[selectedSensation].label[language]}
-                </div>
-                <div className="flex gap-2">
-                  {([1, 2, 3] as const).map((intensity) => (
-                    <button
-                      key={intensity}
-                      onClick={() => handleIntensityPick(intensity)}
-                      className="flex-1 flex flex-col items-center gap-1 px-2 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition-colors"
-                    >
-                      <div className="flex gap-0.5">
-                        {Array.from({ length: 3 }, (_, i) => (
-                          <div
-                            key={i}
-                            className="w-2 h-2 rounded-full"
-                            style={{
-                              backgroundColor: i < intensity ? '#f59e0b' : '#374151',
-                            }}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-xs text-gray-400">
-                        {intensity === 1 ? (language === 'ro' ? 'Ușor' : 'Mild')
-                          : intensity === 2 ? (language === 'ro' ? 'Moderat' : 'Moderate')
-                          : (language === 'ro' ? 'Puternic' : 'Strong')}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <IntensityPicker
+                selectedSensation={selectedSensation}
+                sensationIcon={SENSATION_CONFIG[selectedSensation].icon}
+                sensationLabel={SENSATION_CONFIG[selectedSensation].label}
+                onPick={handleIntensityPick}
+                variant="compact"
+              />
             )}
 
             <div className="flex items-center justify-between">

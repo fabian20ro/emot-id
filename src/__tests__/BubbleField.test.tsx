@@ -36,6 +36,7 @@ describe('BubbleField', () => {
       <BubbleField
         emotions={mockEmotions}
         onSelect={onSelect}
+        onDeselect={vi.fn()}
         sizes={mockSizes}
       />
     )
@@ -51,6 +52,7 @@ describe('BubbleField', () => {
       <BubbleField
         emotions={mockEmotions}
         onSelect={onSelect}
+        onDeselect={vi.fn()}
         sizes={mockSizes}
       />
     )

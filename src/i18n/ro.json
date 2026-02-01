@@ -49,6 +49,18 @@
     "text": "Aceasta aplicatie sprijina constientizarea emotionala. Nu este un instrument de diagnostic si nu inlocuieste sprijinul profesional de sanatate mintala. Daca treci printr-o perioada dificila, te rugam sa apelezi la un specialist.",
     "label": "Disclaimer"
   },
+  "onboarding": {
+    "screen1Title": "Aceasta este o explorare, nu un test",
+    "screen1Body": "Nu exista raspunsuri corecte sau gresite. Emotiile sunt complexe si stratificate. Ia-ti timpul necesar — acesta este un spatiu pentru curiozitate, nu pentru judecata.",
+    "screen2Title": "Fiecare emotie are un scop",
+    "screen2Body": "Nicio emotie nu este buna sau rea. Furia protejeaza limitele. Tristetea ajuta la procesarea pierderii. Frica te tine in siguranta. In loc sa intrebi \"ce e in neregula,\" intreaba \"ce imi transmite sistemul meu?\"",
+    "screen3Title": "Alege calea ta",
+    "screen3Body": "Harta Corporala — simte unde traiesc emotiile in corpul tau. Roata Emotiilor — navigheaza de la sentimente generale la specifice. Plutchik — descopera cum se combina si interactioneaza emotiile. Fiecare reveleaza aspecte diferite. Incepe de unde simti ca e natural.",
+    "next": "Inainte",
+    "back": "Inapoi",
+    "skip": "Sari peste",
+    "getStarted": "Incepe"
+  },
   "somatic": {
     "pickSensation": "Ce simti aici?",
     "pickIntensity": "Cat de intens?",

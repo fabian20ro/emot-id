@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useMemo } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { BodyRegion } from './BodyRegion'
 import { SensationPicker } from './SensationPicker'
@@ -14,11 +14,9 @@ interface BodyMapProps extends VisualizationProps {
 
 export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: BodyMapProps) {
   const { language, t } = useLanguage()
-  const svgRef = useRef<SVGSVGElement>(null)
   const somaticT = (t as Record<string, Record<string, string>>).somatic ?? {}
 
   const [activeRegionId, setActiveRegionId] = useState<string | null>(null)
-  const [pickerPosition, setPickerPosition] = useState({ x: 0, y: 0 })
   const [highlightedRegionId, setHighlightedRegionId] = useState<string | null>(null)
   const [isGuidedMode, setIsGuidedMode] = useState(false)
   const [guidedActive, setGuidedActive] = useState(false)
@@ -42,21 +40,15 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
   }, [emotions])
 
   const handleRegionClick = useCallback(
-    (regionId: string, event: React.MouseEvent) => {
+    (regionId: string) => {
       if (guidedActive) return
 
       if (selectionMap.has(regionId)) {
         const existingSelection = selectionMap.get(regionId)
-        if (existingSelection && onDeselect) onDeselect(existingSelection)
+        if (existingSelection) onDeselect(existingSelection)
         return
       }
 
-      const x = event.clientX
-      const y = event.clientY
-      setPickerPosition({
-        x: Math.min(Math.max(x, 160), window.innerWidth - 160),
-        y: Math.max(y, 200),
-      })
       setActiveRegionId(regionId)
     },
     [guidedActive, onDeselect, selectionMap]
@@ -140,7 +132,6 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
 
       <div className="relative w-full max-w-xs flex-1 min-h-[200px] flex items-center justify-center">
         <svg
-          ref={svgRef}
           viewBox={VIEWBOX}
           className="w-full h-full max-h-[60vh]"
           style={{ filter: 'drop-shadow(0 0 20px rgba(99, 102, 241, 0.1))' }}
@@ -155,6 +146,7 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
                   key={path.id}
                   id={path.id}
                   d={path.d}
+                  hitD={path.hitD}
                   isSelected={!!sel}
                   isHighlighted={highlightedRegionId === path.id || activeRegionId === path.id}
                   sensation={sel?.selectedSensation}
@@ -174,6 +166,7 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
                   key={path.id}
                   id={path.id}
                   d={path.d}
+                  hitD={path.hitD}
                   isSelected={!!sel}
                   isHighlighted={highlightedRegionId === path.id || activeRegionId === path.id}
                   sensation={sel?.selectedSensation}
@@ -194,25 +187,16 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
           />
         )}
 
-        {/* Sensation picker popover */}
+        {/* Sensation picker bottom sheet */}
         {activeRegion && !guidedActive && (
           <SensationPicker
             regionLabel={activeRegion.label[language]}
             availableSensations={activeRegion.commonSensations}
             onSelect={handleSensationSelect}
             onCancel={handlePickerCancel}
-            position={pickerPosition}
           />
         )}
       </div>
-
-      {/* Backdrop to close picker */}
-      {activeRegionId && !guidedActive && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={handlePickerCancel}
-        />
-      )}
     </div>
   )
 }

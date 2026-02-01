@@ -22,6 +22,7 @@ const models: Record<string, ModelRegistryEntry> = {
   },
   somatic: {
     model: somaticModel as EmotionModel<BaseEmotion>,
+    // BodyMap narrows selections to SomaticSelection[], needs cast for registry's VisualizationProps
     Visualization: BodyMap as ComponentType<VisualizationProps>,
   },
 }

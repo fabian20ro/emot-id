@@ -33,7 +33,7 @@ export interface SelectionEffect {
 export interface VisualizationProps {
   emotions: BaseEmotion[]
   onSelect: (emotion: BaseEmotion) => void
-  onDeselect?: (emotion: BaseEmotion) => void
+  onDeselect: (emotion: BaseEmotion) => void
   sizes: Map<string, 'small' | 'medium' | 'large'>
   selections?: BaseEmotion[]
 }

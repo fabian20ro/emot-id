@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
+import { Onboarding } from './components/Onboarding'
 import { Header } from './components/Header'
 import { SelectionBar } from './components/SelectionBar'
 import { AnalyzeButton } from './components/AnalyzeButton'
@@ -10,6 +11,14 @@ import { BubbleField } from './components/BubbleField'
 import type { BaseEmotion, AnalysisResult } from './models/types'
 
 export default function App() {
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    try {
+      return localStorage.getItem('emot-id-onboarded') !== 'true'
+    } catch {
+      return false
+    }
+  })
+
   const [modelId, setModelId] = useState(() => {
     try {
       const saved = localStorage.getItem('emot-id-model')
@@ -106,6 +115,10 @@ export default function App() {
         selections={selections}
         results={analysisResults}
       />
+
+      {showOnboarding && (
+        <Onboarding onComplete={() => setShowOnboarding(false)} />
+      )}
     </div>
   )
 }

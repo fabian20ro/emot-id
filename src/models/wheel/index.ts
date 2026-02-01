@@ -98,10 +98,15 @@ export const wheelModel: EmotionModel<WheelEmotion> = {
     })
   },
 
-  getEmotionSize(emotionId: string): 'small' | 'medium' | 'large' {
+  getEmotionSize(emotionId: string, state: ModelState): 'small' | 'medium' | 'large' {
     const emotion = allEmotions[emotionId]
     if (!emotion) return 'medium'
     if (emotion.level === 0) return 'large'
+
+    const visibleCount = state.visibleEmotionIds.size
+    if (visibleCount <= 4) return 'large'
+    if (visibleCount <= 8) return 'medium'
+
     if (emotion.level === 1) return 'medium'
     return 'small'
   },

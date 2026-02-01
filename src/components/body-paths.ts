@@ -3,6 +3,8 @@
 interface BodyRegionPath {
   id: string
   d: string
+  /** Optional enlarged hit area path for small regions */
+  hitD?: string
   /** Anchor point for popover positioning (relative to viewBox) */
   anchor: { x: number; y: number }
 }
@@ -14,6 +16,7 @@ export const bodyRegionPaths: BodyRegionPath[] = [
   {
     id: 'head',
     d: 'M82 16 C82 6 88 0 100 0 C112 0 118 6 118 16 L118 32 C118 38 112 42 100 42 C88 42 82 38 82 32 Z',
+    hitD: 'M74 16 C74 2 84 -8 100 -8 C116 -8 126 2 126 16 L126 36 C126 46 116 50 100 50 C84 50 74 46 74 36 Z',
     anchor: { x: 100, y: 10 },
   },
   {
