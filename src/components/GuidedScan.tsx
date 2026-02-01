@@ -1,16 +1,24 @@
 import { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { SENSATION_CONFIG } from './SensationPicker'
 import type { SomaticRegion, SensationType } from '../models/somatic/types'
 
-/** Ordered region IDs for head-to-feet body scan */
+/** Scan order interleaving front/back by vertical level */
 const SCAN_ORDER = [
-  'head', 'forehead', 'eyes', 'jaw', 'throat',
-  'shoulders', 'chest', 'stomach',
-  'upper-back', 'lower-back',
+  // Head group
+  'head', 'forehead', 'eyes', 'jaw',
+  // Neck/shoulder group (throat, shoulders, upper-back)
+  'throat', 'shoulders', 'upper-back',
+  // Torso group (chest, stomach, lower-back)
+  'chest', 'stomach', 'lower-back',
+  // Arms group
   'arms', 'hands',
+  // Legs group
   'legs', 'feet',
 ]
+
+const CENTERING_DURATION_MS = 10000
 
 interface GuidedScanProps {
   regions: Map<string, SomaticRegion>
@@ -27,6 +35,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
 
   const [phase, setPhase] = useState<ScanPhase>('centering')
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [selectedSensation, setSelectedSensation] = useState<SensationType | null>(null)
 
   const currentRegionId = SCAN_ORDER[currentIndex]
   const currentRegion = currentRegionId ? regions.get(currentRegionId) : undefined
@@ -41,14 +50,15 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
     return () => onHighlight(null)
   }, [phase, currentRegionId, onHighlight])
 
-  // Auto-advance from centering after 3 seconds
+  // Auto-advance from centering after 10 seconds
   useEffect(() => {
     if (phase !== 'centering') return
-    const timer = setTimeout(() => setPhase('scanning'), 3000)
+    const timer = setTimeout(() => setPhase('scanning'), CENTERING_DURATION_MS)
     return () => clearTimeout(timer)
   }, [phase])
 
   const advanceOrComplete = useCallback(() => {
+    setSelectedSensation(null)
     const nextIndex = currentIndex + 1
     if (nextIndex >= SCAN_ORDER.length) {
       setPhase('complete')
@@ -63,13 +73,20 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   }, [advanceOrComplete])
 
   const handleSensationPick = useCallback(
-    (sensation: SensationType, intensity: 1 | 2 | 3) => {
-      if (currentRegionId) {
-        onRegionSelect(currentRegionId, sensation, intensity)
+    (sensation: SensationType) => {
+      setSelectedSensation(sensation)
+    },
+    []
+  )
+
+  const handleIntensityPick = useCallback(
+    (intensity: 1 | 2 | 3) => {
+      if (currentRegionId && selectedSensation) {
+        onRegionSelect(currentRegionId, selectedSensation, intensity)
       }
       advanceOrComplete()
     },
-    [currentRegionId, onRegionSelect, advanceOrComplete]
+    [currentRegionId, selectedSensation, onRegionSelect, advanceOrComplete]
   )
 
   const handleSkipCentering = useCallback(() => {
@@ -85,7 +102,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   return (
     <div className="absolute inset-0 z-30 flex items-end justify-center pointer-events-none">
       <AnimatePresence mode="wait">
-        {/* Centering phase */}
+        {/* Centering phase — 10s breathing cycle */}
         {phase === 'centering' && (
           <motion.div
             key="centering"
@@ -95,8 +112,15 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-6 mb-4 mx-4 max-w-sm text-center pointer-events-auto"
           >
             <motion.div
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+              animate={{
+                scale: [1, 1.15, 1],
+                opacity: [0.7, 1, 0.7],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 5,
+                ease: 'easeInOut',
+              }}
               className="text-4xl mb-4"
             >
               🫁
@@ -104,9 +128,19 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             <p className="text-gray-200 text-lg mb-2">
               {somaticT.guidedStart ?? 'Take a breath. Notice your body.'}
             </p>
+            <motion.div
+              className="w-full h-1 bg-gray-700 rounded-full mt-4 overflow-hidden"
+            >
+              <motion.div
+                className="h-full bg-indigo-500/50 rounded-full"
+                initial={{ width: '0%' }}
+                animate={{ width: '100%' }}
+                transition={{ duration: CENTERING_DURATION_MS / 1000, ease: 'linear' }}
+              />
+            </motion.div>
             <button
               onClick={handleSkipCentering}
-              className="text-sm text-gray-500 hover:text-gray-300 transition-colors mt-2"
+              className="text-sm text-gray-500 hover:text-gray-300 transition-colors mt-3"
             >
               →
             </button>
@@ -140,18 +174,60 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
               {currentRegion.label[language]}
             </p>
 
-            {/* Quick sensation buttons */}
-            <div className="grid grid-cols-2 gap-2 mb-3">
-              {currentRegion.commonSensations.slice(0, 4).map((sensation) => (
-                <button
-                  key={sensation}
-                  onClick={() => handleSensationPick(sensation, 2)}
-                  className="px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 text-sm text-gray-200 transition-colors"
-                >
-                  {sensation}
-                </button>
-              ))}
-            </div>
+            {/* Sensation buttons with translated labels */}
+            {!selectedSensation && (
+              <div className="grid grid-cols-2 gap-2 mb-3">
+                {currentRegion.commonSensations.map((sensation) => {
+                  const config = SENSATION_CONFIG[sensation]
+                  return (
+                    <button
+                      key={sensation}
+                      onClick={() => handleSensationPick(sensation)}
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 text-sm text-gray-200 transition-colors"
+                    >
+                      <span className="text-base">{config.icon}</span>
+                      <span>{config.label[language]}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+
+            {/* Intensity picker after selecting a sensation */}
+            {selectedSensation && (
+              <div className="mb-3">
+                <div className="text-sm text-gray-400 mb-2">
+                  {SENSATION_CONFIG[selectedSensation].icon}{' '}
+                  {SENSATION_CONFIG[selectedSensation].label[language]}
+                </div>
+                <div className="flex gap-2">
+                  {([1, 2, 3] as const).map((intensity) => (
+                    <button
+                      key={intensity}
+                      onClick={() => handleIntensityPick(intensity)}
+                      className="flex-1 flex flex-col items-center gap-1 px-2 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition-colors"
+                    >
+                      <div className="flex gap-0.5">
+                        {Array.from({ length: 3 }, (_, i) => (
+                          <div
+                            key={i}
+                            className="w-2 h-2 rounded-full"
+                            style={{
+                              backgroundColor: i < intensity ? '#f59e0b' : '#374151',
+                            }}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-xs text-gray-400">
+                        {intensity === 1 ? (language === 'ro' ? 'Ușor' : 'Mild')
+                          : intensity === 2 ? (language === 'ro' ? 'Moderat' : 'Moderate')
+                          : (language === 'ro' ? 'Puternic' : 'Strong')}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <button
               onClick={handleSkip}
@@ -186,4 +262,3 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
     </div>
   )
 }
-

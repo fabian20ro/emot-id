@@ -12,7 +12,7 @@ interface BodyMapProps extends VisualizationProps {
   selections?: SomaticSelection[]
 }
 
-export function BodyMap({ emotions, onSelect, selections = [] }: BodyMapProps) {
+export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: BodyMapProps) {
   const { language, t } = useLanguage()
   const svgRef = useRef<SVGSVGElement>(null)
   const somaticT = (t as Record<string, Record<string, string>>).somatic ?? {}
@@ -46,8 +46,8 @@ export function BodyMap({ emotions, onSelect, selections = [] }: BodyMapProps) {
       if (guidedActive) return
 
       if (selectionMap.has(regionId)) {
-        const region = regionMap.get(regionId)
-        if (region) onSelect(region)
+        const existingSelection = selectionMap.get(regionId)
+        if (existingSelection && onDeselect) onDeselect(existingSelection)
         return
       }
 
@@ -59,7 +59,7 @@ export function BodyMap({ emotions, onSelect, selections = [] }: BodyMapProps) {
       })
       setActiveRegionId(regionId)
     },
-    [guidedActive, onSelect, selectionMap, regionMap]
+    [guidedActive, onSelect, onDeselect, selectionMap, regionMap]
   )
 
   const handleSensationSelect = useCallback(

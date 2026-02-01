@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { scoreSomaticSelections } from '../models/somatic/scoring'
-import type { SomaticSelection, EmotionSignal } from '../models/somatic/types'
+import type { SomaticSelection, EmotionSignal, BodyGroup } from '../models/somatic/types'
 
 function makeSignal(overrides: Partial<EmotionSignal> & Pick<EmotionSignal, 'emotionId' | 'sensationType'>): EmotionSignal {
   return {
@@ -16,14 +16,15 @@ function makeSelection(
   id: string,
   sensation: SomaticSelection['selectedSensation'],
   intensity: SomaticSelection['selectedIntensity'],
-  signals: EmotionSignal[] = []
+  signals: EmotionSignal[] = [],
+  group: BodyGroup = 'torso'
 ): SomaticSelection {
   return {
     id,
     label: { ro: id, en: id },
     color: '#ccc',
     svgRegionId: id,
-    group: 'torso',
+    group,
     commonSensations: [sensation],
     emotionSignals: signals,
     selectedSensation: sensation,
@@ -75,14 +76,30 @@ describe('scoreSomaticSelections', () => {
     const chestSignal = makeSignal({ emotionId: 'anxiety', sensationType: 'tension', weight: 0.6 })
     const stomachSignal = makeSignal({ emotionId: 'anxiety', sensationType: 'churning', weight: 0.4 })
 
-    const chest = makeSelection('chest', 'tension', 2, [chestSignal])
-    const stomach = makeSelection('stomach', 'churning', 3, [stomachSignal])
+    const chest = makeSelection('chest', 'tension', 2, [chestSignal], 'torso')
+    const stomach = makeSelection('stomach', 'churning', 3, [stomachSignal], 'torso')
 
     const results = scoreSomaticSelections([chest, stomach])
 
     expect(results).toHaveLength(1)
     expect(results[0].id).toBe('anxiety')
+    // Both from same group (torso), no coherence bonus
     expect(results[0].score).toBeCloseTo(0.6 * 2 + 0.4 * 3)
+  })
+
+  it('applies coherence bonus when emotion matched from 2+ body groups', () => {
+    const chestSignal = makeSignal({ emotionId: 'anxiety', sensationType: 'tension', weight: 0.6 })
+    const legSignal = makeSignal({ emotionId: 'anxiety', sensationType: 'tingling', weight: 0.4 })
+
+    const chest = makeSelection('chest', 'tension', 2, [chestSignal], 'torso')
+    const legs = makeSelection('legs', 'tingling', 3, [legSignal], 'legs')
+
+    const results = scoreSomaticSelections([chest, legs])
+
+    expect(results).toHaveLength(1)
+    expect(results[0].id).toBe('anxiety')
+    // Cross-group: (0.6*2 + 0.4*3) * 1.2 = 2.88
+    expect(results[0].score).toBeCloseTo((0.6 * 2 + 0.4 * 3) * 1.2)
   })
 
   it('returns multiple emotions sorted by score descending', () => {
@@ -107,6 +124,15 @@ describe('scoreSomaticSelections', () => {
     expect(results.length).toBeLessThanOrEqual(4)
   })
 
+  it('filters out emotions below threshold of 0.5', () => {
+    const weakSignal = makeSignal({ emotionId: 'calm', sensationType: 'warmth', weight: 0.15 })
+    const selection = makeSelection('feet', 'warmth', 2, [weakSignal], 'legs')
+    const results = scoreSomaticSelections([selection])
+
+    // 0.15 * 2 = 0.3 < 0.5 threshold
+    expect(results).toHaveLength(0)
+  })
+
   it('includes component labels showing contributing regions', () => {
     const chestSignal = makeSignal({ emotionId: 'anxiety', sensationType: 'tension', weight: 0.6 })
     const stomachSignal = makeSignal({ emotionId: 'anxiety', sensationType: 'churning', weight: 0.4 })
@@ -124,18 +150,17 @@ describe('scoreSomaticSelections', () => {
     expect(results[0].componentLabels![1].en).toBe('Stomach')
   })
 
-  it('includes match strength label based on score', () => {
+  it('uses resonance-based match strength labels', () => {
     const strongSignal = makeSignal({ emotionId: 'joy', sensationType: 'lightness', weight: 1.0 })
     const weakSignal = makeSignal({ emotionId: 'calm', sensationType: 'lightness', weight: 0.2 })
 
     const selection = makeSelection('chest', 'lightness', 3, [strongSignal, weakSignal])
     const results = scoreSomaticSelections([selection])
 
-    // Strong signal: 1.0 * 3 = 3.0, Weak signal: 0.2 * 3 = 0.6
     const strong = results.find(r => r.id === 'joy')
-    const weak = results.find(r => r.id === 'calm')
+    expect(strong?.matchStrength.en).toBe('strong resonance')
 
-    expect(strong?.matchStrength).toBeDefined()
-    expect(weak?.matchStrength).toBeDefined()
+    const weak = results.find(r => r.id === 'calm')
+    expect(weak?.matchStrength.en).toBe('worth exploring')
   })
 })

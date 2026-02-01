@@ -94,6 +94,7 @@ export default function App() {
       <Visualization
         emotions={visibleEmotions}
         onSelect={handleSelect}
+        onDeselect={handleDeselect}
         sizes={sizes}
         selections={selections}
       />

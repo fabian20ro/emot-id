@@ -1,19 +1,20 @@
 import type { AnalysisResult } from '../types'
-import type { SomaticSelection } from './types'
+import type { SomaticSelection, BodyGroup } from './types'
 
 interface ScoredEmotion extends AnalysisResult {
   score: number
   matchStrength: { ro: string; en: string }
 }
 
-const MINIMUM_THRESHOLD = 0.3
+const MINIMUM_THRESHOLD = 0.5
 const MAX_RESULTS = 4
+const COHERENCE_BONUS = 1.2
 
 function getMatchStrength(score: number, maxScore: number): { ro: string; en: string } {
   const ratio = maxScore > 0 ? score / maxScore : 0
-  if (ratio >= 0.7) return { ro: 'potrivire puternica', en: 'strong match' }
-  if (ratio >= 0.4) return { ro: 'potrivire posibila', en: 'possible match' }
-  return { ro: 'de luat in considerare', en: 'worth considering' }
+  if (ratio >= 0.7) return { ro: 'rezonanță puternică', en: 'strong resonance' }
+  if (ratio >= 0.4) return { ro: 'conexiune posibilă', en: 'possible connection' }
+  return { ro: 'merită explorat', en: 'worth exploring' }
 }
 
 export function scoreSomaticSelections(selections: SomaticSelection[]): ScoredEmotion[] {
@@ -28,6 +29,7 @@ export function scoreSomaticSelections(selections: SomaticSelection[]): ScoredEm
       emotionDescription?: { ro: string; en: string }
       score: number
       contributingRegions: { ro: string; en: string }[]
+      contributingGroups: Set<BodyGroup>
     }
   >()
 
@@ -40,10 +42,13 @@ export function scoreSomaticSelections(selections: SomaticSelection[]): ScoredEm
       const existing = emotionScores.get(signal.emotionId)
 
       if (existing) {
+        const updatedGroups = new Set(existing.contributingGroups)
+        updatedGroups.add(selection.group)
         emotionScores.set(signal.emotionId, {
           ...existing,
           score: existing.score + contribution,
           contributingRegions: [...existing.contributingRegions, selection.label],
+          contributingGroups: updatedGroups,
         })
       } else {
         emotionScores.set(signal.emotionId, {
@@ -53,8 +58,16 @@ export function scoreSomaticSelections(selections: SomaticSelection[]): ScoredEm
           emotionDescription: signal.emotionDescription,
           score: contribution,
           contributingRegions: [selection.label],
+          contributingGroups: new Set([selection.group]),
         })
       }
+    }
+  }
+
+  // Apply pattern coherence bonus: emotions matched from 2+ body groups get a boost
+  for (const [key, entry] of emotionScores) {
+    if (entry.contributingGroups.size >= 2) {
+      emotionScores.set(key, { ...entry, score: entry.score * COHERENCE_BONUS })
     }
   }
 

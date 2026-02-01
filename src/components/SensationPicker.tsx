@@ -21,10 +21,10 @@ const SENSATION_CONFIG: Record<SensationType, { icon: string; label: { ro: strin
   pressure: { icon: '⊛', label: { ro: 'Presiune', en: 'Pressure' } },
 }
 
-const INTENSITY_LABELS: Record<1 | 2 | 3, { ro: string; en: string }> = {
-  1: { ro: 'Ușoară', en: 'Mild' },
-  2: { ro: 'Moderată', en: 'Moderate' },
-  3: { ro: 'Puternică', en: 'Strong' },
+const INTENSITY_LABELS: Record<1 | 2 | 3, { ro: string; en: string; anchor: { ro: string; en: string } }> = {
+  1: { ro: 'Ușoară', en: 'Mild', anchor: { ro: 'abia perceptibilă', en: 'barely noticeable' } },
+  2: { ro: 'Moderată', en: 'Moderate', anchor: { ro: 'clar prezentă', en: 'clearly present' } },
+  3: { ro: 'Puternică', en: 'Strong', anchor: { ro: 'greu de ignorat', en: 'hard to ignore' } },
 }
 
 type PickerStep = 'sensation' | 'intensity'
@@ -149,9 +149,14 @@ export function SensationPicker({
                     />
                   ))}
                 </div>
-                <span className="text-sm text-gray-200">
-                  {INTENSITY_LABELS[intensity][language]}
-                </span>
+                <div className="flex flex-col">
+                  <span className="text-sm text-gray-200">
+                    {INTENSITY_LABELS[intensity][language]}
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    {INTENSITY_LABELS[intensity].anchor[language]}
+                  </span>
+                </div>
               </motion.button>
             ))}
           </div>

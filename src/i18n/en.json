@@ -35,9 +35,6 @@
     "guidedSkip": "Nothing here",
     "guidedDone": "Body scan complete",
     "guidedMode": "Guided scan",
-    "freeMode": "Free selection",
-    "strongMatch": "strong match",
-    "possibleMatch": "possible match",
-    "worthConsidering": "worth considering"
+    "freeMode": "Free selection"
   }
 }
