@@ -1,4 +1,5 @@
-/** SVG path data for 12 body regions in a seated meditation pose (200×400 viewBox) */
+/** SVG path data for 12 body regions in a seated meditation pose.
+ *  Body is centered in x: 30..170 of a 320×420 viewBox (with 60px left margin for labels). */
 
 interface BodyRegionPath {
   id: string
@@ -7,9 +8,14 @@ interface BodyRegionPath {
   hitD?: string
   /** Anchor point for popover positioning (relative to viewBox) */
   anchor: { x: number; y: number }
+  /** Position for the label bubble (outside the silhouette) */
+  labelAnchor: { x: number; y: number }
+  /** Side the label sits on — determines arrow direction */
+  labelSide: 'left' | 'right'
 }
 
-export const VIEWBOX = '0 0 200 400'
+/** Widened viewBox: 60px left margin, 60px right margin for labels */
+export const VIEWBOX = '-60 -10 320 420'
 
 export const bodyRegionPaths: BodyRegionPath[] = [
   // HEAD GROUP — smooth oval head with natural neck
@@ -18,65 +24,89 @@ export const bodyRegionPaths: BodyRegionPath[] = [
     d: 'M80 38 C80 16 88 4 100 4 C112 4 120 16 120 38 C120 54 114 64 100 64 C86 64 80 54 80 38 Z',
     hitD: 'M74 38 C74 12 84 -2 100 -2 C116 -2 126 12 126 38 C126 58 118 70 100 70 C82 70 74 58 74 38 Z',
     anchor: { x: 100, y: 24 },
+    labelAnchor: { x: 170, y: 24 },
+    labelSide: 'right',
   },
   {
     id: 'jaw',
     d: 'M88 58 C88 54 93 50 100 50 C107 50 112 54 112 58 L112 76 C112 84 108 90 100 90 C92 90 88 84 88 76 Z',
     hitD: 'M82 54 C82 48 89 44 100 44 C111 44 118 48 118 54 L118 80 C118 90 112 96 100 96 C88 96 82 90 82 80 Z',
     anchor: { x: 100, y: 70 },
+    labelAnchor: { x: 170, y: 64 },
+    labelSide: 'right',
   },
   {
     id: 'throat',
     d: 'M92 88 C92 85 95 82 100 82 C105 82 108 85 108 88 L108 110 C108 116 106 120 100 120 C94 120 92 116 92 110 Z',
     hitD: 'M86 84 C86 79 91 76 100 76 C109 76 114 79 114 84 L114 114 C114 122 110 126 100 126 C90 126 86 122 86 114 Z',
     anchor: { x: 100, y: 100 },
+    labelAnchor: { x: 170, y: 100 },
+    labelSide: 'right',
   },
   // TORSO GROUP — natural rounded torso
   {
     id: 'shoulders',
     d: 'M100 118 C86 118 70 122 54 132 C50 134 48 138 50 142 L50 150 C54 148 70 140 84 138 L84 126 C84 120 92 118 100 118 C108 118 116 120 116 126 L116 138 C130 140 146 148 150 150 L150 142 C152 138 150 134 146 132 C130 122 114 118 100 118 Z',
     anchor: { x: 100, y: 134 },
+    labelAnchor: { x: -10, y: 134 },
+    labelSide: 'left',
   },
   {
     id: 'chest',
     d: 'M78 136 C78 130 88 126 100 126 C112 126 122 130 122 136 L122 200 C122 210 114 216 100 216 C86 216 78 210 78 200 Z',
     anchor: { x: 100, y: 170 },
+    labelAnchor: { x: -10, y: 170 },
+    labelSide: 'left',
   },
   {
     id: 'upper-back',
     d: 'M64 142 C64 138 80 132 100 132 C120 132 136 138 136 142 L136 200 C136 208 120 214 100 214 C80 214 64 208 64 200 Z',
     anchor: { x: 100, y: 170 },
+    labelAnchor: { x: 180, y: 170 },
+    labelSide: 'right',
   },
   {
     id: 'stomach',
     d: 'M82 214 C82 210 90 206 100 206 C110 206 118 210 118 214 L118 268 C118 278 112 284 100 284 C88 284 82 278 82 268 Z',
     anchor: { x: 100, y: 245 },
+    labelAnchor: { x: -10, y: 245 },
+    labelSide: 'left',
   },
   {
     id: 'lower-back',
     d: 'M68 216 C68 212 82 208 100 208 C118 208 132 212 132 216 L132 266 C132 276 118 282 100 282 C82 282 68 276 68 266 Z',
     anchor: { x: 100, y: 245 },
+    labelAnchor: { x: 180, y: 245 },
+    labelSide: 'right',
   },
   // ARMS GROUP — relaxed arms resting on lap
   {
     id: 'arms',
     d: 'M54 148 C48 152 42 160 38 172 C34 184 32 196 34 206 C36 212 40 216 44 214 C46 212 46 204 46 194 C46 182 50 168 56 158 Z M146 148 C152 152 158 160 162 172 C166 184 168 196 166 206 C164 212 160 216 156 214 C154 212 154 204 154 194 C154 182 150 168 144 158 Z',
     anchor: { x: 38, y: 180 },
+    labelAnchor: { x: -10, y: 200 },
+    labelSide: 'left',
   },
   {
     id: 'hands',
     d: 'M40 212 C36 214 32 220 34 228 C36 236 42 240 50 238 C58 236 64 230 68 224 C70 220 68 216 64 216 C58 216 50 216 44 214 Z M160 212 C164 214 168 220 166 228 C164 236 158 240 150 238 C142 236 136 230 132 224 C130 220 132 216 136 216 C142 216 150 216 156 214 Z',
     anchor: { x: 46, y: 226 },
+    labelAnchor: { x: 180, y: 226 },
+    labelSide: 'right',
   },
   // LEGS GROUP — gently folded/crossed legs
   {
     id: 'legs',
     d: 'M76 280 C70 284 58 292 48 304 C38 316 32 330 30 340 C28 346 30 350 34 350 C38 350 44 346 50 338 C60 322 70 308 80 298 C84 294 84 288 82 284 Z M124 280 C130 284 142 292 152 304 C162 316 168 330 170 340 C172 346 170 350 166 350 C162 350 156 346 150 338 C140 322 130 308 120 298 C116 294 116 288 118 284 Z',
     anchor: { x: 100, y: 316 },
+    labelAnchor: { x: -10, y: 316 },
+    labelSide: 'left',
   },
   {
     id: 'feet',
     d: 'M30 346 C26 348 22 354 24 362 C26 368 32 372 40 372 C50 372 60 368 66 362 C70 358 68 352 64 350 C56 346 44 344 34 346 Z M170 346 C174 348 178 354 176 362 C174 368 168 372 160 372 C150 372 140 368 134 362 C130 358 132 352 136 350 C144 346 156 344 166 346 Z',
     anchor: { x: 100, y: 362 },
+    labelAnchor: { x: -10, y: 362 },
+    labelSide: 'left',
   },
 ]

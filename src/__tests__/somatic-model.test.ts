@@ -5,7 +5,7 @@ import type { SomaticRegion, SomaticSelection } from '../models/somatic/types'
 describe('somaticModel', () => {
   it('has correct id and name', () => {
     expect(somaticModel.id).toBe('somatic')
-    expect(somaticModel.name).toBe('Body Map')
+    expect(somaticModel.name.en).toBe('Body Map')
   })
 
   it('has bilingual description', () => {

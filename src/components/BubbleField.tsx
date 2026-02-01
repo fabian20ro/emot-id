@@ -30,10 +30,10 @@ function calculatePositionsForNewEmotions(
     let attempts = 0
     let foundPosition = false
 
-    // Try random placement with collision detection
+    // Try random placement with collision detection (bias toward upper 70%)
     while (attempts < 100 && !foundPosition) {
       x = padding + Math.random() * Math.max(0, availableWidth - w)
-      y = padding + Math.random() * Math.max(0, availableHeight - h)
+      y = padding + Math.random() * Math.max(0, availableHeight * 0.7 - h)
 
       const hasCollision = placed.some(p =>
         x < p.x + p.w + 8 &&
@@ -101,10 +101,22 @@ export function BubbleField({
       const currentIds = new Set(emotions.map(e => e.id))
       const newEmotions = emotions.filter(e => !prevPositions.has(e.id))
 
+      // Clamp existing positions to current container bounds
+      const clamped = new Map<string, { x: number; y: number }>()
+      for (const [id, pos] of prevPositions) {
+        if (!currentIds.has(id)) continue
+        const size = sizes.get(id) || 'medium'
+        const w = sizePixels[size]
+        clamped.set(id, {
+          x: Math.min(pos.x, Math.max(0, containerSize.width - w - 8)),
+          y: Math.min(pos.y, Math.max(0, containerSize.height - bubbleHeight - 8)),
+        })
+      }
+
       // Build existing rects for collision detection
       const existingRects: { x: number; y: number; w: number; h: number }[] = []
       for (const emotion of emotions) {
-        const pos = prevPositions.get(emotion.id)
+        const pos = clamped.get(emotion.id)
         if (pos) {
           const size = sizes.get(emotion.id) || 'medium'
           existingRects.push({ x: pos.x, y: pos.y, w: sizePixels[size], h: bubbleHeight })
@@ -116,15 +128,11 @@ export function BubbleField({
         newEmotions, containerSize.width, containerSize.height, sizes, existingRects
       )
 
-      // Merge: keep existing, add new, drop removed
-      const merged = new Map<string, { x: number; y: number }>()
-      for (const [id, pos] of prevPositions) {
-        if (currentIds.has(id)) merged.set(id, pos)
-      }
+      // Merge clamped existing + new
       for (const [id, pos] of newPositions) {
-        merged.set(id, pos)
+        clamped.set(id, pos)
       }
-      return merged
+      return clamped
     })
   }, [emotions, sizes, containerSize.width, containerSize.height])
 
@@ -132,7 +140,7 @@ export function BubbleField({
     <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-4">
       <div
         ref={containerRef}
-        className="relative w-full max-w-2xl flex-1 min-h-[120px]"
+        className="relative w-full max-w-2xl flex-1 min-h-[120px] overflow-hidden"
       >
         <AnimatePresence mode="popLayout">
           {emotions.map((emotion, index) => (

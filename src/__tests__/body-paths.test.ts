@@ -73,8 +73,8 @@ describe('bodyRegionPaths', () => {
     }
   })
 
-  it('viewBox is 200x400', () => {
-    expect(VIEWBOX).toBe('0 0 200 400')
+  it('viewBox accommodates body and labels', () => {
+    expect(VIEWBOX).toBe('-60 -10 320 420')
   })
 
   it('all regions have valid anchor points within viewBox', () => {

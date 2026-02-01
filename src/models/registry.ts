@@ -43,7 +43,7 @@ export function getVisualization(id: string): ComponentType<VisualizationProps> 
   return models[id]?.Visualization
 }
 
-export function getAvailableModels(): { id: string; name: string; description: { ro: string; en: string } }[] {
+export function getAvailableModels(): { id: string; name: { ro: string; en: string }; description: { ro: string; en: string } }[] {
   return Object.values(models).map((entry) => ({
     id: entry.model.id,
     name: entry.model.name,

@@ -136,6 +136,20 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
           className="w-full h-full"
           style={{ filter: 'drop-shadow(0 0 20px rgba(99, 102, 241, 0.1))' }}
         >
+          <defs>
+            <marker
+              id="arrow-end"
+              viewBox="0 0 6 6"
+              refX={6}
+              refY={3}
+              markerWidth={4}
+              markerHeight={4}
+              orient="auto-start-reverse"
+            >
+              <path d="M0 0 L6 3 L0 6 Z" fill="rgba(156,163,175,0.5)" />
+            </marker>
+          </defs>
+
           {/* Back-facing regions first */}
           {bodyRegionPaths
             .filter((p) => p.id === 'upper-back' || p.id === 'lower-back')
@@ -177,6 +191,63 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
                 />
               )
             })}
+
+          {/* Label bubbles with arrows */}
+          {bodyRegionPaths.map((path) => {
+            const region = regionMap.get(path.id)
+            if (!region) return null
+            const label = region.label[language]
+            const sel = selectionMap.get(path.id)
+            const isSelected = !!sel
+            const { labelAnchor, labelSide, anchor } = path
+
+            // Arrow endpoints: from label edge toward body anchor
+            const arrowStartX = labelSide === 'left' ? labelAnchor.x + 20 : labelAnchor.x - 20
+            const arrowEndX = labelSide === 'left'
+              ? Math.min(anchor.x, arrowStartX + 30)
+              : Math.max(anchor.x, arrowStartX - 30)
+
+            return (
+              <g
+                key={`label-${path.id}`}
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleRegionClick(path.id)}
+              >
+                {/* Connector line */}
+                <line
+                  x1={arrowStartX}
+                  y1={labelAnchor.y}
+                  x2={arrowEndX}
+                  y2={anchor.y}
+                  stroke={isSelected ? 'rgba(129,140,248,0.6)' : 'rgba(156,163,175,0.3)'}
+                  strokeWidth={1}
+                  markerEnd="url(#arrow-end)"
+                />
+                {/* Label background */}
+                <rect
+                  x={labelSide === 'left' ? labelAnchor.x - 40 : labelAnchor.x - 20}
+                  y={labelAnchor.y - 9}
+                  width={60}
+                  height={18}
+                  rx={9}
+                  fill={isSelected ? 'rgba(129,140,248,0.25)' : 'rgba(55,65,81,0.6)'}
+                  stroke={isSelected ? 'rgba(129,140,248,0.5)' : 'rgba(107,114,128,0.3)'}
+                  strokeWidth={0.5}
+                />
+                {/* Label text */}
+                <text
+                  x={labelSide === 'left' ? labelAnchor.x - 10 : labelAnchor.x + 10}
+                  y={labelAnchor.y + 3.5}
+                  fill={isSelected ? '#c7d2fe' : '#9ca3af'}
+                  fontSize={8}
+                  fontWeight={isSelected ? 600 : 400}
+                  textAnchor="middle"
+                >
+                  {label}
+                </text>
+              </g>
+            )
+          })}
         </svg>
 
         {/* Guided scan overlay */}

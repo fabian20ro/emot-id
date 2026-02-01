@@ -88,11 +88,11 @@ export function DimensionalField({ emotions, onSelect, onDeselect, selections = 
   )
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-4">
+    <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-2 sm:p-4">
       <p className="text-xs text-gray-400 text-center mb-2 px-2">
         {(t as Record<string, Record<string, string>>).dimensional?.instructions}
       </p>
-      <div className="relative w-full max-w-lg flex-1 min-h-[200px] flex flex-col items-center justify-center">
+      <div className="relative w-full max-w-2xl flex-1 min-h-[200px] flex flex-col items-center justify-center">
         <svg
           ref={svgRef}
           viewBox={`0 0 ${FIELD_SIZE} ${FIELD_SIZE}`}
