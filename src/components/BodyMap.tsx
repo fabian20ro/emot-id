@@ -59,7 +59,7 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
       })
       setActiveRegionId(regionId)
     },
-    [guidedActive, onSelect, onDeselect, selectionMap, regionMap]
+    [guidedActive, onDeselect, selectionMap]
   )
 
   const handleSensationSelect = useCallback(

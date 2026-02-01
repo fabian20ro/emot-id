@@ -26,7 +26,7 @@ const models: Record<string, ModelRegistryEntry> = {
   },
 }
 
-export const defaultModelId = 'plutchik'
+export const defaultModelId = 'somatic'
 
 export function getModel(id: string): EmotionModel<BaseEmotion> | undefined {
   return models[id]?.model

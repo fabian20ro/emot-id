@@ -105,7 +105,7 @@ Each model extends `BaseEmotion` with model-specific fields (e.g. Plutchik adds 
 - Somatic: tap region → pick sensation type + intensity → scoring engine maps patterns to emotions
 - **SelectionBar** shows current picks; **AnalyzeButton** triggers result analysis
 - State lives in component state + Context API. No router, no backend.
-- Bilingual: Romanian default, browser-detected. Emotion labels are inline (`label.ro`/`label.en`), UI strings in `i18n/*.json`
+- Bilingual: English default, Romanian auto-detected from browser. Persisted to localStorage. Emotion labels are inline (`label.ro`/`label.en`), UI strings in `i18n/*.json`
 
 ### Somatic Model Pattern
 

@@ -158,7 +158,7 @@ interface ModelRegistryEntry {
 getModel(id: string): EmotionModel | undefined
 getVisualization(id: string): ComponentType | undefined
 getAvailableModels(): { id, name, description }[]
-defaultModelId = 'plutchik'
+defaultModelId = 'somatic'
 ```
 
 Adding a new model requires:
