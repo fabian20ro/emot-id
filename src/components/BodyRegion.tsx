@@ -1,0 +1,72 @@
+import { motion } from 'framer-motion'
+import type { SensationType } from '../models/somatic/types'
+
+interface BodyRegionProps {
+  id: string
+  d: string
+  isSelected: boolean
+  isHighlighted: boolean
+  sensation?: SensationType
+  intensity?: 1 | 2 | 3
+  onClick: (regionId: string, event: React.MouseEvent) => void
+}
+
+const SENSATION_COLORS: Record<SensationType, string> = {
+  tension: '#ef4444',
+  warmth: '#f97316',
+  heaviness: '#6366f1',
+  lightness: '#fbbf24',
+  tingling: '#06b6d4',
+  numbness: '#9ca3af',
+  churning: '#84cc16',
+  pressure: '#ec4899',
+}
+
+const BASE_COLOR = '#4b5563'
+const HIGHLIGHT_COLOR = '#6b7280'
+
+export function BodyRegion({
+  id,
+  d,
+  isSelected,
+  isHighlighted,
+  sensation,
+  intensity,
+  onClick,
+}: BodyRegionProps) {
+  const fillColor = isSelected && sensation
+    ? SENSATION_COLORS[sensation]
+    : isHighlighted
+      ? HIGHLIGHT_COLOR
+      : BASE_COLOR
+
+  const fillOpacity = isSelected && intensity
+    ? 0.3 + intensity * 0.2
+    : isHighlighted
+      ? 0.5
+      : 0.3
+
+  return (
+    <motion.path
+      d={d}
+      data-region={id}
+      fill={fillColor}
+      fillOpacity={fillOpacity}
+      stroke={isSelected ? fillColor : '#6b7280'}
+      strokeWidth={isSelected ? 1.5 : 0.5}
+      strokeOpacity={isSelected ? 0.8 : 0.3}
+      style={{ cursor: 'pointer' }}
+      whileHover={{
+        fillOpacity: Math.min(fillOpacity + 0.15, 0.95),
+        strokeOpacity: 0.6,
+      }}
+      whileTap={{ scale: 0.97 }}
+      animate={{
+        fillOpacity,
+        fill: fillColor,
+      }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      onClick={(e) => onClick(id, e as unknown as React.MouseEvent)}
+    />
+  )
+}

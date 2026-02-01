@@ -25,5 +25,19 @@
     "noCombinations": "Nu s-au gasit combinatii din selectiile tale",
     "combinationsFound": "Combinatii gasite",
     "showDescription": "Arata descrierea"
+  },
+  "somatic": {
+    "pickSensation": "Ce simti aici?",
+    "pickIntensity": "Cat de intens?",
+    "nothingHere": "Nimic aici",
+    "guidedStart": "Respira adanc. Observa-ti corpul.",
+    "guidedPrompt": "Ce observi in zona {region}?",
+    "guidedSkip": "Nimic aici",
+    "guidedDone": "Scanarea corporala s-a incheiat",
+    "guidedMode": "Scanare ghidata",
+    "freeMode": "Selectie libera",
+    "strongMatch": "potrivire puternica",
+    "possibleMatch": "potrivire posibila",
+    "worthConsidering": "de luat in considerare"
   }
 }

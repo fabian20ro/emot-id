@@ -2,7 +2,9 @@ import type { ComponentType } from 'react'
 import type { EmotionModel, BaseEmotion, VisualizationProps } from './types'
 import { plutchikModel } from './plutchik'
 import { wheelModel } from './wheel'
+import { somaticModel } from './somatic'
 import { BubbleField } from '../components/BubbleField'
+import { BodyMap } from '../components/BodyMap'
 
 interface ModelRegistryEntry {
   model: EmotionModel<BaseEmotion>
@@ -17,6 +19,10 @@ const models: Record<string, ModelRegistryEntry> = {
   wheel: {
     model: wheelModel as EmotionModel<BaseEmotion>,
     Visualization: BubbleField,
+  },
+  somatic: {
+    model: somaticModel as EmotionModel<BaseEmotion>,
+    Visualization: BodyMap as ComponentType<VisualizationProps>,
   },
 }
 

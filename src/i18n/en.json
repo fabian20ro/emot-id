@@ -25,5 +25,19 @@
     "noCombinations": "No combinations found from your selections",
     "combinationsFound": "Found combinations",
     "showDescription": "Show description"
+  },
+  "somatic": {
+    "pickSensation": "What do you feel here?",
+    "pickIntensity": "How intense?",
+    "nothingHere": "Nothing here",
+    "guidedStart": "Take a breath. Notice your body.",
+    "guidedPrompt": "What do you notice in your {region}?",
+    "guidedSkip": "Nothing here",
+    "guidedDone": "Body scan complete",
+    "guidedMode": "Guided scan",
+    "freeMode": "Free selection",
+    "strongMatch": "strong match",
+    "possibleMatch": "possible match",
+    "worthConsidering": "worth considering"
   }
 }

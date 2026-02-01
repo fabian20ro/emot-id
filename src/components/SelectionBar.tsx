@@ -1,6 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import type { BaseEmotion, AnalysisResult } from '../models/types'
+import { SENSATION_CONFIG } from './SensationPicker'
+import type { SomaticSelection } from '../models/somatic/types'
+
+function isSomaticSelection(e: BaseEmotion): e is SomaticSelection {
+  return 'selectedSensation' in e && 'selectedIntensity' in e
+}
 
 interface SelectionBarProps {
   selections: BaseEmotion[]
@@ -60,6 +66,12 @@ export function SelectionBar({ selections, combos, onDeselect, onClear }: Select
                 }}
               >
                 {emotion.label[language]}
+                {isSomaticSelection(emotion) && (
+                  <span className="text-xs opacity-70">
+                    {SENSATION_CONFIG[emotion.selectedSensation].icon}
+                    {emotion.selectedIntensity}
+                  </span>
+                )}
                 <span className="text-xs opacity-70">&times;</span>
               </motion.button>
             ))

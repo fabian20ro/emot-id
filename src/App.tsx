@@ -95,6 +95,7 @@ export default function App() {
         emotions={visibleEmotions}
         onSelect={handleSelect}
         sizes={sizes}
+        selections={selections}
       />
 
       <ResultModal

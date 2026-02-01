@@ -1,0 +1,679 @@
+{
+  "head": {
+    "id": "head",
+    "label": { "ro": "Cap / Craniu", "en": "Head / Skull" },
+    "description": {
+      "ro": "Zona capului — asociata cu gandirea excesiva, furie, dureri de cap legate de stres",
+      "en": "Head area — associated with overthinking, anger, stress-related headaches"
+    },
+    "color": "#ef4444",
+    "svgRegionId": "head",
+    "group": "head",
+    "commonSensations": ["tension", "pressure", "warmth", "tingling"],
+    "emotionSignals": [
+      {
+        "emotionId": "anger",
+        "emotionLabel": { "ro": "Furie", "en": "Anger" },
+        "emotionColor": "#ef4444",
+        "emotionDescription": { "ro": "Presiune sau caldura in cap, asociata cu frustrare intensa sau furie", "en": "Pressure or heat in the head, associated with intense frustration or anger" },
+        "sensationType": "pressure",
+        "minIntensity": 2,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "anger",
+        "emotionLabel": { "ro": "Furie", "en": "Anger" },
+        "emotionColor": "#ef4444",
+        "sensationType": "warmth",
+        "minIntensity": 2,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "emotionDescription": { "ro": "Tensiune in cap, gandire in cerc, dificultate de concentrare", "en": "Tension in the head, racing thoughts, difficulty concentrating" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "sensationType": "pressure",
+        "minIntensity": 1,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "overthinking",
+        "emotionLabel": { "ro": "Gandire excesiva", "en": "Overthinking" },
+        "emotionColor": "#8b5cf6",
+        "emotionDescription": { "ro": "Tensiune difuza in cap, senzatie de plin, minte agitata", "en": "Diffuse head tension, feeling of fullness, restless mind" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.6
+      }
+    ]
+  },
+  "forehead": {
+    "id": "forehead",
+    "label": { "ro": "Frunte", "en": "Forehead" },
+    "description": {
+      "ro": "Zona fruntii — legata de concentrare, anxietate, ingrijorare",
+      "en": "Forehead area — linked to concentration, anxiety, worry"
+    },
+    "color": "#f97316",
+    "svgRegionId": "forehead",
+    "group": "head",
+    "commonSensations": ["tension", "pressure", "warmth", "numbness"],
+    "emotionSignals": [
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "emotionDescription": { "ro": "Tensiune in frunte, incretirea sprancenelor, ingrijorare", "en": "Forehead tension, furrowed brow, worry" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "concentration",
+        "emotionLabel": { "ro": "Concentrare intensa", "en": "Intense focus" },
+        "emotionColor": "#3b82f6",
+        "emotionDescription": { "ro": "Presiune in frunte din concentrare prelungita", "en": "Forehead pressure from prolonged concentration" },
+        "sensationType": "pressure",
+        "minIntensity": 1,
+        "weight": 0.5
+      },
+      {
+        "emotionId": "worry",
+        "emotionLabel": { "ro": "Ingrijorare", "en": "Worry" },
+        "emotionColor": "#a78bfa",
+        "emotionDescription": { "ro": "Tensiune persistenta in frunte, anticipare negativa", "en": "Persistent forehead tension, negative anticipation" },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.6
+      }
+    ]
+  },
+  "eyes": {
+    "id": "eyes",
+    "label": { "ro": "Ochi", "en": "Eyes" },
+    "description": {
+      "ro": "Zona ochilor — legata de tristete, plans, surpriza, oboseala emotionala",
+      "en": "Eye area — linked to sadness, crying, surprise, emotional fatigue"
+    },
+    "color": "#60a5fa",
+    "svgRegionId": "eyes",
+    "group": "head",
+    "commonSensations": ["tension", "warmth", "pressure", "tingling"],
+    "emotionSignals": [
+      {
+        "emotionId": "sadness",
+        "emotionLabel": { "ro": "Tristete", "en": "Sadness" },
+        "emotionColor": "#3b82f6",
+        "emotionDescription": { "ro": "Presiune in spatele ochilor, lacrimi, usturime", "en": "Pressure behind the eyes, tears, stinging" },
+        "sensationType": "pressure",
+        "minIntensity": 1,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "sadness",
+        "emotionLabel": { "ro": "Tristete", "en": "Sadness" },
+        "emotionColor": "#3b82f6",
+        "sensationType": "warmth",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "grief",
+        "emotionLabel": { "ro": "Doliu", "en": "Grief" },
+        "emotionColor": "#1e40af",
+        "emotionDescription": { "ro": "Presiune intensa in jurul ochilor, plans necontrolat", "en": "Intense pressure around eyes, uncontrollable crying" },
+        "sensationType": "pressure",
+        "minIntensity": 2,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "surprise",
+        "emotionLabel": { "ro": "Surpriza", "en": "Surprise" },
+        "emotionColor": "#06b6d4",
+        "emotionDescription": { "ro": "Ochi larg deschisi, furnicaturi, senzatie de alerta", "en": "Wide eyes, tingling, sense of alertness" },
+        "sensationType": "tingling",
+        "minIntensity": 1,
+        "weight": 0.6
+      }
+    ]
+  },
+  "jaw": {
+    "id": "jaw",
+    "label": { "ro": "Maxilar", "en": "Jaw" },
+    "description": {
+      "ro": "Zona maxilarului — legata de furie, suprimare emotionala, tensiune",
+      "en": "Jaw area — linked to anger, emotional suppression, tension"
+    },
+    "color": "#dc2626",
+    "svgRegionId": "jaw",
+    "group": "head",
+    "commonSensations": ["tension", "pressure", "numbness"],
+    "emotionSignals": [
+      {
+        "emotionId": "anger",
+        "emotionLabel": { "ro": "Furie", "en": "Anger" },
+        "emotionColor": "#ef4444",
+        "emotionDescription": { "ro": "Inclestrare a maxilarului, scrâsnit din dinti, tensiune", "en": "Jaw clenching, teeth grinding, tension" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.9
+      },
+      {
+        "emotionId": "suppression",
+        "emotionLabel": { "ro": "Suprimare emotionala", "en": "Emotional suppression" },
+        "emotionColor": "#6b7280",
+        "emotionDescription": { "ro": "Maxilar inclestat, cuvinte retinute, controlul exprimarii", "en": "Clenched jaw, held-back words, controlling expression" },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "suppression",
+        "emotionLabel": { "ro": "Suprimare emotionala", "en": "Emotional suppression" },
+        "emotionColor": "#6b7280",
+        "sensationType": "numbness",
+        "minIntensity": 1,
+        "weight": 0.5
+      }
+    ]
+  },
+  "throat": {
+    "id": "throat",
+    "label": { "ro": "Gât", "en": "Throat" },
+    "description": {
+      "ro": "Zona gâtului — legata de durere, rusine, suprimare, dificultate de exprimare",
+      "en": "Throat area — linked to grief, shame, suppression, difficulty expressing"
+    },
+    "color": "#a855f7",
+    "svgRegionId": "throat",
+    "group": "head",
+    "commonSensations": ["tension", "pressure", "heaviness", "numbness"],
+    "emotionSignals": [
+      {
+        "emotionId": "grief",
+        "emotionLabel": { "ro": "Doliu", "en": "Grief" },
+        "emotionColor": "#1e40af",
+        "emotionDescription": { "ro": "Nod in gât, dificultate de a inghiti, plans retinut", "en": "Lump in throat, difficulty swallowing, held-back crying" },
+        "sensationType": "pressure",
+        "minIntensity": 1,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "shame",
+        "emotionLabel": { "ro": "Rusine", "en": "Shame" },
+        "emotionColor": "#be185d",
+        "emotionDescription": { "ro": "Constrictie in gât, dificultate de a vorbi, dorinta de a te ascunde", "en": "Throat constriction, difficulty speaking, urge to hide" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "suppression",
+        "emotionLabel": { "ro": "Suprimare emotionala", "en": "Emotional suppression" },
+        "emotionColor": "#6b7280",
+        "emotionDescription": { "ro": "Senzatie de blocare in gât, cuvinte retinute", "en": "Blocked feeling in throat, words held back" },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "disgust",
+        "emotionLabel": { "ro": "Dezgust", "en": "Disgust" },
+        "emotionColor": "#65a30d",
+        "emotionDescription": { "ro": "Gât contractat, senzatie de greata, refuz instinctiv", "en": "Contracted throat, nausea sensation, instinctive refusal" },
+        "sensationType": "churning",
+        "minIntensity": 1,
+        "weight": 0.5
+      }
+    ]
+  },
+  "chest": {
+    "id": "chest",
+    "label": { "ro": "Piept", "en": "Chest" },
+    "description": {
+      "ro": "Zona pieptului — centrul emotional major, asociat cu iubire, anxietate, durere, bucurie, mandrie",
+      "en": "Chest area — major emotional center, associated with love, anxiety, grief, joy, pride"
+    },
+    "color": "#ec4899",
+    "svgRegionId": "chest",
+    "group": "torso",
+    "commonSensations": ["tension", "warmth", "heaviness", "lightness", "pressure", "tingling"],
+    "emotionSignals": [
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "emotionDescription": { "ro": "Constrictie in piept, dificultate de a respira, inima bate rapid", "en": "Chest tightness, difficulty breathing, racing heart" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.9
+      },
+      {
+        "emotionId": "love",
+        "emotionLabel": { "ro": "Iubire", "en": "Love" },
+        "emotionColor": "#ec4899",
+        "emotionDescription": { "ro": "Caldura in piept, senzatie de deschidere, plenitudine", "en": "Chest warmth, sense of openness, fullness" },
+        "sensationType": "warmth",
+        "minIntensity": 1,
+        "weight": 0.9
+      },
+      {
+        "emotionId": "grief",
+        "emotionLabel": { "ro": "Doliu", "en": "Grief" },
+        "emotionColor": "#1e40af",
+        "emotionDescription": { "ro": "Greutate in piept, senzatie de gol, durere profunda", "en": "Chest heaviness, emptiness, deep ache" },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.9
+      },
+      {
+        "emotionId": "fear",
+        "emotionLabel": { "ro": "Frica", "en": "Fear" },
+        "emotionColor": "#059669",
+        "emotionDescription": { "ro": "Presiune in piept, inima bate tare, respiratie scurta", "en": "Chest pressure, pounding heart, shortness of breath" },
+        "sensationType": "pressure",
+        "minIntensity": 2,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "joy",
+        "emotionLabel": { "ro": "Bucurie", "en": "Joy" },
+        "emotionColor": "#fbbf24",
+        "emotionDescription": { "ro": "Senzatie de usurinta in piept, deschidere, energie calda", "en": "Lightness in chest, openness, warm energy" },
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "pride",
+        "emotionLabel": { "ro": "Mandrie", "en": "Pride" },
+        "emotionColor": "#d97706",
+        "emotionDescription": { "ro": "Piept expansiv, senzatie de plenitudine calda", "en": "Expansive chest, warm fullness sensation" },
+        "sensationType": "warmth",
+        "minIntensity": 2,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "excitement",
+        "emotionLabel": { "ro": "Entuziasm", "en": "Excitement" },
+        "emotionColor": "#f97316",
+        "emotionDescription": { "ro": "Furnicaturi in piept, energie efervescenta, anticipare placuta", "en": "Chest tingling, effervescent energy, pleasant anticipation" },
+        "sensationType": "tingling",
+        "minIntensity": 1,
+        "weight": 0.7
+      }
+    ]
+  },
+  "stomach": {
+    "id": "stomach",
+    "label": { "ro": "Stomac / Intestine", "en": "Stomach / Gut" },
+    "description": {
+      "ro": "Zona abdominala — al doilea creier, asociat cu instincte, frica, anxietate, dezgust, entuziasm",
+      "en": "Abdominal area — the second brain, associated with gut feelings, fear, anxiety, disgust, excitement"
+    },
+    "color": "#eab308",
+    "svgRegionId": "stomach",
+    "group": "torso",
+    "commonSensations": ["churning", "tension", "warmth", "heaviness", "tingling", "numbness"],
+    "emotionSignals": [
+      {
+        "emotionId": "fear",
+        "emotionLabel": { "ro": "Frica", "en": "Fear" },
+        "emotionColor": "#059669",
+        "emotionDescription": { "ro": "Nod in stomac, senzatia de gol, fluturi in stomac", "en": "Pit in stomach, sinking feeling, butterflies" },
+        "sensationType": "churning",
+        "minIntensity": 1,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "emotionDescription": { "ro": "Tensiune abdominala, senzatie de nod, neliniste fizica", "en": "Abdominal tension, knotted feeling, physical unease" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "disgust",
+        "emotionLabel": { "ro": "Dezgust", "en": "Disgust" },
+        "emotionColor": "#65a30d",
+        "emotionDescription": { "ro": "Greata, stomac rascolit, reflex de vomitare", "en": "Nausea, churning stomach, gagging reflex" },
+        "sensationType": "churning",
+        "minIntensity": 2,
+        "weight": 0.9
+      },
+      {
+        "emotionId": "excitement",
+        "emotionLabel": { "ro": "Entuziasm", "en": "Excitement" },
+        "emotionColor": "#f97316",
+        "emotionDescription": { "ro": "Fluturi in stomac, energie nervoasa placuta", "en": "Butterflies in stomach, pleasant nervous energy" },
+        "sensationType": "tingling",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "guilt",
+        "emotionLabel": { "ro": "Vinovatie", "en": "Guilt" },
+        "emotionColor": "#7c3aed",
+        "emotionDescription": { "ro": "Greutate in stomac, senzatie de nod, disconfort persistent", "en": "Stomach heaviness, knotted feeling, persistent discomfort" },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.7
+      }
+    ]
+  },
+  "shoulders": {
+    "id": "shoulders",
+    "label": { "ro": "Umeri", "en": "Shoulders" },
+    "description": {
+      "ro": "Zona umerilor — poarta poveri emotionale, asociata cu stres, tensiune, responsabilitate",
+      "en": "Shoulder area — carries emotional burdens, associated with stress, tension, responsibility"
+    },
+    "color": "#f43f5e",
+    "svgRegionId": "shoulders",
+    "group": "torso",
+    "commonSensations": ["tension", "heaviness", "pressure", "numbness"],
+    "emotionSignals": [
+      {
+        "emotionId": "stress",
+        "emotionLabel": { "ro": "Stres", "en": "Stress" },
+        "emotionColor": "#ef4444",
+        "emotionDescription": { "ro": "Umeri ridicati, tensiune cronica, senzatie de povara", "en": "Raised shoulders, chronic tension, sense of burden" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.9
+      },
+      {
+        "emotionId": "burden",
+        "emotionLabel": { "ro": "Povara", "en": "Feeling burdened" },
+        "emotionColor": "#78716c",
+        "emotionDescription": { "ro": "Greutate pe umeri, senzatie de a purta lumea pe umeri", "en": "Weight on shoulders, feeling of carrying the world" },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "anger",
+        "emotionLabel": { "ro": "Furie", "en": "Anger" },
+        "emotionColor": "#ef4444",
+        "emotionDescription": { "ro": "Tensiune rigida in umeri, postura defensiva", "en": "Rigid shoulder tension, defensive posture" },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.6
+      }
+    ]
+  },
+  "upper-back": {
+    "id": "upper-back",
+    "label": { "ro": "Spate sus", "en": "Upper back" },
+    "description": {
+      "ro": "Zona spatelui superior — asociata cu povara emotionala, tristete, tensiune cronica",
+      "en": "Upper back area — associated with emotional burden, sadness, chronic tension"
+    },
+    "color": "#64748b",
+    "svgRegionId": "upper-back",
+    "group": "torso",
+    "commonSensations": ["tension", "heaviness", "pressure", "numbness"],
+    "emotionSignals": [
+      {
+        "emotionId": "sadness",
+        "emotionLabel": { "ro": "Tristete", "en": "Sadness" },
+        "emotionColor": "#3b82f6",
+        "emotionDescription": { "ro": "Incovoiere, greutate in spate, postura inchisa", "en": "Hunching, back heaviness, closed posture" },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "burden",
+        "emotionLabel": { "ro": "Povara", "en": "Feeling burdened" },
+        "emotionColor": "#78716c",
+        "emotionDescription": { "ro": "Tensiune intre omoplatii, senzatie de comprimare", "en": "Tension between shoulder blades, compression feeling" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "stress",
+        "emotionLabel": { "ro": "Stres", "en": "Stress" },
+        "emotionColor": "#ef4444",
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.6
+      }
+    ]
+  },
+  "lower-back": {
+    "id": "lower-back",
+    "label": { "ro": "Spate jos", "en": "Lower back" },
+    "description": {
+      "ro": "Zona lombara — asociata cu stres cronic, frica, epuizare, instabilitate",
+      "en": "Lower back area — associated with chronic stress, fear, exhaustion, instability"
+    },
+    "color": "#94a3b8",
+    "svgRegionId": "lower-back",
+    "group": "torso",
+    "commonSensations": ["tension", "heaviness", "pressure", "numbness"],
+    "emotionSignals": [
+      {
+        "emotionId": "stress",
+        "emotionLabel": { "ro": "Stres", "en": "Stress" },
+        "emotionColor": "#ef4444",
+        "emotionDescription": { "ro": "Tensiune lombara persistenta, rigiditate, disconfort", "en": "Persistent lower back tension, stiffness, discomfort" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "fear",
+        "emotionLabel": { "ro": "Frica", "en": "Fear" },
+        "emotionColor": "#059669",
+        "emotionDescription": { "ro": "Senzatie de instabilitate, slabiciune lombara", "en": "Feeling of instability, lower back weakness" },
+        "sensationType": "heaviness",
+        "minIntensity": 2,
+        "weight": 0.5
+      },
+      {
+        "emotionId": "exhaustion",
+        "emotionLabel": { "ro": "Epuizare", "en": "Exhaustion" },
+        "emotionColor": "#6b7280",
+        "emotionDescription": { "ro": "Greutate in spate, oboseala profunda, lipsa de sustinere", "en": "Back heaviness, deep fatigue, lack of support" },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.7
+      }
+    ]
+  },
+  "hands": {
+    "id": "hands",
+    "label": { "ro": "Mâini", "en": "Hands" },
+    "description": {
+      "ro": "Zona mâinilor — exprima actiune, furie (inclestrare), anxietate (tremur), entuziasm",
+      "en": "Hand area — express action, anger (clenching), anxiety (trembling), excitement"
+    },
+    "color": "#fb923c",
+    "svgRegionId": "hands",
+    "group": "arms",
+    "commonSensations": ["tension", "tingling", "warmth", "numbness", "pressure"],
+    "emotionSignals": [
+      {
+        "emotionId": "anger",
+        "emotionLabel": { "ro": "Furie", "en": "Anger" },
+        "emotionColor": "#ef4444",
+        "emotionDescription": { "ro": "Pumni inclestriti, palme fierbinti, impuls de a lovi", "en": "Clenched fists, hot palms, urge to strike" },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "emotionDescription": { "ro": "Tremur, furnicaturi, palme transpirate, neliniste", "en": "Trembling, tingling, sweaty palms, restlessness" },
+        "sensationType": "tingling",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "excitement",
+        "emotionLabel": { "ro": "Entuziasm", "en": "Excitement" },
+        "emotionColor": "#f97316",
+        "emotionDescription": { "ro": "Furnicaturi in degete, energie in maini, dorinta de actiune", "en": "Finger tingling, hand energy, urge for action" },
+        "sensationType": "tingling",
+        "minIntensity": 1,
+        "weight": 0.5
+      },
+      {
+        "emotionId": "numbness-emotion",
+        "emotionLabel": { "ro": "Amorteala emotionala", "en": "Emotional numbness" },
+        "emotionColor": "#9ca3af",
+        "emotionDescription": { "ro": "Maini amortitin lipsa de senzatie, deconectare", "en": "Numb hands, lack of sensation, disconnection" },
+        "sensationType": "numbness",
+        "minIntensity": 1,
+        "weight": 0.6
+      }
+    ]
+  },
+  "arms": {
+    "id": "arms",
+    "label": { "ro": "Brate", "en": "Arms" },
+    "description": {
+      "ro": "Zona bratelor — exprima energie, dorinta de actiune sau retragere",
+      "en": "Arm area — express energy, desire for action or withdrawal"
+    },
+    "color": "#22c55e",
+    "svgRegionId": "arms",
+    "group": "arms",
+    "commonSensations": ["heaviness", "lightness", "tension", "tingling", "numbness"],
+    "emotionSignals": [
+      {
+        "emotionId": "joy",
+        "emotionLabel": { "ro": "Bucurie", "en": "Joy" },
+        "emotionColor": "#fbbf24",
+        "emotionDescription": { "ro": "Brate usoare, dorinta de a imbratisa, energie libera", "en": "Light arms, desire to embrace, free energy" },
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "sadness",
+        "emotionLabel": { "ro": "Tristete", "en": "Sadness" },
+        "emotionColor": "#3b82f6",
+        "emotionDescription": { "ro": "Brate grele, lipsa de energie, dorinta de retragere", "en": "Heavy arms, lack of energy, desire to withdraw" },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "anger",
+        "emotionLabel": { "ro": "Furie", "en": "Anger" },
+        "emotionColor": "#ef4444",
+        "emotionDescription": { "ro": "Tensiune in brate, dorinta de a actiona, energie agresiva", "en": "Arm tension, urge to act, aggressive energy" },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.6
+      }
+    ]
+  },
+  "legs": {
+    "id": "legs",
+    "label": { "ro": "Picioare", "en": "Legs" },
+    "description": {
+      "ro": "Zona picioarelor — asociata cu energie, dorinta de fuga, neliniste, stabilitate",
+      "en": "Leg area — associated with energy, urge to flee, restlessness, stability"
+    },
+    "color": "#14b8a6",
+    "svgRegionId": "legs",
+    "group": "legs",
+    "commonSensations": ["heaviness", "lightness", "tension", "tingling", "numbness"],
+    "emotionSignals": [
+      {
+        "emotionId": "joy",
+        "emotionLabel": { "ro": "Bucurie", "en": "Joy" },
+        "emotionColor": "#fbbf24",
+        "emotionDescription": { "ro": "Picioare usoare, dorinta de a sari, energie debordanta", "en": "Light legs, urge to jump, overflowing energy" },
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "sadness",
+        "emotionLabel": { "ro": "Tristete", "en": "Sadness" },
+        "emotionColor": "#3b82f6",
+        "emotionDescription": { "ro": "Picioare grele, slabiciune, lipsa de vointa de a te misca", "en": "Heavy legs, weakness, lack of will to move" },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "emotionDescription": { "ro": "Neliniste in picioare, dorinta de a fugi, tremur", "en": "Restless legs, urge to flee, trembling" },
+        "sensationType": "tingling",
+        "minIntensity": 1,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "fear",
+        "emotionLabel": { "ro": "Frica", "en": "Fear" },
+        "emotionColor": "#059669",
+        "emotionDescription": { "ro": "Picioare tremurande, senzatie de a fi paralizat, slabiciune", "en": "Trembling legs, feeling paralyzed, weakness" },
+        "sensationType": "numbness",
+        "minIntensity": 2,
+        "weight": 0.6
+      }
+    ]
+  },
+  "feet": {
+    "id": "feet",
+    "label": { "ro": "Tălpi", "en": "Feet" },
+    "description": {
+      "ro": "Zona talpilor — legata de impamantrare, conexiune cu prezentul, deconectare",
+      "en": "Feet area — linked to grounding, connection with the present, disconnection"
+    },
+    "color": "#a3e635",
+    "svgRegionId": "feet",
+    "group": "legs",
+    "commonSensations": ["tingling", "warmth", "numbness", "heaviness", "lightness"],
+    "emotionSignals": [
+      {
+        "emotionId": "grounding",
+        "emotionLabel": { "ro": "Împământare", "en": "Grounding" },
+        "emotionColor": "#84cc16",
+        "emotionDescription": { "ro": "Senzatie de stabilitate, conectare cu pamantul, prezenta", "en": "Feeling of stability, earth connection, presence" },
+        "sensationType": "warmth",
+        "minIntensity": 1,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "emotionDescription": { "ro": "Furnicaturi in talpi, dorinta de a fugi, neliniste", "en": "Tingling in feet, urge to run, restlessness" },
+        "sensationType": "tingling",
+        "minIntensity": 1,
+        "weight": 0.5
+      },
+      {
+        "emotionId": "dissociation",
+        "emotionLabel": { "ro": "Disociere", "en": "Dissociation" },
+        "emotionColor": "#d1d5db",
+        "emotionDescription": { "ro": "Amorteala in talpi, senzatie de plutire, deconectare de corp", "en": "Feet numbness, floating sensation, body disconnection" },
+        "sensationType": "numbness",
+        "minIntensity": 1,
+        "weight": 0.7
+      }
+    ]
+  }
+}
