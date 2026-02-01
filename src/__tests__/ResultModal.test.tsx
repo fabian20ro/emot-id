@@ -117,8 +117,45 @@ describe('ResultModal', () => {
   it('renders AI link', () => {
     const results = [makeResult('joy')]
     renderModal({ results, selections: [makeEmotion('joy')] })
-    const link = screen.getByText(/Explore with AI/)
+    const link = screen.getByText(/Learn more about these emotions/)
     expect(link).toHaveAttribute('href')
     expect(link.getAttribute('href')).toContain('google.com/search')
+  })
+
+  it('shows reflection prompt', () => {
+    const results = [makeResult('joy')]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+    expect(screen.getByText('Does this feel right?')).toBeInTheDocument()
+  })
+
+  it('shows crisis resources for high-distress results', () => {
+    const results = [makeResult('despair'), makeResult('rage')]
+    renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('rage')] })
+    expect(screen.getByText(/difficult time/)).toBeInTheDocument()
+    expect(screen.getByText(/116 123/)).toBeInTheDocument()
+  })
+
+  it('does not show crisis resources for non-distress results', () => {
+    const results = [makeResult('joy'), makeResult('trust')]
+    renderModal({ results, selections: [makeEmotion('joy'), makeEmotion('trust')] })
+    expect(screen.queryByText(/difficult time/)).not.toBeInTheDocument()
+  })
+
+  it('shows needs when present in result', () => {
+    const results = [makeResult('joy', { needs: { ro: 'partajare', en: 'sharing and expression' } })]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+    expect(screen.getByText('sharing and expression')).toBeInTheDocument()
+  })
+
+  it('shows match strength when present', () => {
+    const results = [makeResult('anger', { matchStrength: { ro: 'rezonanță puternică', en: 'strong resonance' } })]
+    renderModal({ results, selections: [makeEmotion('anger')] })
+    expect(screen.getByText('strong resonance')).toBeInTheDocument()
+  })
+
+  it('shows AI warning text', () => {
+    const results = [makeResult('joy')]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+    expect(screen.getByText(/not a substitute for professional support/)).toBeInTheDocument()
   })
 })

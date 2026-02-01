@@ -2,6 +2,7 @@ export interface BaseEmotion {
   id: string
   label: { ro: string; en: string }
   description?: { ro: string; en: string }
+  needs?: { ro: string; en: string }
   color: string
   intensity?: number
 }
@@ -11,8 +12,12 @@ export interface AnalysisResult {
   label: { ro: string; en: string }
   color: string
   description?: { ro: string; en: string }
+  needs?: { ro: string; en: string }
   componentLabels?: { ro: string; en: string }[]
   hierarchyPath?: { ro: string; en: string }[]
+  matchStrength?: { ro: string; en: string }
+  valence?: number
+  arousal?: number
 }
 
 export interface ModelState {

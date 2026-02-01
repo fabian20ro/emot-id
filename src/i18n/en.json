@@ -15,24 +15,51 @@
     "button": "Analyze",
     "buttonDisabled": "Select an emotion bubble that resonates with you the most right now",
     "resultPrefix": "Your selections",
-    "exploreAI": "Explore with AI",
+    "exploreAI": "Learn more about these emotions",
     "aiPrompt": "I am feeling {emotions}. What does this emotion mean and how can I understand it better?",
-    "aiPromptMultiple": "I am feeling a combination of {emotions}. How do these emotions relate and what might this mean?"
+    "aiPromptMultiple": "I am feeling a combination of {emotions}. How do these emotions relate and what might this mean?",
+    "aiWarning": "This will search for general information online. Results are not a substitute for professional support."
   },
   "modal": {
     "close": "Close",
     "title": "Analysis result",
     "noCombinations": "No combinations found from your selections",
     "combinationsFound": "Found combinations",
-    "showDescription": "Show description"
+    "showDescription": "Show description",
+    "needsLabel": "This emotion often needs",
+    "matchStrengthLabel": "Match"
+  },
+  "reflection": {
+    "prompt": "Does this feel right?",
+    "yes": "Yes, this resonates",
+    "partly": "Partly",
+    "no": "Not quite",
+    "followUp": "Would you like to explore further?",
+    "backToModel": "Go back and explore",
+    "stayHere": "That's okay for now"
+  },
+  "crisis": {
+    "message": "It sounds like you may be going through a difficult time. You don't have to go through it alone.",
+    "roLine": "Romania: 116 123 (free, 24/7)",
+    "intLine": "International: findahelpline.com",
+    "disclaimer": "If you are in immediate danger, please call emergency services."
+  },
+  "disclaimer": {
+    "title": "About this app",
+    "text": "This app supports emotional self-awareness. It is not a diagnostic tool and does not replace professional mental health support. If you are experiencing distress, please reach out to a qualified professional.",
+    "label": "Disclaimer"
   },
   "somatic": {
     "pickSensation": "What do you feel here?",
     "pickIntensity": "How intense?",
     "nothingHere": "Nothing here",
     "guidedStart": "Take a breath. Notice your body.",
+    "guidedBreathIn": "Breathe in...",
+    "guidedBreathOut": "Breathe out...",
+    "guidedTakeMoreTime": "Take more time",
     "guidedPrompt": "What do you notice in your {region}?",
     "guidedSkip": "Nothing here",
+    "guidedSkipGroup": "Skip this area",
     "guidedDone": "Body scan complete",
     "guidedMode": "Guided scan",
     "freeMode": "Free selection"

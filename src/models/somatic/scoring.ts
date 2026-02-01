@@ -10,10 +10,15 @@ const MINIMUM_THRESHOLD = 0.5
 const MAX_RESULTS = 4
 const COHERENCE_BONUS = 1.2
 
+/** Absolute score floor: if the best score is below this, downgrade all labels */
+const STRONG_FLOOR = 1.0
+const POSSIBLE_FLOOR = 0.6
+
 function getMatchStrength(score: number, maxScore: number): { ro: string; en: string } {
   const ratio = maxScore > 0 ? score / maxScore : 0
-  if (ratio >= 0.7) return { ro: 'rezonanță puternică', en: 'strong resonance' }
-  if (ratio >= 0.4) return { ro: 'conexiune posibilă', en: 'possible connection' }
+  // Apply absolute floor: even the top result can't claim "strong" if scores are low
+  if (ratio >= 0.7 && score >= STRONG_FLOOR) return { ro: 'rezonanță puternică', en: 'strong resonance' }
+  if (ratio >= 0.4 && score >= POSSIBLE_FLOOR) return { ro: 'conexiune posibilă', en: 'possible connection' }
   return { ro: 'merită explorat', en: 'worth exploring' }
 }
 
@@ -27,6 +32,7 @@ export function scoreSomaticSelections(selections: SomaticSelection[]): ScoredEm
       emotionLabel: { ro: string; en: string }
       emotionColor: string
       emotionDescription?: { ro: string; en: string }
+      emotionNeeds?: { ro: string; en: string }
       score: number
       contributingRegions: { ro: string; en: string }[]
       contributingGroups: Set<BodyGroup>
@@ -56,6 +62,7 @@ export function scoreSomaticSelections(selections: SomaticSelection[]): ScoredEm
           emotionLabel: signal.emotionLabel,
           emotionColor: signal.emotionColor,
           emotionDescription: signal.emotionDescription,
+          emotionNeeds: signal.emotionNeeds,
           score: contribution,
           contributingRegions: [selection.label],
           contributingGroups: new Set([selection.group]),
@@ -83,6 +90,7 @@ export function scoreSomaticSelections(selections: SomaticSelection[]): ScoredEm
     label: entry.emotionLabel,
     color: entry.emotionColor,
     description: entry.emotionDescription,
+    needs: entry.emotionNeeds,
     componentLabels: entry.contributingRegions,
     score: entry.score,
     matchStrength: getMatchStrength(entry.score, maxScore),

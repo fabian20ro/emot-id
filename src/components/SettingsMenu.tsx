@@ -12,6 +12,7 @@ interface SettingsMenuProps {
 export function SettingsMenu({ isOpen, onClose, modelId, onModelChange }: SettingsMenuProps) {
   const { language, setLanguage, t } = useLanguage()
   const availableModels = getAvailableModels()
+  const disclaimerT = (t as Record<string, Record<string, string>>).disclaimer ?? {}
 
   return (
     <AnimatePresence>
@@ -89,6 +90,18 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange }: Settin
                     </span>
                   </button>
                 ))}
+              </div>
+
+              {/* Disclaimer */}
+              <div className="px-2 pb-2 pt-1 border-t border-gray-700 mt-1">
+                <details className="group">
+                  <summary className="px-3 py-2 text-xs text-gray-500 cursor-pointer hover:text-gray-400 transition-colors select-none">
+                    {disclaimerT.label ?? 'Disclaimer'}
+                  </summary>
+                  <p className="px-3 py-2 text-xs text-gray-500 leading-relaxed">
+                    {disclaimerT.text ?? 'This app supports emotional self-awareness. It is not a diagnostic tool and does not replace professional mental health support.'}
+                  </p>
+                </details>
               </div>
             </div>
           </motion.div>

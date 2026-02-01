@@ -17,6 +17,7 @@ export interface EmotionSignal {
   emotionLabel: { ro: string; en: string }
   emotionColor: string
   emotionDescription?: { ro: string; en: string }
+  emotionNeeds?: { ro: string; en: string }
   sensationType: SensationType
   minIntensity: 1 | 2 | 3
   weight: number

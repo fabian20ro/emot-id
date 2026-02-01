@@ -15,24 +15,51 @@
     "button": "Analizeaza",
     "buttonDisabled": "Selecteaza o bula de emotie care rezoneaza cel mai mult cu tine acum",
     "resultPrefix": "Selectiile tale",
-    "exploreAI": "Exploreaza cu AI",
+    "exploreAI": "Afla mai multe despre aceste emotii",
     "aiPrompt": "Simt {emotions}. Ce inseamna aceasta emotie si cum o pot intelege mai bine?",
-    "aiPromptMultiple": "Simt o combinatie de {emotions}. Cum se leaga aceste emotii si ce ar putea insemna?"
+    "aiPromptMultiple": "Simt o combinatie de {emotions}. Cum se leaga aceste emotii si ce ar putea insemna?",
+    "aiWarning": "Aceasta va cauta informatii generale online. Rezultatele nu inlocuiesc sprijinul profesional."
   },
   "modal": {
     "close": "Inchide",
     "title": "Rezultatul analizei",
     "noCombinations": "Nu s-au gasit combinatii din selectiile tale",
     "combinationsFound": "Combinatii gasite",
-    "showDescription": "Arata descrierea"
+    "showDescription": "Arata descrierea",
+    "needsLabel": "Aceasta emotie are nevoie adesea de",
+    "matchStrengthLabel": "Potrivire"
+  },
+  "reflection": {
+    "prompt": "Rezonezi cu acest rezultat?",
+    "yes": "Da, rezonez",
+    "partly": "Partial",
+    "no": "Nu prea",
+    "followUp": "Doresti sa explorezi mai departe?",
+    "backToModel": "Inapoi la explorare",
+    "stayHere": "E bine asa deocamdata"
+  },
+  "crisis": {
+    "message": "Se pare ca treci printr-o perioada dificila. Nu trebuie sa treci prin asta singur/a.",
+    "roLine": "Romania: 116 123 (gratuit, 24/7)",
+    "intLine": "International: findahelpline.com",
+    "disclaimer": "Daca esti in pericol imediat, te rugam sa suni la serviciile de urgenta."
+  },
+  "disclaimer": {
+    "title": "Despre aceasta aplicatie",
+    "text": "Aceasta aplicatie sprijina constientizarea emotionala. Nu este un instrument de diagnostic si nu inlocuieste sprijinul profesional de sanatate mintala. Daca treci printr-o perioada dificila, te rugam sa apelezi la un specialist.",
+    "label": "Disclaimer"
   },
   "somatic": {
     "pickSensation": "Ce simti aici?",
     "pickIntensity": "Cat de intens?",
     "nothingHere": "Nimic aici",
     "guidedStart": "Respira adanc. Observa-ti corpul.",
+    "guidedBreathIn": "Inspira...",
+    "guidedBreathOut": "Expira...",
+    "guidedTakeMoreTime": "Mai mult timp",
     "guidedPrompt": "Ce observi in zona {region}?",
     "guidedSkip": "Nimic aici",
+    "guidedSkipGroup": "Sari peste aceasta zona",
     "guidedDone": "Scanarea corporala s-a incheiat",
     "guidedMode": "Scanare ghidata",
     "freeMode": "Selectie libera"

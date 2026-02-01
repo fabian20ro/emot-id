@@ -102,6 +102,7 @@ export default function App() {
       <ResultModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        onExploreMore={handleClear}
         selections={selections}
         results={analysisResults}
       />

@@ -1,24 +1,24 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import { SENSATION_CONFIG } from './SensationPicker'
 import type { SomaticRegion, SensationType } from '../models/somatic/types'
 
-/** Scan order interleaving front/back by vertical level */
-const SCAN_ORDER = [
-  // Head group
-  'head', 'forehead', 'eyes', 'jaw',
-  // Neck/shoulder group (throat, shoulders, upper-back)
-  'throat', 'shoulders', 'upper-back',
-  // Torso group (chest, stomach, lower-back)
-  'chest', 'stomach', 'lower-back',
-  // Arms group
-  'arms', 'hands',
-  // Legs group
-  'legs', 'feet',
-]
+/** Body groups with their region IDs, ordered head-to-feet */
+const BODY_GROUPS = [
+  { id: 'head', regions: ['head', 'forehead', 'eyes', 'jaw'] },
+  { id: 'neck', regions: ['throat', 'shoulders', 'upper-back'] },
+  { id: 'torso', regions: ['chest', 'stomach', 'lower-back'] },
+  { id: 'arms', regions: ['arms', 'hands'] },
+  { id: 'legs', regions: ['legs', 'feet'] },
+] as const
+
+/** Flat scan order derived from groups */
+const SCAN_ORDER = BODY_GROUPS.flatMap((g) => g.regions)
 
 const CENTERING_DURATION_MS = 10000
+const EXTENDED_CENTERING_MS = 30000
+const BREATH_CYCLE_MS = 5000
 
 interface GuidedScanProps {
   regions: Map<string, SomaticRegion>
@@ -29,6 +29,27 @@ interface GuidedScanProps {
 
 type ScanPhase = 'centering' | 'scanning' | 'complete'
 
+/** Find which group a region index belongs to */
+function getGroupForIndex(index: number): string | undefined {
+  let offset = 0
+  for (const group of BODY_GROUPS) {
+    if (index < offset + group.regions.length) return group.id
+    offset += group.regions.length
+  }
+  return undefined
+}
+
+/** Get the next index after skipping the current group */
+function getNextGroupStartIndex(currentIndex: number): number {
+  let offset = 0
+  for (const group of BODY_GROUPS) {
+    const groupEnd = offset + group.regions.length
+    if (currentIndex < groupEnd) return groupEnd
+    offset = groupEnd
+  }
+  return SCAN_ORDER.length
+}
+
 export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }: GuidedScanProps) {
   const { language, t } = useLanguage()
   const somaticT = (t as Record<string, Record<string, string>>).somatic ?? {}
@@ -36,9 +57,46 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   const [phase, setPhase] = useState<ScanPhase>('centering')
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedSensation, setSelectedSensation] = useState<SensationType | null>(null)
+  const [centeringDuration, setCenteringDuration] = useState(CENTERING_DURATION_MS)
+  const [breathPhase, setBreathPhase] = useState<'in' | 'out'>('in')
 
   const currentRegionId = SCAN_ORDER[currentIndex]
   const currentRegion = currentRegionId ? regions.get(currentRegionId) : undefined
+  const currentGroupId = getGroupForIndex(currentIndex)
+
+  // Breathing cycle: alternate in/out every half-cycle
+  useEffect(() => {
+    if (phase !== 'centering') return
+    const halfCycle = BREATH_CYCLE_MS / 2
+    const interval = setInterval(() => {
+      setBreathPhase((prev) => (prev === 'in' ? 'out' : 'in'))
+    }, halfCycle)
+    return () => clearInterval(interval)
+  }, [phase])
+
+  // Check if current region is first in its group (to show group skip)
+  const isFirstInGroup = useMemo(() => {
+    let offset = 0
+    for (const group of BODY_GROUPS) {
+      if (currentIndex === offset) return true
+      offset += group.regions.length
+    }
+    return false
+  }, [currentIndex])
+
+  // Group label for skip button
+  const groupLabel = useMemo(() => {
+    if (!currentGroupId) return ''
+    const groupRegions = BODY_GROUPS.find((g) => g.id === currentGroupId)?.regions ?? []
+    const firstId = groupRegions[0]
+    const lastId = groupRegions[groupRegions.length - 1]
+    const firstRegion = firstId ? regions.get(firstId) : undefined
+    const lastRegion = lastId ? regions.get(lastId) : undefined
+    if (firstRegion && lastRegion && firstRegion.id !== lastRegion.id) {
+      return `${firstRegion.label[language]} - ${lastRegion.label[language]}`
+    }
+    return firstRegion?.label[language] ?? ''
+  }, [currentGroupId, regions, language])
 
   // Highlight current region during scan
   useEffect(() => {
@@ -50,12 +108,12 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
     return () => onHighlight(null)
   }, [phase, currentRegionId, onHighlight])
 
-  // Auto-advance from centering after 10 seconds
+  // Auto-advance from centering
   useEffect(() => {
     if (phase !== 'centering') return
-    const timer = setTimeout(() => setPhase('scanning'), CENTERING_DURATION_MS)
+    const timer = setTimeout(() => setPhase('scanning'), centeringDuration)
     return () => clearTimeout(timer)
-  }, [phase])
+  }, [phase, centeringDuration])
 
   const advanceOrComplete = useCallback(() => {
     setSelectedSensation(null)
@@ -71,6 +129,17 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   const handleSkip = useCallback(() => {
     advanceOrComplete()
   }, [advanceOrComplete])
+
+  const handleSkipGroup = useCallback(() => {
+    setSelectedSensation(null)
+    const nextIndex = getNextGroupStartIndex(currentIndex)
+    if (nextIndex >= SCAN_ORDER.length) {
+      setPhase('complete')
+      onHighlight(null)
+    } else {
+      setCurrentIndex(nextIndex)
+    }
+  }, [currentIndex, onHighlight])
 
   const handleSensationPick = useCallback(
     (sensation: SensationType) => {
@@ -93,6 +162,10 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
     setPhase('scanning')
   }, [])
 
+  const handleExtendCentering = useCallback(() => {
+    setCenteringDuration(EXTENDED_CENTERING_MS)
+  }, [])
+
   const progress = phase === 'scanning'
     ? ((currentIndex + 1) / SCAN_ORDER.length) * 100
     : phase === 'complete'
@@ -102,7 +175,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   return (
     <div className="absolute inset-0 z-30 flex items-end justify-center pointer-events-none">
       <AnimatePresence mode="wait">
-        {/* Centering phase — 10s breathing cycle */}
+        {/* Centering phase — breathing cycle */}
         {phase === 'centering' && (
           <motion.div
             key="centering"
@@ -113,37 +186,56 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
           >
             <motion.div
               animate={{
-                scale: [1, 1.15, 1],
-                opacity: [0.7, 1, 0.7],
+                scale: breathPhase === 'in' ? [1, 1.15] : [1.15, 1],
+                opacity: breathPhase === 'in' ? [0.7, 1] : [1, 0.7],
               }}
               transition={{
-                repeat: Infinity,
-                duration: 5,
+                duration: BREATH_CYCLE_MS / 2000,
                 ease: 'easeInOut',
               }}
-              className="text-4xl mb-4"
+              className="text-4xl mb-3"
             >
               🫁
             </motion.div>
-            <p className="text-gray-200 text-lg mb-2">
+            <p className="text-gray-200 text-lg mb-1">
               {somaticT.guidedStart ?? 'Take a breath. Notice your body.'}
             </p>
+            <motion.p
+              key={breathPhase}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-indigo-300 text-sm mb-3"
+            >
+              {breathPhase === 'in'
+                ? (somaticT.guidedBreathIn ?? 'Breathe in...')
+                : (somaticT.guidedBreathOut ?? 'Breathe out...')}
+            </motion.p>
             <motion.div
-              className="w-full h-1 bg-gray-700 rounded-full mt-4 overflow-hidden"
+              className="w-full h-1 bg-gray-700 rounded-full overflow-hidden"
             >
               <motion.div
                 className="h-full bg-indigo-500/50 rounded-full"
                 initial={{ width: '0%' }}
                 animate={{ width: '100%' }}
-                transition={{ duration: CENTERING_DURATION_MS / 1000, ease: 'linear' }}
+                transition={{ duration: centeringDuration / 1000, ease: 'linear' }}
               />
             </motion.div>
-            <button
-              onClick={handleSkipCentering}
-              className="text-sm text-gray-500 hover:text-gray-300 transition-colors mt-3"
-            >
-              →
-            </button>
+            <div className="flex items-center justify-center gap-4 mt-3">
+              {centeringDuration === CENTERING_DURATION_MS && (
+                <button
+                  onClick={handleExtendCentering}
+                  className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors"
+                >
+                  {somaticT.guidedTakeMoreTime ?? 'Take more time'}
+                </button>
+              )}
+              <button
+                onClick={handleSkipCentering}
+                className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+              >
+                →
+              </button>
+            </div>
           </motion.div>
         )}
 
@@ -229,12 +321,25 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
               </div>
             )}
 
-            <button
-              onClick={handleSkip}
-              className="w-full text-sm text-gray-500 hover:text-gray-400 transition-colors py-2"
-            >
-              {somaticT.guidedSkip ?? 'Nothing here'} →
-            </button>
+            <div className="flex items-center justify-between">
+              <button
+                onClick={handleSkip}
+                className="text-sm text-gray-500 hover:text-gray-400 transition-colors py-2"
+              >
+                {somaticT.guidedSkip ?? 'Nothing here'} →
+              </button>
+
+              {/* Group skip — shown when at first region of a group */}
+              {isFirstInGroup && (
+                <button
+                  onClick={handleSkipGroup}
+                  className="text-xs text-gray-600 hover:text-gray-400 transition-colors py-2"
+                  title={groupLabel}
+                >
+                  {somaticT.guidedSkipGroup ?? 'Skip this area'} →
+                </button>
+              )}
+            </div>
           </motion.div>
         )}
 

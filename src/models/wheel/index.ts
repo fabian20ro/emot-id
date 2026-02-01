@@ -92,6 +92,7 @@ export const wheelModel: EmotionModel<WheelEmotion> = {
         label: s.label,
         color: s.color,
         description: s.description,
+        needs: s.needs,
         hierarchyPath: path.length > 1 ? path : undefined,
       }
     })
