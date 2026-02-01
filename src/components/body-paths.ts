@@ -1,6 +1,6 @@
 /** SVG path data for 14 body regions in a 200×440 viewBox */
 
-export interface BodyRegionPath {
+interface BodyRegionPath {
   id: string
   d: string
   /** Anchor point for popover positioning (relative to viewBox) */
@@ -86,7 +86,3 @@ export const bodyRegionPaths: BodyRegionPath[] = [
   },
 ]
 
-/** Map from region ID to path data for O(1) lookup */
-export const bodyRegionPathMap = new Map(
-  bodyRegionPaths.map((p) => [p.id, p])
-)

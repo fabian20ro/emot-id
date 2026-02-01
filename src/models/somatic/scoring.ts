@@ -1,7 +1,7 @@
 import type { AnalysisResult } from '../types'
 import type { SomaticSelection } from './types'
 
-export interface ScoredEmotion extends AnalysisResult {
+interface ScoredEmotion extends AnalysisResult {
   score: number
   matchStrength: { ro: string; en: string }
 }

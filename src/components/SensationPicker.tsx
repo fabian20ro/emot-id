@@ -169,4 +169,4 @@ export function SensationPicker({
   )
 }
 
-export { SENSATION_CONFIG, INTENSITY_LABELS }
+export { SENSATION_CONFIG }

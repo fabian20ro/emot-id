@@ -187,4 +187,3 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   )
 }
 
-export { SCAN_ORDER }
