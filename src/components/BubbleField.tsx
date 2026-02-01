@@ -1,13 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { Bubble } from './Bubble'
-import type { BaseEmotion } from '../models/types'
-
-interface BubbleFieldProps {
-  emotions: BaseEmotion[]
-  onSelect: (emotion: BaseEmotion) => void
-  sizes: Map<string, 'small' | 'medium' | 'large'>
-}
+import type { BaseEmotion, VisualizationProps } from '../models/types'
 
 const sizePixels = { small: 80, medium: 100, large: 120 }
 const bubbleHeight = 40
@@ -75,7 +69,7 @@ export function BubbleField({
   emotions,
   onSelect,
   sizes,
-}: BubbleFieldProps) {
+}: VisualizationProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
   const [positions, setPositions] = useState<Map<string, { x: number; y: number }>>(new Map())

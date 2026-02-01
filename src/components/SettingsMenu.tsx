@@ -81,7 +81,12 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange }: Settin
                         : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                     }`}
                   >
-                    {m.name}
+                    <span className="block">{m.name}</span>
+                    <span className={`block text-xs mt-0.5 ${
+                      modelId === m.id ? 'text-purple-200' : 'text-gray-400'
+                    }`}>
+                      {m.description[language]}
+                    </span>
                   </button>
                 ))}
               </div>

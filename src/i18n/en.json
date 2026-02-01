@@ -29,6 +29,7 @@
     "close": "Close",
     "title": "Analysis result",
     "noCombinations": "No combinations found from your selections",
-    "combinationsFound": "Found combinations"
+    "combinationsFound": "Found combinations",
+    "showDescription": "Show description"
   }
 }

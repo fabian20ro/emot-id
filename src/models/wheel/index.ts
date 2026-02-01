@@ -17,6 +17,10 @@ const CENTER_IDS = [
 export const wheelModel: EmotionModel<WheelEmotion> = {
   id: 'wheel',
   name: 'Emotion Wheel',
+  description: {
+    ro: 'Navigare ierarhica pe 3 nivele — de la emotii generale la specifice prin explorare in profunzime',
+    en: '3-level hierarchical navigation — from general to specific emotions through drill-down exploration',
+  },
   allEmotions,
 
   get initialState(): ModelState {
@@ -45,23 +49,22 @@ export const wheelModel: EmotionModel<WheelEmotion> = {
       }
     }
 
-    // Leaf node: keep current visible set, let default selection behavior add it
-    return { newState: state }
-  },
-
-  onDeselect(emotion: WheelEmotion, state: ModelState): SelectionEffect {
-    // Go back to showing siblings (parent's children, or root if no parent)
-    const parent = emotion.parent ? allEmotions[emotion.parent] : null
-    const siblingsOrRoot = parent?.children ?? CENTER_IDS
-    const gen = Math.max(0, state.currentGeneration - 1)
-    const newMap = new Map(siblingsOrRoot.map((id) => [id, gen] as [string, number]))
-
+    // Leaf node: add to selections, then reset to root for next pick
     return {
       newState: {
-        visibleEmotionIds: newMap,
-        currentGeneration: gen,
+        visibleEmotionIds: new Map(CENTER_IDS.map((id) => [id, 0])),
+        currentGeneration: 0,
       },
-      newSelections: [],
+    }
+  },
+
+  onDeselect(_emotion: WheelEmotion, _state: ModelState): SelectionEffect {
+    // Reset to root — let the hook's default behavior remove only the deselected emotion
+    return {
+      newState: {
+        visibleEmotionIds: new Map(CENTER_IDS.map((id) => [id, 0])),
+        currentGeneration: 0,
+      },
     }
   },
 
@@ -73,12 +76,25 @@ export const wheelModel: EmotionModel<WheelEmotion> = {
   },
 
   analyze(selections: WheelEmotion[]): AnalysisResult[] {
-    return selections.map((s) => ({
-      id: s.id,
-      label: s.label,
-      color: s.color,
-      description: s.description,
-    }))
+    return selections.map((s) => {
+      const path: { ro: string; en: string }[] = []
+      let current: WheelEmotion | undefined = s
+      let depth = 0
+      while (current && depth < 10) {
+        path.push(current.label)
+        current = current.parent ? allEmotions[current.parent] : undefined
+        depth++
+      }
+      path.reverse()
+
+      return {
+        id: s.id,
+        label: s.label,
+        color: s.color,
+        description: s.description,
+        hierarchyPath: path.length > 1 ? path : undefined,
+      }
+    })
   },
 
   getEmotionSize(emotionId: string): 'small' | 'medium' | 'large' {

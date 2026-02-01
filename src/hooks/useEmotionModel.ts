@@ -3,7 +3,7 @@ import type { BaseEmotion, AnalysisResult, ModelState } from '../models/types'
 import { getModel, defaultModelId } from '../models/registry'
 
 export function useEmotionModel(modelId: string = defaultModelId) {
-  const model = getModel(modelId)!
+  const model = getModel(modelId) ?? getModel(defaultModelId)!
 
   const [selections, setSelections] = useState<BaseEmotion[]>([])
   const [modelState, setModelState] = useState<ModelState>(() => model.initialState)

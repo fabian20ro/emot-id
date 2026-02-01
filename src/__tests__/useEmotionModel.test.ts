@@ -1,0 +1,150 @@
+import { describe, it, expect } from 'vitest'
+import { renderHook, act } from '@testing-library/react'
+import { useEmotionModel } from '../hooks/useEmotionModel'
+
+describe('useEmotionModel', () => {
+  it('starts with empty selections', () => {
+    const { result } = renderHook(() => useEmotionModel('plutchik'))
+    expect(result.current.selections).toEqual([])
+  })
+
+  it('returns visible emotions matching initial state', () => {
+    const { result } = renderHook(() => useEmotionModel('plutchik'))
+    expect(result.current.visibleEmotions.length).toBeGreaterThan(0)
+  })
+
+  it('adds emotion to selections on handleSelect', () => {
+    const { result } = renderHook(() => useEmotionModel('plutchik'))
+    const firstEmotion = result.current.visibleEmotions[0]
+
+    act(() => {
+      result.current.handleSelect(firstEmotion)
+    })
+
+    expect(result.current.selections).toHaveLength(1)
+    expect(result.current.selections[0].id).toBe(firstEmotion.id)
+  })
+
+  it('removes emotion from selections on handleDeselect', () => {
+    const { result } = renderHook(() => useEmotionModel('plutchik'))
+    const firstEmotion = result.current.visibleEmotions[0]
+
+    act(() => {
+      result.current.handleSelect(firstEmotion)
+    })
+    expect(result.current.selections).toHaveLength(1)
+
+    act(() => {
+      result.current.handleDeselect(firstEmotion)
+    })
+    expect(result.current.selections).toHaveLength(0)
+  })
+
+  it('clears all selections on handleClear', () => {
+    const { result } = renderHook(() => useEmotionModel('plutchik'))
+    const emotions = result.current.visibleEmotions
+
+    act(() => {
+      result.current.handleSelect(emotions[0])
+      result.current.handleSelect(emotions[1])
+    })
+    expect(result.current.selections.length).toBeGreaterThan(0)
+
+    act(() => {
+      result.current.handleClear()
+    })
+    expect(result.current.selections).toEqual([])
+  })
+
+  it('resets selections when model changes', () => {
+    const { result, rerender } = renderHook(
+      ({ modelId }) => useEmotionModel(modelId),
+      { initialProps: { modelId: 'plutchik' } }
+    )
+
+    const firstEmotion = result.current.visibleEmotions[0]
+    act(() => {
+      result.current.handleSelect(firstEmotion)
+    })
+    expect(result.current.selections).toHaveLength(1)
+
+    rerender({ modelId: 'wheel' })
+    expect(result.current.selections).toEqual([])
+  })
+
+  it('detects combos for plutchik dyads', () => {
+    const { result } = renderHook(() => useEmotionModel('plutchik'))
+    // Select joy and trust (which form "love" in Plutchik)
+    const joy = result.current.visibleEmotions.find((e) => e.id === 'joy')!
+    const trust = result.current.visibleEmotions.find((e) => e.id === 'trust')!
+
+    act(() => {
+      result.current.handleSelect(joy)
+    })
+    act(() => {
+      result.current.handleSelect(trust)
+    })
+
+    expect(result.current.combos.length).toBeGreaterThan(0)
+    expect(result.current.combos[0].componentLabels).toBeDefined()
+  })
+
+  it('analyze returns results based on current selections', () => {
+    const { result } = renderHook(() => useEmotionModel('plutchik'))
+    const firstEmotion = result.current.visibleEmotions[0]
+
+    act(() => {
+      result.current.handleSelect(firstEmotion)
+    })
+
+    const results = result.current.analyze()
+    expect(results).toHaveLength(1)
+    expect(results[0].id).toBe(firstEmotion.id)
+  })
+
+  it('provides sizes for all visible emotions', () => {
+    const { result } = renderHook(() => useEmotionModel('plutchik'))
+    for (const emotion of result.current.visibleEmotions) {
+      expect(result.current.sizes.has(emotion.id)).toBe(true)
+    }
+  })
+
+  describe('wheel model navigation', () => {
+    it('preserves selections when deselecting one in wheel model', () => {
+      const { result } = renderHook(() => useEmotionModel('wheel'))
+
+      // Drill to happy → playful → aroused
+      const happy = result.current.visibleEmotions.find((e) => e.id === 'happy')!
+      act(() => { result.current.handleSelect(happy) })
+
+      const playful = result.current.visibleEmotions.find((e) => e.id === 'playful')!
+      act(() => { result.current.handleSelect(playful) })
+
+      const aroused = result.current.visibleEmotions.find((e) => e.id === 'aroused')!
+      act(() => { result.current.handleSelect(aroused) })
+
+      expect(result.current.selections).toHaveLength(1)
+      expect(result.current.selections[0].id).toBe('aroused')
+
+      // Now select from another branch: sad → lonely → isolated
+      const sad = result.current.visibleEmotions.find((e) => e.id === 'sad')!
+      act(() => { result.current.handleSelect(sad) })
+
+      const lonely = result.current.visibleEmotions.find((e) => e.id === 'lonely')!
+      act(() => { result.current.handleSelect(lonely) })
+
+      const isolated = result.current.visibleEmotions.find((e) => e.id === 'isolated')!
+      act(() => { result.current.handleSelect(isolated) })
+
+      // Should have both selections
+      expect(result.current.selections).toHaveLength(2)
+      expect(result.current.selections.map((s) => s.id)).toContain('aroused')
+      expect(result.current.selections.map((s) => s.id)).toContain('isolated')
+
+      // Deselect aroused — isolated should remain
+      act(() => { result.current.handleDeselect(result.current.selections.find((s) => s.id === 'aroused')!) })
+      expect(result.current.selections).toHaveLength(1)
+      expect(result.current.selections[0].id).toBe('isolated')
+    })
+  })
+})

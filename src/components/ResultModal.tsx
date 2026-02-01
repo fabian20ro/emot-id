@@ -83,6 +83,11 @@ export function ResultModal({ isOpen, onClose, selections, results }: ResultModa
                         border: `2px solid ${result.color}`,
                       }}
                     >
+                      {result.hierarchyPath && (
+                        <span className="text-xs text-gray-400 block mb-1">
+                          {result.hierarchyPath.map((p) => p[language]).join(' > ')}
+                        </span>
+                      )}
                       <span
                         className="text-xl font-bold block"
                         style={{ color: result.color }}
@@ -96,10 +101,21 @@ export function ResultModal({ isOpen, onClose, selections, results }: ResultModa
                             .join(' + ')}
                         </span>
                       )}
-                      {results.length === 1 && result.description && (
-                        <p className="text-sm text-gray-300 mt-2 leading-relaxed">
-                          {result.description[language]}
-                        </p>
+                      {result.description && (
+                        results.length <= 2 ? (
+                          <p className="text-sm text-gray-300 mt-2 leading-relaxed">
+                            {result.description[language]}
+                          </p>
+                        ) : (
+                          <details className="mt-2 group">
+                            <summary className="text-xs text-gray-400 cursor-pointer hover:text-gray-300 transition-colors select-none">
+                              {t.modal.showDescription}
+                            </summary>
+                            <p className="text-sm text-gray-300 mt-1 leading-relaxed">
+                              {result.description[language]}
+                            </p>
+                          </details>
+                        )
                       )}
                     </div>
                   ))}

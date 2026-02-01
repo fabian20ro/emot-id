@@ -1,16 +1,32 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Header } from './components/Header'
 import { SelectionBar } from './components/SelectionBar'
-import { BubbleField } from './components/BubbleField'
 import { AnalyzeButton } from './components/AnalyzeButton'
 import { ResultModal } from './components/ResultModal'
 import { useSound } from './hooks/useSound'
 import { useEmotionModel } from './hooks/useEmotionModel'
-import { defaultModelId } from './models/registry'
+import { defaultModelId, getVisualization } from './models/registry'
+import { BubbleField } from './components/BubbleField'
 import type { BaseEmotion, AnalysisResult } from './models/types'
 
 export default function App() {
-  const [modelId, setModelId] = useState(defaultModelId)
+  const [modelId, setModelId] = useState(() => {
+    try {
+      const saved = localStorage.getItem('emot-id-model')
+      if (saved && getVisualization(saved)) return saved
+    } catch {
+      // localStorage may be unavailable in private browsing
+    }
+    return defaultModelId
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('emot-id-model', modelId)
+    } catch {
+      // localStorage may be unavailable in private browsing
+    }
+  }, [modelId])
 
   const {
     selections,
@@ -22,6 +38,8 @@ export default function App() {
     handleClear: modelClear,
     analyze,
   } = useEmotionModel(modelId)
+
+  const Visualization = getVisualization(modelId) ?? BubbleField
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [analysisResults, setAnalysisResults] = useState<AnalysisResult[]>([])
@@ -73,7 +91,7 @@ export default function App() {
         onClear={handleClear}
       />
 
-      <BubbleField
+      <Visualization
         emotions={visibleEmotions}
         onSelect={handleSelect}
         sizes={sizes}

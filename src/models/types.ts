@@ -12,6 +12,7 @@ export interface AnalysisResult {
   color: string
   description?: { ro: string; en: string }
   componentLabels?: { ro: string; en: string }[]
+  hierarchyPath?: { ro: string; en: string }[]
 }
 
 export interface ModelState {
@@ -24,9 +25,16 @@ export interface SelectionEffect {
   newSelections?: BaseEmotion[]
 }
 
+export interface VisualizationProps {
+  emotions: BaseEmotion[]
+  onSelect: (emotion: BaseEmotion) => void
+  sizes: Map<string, 'small' | 'medium' | 'large'>
+}
+
 export interface EmotionModel<E extends BaseEmotion = BaseEmotion> {
   id: string
   name: string
+  description: { ro: string; en: string }
   allEmotions: Record<string, E>
   initialState: ModelState
   onSelect(emotion: E, state: ModelState, selections: E[]): SelectionEffect

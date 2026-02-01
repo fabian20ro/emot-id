@@ -29,6 +29,7 @@
     "close": "Inchide",
     "title": "Rezultatul analizei",
     "noCombinations": "Nu s-au gasit combinatii din selectiile tale",
-    "combinationsFound": "Combinatii gasite"
+    "combinationsFound": "Combinatii gasite",
+    "showDescription": "Arata descrierea"
   }
 }
