@@ -81,7 +81,7 @@ export const plutchikModel: EmotionModel<PlutchikEmotion> = {
 
     if (selections.length === 1) {
       const s = selections[0]
-      return [{ id: s.id, label: s.label, color: s.color }]
+      return [{ id: s.id, label: s.label, color: s.color, description: s.description }]
     }
 
     const results: AnalysisResult[] = []
@@ -97,6 +97,7 @@ export const plutchikModel: EmotionModel<PlutchikEmotion> = {
             id: emotion.id,
             label: emotion.label,
             color: emotion.color,
+            description: emotion.description,
             componentLabels: [comp1.label, comp2.label],
           })
         }

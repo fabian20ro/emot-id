@@ -96,6 +96,11 @@ export function ResultModal({ isOpen, onClose, selections, results }: ResultModa
                             .join(' + ')}
                         </span>
                       )}
+                      {results.length === 1 && result.description && (
+                        <p className="text-sm text-gray-300 mt-2 leading-relaxed">
+                          {result.description[language]}
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>

@@ -77,7 +77,7 @@ export const wheelModel: EmotionModel<WheelEmotion> = {
       id: s.id,
       label: s.label,
       color: s.color,
-      description: `Level ${s.level}`,
+      description: s.description,
     }))
   },
 

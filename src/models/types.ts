@@ -1,6 +1,7 @@
 export interface BaseEmotion {
   id: string
   label: { ro: string; en: string }
+  description?: { ro: string; en: string }
   color: string
   intensity?: number
 }
@@ -9,7 +10,7 @@ export interface AnalysisResult {
   id: string
   label: { ro: string; en: string }
   color: string
-  description?: string
+  description?: { ro: string; en: string }
   componentLabels?: { ro: string; en: string }[]
 }
 

@@ -2,6 +2,10 @@
   "joy": {
     "id": "joy",
     "label": { "ro": "bucurie", "en": "joy" },
+    "description": {
+      "ro": "Bucuria este o emotie primara care semnaleaza ca nevoile tale fundamentale sunt satisfacute. Apare cand experimentezi conexiune, implinire sau reusita. Este combustibilul motivational al vietii — te deschide catre lume, iti amplifica creativitatea si intareste relatiile. Bucuria autentica nu depinde de circumstante externe perfecte, ci de capacitatea ta de a fi prezent si receptiv la ceea ce este bun in viata ta.",
+      "en": "Joy is a primary emotion signaling that your fundamental needs are being met. It arises when you experience connection, fulfillment, or achievement. It is life's motivational fuel — it opens you to the world, amplifies your creativity, and strengthens relationships. Authentic joy doesn't depend on perfect external circumstances, but on your capacity to be present and receptive to what is good in your life."
+    },
     "category": "primary",
     "color": "#FFE66D",
     "intensity": 0.5,
@@ -11,6 +15,10 @@
   "serenity": {
     "id": "serenity",
     "label": { "ro": "seninătate", "en": "serenity" },
+    "description": {
+      "ro": "Seninatatea este forma blanda a bucuriei — o liniste interioara calda care apare cand nu exista amenintari si te simti in siguranta. Este starea de echilibru in care mintea se opreste din cautare si corpul se relaxeaza. Seninatatea nu este absenta emotiilor, ci prezenta unei acceptari profunde a momentului prezent.",
+      "en": "Serenity is the gentle form of joy — a warm inner stillness that arises when there are no threats and you feel safe. It is the state of balance where the mind stops searching and the body relaxes. Serenity is not the absence of emotions, but the presence of a deep acceptance of the present moment."
+    },
     "category": "intensity",
     "color": "#FFF59D",
     "intensity": 0.3,
@@ -20,6 +28,10 @@
   "ecstasy": {
     "id": "ecstasy",
     "label": { "ro": "extaz", "en": "ecstasy" },
+    "description": {
+      "ro": "Extazul este forma cea mai intensa a bucuriei — o stare de euforie coplesitoare in care simti ca depasesti limitele sinelui obisnuit. Poate aparea in momente de realizare extraordinara, conexiune profunda sau experienta spirituala. Desi puternic si transformator, extazul este tranzitoriu prin natura sa si nu poate fi sustinut indefinit.",
+      "en": "Ecstasy is the most intense form of joy — an overwhelming state of euphoria where you feel you transcend the boundaries of your ordinary self. It can arise in moments of extraordinary achievement, deep connection, or spiritual experience. Though powerful and transformative, ecstasy is transient by nature and cannot be sustained indefinitely."
+    },
     "category": "intensity",
     "color": "#FFD700",
     "intensity": 0.8,
@@ -29,6 +41,10 @@
   "trust": {
     "id": "trust",
     "label": { "ro": "încredere", "en": "trust" },
+    "description": {
+      "ro": "Increderea este emotia care face posibila conexiunea umana. Ea semnaleaza ca te simti suficient de sigur pentru a fi vulnerabil in prezenta celuilalt. Se construieste lent, prin experienta repetata a fiabilitatii, si se poate prabusi rapid. Increderea sanatoasa nu este naivitate — este o evaluare emotionala informata ca riscul relatiei merita asumat.",
+      "en": "Trust is the emotion that makes human connection possible. It signals that you feel safe enough to be vulnerable in the presence of another. It builds slowly, through repeated experience of reliability, and can collapse quickly. Healthy trust is not naivety — it is an informed emotional assessment that the risk of relationship is worth taking."
+    },
     "category": "primary",
     "color": "#A8E6CF",
     "intensity": 0.5,
@@ -38,6 +54,10 @@
   "acceptance": {
     "id": "acceptance",
     "label": { "ro": "acceptare", "en": "acceptance" },
+    "description": {
+      "ro": "Acceptarea este forma calma a increderii — disponibilitatea de a primi ceea ce este fara a incerca sa schimbi. Nu inseamna resemnare sau pasivitate, ci recunoasterea lucida a realitatii. In terapie, acceptarea este adesea punctul de turnura: cand renunti la lupta cu ceea ce nu poti controla, energia ta se elibereaza pentru ceea ce poti schimba.",
+      "en": "Acceptance is the calm form of trust — the willingness to receive what is without trying to change it. It does not mean resignation or passivity, but the clear recognition of reality. In therapy, acceptance is often the turning point: when you stop fighting what you cannot control, your energy is freed for what you can change."
+    },
     "category": "intensity",
     "color": "#C8F7DC",
     "intensity": 0.3,
@@ -47,6 +67,10 @@
   "admiration": {
     "id": "admiration",
     "label": { "ro": "admirație", "en": "admiration" },
+    "description": {
+      "ro": "Admiratia este forma intensa a increderii — o recunoastere profunda a valorii celuilalt care te inspira si te motiveaza. Este emotia care sta la baza mentoratului si a invatarii. Admiratia sanatoasa nu diminueaza propria valoare, ci iti arata directia in care poti creste. Devine problematica doar cand se transforma in idealizare.",
+      "en": "Admiration is the intense form of trust — a deep recognition of another's value that inspires and motivates you. It is the emotion that underlies mentorship and learning. Healthy admiration does not diminish your own worth, but shows you the direction in which you can grow. It becomes problematic only when it turns into idealization."
+    },
     "category": "intensity",
     "color": "#7DD9A8",
     "intensity": 0.8,
@@ -56,6 +80,10 @@
   "fear": {
     "id": "fear",
     "label": { "ro": "frică", "en": "fear" },
+    "description": {
+      "ro": "Frica este sistemul tau de alarma primitiv — o emotie primara care te pregateste sa faci fata pericolului prin lupta, fuga sau inghetare. Este esentiala pentru supravietuire si te ajuta sa evaluezi riscuri. Frica devine problematica cand se activeaza disproportionat fata de amenintarea reala sau cand te blocheaza in evitare cronica.",
+      "en": "Fear is your primitive alarm system — a primary emotion that prepares you to face danger through fight, flight, or freeze. It is essential for survival and helps you assess risks. Fear becomes problematic when it activates disproportionately to the actual threat or when it locks you into chronic avoidance."
+    },
     "category": "primary",
     "color": "#88D8B0",
     "intensity": 0.5,
@@ -65,6 +93,10 @@
   "apprehension": {
     "id": "apprehension",
     "label": { "ro": "îngrijorare", "en": "apprehension" },
+    "description": {
+      "ro": "Ingrijorarea este forma usoara a fricii — un semnal subtil ca ceva ar putea merge prost. Este mintea ta care scaneaza orizontul pentru potentiale probleme. In doze mici, este utila si adaptativa, ajutandu-te sa te pregatesti. Devine dificila cand se transforma in ruminatie constanta despre scenarii care probabil nu se vor intampla.",
+      "en": "Apprehension is the mild form of fear — a subtle signal that something might go wrong. It is your mind scanning the horizon for potential problems. In small doses, it is useful and adaptive, helping you prepare. It becomes difficult when it turns into constant rumination about scenarios that will probably never happen."
+    },
     "category": "intensity",
     "color": "#A8E8C8",
     "intensity": 0.3,
@@ -74,6 +106,10 @@
   "terror": {
     "id": "terror",
     "label": { "ro": "teroare", "en": "terror" },
+    "description": {
+      "ro": "Teroarea este forma extrema a fricii — o stare de panica totala in care corpul preia controlul si mintea rationala se deconecteaza. Sistemul nervos intra in suprasolicitare, pregatindu-te pentru supravietuire imediata. Este raspunsul la amenintari percepute ca fiind de viata si de moarte, chiar daca uneori amenintarea nu este reala.",
+      "en": "Terror is the extreme form of fear — a state of total panic where the body takes control and the rational mind disconnects. The nervous system enters overload, preparing you for immediate survival. It is the response to threats perceived as life-or-death, even when sometimes the threat is not real."
+    },
     "category": "intensity",
     "color": "#68C898",
     "intensity": 0.8,
@@ -83,6 +119,10 @@
   "surprise": {
     "id": "surprise",
     "label": { "ro": "surprindere", "en": "surprise" },
+    "description": {
+      "ro": "Surprinderea este emotia care apare cand realitatea nu se potriveste cu asteptarile tale. Este un moment de recalibrare cognitiva — o pauza scurta in care mintea se reseteaza pentru a integra informatia noua. Surprinderea in sine este neutra si extrem de scurta; ceea ce urmeaza dupa ea — bucurie, frica, furie — depinde de interpretarea evenimentului.",
+      "en": "Surprise is the emotion that arises when reality doesn't match your expectations. It is a moment of cognitive recalibration — a brief pause where the mind resets to integrate new information. Surprise itself is neutral and extremely brief; what follows it — joy, fear, anger — depends on your interpretation of the event."
+    },
     "category": "primary",
     "color": "#7FDBFF",
     "intensity": 0.5,
@@ -92,6 +132,10 @@
   "distraction": {
     "id": "distraction",
     "label": { "ro": "distragere", "en": "distraction" },
+    "description": {
+      "ro": "Distragerea este forma usoara a surprinderii — o deviere temporara a atentiei cauzata de un stimul neasteptat. Mintea ta isi intrerupe cursul curent pentru a evalua noutatea. In viata moderna, distragerea constanta poate eroda capacitatea de concentrare si prezenta, dar in sine este un mecanism adaptativ care te ajuta sa detectezi schimbarile din mediu.",
+      "en": "Distraction is the mild form of surprise — a temporary diversion of attention caused by an unexpected stimulus. Your mind interrupts its current course to evaluate the novelty. In modern life, constant distraction can erode your capacity for focus and presence, but in itself it is an adaptive mechanism that helps you detect changes in your environment."
+    },
     "category": "intensity",
     "color": "#A8E8FF",
     "intensity": 0.3,
@@ -101,6 +145,10 @@
   "amazement": {
     "id": "amazement",
     "label": { "ro": "uimire", "en": "amazement" },
+    "description": {
+      "ro": "Uimirea este forma intensa a surprinderii — o stare de soc pozitiv in care mintea se opreste complet, coplesita de magnitudinea a ceea ce percepe. Este emotia care deschide usa catre veneratie si respect profund. Uimirea iti reaminteste ca lumea este mai vasta si mai complexa decat modelele tale mentale obisnuite.",
+      "en": "Amazement is the intense form of surprise — a state of positive shock where the mind stops completely, overwhelmed by the magnitude of what it perceives. It is the emotion that opens the door to awe and deep respect. Amazement reminds you that the world is vaster and more complex than your usual mental models."
+    },
     "category": "intensity",
     "color": "#5FC8E8",
     "intensity": 0.8,
@@ -110,6 +158,10 @@
   "sadness": {
     "id": "sadness",
     "label": { "ro": "tristețe", "en": "sadness" },
+    "description": {
+      "ro": "Tristetea este raspunsul emotional la pierdere — de persoane, posibilitati, idealuri sau perioade ale vietii. Este un semnal ca ceva important pentru tine s-a schimbat sau a disparut. Tristetea indeplineste o functie vitala: te incetineste, te intoarce spre interior si invita reflectia. Prin tristete procesezi pierderea si te reorganizezi emotional.",
+      "en": "Sadness is the emotional response to loss — of people, possibilities, ideals, or periods of life. It signals that something important to you has changed or disappeared. Sadness serves a vital function: it slows you down, turns you inward, and invites reflection. Through sadness you process loss and reorganize emotionally."
+    },
     "category": "primary",
     "color": "#5DADE2",
     "intensity": 0.5,
@@ -119,6 +171,10 @@
   "pensiveness": {
     "id": "pensiveness",
     "label": { "ro": "melancolie", "en": "pensiveness" },
+    "description": {
+      "ro": "Melancolia este forma subtila a tristetii — o nostalgie calda amestecata cu reflectie. Nu doare acut, ci pluteste ca o ceata usoara peste constiinta ta. Este starea in care iti amintesti ce a fost si contempli trecerea timpului. Melancolia poate fi o poarta catre intelegere profunda si creativitate, daca nu te pierzi in ea.",
+      "en": "Pensiveness is the subtle form of sadness — a warm nostalgia mixed with reflection. It doesn't hurt acutely, but floats like a gentle mist over your consciousness. It is the state where you remember what was and contemplate the passage of time. Pensiveness can be a gateway to deep understanding and creativity, if you don't lose yourself in it."
+    },
     "category": "intensity",
     "color": "#85C1E9",
     "intensity": 0.3,
@@ -128,6 +184,10 @@
   "grief": {
     "id": "grief",
     "label": { "ro": "durere", "en": "grief" },
+    "description": {
+      "ro": "Durerea este forma cea mai intensa a tristetii — o suferinta profunda care apare dupa pierderi majore. Corpul si mintea sunt complet absorbite de absenta a ceea ce a fost. Durerea nu se vindeca liniar, ci vine in valuri. Nu exista un mod corect de a suferi — procesul tau este unic, si vindecarea inseamna integrare, nu uitare.",
+      "en": "Grief is the most intense form of sadness — a profound suffering that arises after major losses. Body and mind are completely absorbed by the absence of what was. Grief does not heal linearly, but comes in waves. There is no correct way to grieve — your process is unique, and healing means integration, not forgetting."
+    },
     "category": "intensity",
     "color": "#3498DB",
     "intensity": 0.8,
@@ -137,6 +197,10 @@
   "disgust": {
     "id": "disgust",
     "label": { "ro": "dezgust", "en": "disgust" },
+    "description": {
+      "ro": "Dezgustul este mecanismul tau de protectie impotriva a ceea ce este toxic — fizic, emotional sau moral. Initial a evoluat pentru a te feri de hrana contaminata, dar s-a extins la comportamente, idei si persoane pe care le percepi ca nocive. Dezgustul stabileste granite si protejeaza integritatea, dar poate deveni rigid si exclusivist daca nu este examinat constient.",
+      "en": "Disgust is your protective mechanism against what is toxic — physically, emotionally, or morally. It originally evolved to keep you away from contaminated food, but has expanded to behaviors, ideas, and people you perceive as harmful. Disgust establishes boundaries and protects integrity, but can become rigid and exclusionary if not examined consciously."
+    },
     "category": "primary",
     "color": "#BB8FCE",
     "intensity": 0.5,
@@ -146,6 +210,10 @@
   "boredom": {
     "id": "boredom",
     "label": { "ro": "plictiseală", "en": "boredom" },
+    "description": {
+      "ro": "Plictiseala este forma usoara a dezgustului — un dezinteres subtil care semnaleaza ca stimularea actuala nu iti satisface nevoile. Este un semnal important ca ceva trebuie sa se schimbe — fie activitatea, fie perspectiva ta. Plictiseala poate fi un catalizator al creativitatii si schimbarii daca o asculti, sau o sursa de comportamente disfunctionale daca o ignori.",
+      "en": "Boredom is the mild form of disgust — a subtle disinterest signaling that current stimulation doesn't meet your needs. It is an important signal that something needs to change — either the activity or your perspective. Boredom can be a catalyst for creativity and change if you listen to it, or a source of dysfunctional behaviors if you ignore it."
+    },
     "category": "intensity",
     "color": "#D2B4DE",
     "intensity": 0.3,
@@ -155,6 +223,10 @@
   "loathing": {
     "id": "loathing",
     "label": { "ro": "scârbă", "en": "loathing" },
+    "description": {
+      "ro": "Scarba este forma extrema a dezgustului — o respingere viscerala si totala a ceea ce percepi ca profund gresit sau contaminant. Corpul reactioneaza puternic, cu greata si retragere. Scarba functioneaza ca o bariera de protectie maxima, dar cand este indreptata catre propria persoana, devine auto-distructiva si necesita atentie terapeutica.",
+      "en": "Loathing is the extreme form of disgust — a visceral and total rejection of what you perceive as profoundly wrong or contaminating. The body reacts strongly, with nausea and withdrawal. Loathing functions as a maximum protective barrier, but when directed toward yourself, it becomes self-destructive and requires therapeutic attention."
+    },
     "category": "intensity",
     "color": "#9B59B6",
     "intensity": 0.8,
@@ -164,6 +236,10 @@
   "anger": {
     "id": "anger",
     "label": { "ro": "furie", "en": "anger" },
+    "description": {
+      "ro": "Furia este emotia care te mobilizeaza cand percepi o nedreptate, o incalcare a granitelor sau un obstacol in calea nevoilor tale. Este o forta de actiune puternica care iti da energie pentru a schimba ceea ce este gresit. Furia nu este inamicul tau — este un mesager. Problema nu este furia in sine, ci modul in care alegi sa actionezi sub influenta ei.",
+      "en": "Anger is the emotion that mobilizes you when you perceive injustice, a boundary violation, or an obstacle to your needs. It is a powerful force for action that gives you energy to change what is wrong. Anger is not your enemy — it is a messenger. The problem is not anger itself, but how you choose to act under its influence."
+    },
     "category": "primary",
     "color": "#FF6B6B",
     "intensity": 0.5,
@@ -173,6 +249,10 @@
   "annoyance": {
     "id": "annoyance",
     "label": { "ro": "iritare", "en": "annoyance" },
+    "description": {
+      "ro": "Iritarea este forma usoara a furiei — o frustrare de suprafata care apare cand lucrurile mici nu merg asa cum vrei. Este un semnal timpuriu ca o limita personala este testata sau ca o nevoie nu este satisfacuta. Iritarea repetata merita atentie — adesea ascunde emotii mai profunde precum oboseala, dezamagirea sau sentimentul de neapreciere.",
+      "en": "Annoyance is the mild form of anger — a surface frustration that arises when small things don't go your way. It is an early signal that a personal boundary is being tested or a need is unmet. Repeated annoyance deserves attention — it often hides deeper emotions like fatigue, disappointment, or feeling unappreciated."
+    },
     "category": "intensity",
     "color": "#FF9999",
     "intensity": 0.3,
@@ -182,6 +262,10 @@
   "rage": {
     "id": "rage",
     "label": { "ro": "mânie", "en": "rage" },
+    "description": {
+      "ro": "Mania este forma cea mai intensa a furiei — o explozie emotionala in care simti ca trebuie sa distrugi obstacolul, indiferent de consecinte. Corpul se inunda cu adrenalina, gandirea se ingusteaza si capacitatea de empatie dispare temporar. Mania cronica indica adesea rani vechi nerezolvate si necesita un spatiu sigur pentru a fi explorata si integrata.",
+      "en": "Rage is the most intense form of anger — an emotional explosion where you feel you must destroy the obstacle, regardless of consequences. The body floods with adrenaline, thinking narrows, and the capacity for empathy temporarily disappears. Chronic rage often indicates unresolved old wounds and requires a safe space to be explored and integrated."
+    },
     "category": "intensity",
     "color": "#E74C3C",
     "intensity": 0.8,
@@ -191,6 +275,10 @@
   "anticipation": {
     "id": "anticipation",
     "label": { "ro": "anticipare", "en": "anticipation" },
+    "description": {
+      "ro": "Anticiparea este emotia orientata catre viitor — o stare de pregatire activa pentru ceea ce urmeaza. Este motorul planificarii si al sperantei, dar si al anxietatii cand devine excesiva. Anticiparea sanatoasa te ajuta sa te pregatesti fara sa te pierzi in scenarii imaginare. Ea te mentine angajat in viata si orientat catre scopuri.",
+      "en": "Anticipation is the future-oriented emotion — a state of active preparation for what's coming. It is the engine of planning and hope, but also of anxiety when it becomes excessive. Healthy anticipation helps you prepare without losing yourself in imaginary scenarios. It keeps you engaged in life and oriented toward goals."
+    },
     "category": "primary",
     "color": "#FFAB76",
     "intensity": 0.5,
@@ -200,6 +288,10 @@
   "interest": {
     "id": "interest",
     "label": { "ro": "interes", "en": "interest" },
+    "description": {
+      "ro": "Interesul este forma calma a anticiparii — o curiozitate calda care te atrage catre ceva nou fara urgenta. Este starea in care mintea se deschide, invatarea devine placuta si lumea pare plina de posibilitati. Interesul este fundamentul motivatiei intrinsece — faci ceva nu pentru ca trebuie, ci pentru ca te cheama din interior.",
+      "en": "Interest is the calm form of anticipation — a warm curiosity that draws you toward something new without urgency. It is the state where the mind opens, learning becomes pleasurable, and the world seems full of possibilities. Interest is the foundation of intrinsic motivation — you do something not because you must, but because it calls you from within."
+    },
     "category": "intensity",
     "color": "#FFC8A0",
     "intensity": 0.3,
@@ -209,6 +301,10 @@
   "vigilance": {
     "id": "vigilance",
     "label": { "ro": "vigilență", "en": "vigilance" },
+    "description": {
+      "ro": "Vigilenta este forma intensa a anticiparii — o stare de alerta maxima in care esti complet concentrat pe ceea ce urmeaza. Toate simturile sunt ascutite si esti gata sa reactionezi instant. Este utila in situatii critice, dar epuizanta daca devine permanenta. Hipervigilenta cronica este adesea un semn al traumei nerezolvate.",
+      "en": "Vigilance is the intense form of anticipation — a state of maximum alertness where you are completely focused on what's coming. All senses are sharpened and you are ready to react instantly. It is useful in critical situations, but exhausting if it becomes permanent. Chronic hypervigilance is often a sign of unresolved trauma."
+    },
     "category": "intensity",
     "color": "#FF8C42",
     "intensity": 0.8,
@@ -218,6 +314,10 @@
   "love": {
     "id": "love",
     "label": { "ro": "iubire", "en": "love" },
+    "description": {
+      "ro": "Iubirea este diada bucuriei si increderii — starea in care te simti si fericit si in siguranta in prezenta celuilalt. Este cea mai complexa emotie umana, combinand atasament, grija, vulnerabilitate si devotament. Iubirea matura include acceptarea imperfectiunilor si angajamentul de a creste impreuna, nu doar euforia initiala a conexiunii.",
+      "en": "Love is the dyad of joy and trust — the state where you feel both happy and safe in another's presence. It is the most complex human emotion, combining attachment, care, vulnerability, and devotion. Mature love includes accepting imperfections and the commitment to grow together, not just the initial euphoria of connection."
+    },
     "category": "dyad",
     "color": "#FFD1DC",
     "intensity": 0.6,
@@ -227,6 +327,10 @@
   "submission": {
     "id": "submission",
     "label": { "ro": "supunere", "en": "submission" },
+    "description": {
+      "ro": "Supunerea este diada increderii si fricii — cedezi controlul pentru ca ai incredere in celalalt, dar si pentru ca te temi de consecintele rezistentei. Poate fi sanatoasa in contexte de mentorat si invatare, unde te supui expertizei cuiva de incredere. Devine disfunctionala cand este motivata predominant de frica si erodeaza respectul de sine.",
+      "en": "Submission is the dyad of trust and fear — you yield control because you trust the other, but also because you fear the consequences of resistance. It can be healthy in mentoring and learning contexts, where you defer to someone's trusted expertise. It becomes dysfunctional when predominantly motivated by fear and eroding self-respect."
+    },
     "category": "dyad",
     "color": "#98E8C8",
     "intensity": 0.6,
@@ -236,6 +340,10 @@
   "awe": {
     "id": "awe",
     "label": { "ro": "venerație", "en": "awe" },
+    "description": {
+      "ro": "Veneratia este diada fricii si surprinderii — o stare de uimire respectuoasa in fata a ceva mult mai mare decat tine. Combina sentimentul de a fi mic cu fascinatia pentru imens. Cercetarile arata ca experienta veneratiei reduce egocentrismul, creste generozitatea si imbunatateste bunastarea — este una dintre emotiile cele mai transformatoare.",
+      "en": "Awe is the dyad of fear and surprise — a state of respectful wonder before something much greater than yourself. It combines the feeling of being small with fascination for the immense. Research shows that experiencing awe reduces egocentrism, increases generosity, and improves wellbeing — it is one of the most transformative emotions."
+    },
     "category": "dyad",
     "color": "#7FD8D8",
     "intensity": 0.6,
@@ -245,6 +353,10 @@
   "disapproval": {
     "id": "disapproval",
     "label": { "ro": "dezaprobare", "en": "disapproval" },
+    "description": {
+      "ro": "Dezaprobarea este diada surprinderii si tristetii — reactia cand ceva neasteptat te dezamageste sau iti incalca valorile. Combina socul descoperirii cu durerea pierderii asteptarilor. Este mecanismul prin care iti comunici standardele morale si asteptarile sociale. Dezaprobarea cronica poate indica rigiditate sau dificultatea de a accepta diversitatea umana.",
+      "en": "Disapproval is the dyad of surprise and sadness — the reaction when something unexpected disappoints you or violates your values. It combines the shock of discovery with the pain of lost expectations. It is the mechanism through which you communicate your moral standards and social expectations. Chronic disapproval may indicate rigidity or difficulty accepting human diversity."
+    },
     "category": "dyad",
     "color": "#7BB8E8",
     "intensity": 0.6,
@@ -254,6 +366,10 @@
   "remorse": {
     "id": "remorse",
     "label": { "ro": "remușcare", "en": "remorse" },
+    "description": {
+      "ro": "Remuscarea este diada tristetii si dezgustului — o combinatie dureroasa de regret si auto-respingere pentru ceva ce ai facut. Spre deosebire de vinovatie, care este cognitiva, remuscarea se simte in corp — o greata existentiala. Este emotia care motiveaza reparatia autentica si schimbarea comportamentului, dar devine toxica cand se transforma in auto-flagelare permanenta.",
+      "en": "Remorse is the dyad of sadness and disgust — a painful combination of regret and self-rejection for something you've done. Unlike guilt, which is cognitive, remorse is felt in the body — an existential nausea. It is the emotion that motivates authentic repair and behavioral change, but becomes toxic when it turns into permanent self-flagellation."
+    },
     "category": "dyad",
     "color": "#9B8DC8",
     "intensity": 0.6,
@@ -263,6 +379,10 @@
   "contempt": {
     "id": "contempt",
     "label": { "ro": "dispreț", "en": "contempt" },
+    "description": {
+      "ro": "Dispretul este diada dezgustului si furiei — o combinatie de respingere morala si indignare care te pozitioneaza deasupra celuilalt. Cercetarile lui Gottman au demonstrat ca dispretul este cel mai toxic predictor al destramare relationale. Dispretul ridica un zid intre tine si celalalt, eliminand posibilitatea empatiei si reparatiei.",
+      "en": "Contempt is the dyad of disgust and anger — a combination of moral rejection and indignation that positions you above the other. Gottman's research has shown that contempt is the most toxic predictor of relational dissolution. Contempt raises a wall between you and the other, eliminating the possibility of empathy and repair."
+    },
     "category": "dyad",
     "color": "#D88090",
     "intensity": 0.6,
@@ -272,6 +392,10 @@
   "aggression": {
     "id": "aggression",
     "label": { "ro": "agresivitate", "en": "aggression" },
+    "description": {
+      "ro": "Agresivitatea este diada furiei si anticiparii — combinatia dintre nevoia de a ataca si planificarea strategica a atacului. Este energia orientata catre distrugerea obstacolelor si dominarea situatiei. Canalizata constructiv, agresivitatea devine determinare si asertivitate. Necontrolata, produce daune relationale si izolare.",
+      "en": "Aggression is the dyad of anger and anticipation — the combination of the urge to attack and the strategic planning of the attack. It is energy directed toward destroying obstacles and dominating the situation. Channeled constructively, aggression becomes determination and assertiveness. Uncontrolled, it produces relational damage and isolation."
+    },
     "category": "dyad",
     "color": "#FF8860",
     "intensity": 0.6,
@@ -281,6 +405,10 @@
   "optimism": {
     "id": "optimism",
     "label": { "ro": "optimism", "en": "optimism" },
+    "description": {
+      "ro": "Optimismul este diada anticiparii si bucuriei — o incredere calda ca viitorul va aduce lucruri bune. Combina planificarea activa cu starea de bine emotionala. Optimismul realist nu ignora dificultatile, ci mentine convingerea ca ai resurse suficiente pentru a le face fata. Este un factor protector puternic impotriva depresiei si epuizarii.",
+      "en": "Optimism is the dyad of anticipation and joy — a warm confidence that the future will bring good things. It combines active planning with emotional wellbeing. Realistic optimism doesn't ignore difficulties, but maintains the conviction that you have sufficient resources to face them. It is a powerful protective factor against depression and burnout."
+    },
     "category": "dyad",
     "color": "#FFD080",
     "intensity": 0.6,
@@ -290,6 +418,10 @@
   "guilt": {
     "id": "guilt",
     "label": { "ro": "vinovăție", "en": "guilt" },
+    "description": {
+      "ro": "Vinovatia este diada secundara a bucuriei si fricii — paradoxul de a te simti bine si a te teme simultan ca nu meriti acea stare. Apare cand fericirea ta intra in conflict cu un simt al obligatiei sau cu suferinta altora. Vinovatia sanatoasa te ghideaza moral; vinovatia nevrotica te saboteaza si te impiedica sa primesti binele din viata ta.",
+      "en": "Guilt is the secondary dyad of joy and fear — the paradox of feeling good while simultaneously fearing you don't deserve that state. It arises when your happiness conflicts with a sense of obligation or others' suffering. Healthy guilt guides you morally; neurotic guilt sabotages you and prevents you from receiving the good in your life."
+    },
     "category": "secondary_dyad",
     "color": "#C8D888",
     "intensity": 0.5,
@@ -299,6 +431,10 @@
   "bittersweetness": {
     "id": "bittersweetness",
     "label": { "ro": "dulce-amărui", "en": "bittersweetness" },
+    "description": {
+      "ro": "Dulce-amaruiul este diada secundara a bucuriei si tristetii — experienta simultana a fericirii si a pierderii. Apare cand un moment frumos poarta in el constiinta tranzitoriei sale. Absolvirile, despartirile afectuoase si amintirile frumoase au toate aceasta calitate. Este una dintre cele mai mature emotii umane, semnul ca poti tine doua adevaruri simultan.",
+      "en": "Bittersweetness is the secondary dyad of joy and sadness — the simultaneous experience of happiness and loss. It arises when a beautiful moment carries within it the awareness of its transience. Graduations, affectionate farewells, and beautiful memories all have this quality. It is one of the most mature human emotions, the sign that you can hold two truths simultaneously."
+    },
     "category": "secondary_dyad",
     "color": "#C8A8D8",
     "intensity": 0.5,
@@ -308,6 +444,10 @@
   "curiosity": {
     "id": "curiosity",
     "label": { "ro": "curiozitate", "en": "curiosity" },
+    "description": {
+      "ro": "Curiozitatea este diada secundara a increderii si surprinderii — combinatia dintre siguranta de a explora si fascinatia pentru necunoscut. Este motorul invatarii si al descoperirii. Curiozitatea semnaleaza ca te simti suficient de sigur pentru a-ti asuma riscul de a nu sti. In relatii, curiozitatea autentica fata de celalalt este antidotul presupunerilor si al rutinei.",
+      "en": "Curiosity is the secondary dyad of trust and surprise — the combination of safety to explore and fascination with the unknown. It is the engine of learning and discovery. Curiosity signals that you feel safe enough to take the risk of not knowing. In relationships, authentic curiosity toward the other is the antidote to assumptions and routine."
+    },
     "category": "secondary_dyad",
     "color": "#88D8D8",
     "intensity": 0.5,
@@ -317,6 +457,10 @@
   "shame": {
     "id": "shame",
     "label": { "ro": "rușine", "en": "shame" },
+    "description": {
+      "ro": "Rusinea este diada secundara a fricii si dezgustului — convingerea dureroasa ca nu doar ai facut ceva gresit, ci ca esti ceva gresit. Spre deosebire de vinovatie, care priveste comportamentul, rusinea ataca identitatea. Este una dintre cele mai devastatoare emotii, care te face sa vrei sa dispari. Vindecarea rusinii necesita conexiune umana si vulnerabilitate deliberata.",
+      "en": "Shame is the secondary dyad of fear and disgust — the painful conviction that not only did you do something wrong, but that you are something wrong. Unlike guilt, which targets behavior, shame attacks identity. It is one of the most devastating emotions, making you want to disappear. Healing shame requires human connection and deliberate vulnerability."
+    },
     "category": "secondary_dyad",
     "color": "#90C8A8",
     "intensity": 0.5,
@@ -326,6 +470,10 @@
   "outrage": {
     "id": "outrage",
     "label": { "ro": "indignare", "en": "outrage" },
+    "description": {
+      "ro": "Indignarea este diada secundara a surprinderii si furiei — socul transformat in furie cand descoperi o nedreptate neasteptata. Este emotia care alimenteaza activismul si schimbarea sociala. Indignarea te mobilizeaza sa lupti pentru ceea ce este drept. Devine problematica cand se transforma in indignare cronica — o stare de furie permanenta care te epuizeaza.",
+      "en": "Outrage is the secondary dyad of surprise and anger — shock transformed into fury when you discover an unexpected injustice. It is the emotion that fuels activism and social change. Outrage mobilizes you to fight for what is right. It becomes problematic when it turns into chronic outrage — a permanent state of fury that exhausts you."
+    },
     "category": "secondary_dyad",
     "color": "#E87878",
     "intensity": 0.5,
@@ -335,6 +483,10 @@
   "envy": {
     "id": "envy",
     "label": { "ro": "invidie", "en": "envy" },
+    "description": {
+      "ro": "Invidia este diada secundara a tristetii si furiei — durerea de a nu avea ceea ce altcineva are, combinata cu resentimentul ca acea persoana are. Invidia iti arata ce iti doresti cu adevarat si unde te simti deficitar. Ascultata cu intelepciune, devine o busola a valorilor tale. Ignorata sau actionata, te consuma si iti otraveste relatiile.",
+      "en": "Envy is the secondary dyad of sadness and anger — the pain of not having what someone else has, combined with resentment that they have it. Envy shows you what you truly desire and where you feel deficient. Listened to wisely, it becomes a compass of your values. Ignored or acted upon, it consumes you and poisons your relationships."
+    },
     "category": "secondary_dyad",
     "color": "#7898C8",
     "intensity": 0.5,
@@ -344,6 +496,10 @@
   "cynicism": {
     "id": "cynicism",
     "label": { "ro": "cinism", "en": "cynicism" },
+    "description": {
+      "ro": "Cinismul este diada secundara a dezgustului si anticiparii — o expectatie negativa cronica bazata pe respingerea valorilor percepute ca false. Cinismul se prezinta ca inteligenta, dar adesea mascheaza dezamagirea si frica de a spera din nou. Este o armura emotionala care te protejeaza de dezamagire, dar te izoleaza si de conexiune autentica.",
+      "en": "Cynicism is the secondary dyad of disgust and anticipation — a chronic negative expectation based on the rejection of values perceived as false. Cynicism presents itself as intelligence, but often masks disappointment and the fear of hoping again. It is an emotional armor that protects you from disappointment, but also isolates you from authentic connection."
+    },
     "category": "secondary_dyad",
     "color": "#C898A8",
     "intensity": 0.5,
@@ -353,6 +509,10 @@
   "pride": {
     "id": "pride",
     "label": { "ro": "mândrie", "en": "pride" },
+    "description": {
+      "ro": "Mandria este diada secundara a furiei si bucuriei — satisfactia fiereasca a realizarii combinata cu energia de a-ti apara meritul. Mandria autentica iti recunoaste valoarea fara a-i diminua pe altii. Mandria exagerata — hybris-ul — ascunde adesea insecuritate. Mandria sanatoasa este ancorata in efort real si te motiveaza sa continui sa cresti.",
+      "en": "Pride is the secondary dyad of anger and joy — the fierce satisfaction of achievement combined with the energy to defend your merit. Authentic pride recognizes your value without diminishing others. Exaggerated pride — hubris — often conceals insecurity. Healthy pride is anchored in real effort and motivates you to continue growing."
+    },
     "category": "secondary_dyad",
     "color": "#FFB868",
     "intensity": 0.5,
@@ -362,6 +522,10 @@
   "hope": {
     "id": "hope",
     "label": { "ro": "speranță", "en": "hope" },
+    "description": {
+      "ro": "Speranta este diada anticiparii si increderii — convingerea ca viitorul poate fi bun si ca ai pe cineva sau ceva pe care te poti baza pe drum. Este una dintre cele mai puternice resurse psihologice. Speranta nu este optimism naiv — include recunoasterea dificultatii si totusi alegerea de a merge mai departe. Fara speranta, motivatia se stinge.",
+      "en": "Hope is the dyad of anticipation and trust — the conviction that the future can be good and that you have someone or something you can rely on along the way. It is one of the most powerful psychological resources. Hope is not naive optimism — it includes recognizing difficulty and still choosing to move forward. Without hope, motivation fades."
+    },
     "category": "dyad",
     "color": "#C8E8A8",
     "intensity": 0.6,
@@ -371,6 +535,10 @@
   "anxiety": {
     "id": "anxiety",
     "label": { "ro": "anxietate", "en": "anxiety" },
+    "description": {
+      "ro": "Anxietatea este diada anticiparii si fricii — o stare de alerta orientata catre viitor in care te pregatesti pentru pericole care inca nu s-au materializat. Combina dorinta de control cu frica de necunoscut. Anxietatea moderata te ajuta sa performezi; anxietatea excesiva te paralyzeaza. Corpul tau reactioneaza ca si cum pericolul este real, chiar cand este doar imaginat.",
+      "en": "Anxiety is the dyad of anticipation and fear — a future-oriented state of alertness where you prepare for dangers that haven't materialized yet. It combines the desire for control with fear of the unknown. Moderate anxiety helps you perform; excessive anxiety paralyzes you. Your body reacts as if the danger is real, even when it is only imagined."
+    },
     "category": "dyad",
     "color": "#A8D8A0",
     "intensity": 0.6,
@@ -380,6 +548,10 @@
   "sentimentality": {
     "id": "sentimentality",
     "label": { "ro": "sentimentalism", "en": "sentimentality" },
+    "description": {
+      "ro": "Sentimentalismul este diada secundara a increderii si tristetii — o atasare calda si dureroasa fata de trecut, oameni sau momente care au insemnat ceva. Combina siguranta amintirilor frumoase cu tristetea ca nu mai sunt prezente. Sentimentalismul te conecteaza cu valorile tale profunde, dar poate deveni o refugiere in trecut daca inlocuieste angajamentul cu prezentul.",
+      "en": "Sentimentality is the secondary dyad of trust and sadness — a warm and painful attachment to the past, people, or moments that meant something. It combines the safety of beautiful memories with the sadness that they are no longer present. Sentimentality connects you to your deep values, but can become a retreat into the past if it replaces engagement with the present."
+    },
     "category": "secondary_dyad",
     "color": "#A8C8D8",
     "intensity": 0.5,
@@ -389,6 +561,10 @@
   "despair": {
     "id": "despair",
     "label": { "ro": "disperare", "en": "despair" },
+    "description": {
+      "ro": "Disperarea este diada secundara a fricii si tristetii — o stare in care pierderea se combina cu teroarea ca nimic nu se va mai imbunatati. Este punctul in care speranta pare sa dispara complet. Disperarea este un semnal de alarma ca ai nevoie de sprijin — nu trebuie traversata singur. Chiar si in cele mai intunecate momente, conexiunea umana poate reaprinde speranta.",
+      "en": "Despair is the secondary dyad of fear and sadness — a state where loss combines with the terror that nothing will ever improve. It is the point where hope seems to disappear completely. Despair is an alarm signal that you need support — it should not be traversed alone. Even in the darkest moments, human connection can reignite hope."
+    },
     "category": "secondary_dyad",
     "color": "#68A8B8",
     "intensity": 0.5,
@@ -398,6 +574,10 @@
   "dominance": {
     "id": "dominance",
     "label": { "ro": "dominanță", "en": "dominance" },
+    "description": {
+      "ro": "Dominanta este diada secundara a furiei si increderii — combinatia dintre forta de a impune si siguranta ca ai dreptul sa o faci. Este emotia liderului care isi asuma responsabilitatea. Dominanta sanatoasa protejeaza si ghideaza; dominanta toxica controleaza si submineaza. Diferenta sta in prezenta sau absenta empatiei si respectului pentru autonomia celuilalt.",
+      "en": "Dominance is the secondary dyad of anger and trust — the combination of the force to impose and the confidence that you have the right to do so. It is the emotion of a leader taking responsibility. Healthy dominance protects and guides; toxic dominance controls and undermines. The difference lies in the presence or absence of empathy and respect for the other's autonomy."
+    },
     "category": "secondary_dyad",
     "color": "#D89888",
     "intensity": 0.5,
@@ -407,6 +587,10 @@
   "delight": {
     "id": "delight",
     "label": { "ro": "încântare", "en": "delight" },
+    "description": {
+      "ro": "Incantarea este diada secundara a bucuriei si surprinderii — explozia de fericire care apare cand ceva neasteptat de frumos se intampla. Este bucuria amplificata de noutate. Incantarea este una dintre cele mai energizante emotii — te face sa zambesti involuntar si sa vrei sa impartasesti momentul cu altii. Este ingredientul secret al relatiilor vii.",
+      "en": "Delight is the secondary dyad of joy and surprise — the burst of happiness that arises when something unexpectedly beautiful happens. It is joy amplified by novelty. Delight is one of the most energizing emotions — it makes you smile involuntarily and want to share the moment with others. It is the secret ingredient of vibrant relationships."
+    },
     "category": "secondary_dyad",
     "color": "#FFE898",
     "intensity": 0.5,
@@ -416,6 +600,10 @@
   "pessimism": {
     "id": "pessimism",
     "label": { "ro": "pesimism", "en": "pessimism" },
+    "description": {
+      "ro": "Pesimismul este diada secundara a tristetii si anticiparii — o expectatie negativa a viitorului colorata de experienta pierderii. Mintea ta extrapoleaza suferinta trecuta in scenarii viitoare. Pesimismul defensiv poate fi o strategie de protectie — daca te astepti la ce e mai rau, dezamagirea doare mai putin. Dar devine costisitor cand te impiedica sa actionezi si sa speri.",
+      "en": "Pessimism is the secondary dyad of sadness and anticipation — a negative expectation of the future colored by the experience of loss. Your mind extrapolates past suffering into future scenarios. Defensive pessimism can be a protective strategy — if you expect the worst, disappointment hurts less. But it becomes costly when it prevents you from acting and hoping."
+    },
     "category": "secondary_dyad",
     "color": "#8898C8",
     "intensity": 0.5,
@@ -425,6 +613,10 @@
   "morbidness": {
     "id": "morbidness",
     "label": { "ro": "morbiditate", "en": "morbidness" },
+    "description": {
+      "ro": "Morbiditatea este diada tertiara a dezgustului si bucuriei — atractia paradoxala catre ceea ce este intuneric, grotesc sau taboo, combinata cu o placere secreta in explorarea lui. Este fascinatia pentru moarte, descompunere sau suferinta care coexista cu o satisfactie perversa. Poate reflecta o incercare a psihicului de a integra aspectele umbre ale existentei.",
+      "en": "Morbidness is the tertiary dyad of disgust and joy — the paradoxical attraction to what is dark, grotesque, or taboo, combined with a secret pleasure in exploring it. It is the fascination with death, decay, or suffering that coexists with a perverse satisfaction. It may reflect the psyche's attempt to integrate the shadow aspects of existence."
+    },
     "category": "tertiary_dyad",
     "color": "#C8A0C8",
     "intensity": 0.4,
@@ -434,6 +626,10 @@
   "unbelief": {
     "id": "unbelief",
     "label": { "ro": "neîncredere", "en": "unbelief" },
+    "description": {
+      "ro": "Neincrederea este diada tertiara a surprinderii si dezgustului — refuzul de a accepta ceva neasteptat combinat cu o reactie de respingere. Este starea de 'nu se poate' cand realitatea contrazice convingerile tale fundamentale. Neincrederea te protejeaza temporar de socul schimbarii, dar daca persista, te impiedica sa integrezi informatii noi si sa te adaptezi.",
+      "en": "Unbelief is the tertiary dyad of surprise and disgust — the refusal to accept something unexpected combined with a rejection response. It is the state of 'this can't be' when reality contradicts your fundamental beliefs. Unbelief temporarily protects you from the shock of change, but if it persists, it prevents you from integrating new information and adapting."
+    },
     "category": "tertiary_dyad",
     "color": "#A898C8",
     "intensity": 0.4,
@@ -443,6 +639,10 @@
   "ambivalence": {
     "id": "ambivalence",
     "label": { "ro": "ambivalență", "en": "ambivalence" },
+    "description": {
+      "ro": "Ambivalenta este diada opuselor — incredere si dezgust existand simultan. Te simti atras si respins de aceeasi persoana sau situatie. Este una dintre cele mai inconfortabile stari emotionale, pentru ca mintea cauta coerenta si ambivalenta o refuza. Totusi, capacitatea de a tolera ambivalenta este un semn de maturitate emotionala — viata rareori este alb sau negru.",
+      "en": "Ambivalence is the dyad of opposites — trust and disgust existing simultaneously. You feel drawn to and repelled by the same person or situation. It is one of the most uncomfortable emotional states, because the mind seeks coherence and ambivalence refuses it. Yet the capacity to tolerate ambivalence is a sign of emotional maturity — life is rarely black or white."
+    },
     "category": "opposite_dyad",
     "color": "#B8C8A8",
     "intensity": 0.4,
@@ -452,6 +652,10 @@
   "frozenness": {
     "id": "frozenness",
     "label": { "ro": "înghețare", "en": "frozenness" },
+    "description": {
+      "ro": "Inghetarea este diada opuselor — frica si furie blocate reciproc. Vrei sa fugi si sa lupti simultan, asa ca nu faci nimic. Corpul se rigidizeaza, mintea se goleaza si te simti paralizat. In trauma, inghetarea este un raspuns de supravietuire cand nici fuga, nici lupta nu sunt posibile. Dezghetarea necesita siguranta si reactivarea treptata a corpului.",
+      "en": "Frozenness is the dyad of opposites — fear and anger blocking each other. You want to flee and fight simultaneously, so you do nothing. The body stiffens, the mind empties, and you feel paralyzed. In trauma, freezing is a survival response when neither flight nor fight is possible. Thawing requires safety and the gradual reactivation of the body."
+    },
     "category": "opposite_dyad",
     "color": "#78B898",
     "intensity": 0.4,
@@ -461,6 +665,10 @@
   "confusion": {
     "id": "confusion",
     "label": { "ro": "confuzie", "en": "confusion" },
+    "description": {
+      "ro": "Confuzia este diada opuselor — surprindere si anticipare care se neutralizeaza reciproc. Nu stii daca sa te uiti inapoi la ce s-a intamplat sau inainte la ce urmeaza. Mintea oscileaza intre cadre de referinta contradictorii. Confuzia este adesea un semn ca esti la un punct de cotitura si ca modelele tale vechi de intelegere nu mai functioneaza.",
+      "en": "Confusion is the dyad of opposites — surprise and anticipation neutralizing each other. You don't know whether to look back at what happened or forward at what's coming. The mind oscillates between contradictory frames of reference. Confusion is often a sign that you're at a turning point and that your old models of understanding no longer work."
+    },
     "category": "opposite_dyad",
     "color": "#98C8D8",
     "intensity": 0.4,
@@ -470,6 +678,10 @@
   "aggressiveness": {
     "id": "aggressiveness",
     "label": { "ro": "agresivitate intensă", "en": "aggressiveness" },
+    "description": {
+      "ro": "Agresivitatea intensa este diada tertiara a furiei si anticiparii la nivel maxim — o forta distrugere calculata si sustinuta. Spre deosebire de mania spontana, agresivitatea intensa este persistenta si orientata strategic. Poate aparea cand frustrarea cronica se combina cu nevoia urgenta de control. Necesita canalizare constienta pentru a nu deveni devastatoare.",
+      "en": "Aggressiveness is the tertiary dyad of anger and anticipation at maximum level — a calculated and sustained destructive force. Unlike spontaneous rage, aggressiveness is persistent and strategically oriented. It can arise when chronic frustration combines with the urgent need for control. It requires conscious channeling to avoid becoming devastating."
+    },
     "category": "tertiary_dyad",
     "color": "#FF7850",
     "intensity": 0.7,
