@@ -4,7 +4,8 @@
     "subtitle": "Identify your emotions"
   },
   "menu": {
-    "model": "Model"
+    "model": "Model",
+    "language": "Language"
   },
   "selectionBar": {
     "title": "Your selections",
@@ -76,5 +77,8 @@
     "guidedDone": "Body scan complete",
     "guidedMode": "Guided scan",
     "freeMode": "Free selection"
+  },
+  "dimensional": {
+    "instructions": "Locate your state on two axes: how pleasant/unpleasant and how intense/calm you feel"
   }
 }

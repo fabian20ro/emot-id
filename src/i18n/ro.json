@@ -4,7 +4,8 @@
     "subtitle": "Identifica-ti emotiile"
   },
   "menu": {
-    "model": "Model"
+    "model": "Model",
+    "language": "Limba"
   },
   "selectionBar": {
     "title": "Selectiile tale",
@@ -76,5 +77,8 @@
     "guidedDone": "Scanarea corporala s-a incheiat",
     "guidedMode": "Scanare ghidata",
     "freeMode": "Selectie libera"
+  },
+  "dimensional": {
+    "instructions": "Localizeaza-ti starea pe cele doua axe: cat de placut/neplacut si cat de intens/calm te simti"
   }
 }

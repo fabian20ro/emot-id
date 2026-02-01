@@ -1,6 +1,6 @@
 # Emot-ID
 
-Interactive emotion identification PWA. Implements multiple emotion classification models: Plutchik's wheel, Emotion Wheel, and Body Map of Emotions.
+Interactive emotion identification PWA. Implements multiple emotion classification models: Plutchik's wheel, Emotion Wheel, Body Map of Emotions, and Emotional Space (2D valence/arousal).
 
 ## Tech Stack
 
@@ -30,7 +30,7 @@ src/
 │   ├── BodyRegion.tsx       # Single SVG body region with heat coloring
 │   ├── SensationPicker.tsx  # 2-step popover: sensation type → intensity
 │   ├── GuidedScan.tsx       # Sequential head-to-feet body scan overlay
-│   ├── body-paths.ts        # SVG path constants for 14 body regions
+│   ├── body-paths.ts        # SVG path constants for 12 body regions (seated meditation pose)
 │   ├── SelectionBar.tsx    # Selected emotions strip
 │   ├── Header.tsx          # App header
 │   ├── MenuButton.tsx      # Hamburger menu trigger
@@ -123,7 +123,8 @@ The `analyze()` method downcasts back and runs a weighted scoring algorithm (thr
 |-------|-----------|--------|
 | Plutchik wheel | Wheel with dyads + spawns | Done |
 | Emotion Wheel | 3-tier tree (drill-down navigation) | Done |
-| Body Map | SVG silhouette, 14 regions, sensation + intensity | Done |
+| Body Map | SVG silhouette, 12 regions, sensation + intensity | Done |
+| Emotional Space | 2D valence × arousal field | Done |
 | Ekman facial | Flat list (6 basic emotions) | Planned |
 | Parrott hierarchy | 3-tier tree (primary → secondary → tertiary) | Planned |
 | Contrasting pairs/axes | 2D axes (valence × arousal) | Planned |
@@ -132,7 +133,7 @@ The `analyze()` method downcasts back and runs a weighted scoring algorithm (thr
 
 ### Architecture Needs
 
-- **Model-specific visualizations**: BubbleField (Plutchik, Wheel), BodyMap (Somatic); future models may need different visualizations (flat grid, 2D scatter, image overlay)
+- **Model-specific visualizations**: BubbleField (Plutchik, Wheel), BodyMap (Somatic), DimensionalField (Emotional Space); future models may need different visualizations (flat grid, image overlay)
 - **Additional models**: Ekman, Parrott, contrasting pairs (see Models table above)
 
 ## Key Conventions

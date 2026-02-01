@@ -5,8 +5,8 @@ import { findNearest } from '../models/dimensional'
 import type { VisualizationProps } from '../models/types'
 import type { DimensionalEmotion } from '../models/dimensional/types'
 
-const FIELD_SIZE = 300
-const PADDING = 40
+const FIELD_SIZE = 500
+const PADDING = 50
 const INNER = FIELD_SIZE - PADDING * 2
 
 function toPixel(value: number): number {
@@ -15,7 +15,7 @@ function toPixel(value: number): number {
 }
 
 export function DimensionalField({ emotions, onSelect, onDeselect, selections = [] }: VisualizationProps) {
-  const { language } = useLanguage()
+  const { language, t } = useLanguage()
   const dimEmotions = useMemo(
     () => emotions as DimensionalEmotion[],
     [emotions]
@@ -89,11 +89,14 @@ export function DimensionalField({ emotions, onSelect, onDeselect, selections = 
 
   return (
     <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-4">
-      <div className="relative w-full max-w-xs flex-1 min-h-[200px] flex flex-col items-center justify-center">
+      <p className="text-xs text-gray-400 text-center mb-2 px-2">
+        {(t as Record<string, Record<string, string>>).dimensional?.instructions}
+      </p>
+      <div className="relative w-full max-w-lg flex-1 min-h-[200px] flex flex-col items-center justify-center">
         <svg
           ref={svgRef}
           viewBox={`0 0 ${FIELD_SIZE} ${FIELD_SIZE}`}
-          className="w-full h-full max-h-[60vh]"
+          className="w-full h-full"
           onClick={handleFieldClick}
           style={{ cursor: 'crosshair' }}
         >
@@ -120,16 +123,16 @@ export function DimensionalField({ emotions, onSelect, onDeselect, selections = 
           />
 
           {/* Axis labels */}
-          <text x={PADDING} y={FIELD_SIZE / 2 - 4} fill="#9CA3AF" fontSize={9} textAnchor="start">
+          <text x={PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="start">
             {language === 'ro' ? 'Neplacut' : 'Unpleasant'}
           </text>
-          <text x={FIELD_SIZE - PADDING} y={FIELD_SIZE / 2 - 4} fill="#9CA3AF" fontSize={9} textAnchor="end">
+          <text x={FIELD_SIZE - PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="end">
             {language === 'ro' ? 'Placut' : 'Pleasant'}
           </text>
-          <text x={FIELD_SIZE / 2} y={PADDING - 6} fill="#9CA3AF" fontSize={9} textAnchor="middle">
+          <text x={FIELD_SIZE / 2} y={PADDING - 8} fill="#9CA3AF" fontSize={13} textAnchor="middle">
             {language === 'ro' ? 'Intens' : 'Intense'}
           </text>
-          <text x={FIELD_SIZE / 2} y={FIELD_SIZE - PADDING + 14} fill="#9CA3AF" fontSize={9} textAnchor="middle">
+          <text x={FIELD_SIZE / 2} y={FIELD_SIZE - PADDING + 18} fill="#9CA3AF" fontSize={13} textAnchor="middle">
             {language === 'ro' ? 'Calm' : 'Calm'}
           </text>
 
@@ -153,22 +156,22 @@ export function DimensionalField({ emotions, onSelect, onDeselect, selections = 
                 <motion.circle
                   cx={px}
                   cy={py}
-                  r={isSelected ? 6 : 4}
+                  r={isSelected ? 8 : 6}
                   fill={emotion.color}
                   fillOpacity={isSelected ? 0.9 : 0.4}
                   stroke={isSelected ? '#fff' : 'none'}
                   strokeWidth={isSelected ? 1.5 : 0}
                   animate={{
-                    r: isSelected ? 6 : 4,
+                    r: isSelected ? 8 : 6,
                     fillOpacity: isSelected ? 0.9 : 0.4,
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 />
                 <text
                   x={px}
-                  y={py - 8}
+                  y={py - 10}
                   fill={isSelected ? '#fff' : 'rgba(156, 163, 175, 0.6)'}
-                  fontSize={isSelected ? 8 : 7}
+                  fontSize={isSelected ? 11 : 9}
                   textAnchor="middle"
                   fontWeight={isSelected ? 'bold' : 'normal'}
                 >
