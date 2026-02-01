@@ -289,7 +289,6 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             {/* Intensity picker after selecting a sensation */}
             {selectedSensation && (
               <IntensityPicker
-                selectedSensation={selectedSensation}
                 sensationIcon={SENSATION_CONFIG[selectedSensation].icon}
                 sensationLabel={SENSATION_CONFIG[selectedSensation].label}
                 onPick={handleIntensityPick}

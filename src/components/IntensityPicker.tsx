@@ -1,9 +1,7 @@
 import { motion } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
-import type { SensationType } from '../models/somatic/types'
 
 interface IntensityPickerProps {
-  selectedSensation: SensationType
   sensationIcon: string
   sensationLabel: { ro: string; en: string }
   onPick: (intensity: 1 | 2 | 3) => void
@@ -90,4 +88,3 @@ export function IntensityPicker({
   )
 }
 
-export { INTENSITY_LABELS }
