@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { synthesize } from '../models/synthesis'
 import type { BaseEmotion, AnalysisResult } from '../models/types'
 
 /** Emotion IDs considered high-distress across all models */
@@ -35,6 +36,10 @@ export function ResultModal({ isOpen, onClose, onExploreMore, selections, result
   const analyzeT = (t as Record<string, Record<string, string>>).analyze ?? {}
 
   const showCrisis = isHighDistress(results)
+  const synthesisText = useMemo(
+    () => synthesize(results, language),
+    [results, language]
+  )
 
   const getAILink = () => {
     if (results.length === 0) return '#'
@@ -119,6 +124,15 @@ export function ResultModal({ isOpen, onClose, onExploreMore, selections, result
                   </p>
 
                   <div className="flex-1 overflow-y-auto mb-4">
+                    {/* Synthesis narrative */}
+                    {synthesisText && (
+                      <div className="mb-4 p-4 rounded-xl bg-gray-700/50">
+                        <p className="text-sm text-gray-200 leading-relaxed">
+                          {synthesisText}
+                        </p>
+                      </div>
+                    )}
+
                     {results.length > 0 ? (
                       <div className="space-y-3">
                         {results.some((r) => r.componentLabels) && (
