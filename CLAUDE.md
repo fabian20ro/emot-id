@@ -1,6 +1,6 @@
 # Emot-ID
 
-Interactive emotion identification PWA. Currently implements Plutchik's wheel of emotions; expanding to multiple emotion classification models.
+Interactive emotion identification PWA. Implements multiple emotion classification models: Plutchik's wheel, Emotion Wheel, and Body Map of Emotions.
 
 ## Tech Stack
 
@@ -25,7 +25,12 @@ Interactive emotion identification PWA. Currently implements Plutchik's wheel of
 src/
 ├── components/        # All UI components (flat)
 │   ├── Bubble.tsx          # Single emotion bubble
-│   ├── BubbleField.tsx     # Physics-like bubble layout
+│   ├── BubbleField.tsx     # Physics-like bubble layout (Plutchik, Wheel)
+│   ├── BodyMap.tsx          # SVG body silhouette visualization (Somatic)
+│   ├── BodyRegion.tsx       # Single SVG body region with heat coloring
+│   ├── SensationPicker.tsx  # 2-step popover: sensation type → intensity
+│   ├── GuidedScan.tsx       # Sequential head-to-feet body scan overlay
+│   ├── body-paths.ts        # SVG path constants for 14 body regions
 │   ├── SelectionBar.tsx    # Selected emotions strip
 │   ├── Header.tsx          # App header
 │   ├── MenuButton.tsx      # Hamburger menu trigger
@@ -34,15 +39,20 @@ src/
 │   └── ResultModal.tsx     # Analysis result display
 ├── models/            # Emotion classification models
 │   ├── types.ts            # BaseEmotion, EmotionModel, AnalysisResult interfaces
-│   ├── registry.ts         # Model registry (available models)
+│   ├── registry.ts         # Model registry (available models + visualizations)
 │   ├── plutchik/           # Plutchik's wheel model
 │   │   ├── index.ts        # Model implementation (spawns, dyads)
 │   │   ├── types.ts        # PlutchikEmotion extends BaseEmotion
 │   │   └── data.json       # Emotion data with descriptions
-│   └── wheel/              # Emotion Wheel model (hierarchical drill-down)
-│       ├── index.ts        # Model implementation (tree navigation)
-│       ├── types.ts        # WheelEmotion extends BaseEmotion
-│       └── data.json       # Emotion data with descriptions
+│   ├── wheel/              # Emotion Wheel model (hierarchical drill-down)
+│   │   ├── index.ts        # Model implementation (tree navigation)
+│   │   ├── types.ts        # WheelEmotion extends BaseEmotion
+│   │   └── data.json       # Emotion data with descriptions
+│   └── somatic/            # Body Map of Emotions model
+│       ├── index.ts        # Model implementation (region selection)
+│       ├── types.ts        # SomaticRegion, SomaticSelection, SensationType
+│       ├── scoring.ts      # Pattern → emotion scoring engine
+│       └── data.json       # 14 body regions with emotion signal mappings
 ├── context/
 │   └── LanguageContext.tsx  # i18n provider (ro/en, persisted to localStorage)
 ├── hooks/
@@ -83,25 +93,33 @@ interface EmotionModel<E extends BaseEmotion> {
 }
 ```
 
-Each model extends `BaseEmotion` with model-specific fields (e.g. Plutchik adds `spawns`, `components`, `category`; Wheel adds `level`, `parent`, `children`).
+Each model extends `BaseEmotion` with model-specific fields (e.g. Plutchik adds `spawns`, `components`, `category`; Wheel adds `level`, `parent`, `children`; Somatic adds `emotionSignals`, `group`, `commonSensations`).
 
 ### How It Works
 
-- **BubbleField** renders emotion bubbles with physics-like positioning
-- Selecting a bubble spawns related emotions (via `spawns` array)
-- Dyads are detected from `components` — two selected primaries reveal their dyad
+- **Model Registry** maps model IDs to model logic + visualization component
+- **BubbleField** renders emotion bubbles with physics-like positioning (Plutchik, Wheel)
+- **BodyMap** renders an SVG body silhouette with 14 interactive regions (Somatic)
+- Plutchik: selecting a bubble spawns related emotions; dyads detected from components
+- Wheel: 3-level drill-down navigation; only leaf nodes become selections
+- Somatic: tap region → pick sensation type + intensity → scoring engine maps patterns to emotions
 - **SelectionBar** shows current picks; **AnalyzeButton** triggers result analysis
 - State lives in component state + Context API. No router, no backend.
 - Bilingual: Romanian default, browser-detected. Emotion labels are inline (`label.ro`/`label.en`), UI strings in `i18n/*.json`
 
+### Somatic Model Pattern
+
+The Body Map uses an **adapter pattern** where body regions extend `BaseEmotion`. The BodyMap component intercepts `onSelect` to enrich regions with sensation type + intensity (as `SomaticSelection`), which flows through the generic hook unchanged. The `analyze()` method downcasts back and runs a weighted scoring algorithm mapping somatic patterns to candidate emotions.
+
 ## Multi-Model Expansion Direction
 
-### Planned Models
+### Models
 
 | Model | Data Shape | Status |
 |-------|-----------|--------|
 | Plutchik wheel | Wheel with dyads + spawns | Done |
 | Emotion Wheel | 3-tier tree (drill-down navigation) | Done |
+| Body Map | SVG silhouette, 14 regions, sensation + intensity | Done |
 | Ekman facial | Flat list (6 basic emotions) | Planned |
 | Parrott hierarchy | 3-tier tree (primary → secondary → tertiary) | Planned |
 | Contrasting pairs/axes | 2D axes (valence × arousal) | Planned |
@@ -110,8 +128,8 @@ Each model extends `BaseEmotion` with model-specific fields (e.g. Plutchik adds 
 
 ### Architecture Needs
 
-- **Model-specific visualizations**: BubbleField works for Plutchik and Wheel; future models may need different visualizations (flat grid, 2D scatter, image overlay)
-- **Additional models**: Ekman, Parrott, contrasting pairs (see Planned Models above)
+- **Model-specific visualizations**: BubbleField (Plutchik, Wheel), BodyMap (Somatic); future models may need different visualizations (flat grid, 2D scatter, image overlay)
+- **Additional models**: Ekman, Parrott, contrasting pairs (see Models table above)
 
 ## Key Conventions
 
