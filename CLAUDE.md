@@ -15,6 +15,7 @@ Interactive emotion identification PWA. Currently implements Plutchik's wheel of
 | `npm run dev` | Vite dev server |
 | `npm run build` | `tsc -b && vite build` |
 | `npm test` | `vitest run` |
+| `npm run test:watch` | `vitest` (watch mode) |
 | `npm run lint` | ESLint |
 | `npm run preview` | Preview production build |
 
@@ -23,22 +24,30 @@ Interactive emotion identification PWA. Currently implements Plutchik's wheel of
 ```
 src/
 ├── components/        # All UI components (flat)
-│   ├── Bubble.tsx          # Single emotion bubble + Emotion interface
+│   ├── Bubble.tsx          # Single emotion bubble
 │   ├── BubbleField.tsx     # Physics-like bubble layout
 │   ├── SelectionBar.tsx    # Selected emotions strip
 │   ├── Header.tsx          # App header
 │   ├── MenuButton.tsx      # Hamburger menu trigger
-│   ├── SettingsMenu.tsx    # Settings panel
+│   ├── SettingsMenu.tsx    # Settings panel (model selector, language)
 │   ├── AnalyzeButton.tsx   # Triggers emotion analysis
 │   └── ResultModal.tsx     # Analysis result display
+├── models/            # Emotion classification models
+│   ├── types.ts            # BaseEmotion, EmotionModel, AnalysisResult interfaces
+│   ├── registry.ts         # Model registry (available models)
+│   ├── plutchik/           # Plutchik's wheel model
+│   │   ├── index.ts        # Model implementation (spawns, dyads)
+│   │   ├── types.ts        # PlutchikEmotion extends BaseEmotion
+│   │   └── data.json       # Emotion data with descriptions
+│   └── wheel/              # Emotion Wheel model (hierarchical drill-down)
+│       ├── index.ts        # Model implementation (tree navigation)
+│       ├── types.ts        # WheelEmotion extends BaseEmotion
+│       └── data.json       # Emotion data with descriptions
 ├── context/
-│   ├── LanguageContext.tsx  # i18n provider (ro/en, persisted to localStorage)
-│   └── ThemeContext.tsx     # Dark theme only (currently)
+│   └── LanguageContext.tsx  # i18n provider (ro/en, persisted to localStorage)
 ├── hooks/
-│   ├── useLocalStorage.ts  # Generic localStorage hook
+│   ├── useEmotionModel.ts  # Model state management (selection, analysis)
 │   └── useSound.ts         # Web Audio API tones (select/deselect)
-├── data/
-│   └── emotions.json       # 49 Plutchik emotions
 ├── i18n/
 │   ├── ro.json             # Romanian (default)
 │   └── en.json             # English
@@ -50,20 +59,31 @@ src/
 
 ## Architecture
 
-### Core Emotion Interface (in `Bubble.tsx`)
+### Core Types (in `src/models/types.ts`)
 
 ```typescript
-interface Emotion {
+interface BaseEmotion {
   id: string
   label: { ro: string; en: string }
-  category: string          // "primary" | "intensity" | "dyad" | "secondary_dyad" | "tertiary_dyad" | "opposite_dyad"
-  color: string             // hex color
-  intensity: number         // 0.3–0.8
-  opposite?: string         // opposite emotion id
-  spawns: string[]          // emotions revealed on selection
-  components?: string[]     // two emotion ids that combine into this dyad
+  description?: { ro: string; en: string }
+  color: string
+  intensity?: number
+}
+
+interface EmotionModel<E extends BaseEmotion> {
+  id: string
+  name: string
+  allEmotions: Record<string, E>
+  initialState: ModelState
+  onSelect(emotion, state, selections): SelectionEffect
+  onDeselect(emotion, state): SelectionEffect
+  onClear(): ModelState
+  analyze(selections): AnalysisResult[]
+  getEmotionSize(emotionId, state): 'small' | 'medium' | 'large'
 }
 ```
+
+Each model extends `BaseEmotion` with model-specific fields (e.g. Plutchik adds `spawns`, `components`, `category`; Wheel adds `level`, `parent`, `children`).
 
 ### How It Works
 
@@ -81,6 +101,7 @@ interface Emotion {
 | Model | Data Shape | Status |
 |-------|-----------|--------|
 | Plutchik wheel | Wheel with dyads + spawns | Done |
+| Emotion Wheel | 3-tier tree (drill-down navigation) | Done |
 | Ekman facial | Flat list (6 basic emotions) | Planned |
 | Parrott hierarchy | 3-tier tree (primary → secondary → tertiary) | Planned |
 | Contrasting pairs/axes | 2D axes (valence × arousal) | Planned |
@@ -89,10 +110,8 @@ interface Emotion {
 
 ### Architecture Needs
 
-- **Model registry**: defines available models, their metadata, and data shapes
-- **Per-model data files**: `src/data/plutchik.json`, `src/data/ekman.json`, etc.
-- **Shared vs model-specific components**: BubbleField works for Plutchik; other models need different visualizations (flat grid, tree view, 2D scatter, image overlay)
-- **Model selector menu**: switch between classification systems in the UI
+- **Model-specific visualizations**: BubbleField works for Plutchik and Wheel; future models may need different visualizations (flat grid, 2D scatter, image overlay)
+- **Additional models**: Ekman, Parrott, contrasting pairs (see Planned Models above)
 
 ## Key Conventions
 

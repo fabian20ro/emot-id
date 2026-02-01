@@ -86,11 +86,14 @@ export const plutchikModel: EmotionModel<PlutchikEmotion> = {
 
     const results: AnalysisResult[] = []
     const selectionIds = new Set(selections.map((s) => s.id))
+    const usedAsComponent = new Set<string>()
 
     for (const emotion of Object.values(allEmotions)) {
       if (emotion.components && emotion.components.length === 2) {
         const [c1, c2] = emotion.components
         if (selectionIds.has(c1) && selectionIds.has(c2)) {
+          usedAsComponent.add(c1)
+          usedAsComponent.add(c2)
           const comp1 = allEmotions[c1]
           const comp2 = allEmotions[c2]
           results.push({
@@ -101,6 +104,12 @@ export const plutchikModel: EmotionModel<PlutchikEmotion> = {
             componentLabels: [comp1.label, comp2.label],
           })
         }
+      }
+    }
+
+    for (const s of selections) {
+      if (!usedAsComponent.has(s.id)) {
+        results.push({ id: s.id, label: s.label, color: s.color, description: s.description })
       }
     }
 
