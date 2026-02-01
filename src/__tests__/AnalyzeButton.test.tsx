@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { userEvent } from '@testing-library/user-event'
+import userEvent from '@testing-library/user-event'
 import { AnalyzeButton } from '../components/AnalyzeButton'
 import { LanguageProvider } from '../context/LanguageContext'
 

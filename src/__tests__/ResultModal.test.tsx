@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { userEvent } from '@testing-library/user-event'
+import userEvent from '@testing-library/user-event'
 import { ResultModal } from '../components/ResultModal'
 import { LanguageProvider } from '../context/LanguageContext'
 import type { BaseEmotion, AnalysisResult } from '../models/types'
