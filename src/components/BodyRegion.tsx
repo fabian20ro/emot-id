@@ -6,6 +6,8 @@ interface BodyRegionProps {
   d: string
   /** Enlarged invisible hit area path for small regions */
   hitD?: string
+  /** Accessible label for screen readers */
+  label?: string
   isSelected: boolean
   isHighlighted: boolean
   sensation?: SensationType
@@ -31,6 +33,7 @@ export function BodyRegion({
   id,
   d,
   hitD,
+  label,
   isSelected,
   isHighlighted,
   sensation,
@@ -50,7 +53,15 @@ export function BodyRegion({
       : 0.3
 
   return (
-    <g style={{ cursor: 'pointer' }} onClick={() => onClick(id)}>
+    <g
+      role="button"
+      tabIndex={0}
+      aria-label={label ?? id}
+      aria-pressed={isSelected}
+      style={{ cursor: 'pointer', outline: 'none' }}
+      onClick={() => onClick(id)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(id) } }}
+    >
       {/* Invisible expanded hit area for small regions */}
       {hitD && (
         <path

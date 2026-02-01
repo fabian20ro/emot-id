@@ -140,7 +140,16 @@ export function DimensionalField({ emotions, onSelect, onDeselect, selections = 
             const isSelected = selectedIds.has(emotion.id)
 
             return (
-              <g key={emotion.id} onClick={(e) => handleEmotionDotClick(emotion, e)} style={{ cursor: 'pointer' }}>
+              <g
+                key={emotion.id}
+                role="button"
+                tabIndex={0}
+                aria-label={emotion.label[language]}
+                aria-pressed={isSelected}
+                style={{ cursor: 'pointer', outline: 'none' }}
+                onClick={(e) => handleEmotionDotClick(emotion, e)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); handleEmotionDotClick(emotion, e as unknown as React.MouseEvent) } }}
+              >
                 <motion.circle
                   cx={px}
                   cy={py}

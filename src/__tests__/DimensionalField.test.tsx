@@ -84,4 +84,15 @@ describe('DimensionalField', () => {
     // 3 emotion dots (crosshair not rendered yet)
     expect(circles.length).toBe(3)
   })
+
+  it('emotion dots have ARIA attributes for accessibility', () => {
+    renderField()
+    const buttons = document.querySelectorAll('g[role="button"]')
+    expect(buttons.length).toBe(3)
+    for (const btn of buttons) {
+      expect(btn).toHaveAttribute('tabindex', '0')
+      expect(btn).toHaveAttribute('aria-label')
+      expect(btn).toHaveAttribute('aria-pressed', 'false')
+    }
+  })
 })

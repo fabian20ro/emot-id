@@ -2,34 +2,35 @@ import { describe, it, expect } from 'vitest'
 import { dimensionalModel, findNearest } from '../models/dimensional'
 
 const allEmotions = dimensionalModel.allEmotions
+const emotionCount = Object.keys(allEmotions).length
 
 describe('dimensional model', () => {
-  it('has all 28 emotions', () => {
-    expect(Object.keys(allEmotions).length).toBe(28)
+  it('has at least 28 emotions', () => {
+    expect(emotionCount).toBeGreaterThanOrEqual(28)
   })
 
   it('initialState shows all emotions', () => {
     const state = dimensionalModel.initialState
-    expect(state.visibleEmotionIds.size).toBe(28)
+    expect(state.visibleEmotionIds.size).toBe(emotionCount)
   })
 
   it('onSelect returns same state (all always visible)', () => {
     const state = dimensionalModel.initialState
     const emotion = allEmotions['happy']
     const effect = dimensionalModel.onSelect(emotion, state, [])
-    expect(effect.newState.visibleEmotionIds.size).toBe(28)
+    expect(effect.newState.visibleEmotionIds.size).toBe(emotionCount)
   })
 
   it('onDeselect returns same state', () => {
     const state = dimensionalModel.initialState
     const emotion = allEmotions['happy']
     const effect = dimensionalModel.onDeselect(emotion, state)
-    expect(effect.newState.visibleEmotionIds.size).toBe(28)
+    expect(effect.newState.visibleEmotionIds.size).toBe(emotionCount)
   })
 
   it('onClear returns initial state', () => {
     const state = dimensionalModel.onClear()
-    expect(state.visibleEmotionIds.size).toBe(28)
+    expect(state.visibleEmotionIds.size).toBe(emotionCount)
   })
 
   it('analyze returns results with valence and arousal', () => {

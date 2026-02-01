@@ -414,9 +414,10 @@
     },
     "needs": { "ro": "empatie si schimbare de perspectiva", "en": "empathy and perspective-taking" },
     "category": "dyad",
-    "color": "#D88090",
+    "color": "#795548",
     "intensity": 0.6,
-    "components": ["disgust", "anger"],
+    "opposite": "compassion",
+    "components": ["anger", "disgust"],
     "spawns": ["disgust", "anger", "loathing", "rage"]
   },
   "aggression": {
@@ -740,5 +741,35 @@
     "intensity": 0.7,
     "components": ["anger", "anticipation"],
     "spawns": ["anger", "anticipation", "rage", "vigilance"]
+  },
+  "compassion": {
+    "id": "compassion",
+    "label": { "ro": "compasiune", "en": "compassion" },
+    "description": {
+      "ro": "Compasiunea este diada iubirii si tristetii — capacitatea de a percepe suferinta celuilalt si de a raspunde cu caldura si grija, nu cu retragere. Ea transforma durerea observata in impuls de actiune blanda. Compasiunea nu inseamna a prelua suferinta celuilalt, ci a fi prezent alaturi de ea fara a te pierde. Este fundamentul vindecarii relationale si al resilientei comunitare.",
+      "en": "Compassion is the dyad of love and sadness — the capacity to perceive another's suffering and respond with warmth and care, not withdrawal. It transforms observed pain into a gentle impulse to act. Compassion does not mean taking on another's suffering, but being present alongside it without losing yourself. It is the foundation of relational healing and community resilience."
+    },
+    "needs": { "ro": "echilibru intre grija si auto-protectie", "en": "balance between care and self-protection" },
+    "category": "dyad",
+    "color": "#66BB6A",
+    "intensity": 0.5,
+    "opposite": "contempt",
+    "components": ["love", "sadness"],
+    "spawns": []
+  },
+  "nostalgia": {
+    "id": "nostalgia",
+    "label": { "ro": "nostalgie", "en": "nostalgia" },
+    "description": {
+      "ro": "Nostalgia este diada bucuriei si tristetii — o dor dulce-amar pentru momente, locuri sau persoane din trecut care au avut o semnificatie profunda. Ea iti reaminteste ce a contat cu adevarat si iti ancoreaza identitatea in povestea ta de viata. Nostalgia sanatoasa te reconecteaza cu valorile tale si iti ofera caldura; devine problematica doar cand te impiedica sa te angajezi in prezent.",
+      "en": "Nostalgia is the dyad of joy and sadness — a bittersweet longing for moments, places, or people from the past that held deep significance. It reminds you of what truly mattered and anchors your identity in your life story. Healthy nostalgia reconnects you with your values and offers warmth; it becomes problematic only when it prevents you from engaging with the present."
+    },
+    "needs": { "ro": "onorarea trecutului si ancorare in prezent", "en": "honoring the past and anchoring in the present" },
+    "category": "dyad",
+    "color": "#AB47BC",
+    "intensity": 0.5,
+    "opposite": "",
+    "components": ["joy", "sadness"],
+    "spawns": []
   }
 }

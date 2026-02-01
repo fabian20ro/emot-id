@@ -30,6 +30,10 @@
 
 *All known issues resolved in Sprint 2.*
 
+### Body Map Meditation Pose
+- [x] Redesigned SVG body silhouette as meditation pose (cross-legged, hands resting on knees)
+- [x] ViewBox compressed from 200×440 to 200×320 — better fit for phone screens
+
 ---
 
 ## Remaining Work (Sprint-Based)
@@ -82,49 +86,50 @@ Coverage: ~55% -> ~70%.
 
 ---
 
-### Sprint 4: Emotional Profile Synthesis
+### Sprint 4: Emotional Profile Synthesis ✅
 
 Rule-based narrative for multi-emotion results. Transforms from labeling tool to reflection tool.
 
-Rules: valence balance, intensity pattern, complexity framing, adaptive function weaving, needs integration.
-
-- [ ] `src/models/synthesis.ts` -- `synthesize(results, language)` pure function returning 4-8 sentence narrative
-- [ ] Update ResultModal to show synthesis card above individual results
-- [ ] `src/__tests__/synthesis.test.ts` -- test each rule independently
+- [x] `src/models/synthesis.ts` -- pure `synthesize(results, language)` function with 5 rules: valence balance, intensity pattern, complexity framing, adaptive function weaving, needs integration
+- [x] Updated ResultModal with synthesis card (neutral `bg-gray-700/50`) above individual results
+- [x] `src/__tests__/synthesis.test.ts` -- 11 tests (empty, single/multi emotion, valence detection, intensity bands, complexity, needs, bilingual, anti-diagnostic)
 
 ---
 
-### Sprint 5: Russell Circumplex Model
+### Sprint 5: Russell Circumplex Model ✅
 
-4th model -- adds dimensional/spatial access channel. 28 reference emotions across 4 quadrants. Tap-to-place + drag-to-refine interaction.
+4th model — Emotional Space. 28 reference emotions across 4 quadrants. Tap-to-place + nearest suggestions interaction.
 
-- [ ] `src/models/dimensional/types.ts` -- DimensionalEmotion with valence, arousal
-- [ ] `src/models/dimensional/data.json` -- 28 emotions with coordinates, descriptions, needs
-- [ ] `src/models/dimensional/index.ts` -- model logic (nearest emotion selection)
-- [ ] `src/components/DimensionalField.tsx` -- 2D field visualization
-- [ ] Register in `src/models/registry.ts`
-- [ ] `src/__tests__/dimensional-model.test.ts`
-- [ ] `src/__tests__/dimensional-data.test.ts`
-- [ ] `src/__tests__/DimensionalField.test.tsx`
+- [x] `src/models/dimensional/types.ts` — DimensionalEmotion with valence, arousal, quadrant
+- [x] `src/models/dimensional/data.json` — 28 emotions (7 per quadrant) with coordinates, descriptions, needs (bilingual)
+- [x] `src/models/dimensional/index.ts` — model logic + `findNearest()` Euclidean distance helper
+- [x] `src/components/DimensionalField.tsx` — SVG 2D field, axis labels, reference dots, crosshair, 3-nearest suggestions panel
+- [x] Registered in `src/models/registry.ts`
+- [x] `src/__tests__/dimensional-model.test.ts` — 11 tests (state, analyze, findNearest)
+- [x] `src/__tests__/dimensional-data.test.ts` — 9 tests (data integrity, quadrant balance, coordinate ranges)
+- [x] `src/__tests__/DimensionalField.test.tsx` — 4 tests (SVG render, axis labels, emotion labels, circles)
 
 ---
 
-### Sprint 6: Data Enrichment (Deferred Emotions)
+### Sprint 6: Data Enrichment (Deferred Emotions) ✅
 
 Priority order: dor, compassion, loneliness, safety/relief, nostalgia, boredom (circumplex), contempt (circumplex).
 
-- [ ] Add new emotions across all model data.json files
-- [ ] Update data integrity tests
+- [x] Added 5 emotions to dimensional/data.json: dor, compassion, relief, nostalgia, contempt (28 → 33)
+- [x] Added 7 emotions to plutchik/data.json (48 → 55): compassion, nostalgia, contempt + related dyads/spawns
+- [x] Added 5 emotions to wheel/data.json (130 → 135): dor, compassion, loneliness, relief, nostalgia
+- [x] Updated data integrity tests (dynamic counts, ≥ floor assertions)
 
 ---
 
-### Sprint 7: Accessibility + PWA Polish
+### Sprint 7: Accessibility + PWA Polish ✅
 
-- [ ] ARIA for SVG regions (role="button", aria-label, tabindex)
-- [ ] Keyboard nav for BubbleField (arrow keys + Enter)
-- [ ] Keyboard nav for DimensionalField
-- [ ] PWA offline caching verification
-- [ ] Final a11y audit (screen reader, focus management in modals)
+- [x] ARIA for SVG body regions (role="button", aria-label, aria-pressed, tabindex, onKeyDown)
+- [x] ARIA for DimensionalField emotion dots (role="button", tabindex, keyboard Enter/Space)
+- [x] BubbleField uses native `<button>` elements — keyboard-accessible by default
+- [x] ResultModal: role="dialog", aria-modal="true", aria-label
+- [x] A11y test assertions added to BodyMap, DimensionalField, and ResultModal tests (3 new tests)
+- [ ] PWA offline caching verification (deferred — requires manual device testing)
 
 ---
 

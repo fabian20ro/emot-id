@@ -158,6 +158,17 @@ describe('BodyMap', () => {
     expect(screen.queryByText('Tension')).not.toBeInTheDocument()
   })
 
+  it('body regions have ARIA attributes for accessibility', () => {
+    renderBodyMap()
+    const buttons = document.querySelectorAll('g[role="button"]')
+    expect(buttons.length).toBe(14)
+    for (const btn of buttons) {
+      expect(btn).toHaveAttribute('tabindex', '0')
+      expect(btn).toHaveAttribute('aria-label')
+      expect(btn).toHaveAttribute('aria-pressed', 'false')
+    }
+  })
+
   it('activates guided scan mode', async () => {
     const user = userEvent.setup()
     renderBodyMap()

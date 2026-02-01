@@ -170,7 +170,8 @@
     "parent": "happy",
     "children": [
       "loving",
-      "thankful"
+      "thankful",
+      "relief"
     ],
     "description": {
       "ro": "Pacea interioara este starea in care conflictele interne s-au calmat si te simti in armonie cu tine insuti si cu lumea. Nu este o stare pasiva, ci o prezenta activa si constienta. Pacea apare cand renunti la lupta cu realitatea si gasesti un echilibru intre acceptare si actiune. Este fundamentul bunastarii durabile.",
@@ -192,7 +193,8 @@
     "parent": "happy",
     "children": [
       "sensitive",
-      "intimate"
+      "intimate",
+      "compassion"
     ],
     "description": {
       "ro": "A fi in stare de incredere inseamna sa te simti suficient de sigur pentru a te deschide catre ceilalti si catre viata. Este capacitatea de a te baza pe altii fara a avea nevoie de garantii absolute. Increderea sanatoasa se bazeaza pe experienta, nu pe naivitate, si include capacitatea de a-ti proteja granitele cand este necesar.",
@@ -2324,7 +2326,10 @@
     "parent": "sad",
     "children": [
       "abandoned",
-      "isolated"
+      "isolated",
+      "dor",
+      "loneliness",
+      "nostalgia"
     ],
     "description": {
       "ro": "Singuratatea este durerea de a fi deconectat — nu neaparat de a fi singur fizic, ci de a nu te simti vazut, inteles si conectat emotional. Singuratatea cronica este un factor de risc major pentru sanatate, comparable cu fumatul. Vindecarea singuratatii nu vine din a fi inconjurat de oameni, ci din a avea relatii in care te simti cu adevarat cunoscut.",
@@ -2549,6 +2554,96 @@
     "needs": {
       "ro": "un pas mic catre conexiune",
       "en": "one small step toward connection"
+    }
+  },
+  "dor": {
+    "id": "dor",
+    "label": {
+      "ro": "Dor",
+      "en": "Longing (dor)"
+    },
+    "color": "#7E57C2",
+    "level": 2,
+    "parent": "lonely",
+    "description": {
+      "ro": "Dorul este un concept emotional profund romanesc — un amestec dulce-amar de iubire, tristete si speranta indreptate catre cineva sau ceva absent. Dorul te conecteaza cu ceea ce conteaza cel mai mult pentru tine, chiar cand acel lucru este departe. Functia lui adaptiva este sa pastreze vie legatura interioara cu persoanele, locurile si momentele care ti-au modelat identitatea.",
+      "en": "Dor is a deeply Romanian emotional concept — a bittersweet blend of love, sadness, and hope directed toward someone or something absent. It connects you to what matters most, even when that thing is far away. Its adaptive function is to keep alive the inner bond with the people, places, and moments that have shaped your identity."
+    },
+    "needs": {
+      "ro": "recunoastere si conexiune",
+      "en": "acknowledgment and connection"
+    }
+  },
+  "loneliness": {
+    "id": "loneliness",
+    "label": {
+      "ro": "Singuratate",
+      "en": "Loneliness"
+    },
+    "color": "#5C6BC0",
+    "level": 2,
+    "parent": "lonely",
+    "description": {
+      "ro": "Singuratatea este semnalul emotional ca nevoia ta fundamentala de apartenenta si conexiune autentica nu este implinita. Spre deosebire de izolare, singuratatea poate aparea chiar si in mijlocul multimii — este despre calitatea legaturilor, nu despre cantitate. Functia ei adaptiva este sa te motiveze sa cauti relatii autentice si sa investesti in legaturi care iti hranesc sufletul.",
+      "en": "Loneliness is the emotional signal that your fundamental need for belonging and authentic connection is unmet. Unlike isolation, loneliness can arise even in a crowd — it is about the quality of bonds, not quantity. Its adaptive function is to motivate you to seek genuine relationships and invest in connections that nourish your soul."
+    },
+    "needs": {
+      "ro": "conexiune autentica si apartenenta",
+      "en": "authentic connection and belonging"
+    }
+  },
+  "nostalgia": {
+    "id": "nostalgia",
+    "label": {
+      "ro": "Nostalgie",
+      "en": "Nostalgia"
+    },
+    "color": "#AB47BC",
+    "level": 2,
+    "parent": "lonely",
+    "description": {
+      "ro": "Nostalgia este o emotie dulce-amara care te transporta in momente semnificative din trecut — nu pentru a fugi de prezent, ci pentru a regasi un sentiment de continuitate si sens. Cercetarile arata ca nostalgia contracareaza singuratatea si intareste sentimentul de identitate. Functia ei adaptiva este sa iti reaminteasca cine esti si de unde vii, oferindu-ti resurse emotionale pentru prezent.",
+      "en": "Nostalgia is a bittersweet emotion that transports you to meaningful moments from the past — not to escape the present, but to rediscover a sense of continuity and meaning. Research shows nostalgia counteracts loneliness and strengthens the sense of identity. Its adaptive function is to remind you who you are and where you come from, providing emotional resources for the present."
+    },
+    "needs": {
+      "ro": "sens si continuitate",
+      "en": "meaning and continuity"
+    }
+  },
+  "compassion": {
+    "id": "compassion",
+    "label": {
+      "ro": "Compasiune",
+      "en": "Compassion"
+    },
+    "color": "#66BB6A",
+    "level": 2,
+    "parent": "trusting",
+    "description": {
+      "ro": "Compasiunea este capacitatea de a recunoaste suferinta celuilalt si de a simti un impuls autentic de a ajuta. Este mai mult decat empatie — include si actiunea, dorinta de a alina durerea pe care o percepi. Functia ei adaptiva este sa intareasca legaturile sociale si sa creeze retele de sprijin reciproc, facandu-ne mai rezilienti impreuna decat singuri.",
+      "en": "Compassion is the capacity to recognize another's suffering and feel a genuine impulse to help. It is more than empathy — it includes action, the desire to ease the pain you perceive. Its adaptive function is to strengthen social bonds and create networks of mutual support, making us more resilient together than alone."
+    },
+    "needs": {
+      "ro": "exprimare si reciprocitate",
+      "en": "expression and reciprocity"
+    }
+  },
+  "relief": {
+    "id": "relief",
+    "label": {
+      "ro": "Usurare",
+      "en": "Relief"
+    },
+    "color": "#81C784",
+    "level": 2,
+    "parent": "peaceful",
+    "description": {
+      "ro": "Usurarea este eliberarea emotionala care vine dupa ce o amenintare, o tensiune sau o incertitudine a trecut. Este corpul si mintea ta care se relaxeaza dupa o perioada de alerta. Functia adaptiva a usurarii este sa semnaleze ca esti din nou in siguranta si sa permita sistemului nervos sa revina la echilibru, creand spatiu pentru odihna si recuperare.",
+      "en": "Relief is the emotional release that comes after a threat, tension, or uncertainty has passed. It is your body and mind relaxing after a period of alertness. The adaptive function of relief is to signal that you are safe again and allow the nervous system to return to balance, creating space for rest and recovery."
+    },
+    "needs": {
+      "ro": "siguranta si odihna",
+      "en": "safety and rest"
     }
   }
 }

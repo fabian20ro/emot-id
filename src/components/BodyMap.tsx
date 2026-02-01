@@ -147,6 +147,7 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
                   id={path.id}
                   d={path.d}
                   hitD={path.hitD}
+                  label={regionMap.get(path.id)?.label[language]}
                   isSelected={!!sel}
                   isHighlighted={highlightedRegionId === path.id || activeRegionId === path.id}
                   sensation={sel?.selectedSensation}
@@ -167,6 +168,7 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
                   id={path.id}
                   d={path.d}
                   hitD={path.hitD}
+                  label={regionMap.get(path.id)?.label[language]}
                   isSelected={!!sel}
                   isHighlighted={highlightedRegionId === path.id || activeRegionId === path.id}
                   sensation={sel?.selectedSensation}

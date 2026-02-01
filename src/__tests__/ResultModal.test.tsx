@@ -158,4 +158,12 @@ describe('ResultModal', () => {
     renderModal({ results, selections: [makeEmotion('joy')] })
     expect(screen.getByText(/not a substitute for professional support/)).toBeInTheDocument()
   })
+
+  it('has proper dialog ARIA attributes', () => {
+    renderModal()
+    const dialog = document.querySelector('[role="dialog"]')
+    expect(dialog).toBeInTheDocument()
+    expect(dialog).toHaveAttribute('aria-modal', 'true')
+    expect(dialog).toHaveAttribute('aria-label', 'Analysis result')
+  })
 })

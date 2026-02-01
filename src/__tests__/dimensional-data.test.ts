@@ -5,11 +5,11 @@ import type { DimensionalEmotion } from '../models/dimensional/types'
 const emotions = Object.values(emotionsData) as DimensionalEmotion[]
 
 describe('dimensional data', () => {
-  it('has 28 reference emotions', () => {
-    expect(emotions.length).toBe(28)
+  it('has at least 28 reference emotions', () => {
+    expect(emotions.length).toBeGreaterThanOrEqual(28)
   })
 
-  it('has 7 emotions per quadrant', () => {
+  it('has at least 7 emotions per quadrant', () => {
     const quadrants = {
       'pleasant-intense': 0,
       'pleasant-calm': 0,
@@ -19,10 +19,10 @@ describe('dimensional data', () => {
     for (const e of emotions) {
       quadrants[e.quadrant]++
     }
-    expect(quadrants['pleasant-intense']).toBe(7)
-    expect(quadrants['pleasant-calm']).toBe(7)
-    expect(quadrants['unpleasant-intense']).toBe(7)
-    expect(quadrants['unpleasant-calm']).toBe(7)
+    expect(quadrants['pleasant-intense']).toBeGreaterThanOrEqual(7)
+    expect(quadrants['pleasant-calm']).toBeGreaterThanOrEqual(7)
+    expect(quadrants['unpleasant-intense']).toBeGreaterThanOrEqual(7)
+    expect(quadrants['unpleasant-calm']).toBeGreaterThanOrEqual(7)
   })
 
   it('all emotions have coordinates in -1 to +1 range', () => {

@@ -90,6 +90,9 @@ export function ResultModal({ isOpen, onClose, onExploreMore, selections, result
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: 'spring', damping: 25 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={modalT.title ?? 'Analysis result'}
             onClick={(e) => e.stopPropagation()}
             className="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6 max-h-[80vh] flex flex-col"
           >

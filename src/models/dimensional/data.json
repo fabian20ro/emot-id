@@ -278,5 +278,55 @@
     "valence": -0.5,
     "arousal": -0.5,
     "quadrant": "unpleasant-calm"
+  },
+  "dor": {
+    "id": "dor",
+    "label": { "ro": "dor", "en": "longing (dor)" },
+    "description": { "ro": "Dorul este un concept romanesc profund — o dorinta dulce-amara pentru cineva, ceva sau un loc indepartat. Semnaleaza cat de mult valoareaza ceea ce lipseste si mentine vie legatura cu ceea ce iubesti.", "en": "Dor is a deep Romanian cultural concept — a bittersweet yearning for someone, something, or a distant place. It signals how much what is missing truly matters and keeps alive the bond with what you love." },
+    "needs": { "ro": "conexiune si acceptarea distantei", "en": "connection and acceptance of distance" },
+    "color": "#7E57C2",
+    "valence": 0.1,
+    "arousal": -0.4,
+    "quadrant": "pleasant-calm"
+  },
+  "compassion": {
+    "id": "compassion",
+    "label": { "ro": "compasiune", "en": "compassion" },
+    "description": { "ro": "Compasiunea este o deschidere empatica catre suferinta altuia, insotita de dorinta de a ajuta. Este forta care construieste incredere si vindeca relatii prin prezenta si grija autentica.", "en": "Compassion is an empathic openness toward another's suffering, accompanied by the desire to help. It is the force that builds trust and heals relationships through genuine presence and care." },
+    "needs": { "ro": "echilibru intre grija si autoprotectie", "en": "balance between caring and self-protection" },
+    "color": "#66BB6A",
+    "valence": 0.4,
+    "arousal": -0.1,
+    "quadrant": "pleasant-calm"
+  },
+  "relief": {
+    "id": "relief",
+    "label": { "ro": "usurare", "en": "relief" },
+    "description": { "ro": "Usurarea apare cand o amenintare sau o tensiune se dizolva — este eliberarea brusca a corpului din starea de alerta. Semnaleaza tranzitia de la pericol perceput la siguranta si permite sistemului nervos sa se reseteze.", "en": "Relief arises when a threat or tension dissolves — it is the body's sudden release from a state of alert. It signals the transition from perceived danger to safety and allows the nervous system to reset." },
+    "needs": { "ro": "integrare si odihna dupa stres", "en": "integration and rest after stress" },
+    "color": "#81C784",
+    "valence": 0.5,
+    "arousal": -0.4,
+    "quadrant": "pleasant-calm"
+  },
+  "nostalgia": {
+    "id": "nostalgia",
+    "label": { "ro": "nostalgie", "en": "nostalgia" },
+    "description": { "ro": "Nostalgia este o reflectie calda asupra trecutului — un amestec de bucurie si tristete usoara care reafirma cine esti. Conecteaza experienta prezenta cu amintiri semnificative si intareste sentimentul de continuitate a sinelui.", "en": "Nostalgia is a warm reflection on the past — a blend of joy and gentle sadness that reaffirms who you are. It connects present experience with meaningful memories and strengthens the sense of self-continuity." },
+    "needs": { "ro": "apreciere si ancorare in prezent", "en": "appreciation and grounding in the present" },
+    "color": "#AB47BC",
+    "valence": 0.2,
+    "arousal": -0.3,
+    "quadrant": "pleasant-calm"
+  },
+  "contempt": {
+    "id": "contempt",
+    "label": { "ro": "dispret", "en": "contempt" },
+    "description": { "ro": "Dispretul este o distantare morala fata de ceva perceput ca inferior sau gresit. Protejeaza valorile si standardele tale, dar prelungit poate eroda empatia si relatiile. Semnaleaza o nevoie de a-ti reevalua limitele.", "en": "Contempt is a moral distancing from something perceived as inferior or wrong. It protects your values and standards, but when prolonged it can erode empathy and relationships. It signals a need to reassess your boundaries." },
+    "needs": { "ro": "clarificarea valorilor si reconectare", "en": "clarification of values and reconnection" },
+    "color": "#795548",
+    "valence": -0.55,
+    "arousal": 0.15,
+    "quadrant": "unpleasant-intense"
   }
 }
