@@ -1,0 +1,282 @@
+{
+  "excited": {
+    "id": "excited",
+    "label": { "ro": "entuziasmat", "en": "excited" },
+    "description": { "ro": "Entuziasmul este o stare de activare placuta care semnaleaza anticiparea a ceva bun. Este energia care te propulseaza spre noi experiente si posibilitati.", "en": "Excitement is a pleasant state of activation signaling anticipation of something good. It is the energy that propels you toward new experiences and possibilities." },
+    "needs": { "ro": "canalizare si actiune", "en": "channeling and action" },
+    "color": "#FFD700",
+    "valence": 0.7,
+    "arousal": 0.8,
+    "quadrant": "pleasant-intense"
+  },
+  "elated": {
+    "id": "elated",
+    "label": { "ro": "exaltat", "en": "elated" },
+    "description": { "ro": "Exaltarea este o bucurie intensa care apare cand ceva depaseste asteptarile. Este o stare de varf care celebreaza reusita si conexiunea.", "en": "Elation is intense joy that arises when something exceeds expectations. It is a peak state that celebrates achievement and connection." },
+    "needs": { "ro": "partajare si ancorare", "en": "sharing and grounding" },
+    "color": "#FFE66D",
+    "valence": 0.8,
+    "arousal": 0.7,
+    "quadrant": "pleasant-intense"
+  },
+  "alert": {
+    "id": "alert",
+    "label": { "ro": "alert", "en": "alert" },
+    "description": { "ro": "Starea de alerta este o vigilenta placuta — o claritate mentala care te face prezent si receptiv la ceea ce se intampla.", "en": "Alertness is a pleasant vigilance — a mental clarity that makes you present and receptive to what is happening." },
+    "needs": { "ro": "focalizare si directie", "en": "focus and direction" },
+    "color": "#FFA726",
+    "valence": 0.3,
+    "arousal": 0.8,
+    "quadrant": "pleasant-intense"
+  },
+  "enthusiastic": {
+    "id": "enthusiastic",
+    "label": { "ro": "entuziast", "en": "enthusiastic" },
+    "description": { "ro": "Entuziasmul este o pasiune activa care te energizeaza si te conecteaza cu scopul tau. Este combustibilul motivatiei intrinsece.", "en": "Enthusiasm is an active passion that energizes you and connects you with your purpose. It is the fuel of intrinsic motivation." },
+    "needs": { "ro": "exprimare si sustinere", "en": "expression and support" },
+    "color": "#FF9800",
+    "valence": 0.6,
+    "arousal": 0.6,
+    "quadrant": "pleasant-intense"
+  },
+  "happy": {
+    "id": "happy",
+    "label": { "ro": "fericit", "en": "happy" },
+    "description": { "ro": "Fericirea este o stare de multumire activa care semnaleaza ca lucrurile merg bine. Este o confirmare ca nevoile tale fundamentale sunt satisfacute.", "en": "Happiness is an active state of satisfaction signaling that things are going well. It is a confirmation that your fundamental needs are being met." },
+    "needs": { "ro": "savurare si recunostinta", "en": "savoring and gratitude" },
+    "color": "#FFEB3B",
+    "valence": 0.7,
+    "arousal": 0.4,
+    "quadrant": "pleasant-intense"
+  },
+  "delighted": {
+    "id": "delighted",
+    "label": { "ro": "incantat", "en": "delighted" },
+    "description": { "ro": "Incantarea este o surpriza placuta — o bucurie spontana care apare cand ceva neasteptat si bun se intampla.", "en": "Delight is a pleasant surprise — a spontaneous joy that arises when something unexpected and good happens." },
+    "needs": { "ro": "prezenta si deschidere", "en": "presence and openness" },
+    "color": "#FFD54F",
+    "valence": 0.8,
+    "arousal": 0.5,
+    "quadrant": "pleasant-intense"
+  },
+  "amused": {
+    "id": "amused",
+    "label": { "ro": "amuzat", "en": "amused" },
+    "description": { "ro": "Amuzamentul este o usurinta placuta care apare cand ceva te surprinde intr-un mod jucaus. Este un semn ca poti vedea lumea cu umor si flexibilitate.", "en": "Amusement is a pleasant lightness that arises when something surprises you in a playful way. It is a sign that you can see the world with humor and flexibility." },
+    "needs": { "ro": "joaca si conexiune", "en": "play and connection" },
+    "color": "#FFC107",
+    "valence": 0.5,
+    "arousal": 0.5,
+    "quadrant": "pleasant-intense"
+  },
+  "calm": {
+    "id": "calm",
+    "label": { "ro": "calm", "en": "calm" },
+    "description": { "ro": "Calmul este o stare de echilibru in care nu exista amenintari si corpul se relaxeaza. Este baza siguranta din care poti explora lumea.", "en": "Calm is a state of balance where there are no threats and the body relaxes. It is the safe foundation from which you can explore the world." },
+    "needs": { "ro": "mentinere si protejare", "en": "maintenance and protection" },
+    "color": "#81D4FA",
+    "valence": 0.3,
+    "arousal": -0.6,
+    "quadrant": "pleasant-calm"
+  },
+  "serene": {
+    "id": "serene",
+    "label": { "ro": "senin", "en": "serene" },
+    "description": { "ro": "Seninatatea este o pace interioara profunda — o acceptare lina a momentului prezent fara nevoia de a schimba nimic.", "en": "Serenity is a deep inner peace — a gentle acceptance of the present moment without the need to change anything." },
+    "needs": { "ro": "liniste si continuitate", "en": "quiet and continuity" },
+    "color": "#B3E5FC",
+    "valence": 0.5,
+    "arousal": -0.7,
+    "quadrant": "pleasant-calm"
+  },
+  "relaxed": {
+    "id": "relaxed",
+    "label": { "ro": "relaxat", "en": "relaxed" },
+    "description": { "ro": "Relaxarea este o eliberare a tensiunii — corpul si mintea se deschid cand sistemul nervos parasimpatic preia controlul.", "en": "Relaxation is a release of tension — body and mind open when the parasympathetic nervous system takes over." },
+    "needs": { "ro": "spatiu si odihna", "en": "space and rest" },
+    "color": "#4FC3F7",
+    "valence": 0.4,
+    "arousal": -0.5,
+    "quadrant": "pleasant-calm"
+  },
+  "content": {
+    "id": "content",
+    "label": { "ro": "multumit", "en": "content" },
+    "description": { "ro": "Multumirea este o satisfactie lina — un sentiment ca ceea ce ai este suficient. Este o stare de completitudine fara dorinta de mai mult.", "en": "Contentment is a gentle satisfaction — a feeling that what you have is enough. It is a state of completeness without wanting more." },
+    "needs": { "ro": "apreciere si prezenta", "en": "appreciation and presence" },
+    "color": "#29B6F6",
+    "valence": 0.5,
+    "arousal": -0.4,
+    "quadrant": "pleasant-calm"
+  },
+  "peaceful": {
+    "id": "peaceful",
+    "label": { "ro": "pasnic", "en": "peaceful" },
+    "description": { "ro": "Pacea este absenta conflictului intern — o armonie intre ceea ce simti, gandesti si faci. Este starea naturala cand nu exista amenintari.", "en": "Peace is the absence of inner conflict — a harmony between what you feel, think, and do. It is the natural state when there are no threats." },
+    "needs": { "ro": "siguranta si armonie", "en": "safety and harmony" },
+    "color": "#039BE5",
+    "valence": 0.6,
+    "arousal": -0.6,
+    "quadrant": "pleasant-calm"
+  },
+  "satisfied": {
+    "id": "satisfied",
+    "label": { "ro": "satisfacut", "en": "satisfied" },
+    "description": { "ro": "Satisfactia este sentimentul de implinire dupa ce un efort a dat roade. Semnaleaza ca actiunile tale au avut sens.", "en": "Satisfaction is the feeling of fulfillment after effort has borne fruit. It signals that your actions had meaning." },
+    "needs": { "ro": "recunoastere si reflectie", "en": "recognition and reflection" },
+    "color": "#0288D1",
+    "valence": 0.6,
+    "arousal": -0.3,
+    "quadrant": "pleasant-calm"
+  },
+  "tender": {
+    "id": "tender",
+    "label": { "ro": "tandru", "en": "tender" },
+    "description": { "ro": "Tandretea este o deschidere vulnerabila catre altcineva — o caldura blanda care apare in momente de conexiune intima.", "en": "Tenderness is a vulnerable openness toward another — a gentle warmth that arises in moments of intimate connection." },
+    "needs": { "ro": "reciprocitate si protectie", "en": "reciprocity and protection" },
+    "color": "#4DD0E1",
+    "valence": 0.5,
+    "arousal": -0.3,
+    "quadrant": "pleasant-calm"
+  },
+  "angry": {
+    "id": "angry",
+    "label": { "ro": "furios", "en": "angry" },
+    "description": { "ro": "Furia este o mobilizare puternica care apare cand limitele tale sunt incalcate sau cand ceva important este amenintat. Este energia care protejeaza ceea ce contează.", "en": "Anger is a powerful mobilization that arises when your boundaries are violated or something important is threatened. It is the energy that protects what matters." },
+    "needs": { "ro": "recunoasterea limitelor si actiune", "en": "boundary recognition and action" },
+    "color": "#F44336",
+    "valence": -0.7,
+    "arousal": 0.8,
+    "quadrant": "unpleasant-intense"
+  },
+  "afraid": {
+    "id": "afraid",
+    "label": { "ro": "infricosat", "en": "afraid" },
+    "description": { "ro": "Frica este sistemul tau de alarma — semnaleaza un pericol perceput si te pregateste sa te protejezi. Este o emotie fundamentala de supravietuire.", "en": "Fear is your alarm system — it signals a perceived danger and prepares you to protect yourself. It is a fundamental survival emotion." },
+    "needs": { "ro": "siguranta si reasigurare", "en": "safety and reassurance" },
+    "color": "#E91E63",
+    "valence": -0.6,
+    "arousal": 0.7,
+    "quadrant": "unpleasant-intense"
+  },
+  "stressed": {
+    "id": "stressed",
+    "label": { "ro": "stresat", "en": "stressed" },
+    "description": { "ro": "Stresul semnaleaza ca cerintele depasesc resursele percepute. Este un apel la mobilizare — corpul se pregateste pentru efort sustinut.", "en": "Stress signals that demands exceed perceived resources. It is a call to mobilize — the body prepares for sustained effort." },
+    "needs": { "ro": "prioritizare si sprijin", "en": "prioritization and support" },
+    "color": "#D32F2F",
+    "valence": -0.5,
+    "arousal": 0.6,
+    "quadrant": "unpleasant-intense"
+  },
+  "tense": {
+    "id": "tense",
+    "label": { "ro": "tensionat", "en": "tense" },
+    "description": { "ro": "Tensiunea este o stare de pregatire — corpul se contracta in anticiparea unui eveniment incert. Semnaleaza ca ceva necesita atentie.", "en": "Tension is a state of readiness — the body contracts in anticipation of an uncertain event. It signals that something needs attention." },
+    "needs": { "ro": "claritate si decizie", "en": "clarity and decision" },
+    "color": "#C62828",
+    "valence": -0.4,
+    "arousal": 0.5,
+    "quadrant": "unpleasant-intense"
+  },
+  "nervous": {
+    "id": "nervous",
+    "label": { "ro": "nervos", "en": "nervous" },
+    "description": { "ro": "Nervozitatea este o anticipare anxioasa — o energie care fluctueaza intre dorinta de a actiona si teama de consecinte.", "en": "Nervousness is an anxious anticipation — an energy that fluctuates between the desire to act and the fear of consequences." },
+    "needs": { "ro": "pregatire si incurajare", "en": "preparation and encouragement" },
+    "color": "#EF5350",
+    "valence": -0.4,
+    "arousal": 0.6,
+    "quadrant": "unpleasant-intense"
+  },
+  "frustrated": {
+    "id": "frustrated",
+    "label": { "ro": "frustrat", "en": "frustrated" },
+    "description": { "ro": "Frustarea apare cand un obiectiv este blocat — energia de actiune nu gaseste o cale. Semnaleaza nevoia de a adapta strategia.", "en": "Frustration arises when a goal is blocked — the energy for action finds no path. It signals the need to adapt strategy." },
+    "needs": { "ro": "flexibilitate si alternative", "en": "flexibility and alternatives" },
+    "color": "#E53935",
+    "valence": -0.6,
+    "arousal": 0.5,
+    "quadrant": "unpleasant-intense"
+  },
+  "distressed": {
+    "id": "distressed",
+    "label": { "ro": "tulburat", "en": "distressed" },
+    "description": { "ro": "Tulburarea este o suferinta activa — un semnal ca ceva important este amenintat si necesita atentie imediata.", "en": "Distress is active suffering — a signal that something important is threatened and needs immediate attention." },
+    "needs": { "ro": "sprijin si compassiune", "en": "support and compassion" },
+    "color": "#B71C1C",
+    "valence": -0.8,
+    "arousal": 0.7,
+    "quadrant": "unpleasant-intense"
+  },
+  "sad": {
+    "id": "sad",
+    "label": { "ro": "trist", "en": "sad" },
+    "description": { "ro": "Tristetea este un proces de integrare a pierderii — o retragere care permite reflectia si vindecarea. Este semnalul ca ceva valoros lipseste.", "en": "Sadness is a process of integrating loss — a withdrawal that allows reflection and healing. It is the signal that something valuable is missing." },
+    "needs": { "ro": "compasiune si timp", "en": "compassion and time" },
+    "color": "#5C6BC0",
+    "valence": -0.6,
+    "arousal": -0.4,
+    "quadrant": "unpleasant-calm"
+  },
+  "bored": {
+    "id": "bored",
+    "label": { "ro": "plictisit", "en": "bored" },
+    "description": { "ro": "Plictiseala semnaleaza ca mediul nu ofera suficienta stimulare pentru nevoile tale. Este un impuls spre cautarea sensului si noutatii.", "en": "Boredom signals that the environment doesn't offer enough stimulation for your needs. It is an impulse toward seeking meaning and novelty." },
+    "needs": { "ro": "stimulare si sens", "en": "stimulation and meaning" },
+    "color": "#7986CB",
+    "valence": -0.3,
+    "arousal": -0.6,
+    "quadrant": "unpleasant-calm"
+  },
+  "tired": {
+    "id": "tired",
+    "label": { "ro": "obosit", "en": "tired" },
+    "description": { "ro": "Oboseala este semnalul corpului ca resursele sunt epuizate si este nevoie de recuperare. Este o invitatie la odihna si regenerare.", "en": "Tiredness is the body's signal that resources are depleted and recovery is needed. It is an invitation to rest and regenerate." },
+    "needs": { "ro": "odihna si recuperare", "en": "rest and recovery" },
+    "color": "#9FA8DA",
+    "valence": -0.2,
+    "arousal": -0.7,
+    "quadrant": "unpleasant-calm"
+  },
+  "depressed": {
+    "id": "depressed",
+    "label": { "ro": "deprimat", "en": "depressed" },
+    "description": { "ro": "Starea de deprimare este o retragere profunda — o scadere a energiei si motivatiei care semnaleaza ca ceva fundamental necesita atentie.", "en": "Depression is a deep withdrawal — a decrease in energy and motivation signaling that something fundamental needs attention." },
+    "needs": { "ro": "sprijin profesional si conexiune", "en": "professional support and connection" },
+    "color": "#3F51B5",
+    "valence": -0.8,
+    "arousal": -0.6,
+    "quadrant": "unpleasant-calm"
+  },
+  "lonely": {
+    "id": "lonely",
+    "label": { "ro": "singur", "en": "lonely" },
+    "description": { "ro": "Singuratatea semnaleaza o nevoie fundamentala de conexiune umana. Este diferita de izolare — poti fi singur fara sa fii singuratic si singuratic intr-o multime.", "en": "Loneliness signals a fundamental need for human connection. It is different from solitude — you can be alone without being lonely and lonely in a crowd." },
+    "needs": { "ro": "conexiune autentica si apartenenta", "en": "authentic connection and belonging" },
+    "color": "#5C6BC0",
+    "valence": -0.6,
+    "arousal": -0.4,
+    "quadrant": "unpleasant-calm"
+  },
+  "lethargic": {
+    "id": "lethargic",
+    "label": { "ro": "letargic", "en": "lethargic" },
+    "description": { "ro": "Letargia este o lipsa profunda de energie — corpul si mintea se opresc ca un mecanism de protectie. Poate semnala suprasolicitare prelungita.", "en": "Lethargy is a profound lack of energy — body and mind shut down as a protection mechanism. It may signal prolonged overexertion." },
+    "needs": { "ro": "odihna profunda si grija", "en": "deep rest and care" },
+    "color": "#7E57C2",
+    "valence": -0.4,
+    "arousal": -0.8,
+    "quadrant": "unpleasant-calm"
+  },
+  "gloomy": {
+    "id": "gloomy",
+    "label": { "ro": "sumbru", "en": "gloomy" },
+    "description": { "ro": "Starea sumbra este o umbrela de tristete pasiva — o perceptie ca lucrurile nu se vor imbunatati. Adesea precede o tranzitie sau o eliberare.", "en": "Gloominess is a passive umbrella of sadness — a perception that things won't improve. It often precedes a transition or release." },
+    "needs": { "ro": "speranta si perspectiva", "en": "hope and perspective" },
+    "color": "#673AB7",
+    "valence": -0.5,
+    "arousal": -0.5,
+    "quadrant": "unpleasant-calm"
+  }
+}

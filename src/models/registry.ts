@@ -3,8 +3,10 @@ import type { EmotionModel, BaseEmotion, VisualizationProps } from './types'
 import { plutchikModel } from './plutchik'
 import { wheelModel } from './wheel'
 import { somaticModel } from './somatic'
+import { dimensionalModel } from './dimensional'
 import { BubbleField } from '../components/BubbleField'
 import { BodyMap } from '../components/BodyMap'
+import { DimensionalField } from '../components/DimensionalField'
 
 interface ModelRegistryEntry {
   model: EmotionModel<BaseEmotion>
@@ -24,6 +26,10 @@ const models: Record<string, ModelRegistryEntry> = {
     model: somaticModel as EmotionModel<BaseEmotion>,
     // BodyMap narrows selections to SomaticSelection[], needs cast for registry's VisualizationProps
     Visualization: BodyMap as ComponentType<VisualizationProps>,
+  },
+  dimensional: {
+    model: dimensionalModel as EmotionModel<BaseEmotion>,
+    Visualization: DimensionalField,
   },
 }
 
