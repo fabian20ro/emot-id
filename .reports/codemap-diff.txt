@@ -1,0 +1,13 @@
+Codemap Diff Report
+Generated: 2026-02-01
+
+Status: INITIAL GENERATION (no previous codemaps to diff against)
+
+Files created:
+  codemaps/architecture.md  - Overall architecture, component tree, state, data flow
+  codemaps/frontend.md      - Components, hooks, context, layout, animations
+  codemaps/data.md           - Types, model data, i18n, registry, invariants
+  codemaps/backend.md        - No backend (client-side PWA), external services, PWA config
+
+Diff percentage: N/A (first generation)
+Approval required: No (initial creation)
