@@ -3,12 +3,7 @@
     "title": "Emot-ID",
     "subtitle": "Identifica-ti emotiile"
   },
-  "header": {
-    "language": "Limba"
-  },
   "menu": {
-    "settings": "Setari",
-    "language": "Limba",
     "model": "Model"
   },
   "selectionBar": {
@@ -20,7 +15,6 @@
     "button": "Analizeaza",
     "buttonDisabled": "Selecteaza o bula de emotie care rezoneaza cel mai mult cu tine acum",
     "resultPrefix": "Selectiile tale",
-    "resultSuffix": "descriu emotia",
     "exploreAI": "Exploreaza cu AI",
     "aiPrompt": "Simt {emotions}. Ce inseamna aceasta emotie si cum o pot intelege mai bine?",
     "aiPromptMultiple": "Simt o combinatie de {emotions}. Cum se leaga aceste emotii si ce ar putea insemna?"

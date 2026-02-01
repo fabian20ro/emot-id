@@ -3,12 +3,7 @@
     "title": "Emot-ID",
     "subtitle": "Identify your emotions"
   },
-  "header": {
-    "language": "Language"
-  },
   "menu": {
-    "settings": "Settings",
-    "language": "Language",
     "model": "Model"
   },
   "selectionBar": {
@@ -20,7 +15,6 @@
     "button": "Analyze",
     "buttonDisabled": "Select an emotion bubble that resonates with you the most right now",
     "resultPrefix": "Your selections",
-    "resultSuffix": "describe the emotion",
     "exploreAI": "Explore with AI",
     "aiPrompt": "I am feeling {emotions}. What does this emotion mean and how can I understand it better?",
     "aiPromptMultiple": "I am feeling a combination of {emotions}. How do these emotions relate and what might this mean?"
