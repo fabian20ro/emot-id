@@ -49,15 +49,22 @@ No external state library. State lives in:
 | `useEmotionModel` hook | `selections`, `modelState` (visible IDs, generation) | none (resets on model change) |
 | `LanguageContext` | `language` ('ro' or 'en') | localStorage |
 
-### Data Flow: Select -> Analyze
+### Data Flow: Select / Deselect -> Analyze
 
 ```
-User taps emotion
+User taps emotion (or body region)
   -> App.handleSelect (plays sound)
     -> useEmotionModel.handleSelect
       -> model.onSelect(emotion, state, selections)
         <- returns SelectionEffect { newState, newSelections? }
       -> updates modelState + selections
+
+User taps selected emotion (deselect)
+  -> App.handleDeselect (plays sound)
+    -> useEmotionModel.handleDeselect
+      -> model.onDeselect(emotion, state)
+        <- returns SelectionEffect { newState }
+      -> removes from selections, updates modelState
 
 User taps "Analyze"
   -> App.analyzeEmotions
@@ -65,6 +72,8 @@ User taps "Analyze"
       <- returns AnalysisResult[]
     -> opens ResultModal with results
 ```
+
+**Somatic deselect routing:** BodyMap intercepts the deselect path. When a selected region is clicked, it calls `onDeselect(enrichedSelection)` with the `SomaticSelection` from its selection map, not `onSelect(plainRegion)`. This ensures the hook receives the enriched object it stored.
 
 ### Internationalization
 

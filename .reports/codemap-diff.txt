@@ -1,13 +1,21 @@
 Codemap Diff Report
 Generated: 2026-02-01
+Previous: 2026-02-01 (initial generation)
 
-Status: INITIAL GENERATION (no previous codemaps to diff against)
+Status: INCREMENTAL UPDATE — Body Map improvements
 
-Files created:
-  codemaps/architecture.md  - Overall architecture, component tree, state, data flow
-  codemaps/frontend.md      - Components, hooks, context, layout, animations
-  codemaps/data.md           - Types, model data, i18n, registry, invariants
-  codemaps/backend.md        - No backend (client-side PWA), external services, PWA config
+Files updated:
+  docs/CODEMAPS/architecture.md  - Added deselect data flow, somatic routing note
+  docs/CODEMAPS/frontend.md      - GuidedScan rewrite (10s, 2-step, i18n), BodyMap deselect, SensationPicker anchors
+  docs/CODEMAPS/models.md        - Scoring algorithm (threshold, coherence bonus, labels), renamed emotion IDs, adaptive descriptions
+  CLAUDE.md                      - Somatic model pattern (deselect routing, scoring params)
 
-Diff percentage: N/A (first generation)
-Approval required: No (initial creation)
+Diff percentage: ~15% (incremental — somatic model section updates only, architecture/frontend minor)
+Approval required: No (under 30% threshold)
+
+Changes driven by:
+  - VisualizationProps gained onDeselect? callback
+  - Scoring: threshold 0.3->0.5, coherence bonus 1.2x, resonance labels
+  - GuidedScan: 10s centering, 2-step sensation->intensity, all sensations, interleaved order
+  - Data: 7 emotion ID renames, adaptive-function descriptions, pop-science fix
+  - SensationPicker: intensity anchor descriptions

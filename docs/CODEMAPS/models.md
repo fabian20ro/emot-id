@@ -34,7 +34,7 @@ EmotionModel<E extends BaseEmotion> {
 ModelState { visibleEmotionIds: Map<string, number>, currentGeneration: number }
 SelectionEffect { newState: ModelState, newSelections?: BaseEmotion[] }
 AnalysisResult { id, label, color, description?, componentLabels?, hierarchyPath? }
-VisualizationProps { emotions, onSelect, sizes, selections? }
+VisualizationProps { emotions, onSelect, onDeselect?, sizes, selections? }
 ```
 
 ## Model Implementations
@@ -106,11 +106,15 @@ VisualizationProps { emotions, onSelect, sizes, selections? }
 - `scoring.ts` -- `scoreSomaticSelections()` algorithm
 - `data.json` -- 14 body regions with sensation-to-emotion signal mappings
 
-**onSelect / onDeselect:** No-op on state (all regions always visible). BodyMap component enriches selections with `selectedSensation` and `selectedIntensity` before passing upstream.
+**onSelect / onDeselect:** No-op on state (all regions always visible). BodyMap component enriches selections with `selectedSensation` and `selectedIntensity` before passing upstream. Deselect routes through `onDeselect` with the enriched `SomaticSelection`.
 
 **Sensation types (8):** tension, warmth, heaviness, lightness, tingling, numbness, churning, pressure
 
 **Body groups (4):** head (5 regions), torso (5), arms (2), legs (2)
+
+**Emotion ID conventions:** All emotion IDs are true emotional states (not cognitive processes or clinical terms). Key renames: overthinking→merged into anxiety, concentration→removed, grounding→calm, burden→overwhelm, suppression→emotional-holding, dissociation→disconnection, numbness-emotion→emotional-withdrawal.
+
+**Adaptive descriptions:** Every `emotionDescription` includes an adaptive-function sentence explaining why the emotion exists (e.g., "Anger signals an important boundary that has been crossed").
 
 ### Scoring Algorithm (`src/models/somatic/scoring.ts`)
 
@@ -120,14 +124,17 @@ For each selection:
     if signal.sensationType matches selectedSensation
     AND selectedIntensity >= signal.minIntensity:
       contribution = signal.weight * selectedIntensity
-      accumulate into emotionScores map
+      accumulate into emotionScores map (tracks contributing BodyGroups)
 
-Filter scores >= MINIMUM_THRESHOLD (0.3)
+Apply coherence bonus: emotions matched from 2+ body groups get score * 1.2
+Filter scores >= MINIMUM_THRESHOLD (0.5)
 Sort descending, take top MAX_RESULTS (4)
-Tag each with matchStrength: strong (>=70%), possible (>=40%), worth considering
+Tag each with matchStrength: strong resonance (>=70%), possible connection (>=40%), worth exploring
 ```
 
 **Output:** `ScoredEmotion extends AnalysisResult` with `score` and `matchStrength` fields. Uses `componentLabels` to carry contributing region labels.
+
+**Coherence bonus rationale:** Emotions that manifest across multiple body areas (e.g., chest + legs) are more likely to be the dominant emotional state than single-region signals.
 
 ## Data Files
 

@@ -36,7 +36,7 @@ Used by: Plutchik, Wheel models.
 - Positions are memoized: existing bubbles keep position, only new ones are placed
 - `AnimatePresence mode="popLayout"` for enter/exit animations
 
-**Props:** `VisualizationProps { emotions, onSelect, sizes, selections? }`
+**Props:** `VisualizationProps { emotions, onSelect, onDeselect?, sizes, selections? }`
 
 ### Bubble (`src/components/Bubble.tsx`)
 
@@ -54,7 +54,9 @@ Used by: Somatic model.
   - **Free selection** -- tap region, pick sensation + intensity via `SensationPicker`
   - **Guided scan** -- sequential head-to-feet `GuidedScan` overlay
 - Enriches selections with `selectedSensation` and `selectedIntensity` before passing to model
+- Routes deselect through `onDeselect(enrichedSelection)` using selection map lookup
 - Region rendering order: back-facing first (upper-back, lower-back), then front-facing
+- Back regions widened ~15px beyond front regions for visible/clickable slivers
 
 ### BodyRegion (`src/components/BodyRegion.tsx`)
 
@@ -72,15 +74,18 @@ Used by: Somatic model.
 ### SensationPicker (`src/components/SensationPicker.tsx`)
 
 - Fixed-position popover near click point
-- Two steps: sensation type (grid of 8) -> intensity (1-3 scale)
+- Two steps: sensation type (grid of 8) -> intensity (1-3 scale with anchor descriptions)
+- Intensity anchors: "barely noticeable" / "clearly present" / "hard to ignore" (bilingual)
 - Exports `SENSATION_CONFIG` (icon + bilingual label per sensation type)
 
 ### GuidedScan (`src/components/GuidedScan.tsx`)
 
-- Three phases: `centering` (3s breathing prompt) -> `scanning` (14 regions) -> `complete`
-- Progress bar tracks scan position
-- Highlights current region on body map via `onHighlight` callback
-- Quick sensation buttons per region, skip option
+- Three phases: `centering` (10s breathing animation with progress bar) -> `scanning` (14 regions) -> `complete`
+- Centering includes skip button; breathing emoji pulses with scale+opacity
+- Scan order interleaves front/back by vertical level (head → throat/shoulders/upper-back → chest/stomach/lower-back → arms → legs)
+- 2-step sensation flow: pick translated sensation (icon + label from `SENSATION_CONFIG`) → pick intensity (1/2/3 with dot indicators)
+- Shows all `commonSensations` per region (no truncation)
+- Progress bar tracks scan position; highlights current region via `onHighlight` callback
 
 ## Shared UI Components
 

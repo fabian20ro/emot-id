@@ -109,7 +109,11 @@ Each model extends `BaseEmotion` with model-specific fields (e.g. Plutchik adds 
 
 ### Somatic Model Pattern
 
-The Body Map uses an **adapter pattern** where body regions extend `BaseEmotion`. The BodyMap component intercepts `onSelect` to enrich regions with sensation type + intensity (as `SomaticSelection`), which flows through the generic hook unchanged. The `analyze()` method downcasts back and runs a weighted scoring algorithm mapping somatic patterns to candidate emotions.
+The Body Map uses an **adapter pattern** where body regions extend `BaseEmotion`. The BodyMap component intercepts both `onSelect` and `onDeselect`:
+- **Select:** enriches regions with sensation type + intensity (as `SomaticSelection`) before passing upstream
+- **Deselect:** looks up the enriched `SomaticSelection` from the selection map and routes through `onDeselect`
+
+The `analyze()` method downcasts back and runs a weighted scoring algorithm (threshold 0.5, coherence bonus 1.2x for 2+ body groups) mapping somatic patterns to candidate emotions. All emotion descriptions include adaptive-function framing ("why this emotion exists").
 
 ## Multi-Model Expansion Direction
 
