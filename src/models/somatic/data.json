@@ -1,16 +1,16 @@
 {
   "head": {
     "id": "head",
-    "label": { "ro": "Cap / Craniu", "en": "Head / Skull" },
+    "label": { "ro": "Cap / Față", "en": "Head / Face" },
     "description": {
-      "ro": "Zona capului — asociata cu gandirea excesiva, furie, dureri de cap legate de stres",
-      "en": "Head area — associated with overthinking, anger, stress-related headaches"
+      "ro": "Zona capului și feței — asociată cu gândirea excesivă, furie, tensiune în frunte, presiune la ochi, dureri de cap legate de stres",
+      "en": "Head and face area — associated with overthinking, anger, forehead tension, eye pressure, stress-related headaches"
     },
     "needs": { "ro": "respiratie profunda si pauza", "en": "deep breathing and pause" },
     "color": "#ef4444",
     "svgRegionId": "head",
     "group": "head",
-    "commonSensations": ["tension", "pressure", "warmth", "tingling"],
+    "commonSensations": ["tension", "pressure", "warmth", "tingling", "numbness"],
     "emotionSignals": [
       {
         "emotionId": "anger",
@@ -34,7 +34,7 @@
         "emotionId": "anxiety",
         "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
         "emotionColor": "#f59e0b",
-        "emotionDescription": { "ro": "Tensiune în cap, gândire în cerc, dificultate de concentrare. Anxietatea este sistemul de alertă al corpului — te pregătește pentru o amenințare percepută.", "en": "Tension in the head, racing thoughts, difficulty concentrating. Anxiety is your body's alert system — it's preparing you for a perceived threat." },
+        "emotionDescription": { "ro": "Tensiune în cap și frunte, gândire în cerc, dificultate de concentrare. Anxietatea este sistemul de alertă al corpului — te pregătește pentru o amenințare percepută.", "en": "Tension in the head and forehead, racing thoughts, difficulty concentrating. Anxiety is your body's alert system — it's preparing you for a perceived threat." },
         "emotionNeeds": { "ro": "ancoraj in prezent si respiratie", "en": "grounding in the present and breathing" },
         "sensationType": "tension",
         "minIntensity": 1,
@@ -48,66 +48,6 @@
         "minIntensity": 1,
         "weight": 0.6
       },
-      {
-        "emotionId": "anxiety",
-        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
-        "emotionColor": "#f59e0b",
-        "emotionDescription": { "ro": "Tensiune difuză în cap, senzație de plin, minte agitată. Anxietatea poate apărea ca gândire repetitivă — corpul semnalează nevoia de siguranță.", "en": "Diffuse head tension, feeling of fullness, restless mind. Anxiety can show up as repetitive thinking — your body is signaling a need for safety." },
-        "emotionNeeds": { "ro": "pauza de la gandire si ancoraj senzorial", "en": "pause from thinking and sensory grounding" },
-        "sensationType": "tension",
-        "minIntensity": 1,
-        "weight": 0.5
-      }
-    ]
-  },
-  "forehead": {
-    "id": "forehead",
-    "label": { "ro": "Frunte", "en": "Forehead" },
-    "description": {
-      "ro": "Zona fruntii — legata de concentrare, anxietate, ingrijorare",
-      "en": "Forehead area — linked to concentration, anxiety, worry"
-    },
-    "needs": { "ro": "masaj usor si odihna ochilor", "en": "gentle massage and eye rest" },
-    "color": "#f97316",
-    "svgRegionId": "forehead",
-    "group": "head",
-    "commonSensations": ["tension", "pressure", "warmth", "numbness"],
-    "emotionSignals": [
-      {
-        "emotionId": "anxiety",
-        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
-        "emotionColor": "#f59e0b",
-        "emotionDescription": { "ro": "Tensiune în frunte, încrețirea sprâncenelor. Anxietatea anticipativă încearcă să te protejeze de posibile pericole.", "en": "Forehead tension, furrowed brow. Anticipatory anxiety is trying to protect you from potential dangers." },
-        "emotionNeeds": { "ro": "relaxarea fruntii si respiratie lenta", "en": "forehead relaxation and slow breathing" },
-        "sensationType": "tension",
-        "minIntensity": 1,
-        "weight": 0.7
-      },
-      {
-        "emotionId": "worry",
-        "emotionLabel": { "ro": "Ingrijorare", "en": "Worry" },
-        "emotionColor": "#a78bfa",
-        "emotionDescription": { "ro": "Tensiune persistentă în frunte, anticipare negativă. Îngrijorarea semnalează că îți pasă de ceva important.", "en": "Persistent forehead tension, negative anticipation. Worry signals that you care about something important." },
-        "emotionNeeds": { "ro": "redirectare spre prezent, nu viitor", "en": "redirect to present, not future" },
-        "sensationType": "tension",
-        "minIntensity": 2,
-        "weight": 0.6
-      }
-    ]
-  },
-  "eyes": {
-    "id": "eyes",
-    "label": { "ro": "Ochi", "en": "Eyes" },
-    "description": {
-      "ro": "Zona ochilor — legata de tristete, plans, surpriza, oboseala emotionala",
-      "en": "Eye area — linked to sadness, crying, surprise, emotional fatigue"
-    },
-    "needs": { "ro": "compresa calda si inchidere blanda", "en": "warm compress and gentle closing" },
-    "color": "#60a5fa",
-    "svgRegionId": "eyes",
-    "group": "head",
-    "commonSensations": ["tension", "warmth", "pressure", "tingling"],
-    "emotionSignals": [
       {
         "emotionId": "sadness",
         "emotionLabel": { "ro": "Tristete", "en": "Sadness" },
@@ -135,6 +75,16 @@
         "sensationType": "pressure",
         "minIntensity": 2,
         "weight": 0.7
+      },
+      {
+        "emotionId": "worry",
+        "emotionLabel": { "ro": "Ingrijorare", "en": "Worry" },
+        "emotionColor": "#a78bfa",
+        "emotionDescription": { "ro": "Tensiune persistentă în frunte, anticipare negativă. Îngrijorarea semnalează că îți pasă de ceva important.", "en": "Persistent forehead tension, negative anticipation. Worry signals that you care about something important." },
+        "emotionNeeds": { "ro": "redirectare spre prezent, nu viitor", "en": "redirect to present, not future" },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.6
       },
       {
         "emotionId": "surprise",

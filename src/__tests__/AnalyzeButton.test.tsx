@@ -5,7 +5,7 @@ import { AnalyzeButton } from '../components/AnalyzeButton'
 import { LanguageProvider } from '../context/LanguageContext'
 
 function renderButton(props: Partial<React.ComponentProps<typeof AnalyzeButton>> = {}) {
-  const defaults = { disabled: false, onClick: () => {}, ...props }
+  const defaults = { disabled: false, onClick: () => {}, modelId: 'plutchik', ...props }
   return render(
     <LanguageProvider>
       <AnalyzeButton {...defaults} />
@@ -19,9 +19,9 @@ describe('AnalyzeButton', () => {
     expect(screen.getByText('Analyze')).toBeInTheDocument()
   })
 
-  it('shows disabled text when disabled', () => {
-    renderButton({ disabled: true })
-    expect(screen.getByText(/Select an emotion bubble/)).toBeInTheDocument()
+  it('shows default disabled text when disabled with non-somatic model', () => {
+    renderButton({ disabled: true, modelId: 'plutchik' })
+    expect(screen.getByText(/Select an emotion that resonates/)).toBeInTheDocument()
   })
 
   it('calls onClick when enabled and clicked', async () => {

@@ -30,17 +30,7 @@ You must have deep working knowledge of these frameworks:
 - Navigation is a drill-down process reflecting how people refine their emotional awareness
 - Leaf-level emotions are the most specific and actionable
 
-### Ekman's Basic Emotions (Planned)
-- 6 universal facial expressions: anger, disgust, fear, happiness, sadness, surprise
-- Cross-cultural universality evidence and its critiques
-- Distinction between felt emotion and expressed emotion
-
-### Parrott's Hierarchy (Planned)
-- 3-tier classification: primary → secondary → tertiary
-- 6 primaries, ~25 secondaries, ~100+ tertiaries
-- Overlap and divergence from Plutchik's model
-
-### Russell's Circumplex Model (Planned)
+### Russell's Circumplex Model
 - Two-dimensional: valence (pleasant–unpleasant) × arousal (activated–deactivated)
 - Emotions as points in continuous affective space, not discrete categories
 - Core affect vs. prototypical emotional episodes

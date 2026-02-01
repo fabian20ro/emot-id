@@ -35,9 +35,7 @@ function makeRegion(id: string, label: string, group: 'head' | 'torso' | 'arms' 
 
 function buildRegionMap(): Map<string, SomaticRegion> {
   const regions: [string, string, 'head' | 'torso' | 'arms' | 'legs'][] = [
-    ['head', 'Head', 'head'],
-    ['forehead', 'Forehead', 'head'],
-    ['eyes', 'Eyes', 'head'],
+    ['head', 'Head / Face', 'head'],
     ['jaw', 'Jaw', 'head'],
     ['throat', 'Throat', 'head'],
     ['shoulders', 'Shoulders', 'torso'],
@@ -109,7 +107,7 @@ describe('GuidedScan', () => {
 
       act(() => { vi.advanceTimersByTime(10_100) })
 
-      expect(screen.getByText('Head')).toBeInTheDocument()
+      expect(screen.getByText('Head / Face')).toBeInTheDocument()
     })
 
     it('extends centering when "Take more time" clicked', () => {
@@ -126,7 +124,7 @@ describe('GuidedScan', () => {
     it('skips centering when skip arrow clicked', () => {
       renderGuidedScan()
       skipCentering()
-      expect(screen.getByText('Head')).toBeInTheDocument()
+      expect(screen.getByText('Head / Face')).toBeInTheDocument()
     })
   })
 
@@ -134,7 +132,7 @@ describe('GuidedScan', () => {
     it('shows the first region prompt', () => {
       renderGuidedScan()
       skipCentering()
-      expect(screen.getByText('Head')).toBeInTheDocument()
+      expect(screen.getByText('Head / Face')).toBeInTheDocument()
       expect(screen.getByText(/What do you notice/)).toBeInTheDocument()
     })
 
@@ -171,7 +169,7 @@ describe('GuidedScan', () => {
       fireEvent.click(screen.getByText('Moderate'))
 
       expect(onRegionSelect).toHaveBeenCalledWith('head', 'tension', 2)
-      expect(screen.getByText('Forehead')).toBeInTheDocument()
+      expect(screen.getByText('Jaw')).toBeInTheDocument()
     })
 
     it('skips region when "Nothing here" clicked', () => {
@@ -181,7 +179,7 @@ describe('GuidedScan', () => {
       fireEvent.click(screen.getByText(/Nothing here/))
 
       expect(onRegionSelect).not.toHaveBeenCalled()
-      expect(screen.getByText('Forehead')).toBeInTheDocument()
+      expect(screen.getByText('Jaw')).toBeInTheDocument()
     })
 
     it('skips entire group when group skip clicked', () => {
@@ -190,7 +188,7 @@ describe('GuidedScan', () => {
 
       fireEvent.click(screen.getByText(/Skip this area/))
 
-      // Head group = head, forehead, eyes, jaw → next is throat
+      // Head group = head, jaw → next is throat (neck group)
       expect(screen.getByText('Throat')).toBeInTheDocument()
     })
 
@@ -207,7 +205,7 @@ describe('GuidedScan', () => {
       const { onComplete } = renderGuidedScan()
       skipCentering()
 
-      for (let i = 0; i < 14; i++) {
+      for (let i = 0; i < 12; i++) {
         fireEvent.click(screen.getByText(/Nothing here/))
       }
 
@@ -221,7 +219,7 @@ describe('GuidedScan', () => {
       const { onHighlight } = renderGuidedScan()
       skipCentering()
 
-      for (let i = 0; i < 14; i++) {
+      for (let i = 0; i < 12; i++) {
         fireEvent.click(screen.getByText(/Nothing here/))
       }
 

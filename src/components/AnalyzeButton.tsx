@@ -4,10 +4,15 @@ import { useLanguage } from '../context/LanguageContext'
 interface AnalyzeButtonProps {
   disabled: boolean
   onClick: () => void
+  modelId: string
 }
 
-export function AnalyzeButton({ disabled, onClick }: AnalyzeButtonProps) {
+export function AnalyzeButton({ disabled, onClick, modelId }: AnalyzeButtonProps) {
   const { t } = useLanguage()
+
+  const disabledText = modelId === 'somatic'
+    ? t.analyze.buttonDisabledSomatic
+    : t.analyze.buttonDisabledDefault
 
   return (
     <motion.button
@@ -21,7 +26,7 @@ export function AnalyzeButton({ disabled, onClick }: AnalyzeButtonProps) {
           : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 cursor-pointer'
       }`}
     >
-      {disabled ? t.analyze.buttonDisabled : t.analyze.button}
+      {disabled ? disabledText : t.analyze.button}
     </motion.button>
   )
 }

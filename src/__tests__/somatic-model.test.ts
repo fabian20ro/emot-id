@@ -13,14 +13,14 @@ describe('somaticModel', () => {
     expect(somaticModel.description.ro).toBeTruthy()
   })
 
-  it('has 14 body regions in allEmotions', () => {
+  it('has 12 body regions in allEmotions', () => {
     const ids = Object.keys(somaticModel.allEmotions)
-    expect(ids).toHaveLength(14)
+    expect(ids).toHaveLength(12)
   })
 
-  it('initialState shows all 14 regions', () => {
+  it('initialState shows all 12 regions', () => {
     const state = somaticModel.initialState
-    expect(state.visibleEmotionIds.size).toBe(14)
+    expect(state.visibleEmotionIds.size).toBe(12)
     expect(state.currentGeneration).toBe(0)
   })
 
@@ -31,7 +31,7 @@ describe('somaticModel', () => {
       const effect = somaticModel.onSelect(region, state, [])
 
       // All regions should remain visible
-      expect(effect.newState.visibleEmotionIds.size).toBe(14)
+      expect(effect.newState.visibleEmotionIds.size).toBe(12)
     })
 
     it('does not modify selections (handled externally by BodyMap)', () => {
@@ -51,14 +51,14 @@ describe('somaticModel', () => {
       const state = somaticModel.initialState
       const effect = somaticModel.onDeselect(region, state)
 
-      expect(effect.newState.visibleEmotionIds.size).toBe(14)
+      expect(effect.newState.visibleEmotionIds.size).toBe(12)
     })
   })
 
   describe('onClear', () => {
     it('returns initial state', () => {
       const state = somaticModel.onClear()
-      expect(state.visibleEmotionIds.size).toBe(14)
+      expect(state.visibleEmotionIds.size).toBe(12)
       expect(state.currentGeneration).toBe(0)
     })
   })

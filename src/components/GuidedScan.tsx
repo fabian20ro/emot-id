@@ -7,7 +7,7 @@ import type { SomaticRegion, SensationType } from '../models/somatic/types'
 
 /** Body groups with their region IDs, ordered head-to-feet */
 const BODY_GROUPS = [
-  { id: 'head', regions: ['head', 'forehead', 'eyes', 'jaw'] },
+  { id: 'head', regions: ['head', 'jaw'] },
   { id: 'neck', regions: ['throat', 'shoulders', 'upper-back'] },
   { id: 'torso', regions: ['chest', 'stomach', 'lower-back'] },
   { id: 'arms', regions: ['arms', 'hands'] },

@@ -13,7 +13,8 @@
   },
   "analyze": {
     "button": "Analyze",
-    "buttonDisabled": "Select an emotion bubble that resonates with you the most right now",
+    "buttonDisabledSomatic": "Tap a body area where you notice a sensation",
+    "buttonDisabledDefault": "Select an emotion that resonates with you the most right now",
     "resultPrefix": "Your selections",
     "exploreAI": "Learn more about these emotions",
     "aiPrompt": "I am feeling {emotions}. What does this emotion mean and how can I understand it better?",

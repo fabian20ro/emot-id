@@ -83,13 +83,14 @@ export default function App() {
   }, [selections, analyze])
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="h-dvh overflow-hidden flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
       <Header modelId={modelId} onModelChange={setModelId} />
 
-      <div className="px-4 pt-4 max-w-md mx-auto w-full">
+      <div className="px-4 pt-2 max-w-md mx-auto w-full">
         <AnalyzeButton
           disabled={selections.length === 0}
           onClick={analyzeEmotions}
+          modelId={modelId}
         />
       </div>
 

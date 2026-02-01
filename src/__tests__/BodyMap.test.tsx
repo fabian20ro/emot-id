@@ -19,9 +19,7 @@ function makeRegion(id: string, label: string): SomaticRegion {
 
 function buildEmotions() {
   const regions: [string, string][] = [
-    ['head', 'Head'],
-    ['forehead', 'Forehead'],
-    ['eyes', 'Eyes'],
+    ['head', 'Head / Face'],
     ['jaw', 'Jaw'],
     ['throat', 'Throat'],
     ['shoulders', 'Shoulders'],
@@ -65,7 +63,13 @@ describe('BodyMap', () => {
 
     // Should have path elements for each body region (exclude hit area paths)
     const paths = document.querySelectorAll('[data-region]:not([data-region$="-hit"])')
-    expect(paths.length).toBe(14)
+    expect(paths.length).toBe(12)
+  })
+
+  it('SVG does not have max-h constraint', () => {
+    renderBodyMap()
+    const svg = document.querySelector('svg')!
+    expect(svg.className.baseVal).not.toContain('max-h')
   })
 
   it('renders mode toggle buttons', () => {
@@ -161,7 +165,7 @@ describe('BodyMap', () => {
   it('body regions have ARIA attributes for accessibility', () => {
     renderBodyMap()
     const buttons = document.querySelectorAll('g[role="button"]')
-    expect(buttons.length).toBe(14)
+    expect(buttons.length).toBe(12)
     for (const btn of buttons) {
       expect(btn).toHaveAttribute('tabindex', '0')
       expect(btn).toHaveAttribute('aria-label')

@@ -130,10 +130,10 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
         </button>
       </div>
 
-      <div className="relative w-full max-w-xs flex-1 min-h-[200px] flex items-center justify-center">
+      <div className="relative w-full max-w-sm flex-1 min-h-[200px] flex items-center justify-center">
         <svg
           viewBox={VIEWBOX}
-          className="w-full h-full max-h-[60vh]"
+          className="w-full h-full"
           style={{ filter: 'drop-shadow(0 0 20px rgba(99, 102, 241, 0.1))' }}
         >
           {/* Back-facing regions first */}

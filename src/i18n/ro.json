@@ -13,7 +13,8 @@
   },
   "analyze": {
     "button": "Analizeaza",
-    "buttonDisabled": "Selecteaza o bula de emotie care rezoneaza cel mai mult cu tine acum",
+    "buttonDisabledSomatic": "Atinge o zona a corpului unde observi o senzatie",
+    "buttonDisabledDefault": "Selecteaza o emotie care rezoneaza cel mai mult cu tine acum",
     "resultPrefix": "Selectiile tale",
     "exploreAI": "Afla mai multe despre aceste emotii",
     "aiPrompt": "Simt {emotions}. Ce inseamna aceasta emotie si cum o pot intelege mai bine?",
