@@ -7,12 +7,15 @@ interface SettingsMenuProps {
   onClose: () => void
   modelId: string
   onModelChange: (id: string) => void
+  soundMuted: boolean
+  onSoundMutedChange: (muted: boolean) => void
 }
 
-export function SettingsMenu({ isOpen, onClose, modelId, onModelChange }: SettingsMenuProps) {
+export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMuted, onSoundMutedChange }: SettingsMenuProps) {
   const { language, setLanguage, t } = useLanguage()
   const availableModels = getAvailableModels()
   const disclaimerT = (t as Record<string, Record<string, string>>).disclaimer ?? {}
+  const settingsT = (t as Record<string, Record<string, string>>).settings ?? {}
 
   return (
     <AnimatePresence>
@@ -90,6 +93,35 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange }: Settin
                     </span>
                   </button>
                 ))}
+              </div>
+
+              {/* Sound Section */}
+              <div className="px-3 py-2">
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                  {settingsT.soundLabel ?? 'Sound effects'}
+                </span>
+              </div>
+              <div className="flex gap-1 px-2 pb-2">
+                <button
+                  onClick={() => { onSoundMutedChange(false); onClose() }}
+                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    !soundMuted
+                      ? 'bg-purple-500 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  {settingsT.soundOn ?? 'On'}
+                </button>
+                <button
+                  onClick={() => { onSoundMutedChange(true); onClose() }}
+                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    soundMuted
+                      ? 'bg-purple-500 text-white'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  {settingsT.soundOff ?? 'Off'}
+                </button>
               </div>
 
               {/* Disclaimer */}

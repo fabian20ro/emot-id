@@ -8,7 +8,8 @@ interface ScoredEmotion extends AnalysisResult {
 
 const MINIMUM_THRESHOLD = 0.5
 const MAX_RESULTS = 4
-const COHERENCE_BONUS = 1.2
+/** Scaled coherence bonus by number of contributing body groups */
+const COHERENCE_BONUS: Record<number, number> = { 2: 1.2, 3: 1.3, 4: 1.4 }
 
 /** Absolute score floor: if the best score is below this, downgrade all labels */
 const STRONG_FLOOR = 1.0
@@ -71,10 +72,12 @@ export function scoreSomaticSelections(selections: SomaticSelection[]): ScoredEm
     }
   }
 
-  // Apply pattern coherence bonus: emotions matched from 2+ body groups get a boost
+  // Apply scaled pattern coherence bonus: more body groups = higher multiplier
   for (const [key, entry] of emotionScores) {
-    if (entry.contributingGroups.size >= 2) {
-      emotionScores.set(key, { ...entry, score: entry.score * COHERENCE_BONUS })
+    const groupCount = entry.contributingGroups.size
+    const bonus = COHERENCE_BONUS[groupCount] ?? (groupCount >= 4 ? 1.4 : 1)
+    if (bonus > 1) {
+      emotionScores.set(key, { ...entry, score: entry.score * bonus })
     }
   }
 

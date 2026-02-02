@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { motion } from 'framer-motion'
 import type { SensationType } from '../models/somatic/types'
 
@@ -29,7 +30,7 @@ const SENSATION_COLORS: Record<SensationType, string> = {
 const BASE_COLOR = '#4b5563'
 const HIGHLIGHT_COLOR = '#6b7280'
 
-export function BodyRegion({
+function BodyRegionBase({
   id,
   d,
   hitD,
@@ -94,3 +95,5 @@ export function BodyRegion({
     </g>
   )
 }
+
+export const BodyRegion = memo(BodyRegionBase)

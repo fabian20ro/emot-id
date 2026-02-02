@@ -26,7 +26,7 @@ export function useEmotionModel(modelId: string = defaultModelId) {
   const sizes = useMemo(() => {
     const map = new Map<string, 'small' | 'medium' | 'large'>()
     for (const id of modelState.visibleEmotionIds.keys()) {
-      map.set(id, model.getEmotionSize(id, modelState))
+      map.set(id, model.getEmotionSize?.(id, modelState) ?? 'medium')
     }
     return map
   }, [modelState, model])

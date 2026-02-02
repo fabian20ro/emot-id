@@ -9,6 +9,8 @@ function renderMenu(overrides: Partial<React.ComponentProps<typeof SettingsMenu>
     onClose: vi.fn(),
     modelId: 'plutchik',
     onModelChange: vi.fn(),
+    soundMuted: false,
+    onSoundMutedChange: vi.fn(),
     ...overrides,
   }
   return render(

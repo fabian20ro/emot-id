@@ -817,7 +817,7 @@
     "children": [
       "tired",
       "stressed",
-      "busy",
+      "overwhelmed",
       "bored"
     ],
     "description": {
@@ -873,11 +873,11 @@
       "en": "relief and boundaries"
     }
   },
-  "busy": {
-    "id": "busy",
+  "overwhelmed": {
+    "id": "overwhelmed",
     "label": {
-      "ro": "Ocupat",
-      "en": "Busy"
+      "ro": "Coplesit",
+      "en": "Overwhelmed"
     },
     "color": "#C4CCD4",
     "level": 1,
@@ -887,12 +887,12 @@
       "rushed"
     ],
     "description": {
-      "ro": "A fi ocupat este o stare de supraincarcare in care cererea de timp si atentie depaseste disponibilitatea ta. In cultura moderna, ocupatia a devenit un semn de valoare, dar de fapt semnaleaza adesea o dificultate de a stabili prioritati sau de a spune nu. A fi constant ocupat te deconecteaza de la tine insuti si de la relatiile tale.",
-      "en": "Being busy is a state of overload where the demand for time and attention exceeds your availability. In modern culture, busyness has become a sign of worth, but it actually often signals a difficulty in setting priorities or saying no. Being constantly busy disconnects you from yourself and from your relationships."
+      "ro": "A te simti coplesit inseamna ca cerintele depasesc capacitatea ta de a le gestiona in acest moment. Este semnalul ca ai nevoie sa eliberezi presiunea — fie prin delegare, fie prin renuntare la ceea ce nu este esential. Coplesirea cronica erodeaza increderea in sine si poate duce la epuizare emotionala si fizica.",
+      "en": "Feeling overwhelmed means that demands exceed your capacity to manage them right now. It is the signal that you need to release pressure — either through delegation or by letting go of what isn't essential. Chronic overwhelm erodes self-confidence and can lead to emotional and physical burnout."
     },
     "needs": {
-      "ro": "incetinire si prioritizare",
-      "en": "slowing down and priorities"
+      "ro": "usurare si prioritizare",
+      "en": "relief and prioritization"
     }
   },
   "bored": {
@@ -997,7 +997,7 @@
     },
     "color": "#D0D8E0",
     "level": 2,
-    "parent": "busy",
+    "parent": "overwhelmed",
     "description": {
       "ro": "Presiunea este senzatia de a fi impins din toate directiile — de timp, de asteptari sau de responsabilitati. Te simti comprimat si fara spatiu de miscare. Presiunea moderata poate stimula performanta, dar presiunea cronica duce la epuizare si la pierderea bucuriei. Este esential sa identifici ce presiuni sunt reale si care sunt auto-impuse.",
       "en": "Pressure is the sensation of being pushed from all directions — by time, expectations, or responsibilities. You feel compressed and without room to move. Moderate pressure can stimulate performance, but chronic pressure leads to burnout and loss of joy. It is essential to identify which pressures are real and which are self-imposed."
@@ -1015,7 +1015,7 @@
     },
     "color": "#D0D8E0",
     "level": 2,
-    "parent": "busy",
+    "parent": "overwhelmed",
     "description": {
       "ro": "Graba este senzatia ca timpul curge mai repede decat poti actiona — o urgenta constanta care nu iti permite sa fii prezent. In graba, calitatea gandurilor, relatiilor si deciziilor se deterioreaza. Graba cronica este adesea o fugire de sine — daca te opresti, trebuie sa te confrunti cu ce simti cu adevarat.",
       "en": "Feeling rushed is the sensation that time flows faster than you can act — a constant urgency that doesn't allow you to be present. In a rush, the quality of thoughts, relationships, and decisions deteriorates. Chronic rushing is often a flight from the self — if you stop, you must confront what you truly feel."

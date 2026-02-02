@@ -1,4 +1,5 @@
 import type { AnalysisResult } from './types'
+import { HIGH_DISTRESS_IDS } from './distress'
 
 type Lang = 'ro' | 'en'
 
@@ -78,6 +79,8 @@ const templates = {
       `Your experience weaves together ${names.join(' and ')} — a harmonious blend of pleasant feelings.`,
     concordantUnpleasant: (names: string[]) =>
       `You are experiencing ${names.join(' and ')} together. These feelings often appear when something meaningful is at stake.`,
+    concordantUnpleasantSevere: (names: string[]) =>
+      `What you're experiencing — ${names.join(' and ')} — sounds painful. You deserve support.`,
     complexityMultiple: (count: number) =>
       `You are holding multiple emotional threads simultaneously — ${count} distinct feelings. This complexity is common and healthy, reflecting how your system processes layered experiences.`,
     highIntensityGroup:
@@ -93,6 +96,13 @@ const templates = {
       const last = unique.pop()
       return `Right now, you may need ${unique.join(', ')}, and ${last}.`
     },
+    needsClosingSevere: (needs: string[]) => {
+      const unique = [...new Set(needs)]
+      if (unique.length === 1) return `Right now, you deserve ${unique[0]}.`
+      if (unique.length === 2) return `Right now, you deserve ${unique[0]} and ${unique[1]}.`
+      const last = unique.pop()
+      return `Right now, you deserve ${unique.join(', ')}, and ${last}.`
+    },
   },
   ro: {
     singleClear: (name: string) =>
@@ -107,6 +117,8 @@ const templates = {
       `Experienta ta impleteste ${names.join(' si ')} — un amestec armonios de sentimente placute.`,
     concordantUnpleasant: (names: string[]) =>
       `Experimentezi ${names.join(' si ')} impreuna. Aceste sentimente apar adesea cand ceva semnificativ este in joc.`,
+    concordantUnpleasantSevere: (names: string[]) =>
+      `Ceea ce experimentezi — ${names.join(' si ')} — pare dureros. Meriti sprijin.`,
     complexityMultiple: (count: number) =>
       `Tii simultan mai multe fire emotionale — ${count} sentimente distincte. Aceasta complexitate este comuna si sanatoasa, reflectand modul in care sistemul tau proceseaza experiențe stratificate.`,
     highIntensityGroup:
@@ -121,6 +133,13 @@ const templates = {
       if (unique.length === 2) return `Acum, ai putea avea nevoie de ${unique[0]} si ${unique[1]}.`
       const last = unique.pop()
       return `Acum, ai putea avea nevoie de ${unique.join(', ')} si ${last}.`
+    },
+    needsClosingSevere: (needs: string[]) => {
+      const unique = [...new Set(needs)]
+      if (unique.length === 1) return `Acum, meriti ${unique[0]}.`
+      if (unique.length === 2) return `Acum, meriti ${unique[0]} si ${unique[1]}.`
+      const last = unique.pop()
+      return `Acum, meriti ${unique.join(', ')} si ${last}.`
     },
   },
 }
@@ -139,6 +158,9 @@ export function synthesize(results: AnalysisResult[], language: Lang): string {
   const needs = collectNeeds(results, language)
   const sentences: string[] = []
 
+  // Detect if results contain high-distress emotions
+  const isSevere = results.filter((r) => HIGH_DISTRESS_IDS.has(r.id)).length >= 2
+
   // 1. Complexity framing
   if (results.length === 1) {
     sentences.push(t.singleClear(names[0]))
@@ -153,7 +175,7 @@ export function synthesize(results: AnalysisResult[], language: Lang): string {
     } else if (valence.hasPositive && !valence.hasNegative) {
       sentences.push(t.concordantPleasant(names))
     } else if (valence.hasNegative && !valence.hasPositive) {
-      sentences.push(t.concordantUnpleasant(names))
+      sentences.push(isSevere ? t.concordantUnpleasantSevere(names) : t.concordantUnpleasant(names))
     }
   }
 
@@ -185,7 +207,7 @@ export function synthesize(results: AnalysisResult[], language: Lang): string {
 
   // 5. Needs integration
   if (needs.length > 0) {
-    sentences.push(t.needsClosing(needs))
+    sentences.push(isSevere ? t.needsClosingSevere(needs) : t.needsClosing(needs))
   }
 
   return sentences.join(' ')

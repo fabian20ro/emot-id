@@ -65,8 +65,8 @@ describe('somaticModel', () => {
 
   describe('getEmotionSize', () => {
     it('returns medium for all regions (uniform size)', () => {
-      expect(somaticModel.getEmotionSize('chest', somaticModel.initialState)).toBe('medium')
-      expect(somaticModel.getEmotionSize('head', somaticModel.initialState)).toBe('medium')
+      expect(somaticModel.getEmotionSize!('chest', somaticModel.initialState)).toBe('medium')
+      expect(somaticModel.getEmotionSize!('head', somaticModel.initialState)).toBe('medium')
     })
   })
 

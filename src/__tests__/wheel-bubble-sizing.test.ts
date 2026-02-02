@@ -8,7 +8,7 @@ describe('Wheel bubble sizing', () => {
   it('returns large for all root-level emotions', () => {
     const state = wheelModel.initialState
     for (const [id] of state.visibleEmotionIds) {
-      expect(wheelModel.getEmotionSize(id, state)).toBe('large')
+      expect(wheelModel.getEmotionSize!(id, state)).toBe('large')
     }
   })
 
@@ -24,7 +24,7 @@ describe('Wheel bubble sizing', () => {
         currentGeneration: 0,
       }
       expect(
-        wheelModel.getEmotionSize(id, dummyState),
+        wheelModel.getEmotionSize!(id, dummyState),
         `emotion ${id} (level ${wheelModel.allEmotions[id].level}) should be large`
       ).toBe('large')
     }
@@ -44,7 +44,7 @@ describe('Wheel bubble sizing', () => {
 
     for (const [id] of drillState.visibleEmotionIds) {
       expect(
-        wheelModel.getEmotionSize(id, drillState),
+        wheelModel.getEmotionSize!(id, drillState),
         `child ${id} should be large after drill-down`
       ).toBe('large')
     }
@@ -56,7 +56,7 @@ describe('Wheel bubble sizing', () => {
       currentGeneration: 0,
     }
     for (const id of allIds.slice(0, 20)) {
-      expect(wheelModel.getEmotionSize(id, crowdedState)).toBe('large')
+      expect(wheelModel.getEmotionSize!(id, crowdedState)).toBe('large')
     }
   })
 })

@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useRef } from 'react'
+import { memo, useState, useCallback, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import { findNearest } from '../models/dimensional'
@@ -14,7 +14,7 @@ function toPixel(value: number): number {
   return PADDING + ((value + 1) / 2) * INNER
 }
 
-export function DimensionalField({ emotions, onSelect, onDeselect, selections = [] }: VisualizationProps) {
+function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] }: VisualizationProps) {
   const { language, t } = useLanguage()
   const dimEmotions = useMemo(
     () => emotions as DimensionalEmotion[],
@@ -235,3 +235,5 @@ export function DimensionalField({ emotions, onSelect, onDeselect, selections = 
     </div>
   )
 }
+
+export const DimensionalField = memo(DimensionalFieldBase)

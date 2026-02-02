@@ -60,6 +60,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   const [selectedSensation, setSelectedSensation] = useState<SensationType | null>(null)
   const [centeringDuration, setCenteringDuration] = useState(CENTERING_DURATION_MS)
   const [breathPhase, setBreathPhase] = useState<'in' | 'out'>('in')
+  const [skipCount, setSkipCount] = useState(0)
 
   const currentRegionId = SCAN_ORDER[currentIndex]
   const currentRegion = currentRegionId ? regions.get(currentRegionId) : undefined
@@ -128,6 +129,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   }, [currentIndex, onHighlight])
 
   const handleSkip = useCallback(() => {
+    setSkipCount((c) => c + 1)
     advanceOrComplete()
   }, [advanceOrComplete])
 
@@ -200,6 +202,9 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             </motion.div>
             <p className="text-gray-200 text-lg mb-1">
               {somaticT.guidedStart ?? 'Take a breath. Notice your body.'}
+            </p>
+            <p className="text-xs text-gray-400 mb-2">
+              {somaticT.guidedTraumaNote ?? 'If any area feels uncomfortable, you can skip it at any time.'}
             </p>
             <motion.p
               key={breathPhase}
@@ -327,9 +332,14 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             exit={{ opacity: 0 }}
             className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-6 mb-4 mx-4 max-w-sm text-center pointer-events-auto"
           >
-            <p className="text-gray-200 text-lg mb-4">
+            <p className="text-gray-200 text-lg mb-2">
               {somaticT.guidedDone ?? 'Body scan complete'}
             </p>
+            {skipCount >= 3 && (
+              <p className="text-xs text-gray-400 mb-3 max-w-xs">
+                {somaticT.guidedNothingNormal ?? 'Not noticing sensations is common. Body awareness develops with practice.'}
+              </p>
+            )}
             <button
               onClick={onComplete}
               className="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm transition-colors"

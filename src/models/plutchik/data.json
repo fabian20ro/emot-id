@@ -728,18 +728,18 @@
     "components": ["surprise", "anticipation"],
     "spawns": ["surprise", "anticipation", "distraction", "interest"]
   },
-  "aggressiveness": {
-    "id": "aggressiveness",
-    "label": { "ro": "agresivitate intensă", "en": "aggressiveness" },
+  "ruthlessness": {
+    "id": "ruthlessness",
+    "label": { "ro": "neîndurare", "en": "ruthlessness" },
     "description": {
-      "ro": "Agresivitatea intensa este diada tertiara a furiei si anticiparii la nivel maxim — o forta distrugere calculata si sustinuta. Spre deosebire de mania spontana, agresivitatea intensa este persistenta si orientata strategic. Poate aparea cand frustrarea cronica se combina cu nevoia urgenta de control. Necesita canalizare constienta pentru a nu deveni devastatoare.",
-      "en": "Aggressiveness is the tertiary dyad of anger and anticipation at maximum level — a calculated and sustained destructive force. Unlike spontaneous rage, aggressiveness is persistent and strategically oriented. It can arise when chronic frustration combines with the urgent need for control. It requires conscious channeling to avoid becoming devastating."
+      "ro": "Neindurarea este diada tertiara a furiei si anticiparii la nivel maxim — o determinare rece si calculata de a-ti atinge scopul indiferent de costul uman. Spre deosebire de agresivitate, care pastreaza o componenta emotionala activa, neindurarea este lipsita de empatie temporar. Poate fi utila in situatii de criza care cer decizii rapide, dar devine distructiva cand devine un mod de viata.",
+      "en": "Ruthlessness is the tertiary dyad of anger and anticipation at maximum level — a cold, calculated determination to achieve your goal regardless of human cost. Unlike aggression, which retains an active emotional component, ruthlessness is temporarily devoid of empathy. It can be useful in crisis situations requiring rapid decisions, but becomes destructive when it becomes a way of life."
     },
-    "needs": { "ro": "canalizare constienta si containment", "en": "conscious channeling and containment" },
+    "needs": { "ro": "empatie si reancorare relationala", "en": "empathy and relational re-anchoring" },
     "category": "tertiary_dyad",
     "color": "#FF7850",
     "intensity": 0.7,
-    "components": ["anger", "anticipation"],
+    "components": ["rage", "vigilance"],
     "spawns": ["anger", "anticipation", "rage", "vigilance"]
   },
   "compassion": {
@@ -754,22 +754,22 @@
     "color": "#66BB6A",
     "intensity": 0.5,
     "opposite": "contempt",
-    "components": ["love", "sadness"],
+    "components": ["trust", "sadness"],
     "spawns": []
   },
   "nostalgia": {
     "id": "nostalgia",
     "label": { "ro": "nostalgie", "en": "nostalgia" },
     "description": {
-      "ro": "Nostalgia este diada bucuriei si tristetii — o dor dulce-amar pentru momente, locuri sau persoane din trecut care au avut o semnificatie profunda. Ea iti reaminteste ce a contat cu adevarat si iti ancoreaza identitatea in povestea ta de viata. Nostalgia sanatoasa te reconecteaza cu valorile tale si iti ofera caldura; devine problematica doar cand te impiedica sa te angajezi in prezent.",
-      "en": "Nostalgia is the dyad of joy and sadness — a bittersweet longing for moments, places, or people from the past that held deep significance. It reminds you of what truly mattered and anchors your identity in your life story. Healthy nostalgia reconnects you with your values and offers warmth; it becomes problematic only when it prevents you from engaging with the present."
+      "ro": "Nostalgia este diada seninatații si tristetii — o dor dulce-amar pentru momente, locuri sau persoane din trecut care au avut o semnificatie profunda. Ea iti reaminteste ce a contat cu adevarat si iti ancoreaza identitatea in povestea ta de viata. Nostalgia sanatoasa te reconecteaza cu valorile tale si iti ofera caldura; devine problematica doar cand te impiedica sa te angajezi in prezent.",
+      "en": "Nostalgia is the dyad of serenity and sadness — a gentle, bittersweet longing for moments, places, or people from the past that held deep significance. It reminds you of what truly mattered and anchors your identity in your life story. Healthy nostalgia reconnects you with your values and offers warmth; it becomes problematic only when it prevents you from engaging with the present."
     },
     "needs": { "ro": "onorarea trecutului si ancorare in prezent", "en": "honoring the past and anchoring in the present" },
     "category": "dyad",
     "color": "#AB47BC",
     "intensity": 0.5,
     "opposite": "",
-    "components": ["joy", "sadness"],
+    "components": ["serenity", "sadness"],
     "spawns": []
   }
 }

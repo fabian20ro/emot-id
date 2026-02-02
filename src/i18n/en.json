@@ -38,13 +38,19 @@
     "no": "Not quite",
     "followUp": "Would you like to explore further?",
     "backToModel": "Go back and explore",
-    "stayHere": "That's okay for now"
+    "stayHere": "That's okay for now",
+    "notQuiteValidation": "Your felt experience is the best guide. Emotion labels are approximations — what you feel is real and valid.",
+    "tryDifferentModel": "Try a different model"
   },
   "crisis": {
-    "message": "It sounds like you may be going through a difficult time. You don't have to go through it alone.",
+    "tier1": "If what you're feeling feels overwhelming, support is available. You don't have to navigate this alone.",
+    "tier2": "It sounds like you may be going through a difficult time. You don't have to go through it alone.",
+    "tier3": "What you're describing sounds very painful. You deserve support right now — please consider reaching out.",
     "roLine": "Romania: 116 123 (free, 24/7)",
     "intLine": "International: findahelpline.com",
-    "disclaimer": "If you are in immediate danger, please call emergency services."
+    "disclaimer": "If you are in immediate danger, please call emergency services.",
+    "groundingTitle": "A quick grounding technique (5-4-3-2-1)",
+    "groundingBody": "Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste. This helps bring your attention to the present moment."
   },
   "disclaimer": {
     "title": "About this app",
@@ -65,6 +71,36 @@
     "skip": "Skip",
     "getStarted": "Get started"
   },
+  "results": {
+    "microDisclaimer": "For self-exploration, not diagnosis"
+  },
+  "settings": {
+    "soundLabel": "Sound effects",
+    "soundOn": "On",
+    "soundOff": "Off"
+  },
+  "bridges": {
+    "somaticFromCognitive": "Where do you notice this in your body?",
+    "cognitiveFromSomatic": "Can you name the emotion more precisely?",
+    "cognitiveFromDimensional": "Want to explore what this feeling is called?",
+    "trySomatic": "Try the Body Map",
+    "tryWheel": "Try the Emotion Wheel",
+    "tryPlutchik": "Try Plutchik's Wheel"
+  },
+  "firstHint": {
+    "somatic": "Tap where you notice a sensation",
+    "wheel": "Tap an emotion that resonates with you",
+    "plutchik": "Tap an emotion to see how it connects",
+    "dimensional": "Tap where your state feels located"
+  },
+  "dontKnow": {
+    "link": "I don't know what I'm feeling",
+    "title": "That's okay — here are two ways to start",
+    "bodyOption": "Start with your body",
+    "bodyDesc": "Notice physical sensations first",
+    "dimensionalOption": "Start with pleasant/unpleasant",
+    "dimensionalDesc": "Locate your state on a simple scale"
+  },
   "somatic": {
     "pickSensation": "What do you feel here?",
     "pickIntensity": "How intense?",
@@ -77,6 +113,8 @@
     "guidedSkip": "Nothing here",
     "guidedSkipGroup": "Skip this area",
     "guidedDone": "Body scan complete",
+    "guidedTraumaNote": "If any area feels uncomfortable, you can skip it at any time.",
+    "guidedNothingNormal": "Not noticing sensations is common. Body awareness develops with practice.",
     "guidedMode": "Guided scan",
     "freeMode": "Free selection"
   },

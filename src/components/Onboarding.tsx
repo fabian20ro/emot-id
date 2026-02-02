@@ -104,13 +104,15 @@ export function Onboarding({ onComplete }: OnboardingProps) {
           </button>
         </div>
 
-        <button
-          onClick={finish}
-          className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
-          aria-label={onboardingT.skip ?? 'Skip'}
-        >
-          {onboardingT.skip ?? 'Skip'}
-        </button>
+        {!isLast && (
+          <button
+            onClick={finish}
+            className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+            aria-label={onboardingT.skip ?? 'Skip'}
+          >
+            {onboardingT.skip ?? 'Skip'}
+          </button>
+        )}
       </div>
     </div>
   )

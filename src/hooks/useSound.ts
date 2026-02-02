@@ -1,14 +1,34 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 type SoundType = 'select' | 'deselect'
+
+const STORAGE_KEY = 'emot-id-sound-muted'
 
 const frequencies: Record<SoundType, number> = {
   select: 523.25, // C5
   deselect: 392.0, // G4
 }
 
+function readMuted(): boolean {
+  try {
+    return localStorage.getItem(STORAGE_KEY) === 'true'
+  } catch {
+    return false
+  }
+}
+
 export function useSound() {
   const audioContextRef = useRef<AudioContext | null>(null)
+  const [muted, setMutedState] = useState(readMuted)
+
+  const setMuted = useCallback((value: boolean) => {
+    setMutedState(value)
+    try {
+      localStorage.setItem(STORAGE_KEY, String(value))
+    } catch {
+      // localStorage may be unavailable
+    }
+  }, [])
 
   const getAudioContext = useCallback(() => {
     if (!audioContextRef.current) {
@@ -19,6 +39,8 @@ export function useSound() {
 
   const playSound = useCallback(
     (type: SoundType) => {
+      if (muted) return
+
       try {
         const ctx = getAudioContext()
 
@@ -44,8 +66,8 @@ export function useSound() {
         // Web Audio API not available, fail silently
       }
     },
-    [getAudioContext]
+    [getAudioContext, muted],
   )
 
-  return { playSound }
+  return { playSound, muted, setMuted }
 }

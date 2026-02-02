@@ -38,13 +38,19 @@
     "no": "Nu prea",
     "followUp": "Doresti sa explorezi mai departe?",
     "backToModel": "Inapoi la explorare",
-    "stayHere": "E bine asa deocamdata"
+    "stayHere": "E bine asa deocamdata",
+    "notQuiteValidation": "Experienta ta traita este cel mai bun ghid. Etichetele emotionale sunt aproximari — ceea ce simti este real si valid.",
+    "tryDifferentModel": "Incearca un alt model"
   },
   "crisis": {
-    "message": "Se pare ca treci printr-o perioada dificila. Nu trebuie sa treci prin asta singur/a.",
+    "tier1": "Daca ceea ce simti pare coplesitor, exista sprijin disponibil. Nu trebuie sa navighezi singur/a.",
+    "tier2": "Se pare ca treci printr-o perioada dificila. Nu trebuie sa treci prin asta singur/a.",
+    "tier3": "Ceea ce descrii pare foarte dureros. Meriti sprijin acum — te rugam sa iei in considerare sa ceri ajutor.",
     "roLine": "Romania: 116 123 (gratuit, 24/7)",
     "intLine": "International: findahelpline.com",
-    "disclaimer": "Daca esti in pericol imediat, te rugam sa suni la serviciile de urgenta."
+    "disclaimer": "Daca esti in pericol imediat, te rugam sa suni la serviciile de urgenta.",
+    "groundingTitle": "O tehnica rapida de ancorare (5-4-3-2-1)",
+    "groundingBody": "Numeste 5 lucruri pe care le vezi, 4 pe care le poti atinge, 3 pe care le auzi, 2 pe care le mirosi, 1 pe care il gusti. Aceasta ajuta sa iti aduci atentia in momentul prezent."
   },
   "disclaimer": {
     "title": "Despre aceasta aplicatie",
@@ -65,6 +71,36 @@
     "skip": "Sari peste",
     "getStarted": "Incepe"
   },
+  "results": {
+    "microDisclaimer": "Pentru auto-explorare, nu diagnostic"
+  },
+  "settings": {
+    "soundLabel": "Efecte sonore",
+    "soundOn": "Pornit",
+    "soundOff": "Oprit"
+  },
+  "bridges": {
+    "somaticFromCognitive": "Unde observi aceasta in corpul tau?",
+    "cognitiveFromSomatic": "Poti numi emotia mai precis?",
+    "cognitiveFromDimensional": "Vrei sa explorezi cum se numeste aceasta stare?",
+    "trySomatic": "Incearca Harta Corporala",
+    "tryWheel": "Incearca Roata Emotiilor",
+    "tryPlutchik": "Incearca Roata Plutchik"
+  },
+  "firstHint": {
+    "somatic": "Atinge zona unde observi o senzatie",
+    "wheel": "Atinge o emotie care rezoneaza cu tine",
+    "plutchik": "Atinge o emotie pentru a vedea cum se conecteaza",
+    "dimensional": "Atinge unde simti ca se afla starea ta"
+  },
+  "dontKnow": {
+    "link": "Nu stiu ce simt",
+    "title": "E in regula — iata doua moduri de a incepe",
+    "bodyOption": "Incepe cu corpul",
+    "bodyDesc": "Observa mai intai senzatiile fizice",
+    "dimensionalOption": "Incepe cu placut/neplacut",
+    "dimensionalDesc": "Localizeaza-ti starea pe o scala simpla"
+  },
   "somatic": {
     "pickSensation": "Ce simti aici?",
     "pickIntensity": "Cat de intens?",
@@ -77,6 +113,8 @@
     "guidedSkip": "Nimic aici",
     "guidedSkipGroup": "Sari peste aceasta zona",
     "guidedDone": "Scanarea corporala s-a incheiat",
+    "guidedTraumaNote": "Daca vreo zona te face sa te simti inconfortabil, o poti sari oricand.",
+    "guidedNothingNormal": "Este normal sa nu observi senzatii. Constiinta corporala se dezvolta cu practica.",
     "guidedMode": "Scanare ghidata",
     "freeMode": "Selectie libera"
   },

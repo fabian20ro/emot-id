@@ -6,9 +6,11 @@ import { SettingsMenu } from './SettingsMenu'
 interface HeaderProps {
   modelId: string
   onModelChange: (id: string) => void
+  soundMuted: boolean
+  onSoundMutedChange: (muted: boolean) => void
 }
 
-export function Header({ modelId, onModelChange }: HeaderProps) {
+export function Header({ modelId, onModelChange, soundMuted, onSoundMutedChange }: HeaderProps) {
   const { t } = useLanguage()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -26,6 +28,8 @@ export function Header({ modelId, onModelChange }: HeaderProps) {
               onClose={() => setMenuOpen(false)}
               modelId={modelId}
               onModelChange={onModelChange}
+              soundMuted={soundMuted}
+              onSoundMutedChange={onSoundMutedChange}
             />
           </div>
           <div>

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { memo, useRef, useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { Bubble } from './Bubble'
 import type { BaseEmotion, VisualizationProps } from '../models/types'
@@ -65,7 +65,7 @@ function calculatePositionsForNewEmotions(
   return positions
 }
 
-export function BubbleField({
+function BubbleFieldBase({
   emotions,
   onSelect,
   sizes,
@@ -158,3 +158,5 @@ export function BubbleField({
     </div>
   )
 }
+
+export const BubbleField = memo(BubbleFieldBase)

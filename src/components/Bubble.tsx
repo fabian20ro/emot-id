@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { motion } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import type { BaseEmotion } from '../models/types'
@@ -39,7 +40,7 @@ function getContrastColor(hex: string): string {
   return luminance > 0.5 ? '#1a1a1a' : '#ffffff'
 }
 
-export function Bubble({ emotion, onClick, size = 'medium', index = 0, position }: BubbleProps) {
+function BubbleBase({ emotion, onClick, size = 'medium', index = 0, position }: BubbleProps) {
   const { language } = useLanguage()
 
   return (
@@ -71,3 +72,5 @@ export function Bubble({ emotion, onClick, size = 'medium', index = 0, position 
     </motion.button>
   )
 }
+
+export const Bubble = memo(BubbleBase)

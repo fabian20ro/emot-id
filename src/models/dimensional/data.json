@@ -319,6 +319,56 @@
     "arousal": -0.3,
     "quadrant": "pleasant-calm"
   },
+  "apathetic": {
+    "id": "apathetic",
+    "label": { "ro": "apatic", "en": "apathetic" },
+    "description": { "ro": "Apatia este o lipsa de interes si motivatie — o stare in care nimic nu pare sa conteze suficient pentru a te misca. Poate semnala epuizare emotionala profunda sau o retragere protectiva dupa suprasolicitare.", "en": "Apathy is a lack of interest and motivation — a state where nothing seems to matter enough to move you. It may signal deep emotional exhaustion or a protective withdrawal after being overwhelmed." },
+    "needs": { "ro": "recuperare si sens", "en": "recovery and meaning" },
+    "color": "#7E57C2",
+    "valence": -0.3,
+    "arousal": -0.7,
+    "quadrant": "unpleasant-calm"
+  },
+  "melancholic": {
+    "id": "melancholic",
+    "label": { "ro": "melancolic", "en": "melancholic" },
+    "description": { "ro": "Melancolia este o tristete calda si reflectiva — un amestec de nostalgie si acceptare a tranzitoriei. Nu doare acut, ci pluteste ca o ceata usoara care te invita la contemplare.", "en": "Melancholy is a warm, reflective sadness — a blend of nostalgia and acceptance of transience. It doesn't hurt acutely, but floats like a gentle mist inviting contemplation." },
+    "needs": { "ro": "companie blanda si creativitate", "en": "gentle company and creativity" },
+    "color": "#5C6BC0",
+    "valence": -0.4,
+    "arousal": -0.3,
+    "quadrant": "unpleasant-calm"
+  },
+  "resigned": {
+    "id": "resigned",
+    "label": { "ro": "resemnat", "en": "resigned" },
+    "description": { "ro": "Resemnarea este renuntarea la lupta — o acceptare pasiva ca lucrurile nu se vor schimba. Poate fi o forma de protectie dupa esecuri repetate, dar daca persista, poate impiedica cresterea si schimbarea.", "en": "Resignation is giving up the fight — a passive acceptance that things won't change. It can be a form of protection after repeated failures, but if it persists, it may prevent growth and change." },
+    "needs": { "ro": "speranta si pasi mici", "en": "hope and small steps" },
+    "color": "#9575CD",
+    "valence": -0.5,
+    "arousal": -0.5,
+    "quadrant": "unpleasant-calm"
+  },
+  "pensive": {
+    "id": "pensive",
+    "label": { "ro": "ganditor", "en": "pensive" },
+    "description": { "ro": "Starea de gandire este o reflectie calma cu o nota de tristete — un moment in care te opresti sa contempli ce s-a intamplat sau ce ar putea fi. Este o poarta catre intelepciune daca nu se transforma in ruminatie.", "en": "Pensiveness is a quiet reflection tinged with sadness — a moment where you pause to contemplate what has happened or what could be. It is a gateway to wisdom if it doesn't turn into rumination." },
+    "needs": { "ro": "spatiu si claritate", "en": "space and clarity" },
+    "color": "#9FA8DA",
+    "valence": -0.1,
+    "arousal": -0.4,
+    "quadrant": "unpleasant-calm"
+  },
+  "contemplative": {
+    "id": "contemplative",
+    "label": { "ro": "contemplativ", "en": "contemplative" },
+    "description": { "ro": "Contemplarea este o stare de observare calma si deschisa — o privire larga asupra vietii care nu cauta raspunsuri imediate. Este spatiul in care se naste intelegerea profunda si acceptarea.", "en": "Contemplation is a state of calm, open observation — a wide gaze at life that doesn't seek immediate answers. It is the space where deep understanding and acceptance are born." },
+    "needs": { "ro": "liniste si timp", "en": "quiet and time" },
+    "color": "#7986CB",
+    "valence": 0.1,
+    "arousal": -0.3,
+    "quadrant": "pleasant-calm"
+  },
   "contempt": {
     "id": "contempt",
     "label": { "ro": "dispret", "en": "contempt" },

@@ -48,5 +48,5 @@ export interface EmotionModel<E extends BaseEmotion = BaseEmotion> {
   onDeselect(emotion: E, state: ModelState): SelectionEffect
   onClear(): ModelState
   analyze(selections: E[]): AnalysisResult[]
-  getEmotionSize(emotionId: string, state: ModelState): 'small' | 'medium' | 'large'
+  getEmotionSize?(emotionId: string, state: ModelState): 'small' | 'medium' | 'large'
 }

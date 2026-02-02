@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { memo, useState, useCallback, useMemo } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { BodyRegion } from './BodyRegion'
 import { SensationPicker } from './SensationPicker'
@@ -12,7 +12,7 @@ interface BodyMapProps extends VisualizationProps {
   selections?: SomaticSelection[]
 }
 
-export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: BodyMapProps) {
+function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMapProps) {
   const { language, t } = useLanguage()
   const somaticT = (t as Record<string, Record<string, string>>).somatic ?? {}
 
@@ -273,3 +273,5 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
     </div>
   )
 }
+
+export const BodyMap = memo(BodyMapBase)
