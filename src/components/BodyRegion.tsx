@@ -42,17 +42,20 @@ function BodyRegionBase({
   intensity,
   onClick,
 }: BodyRegionProps) {
-  const fillColor = isSelected && sensation
-    ? SENSATION_COLORS[sensation]
-    : isHighlighted
-      ? HIGHLIGHT_COLOR
-      : BASE_COLOR
+  function getFillColor(): string {
+    if (isSelected && sensation) return SENSATION_COLORS[sensation]
+    if (isHighlighted) return HIGHLIGHT_COLOR
+    return BASE_COLOR
+  }
 
-  const fillOpacity = isSelected && intensity
-    ? 0.3 + intensity * 0.2
-    : isHighlighted
-      ? 0.5
-      : 0.3
+  function getFillOpacity(): number {
+    if (isSelected && intensity) return 0.3 + intensity * 0.2
+    if (isHighlighted) return 0.5
+    return 0.3
+  }
+
+  const fillColor = getFillColor()
+  const fillOpacity = getFillOpacity()
 
   return (
     <g

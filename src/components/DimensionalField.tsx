@@ -47,18 +47,11 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
       const px = (e.clientX - rect.left) * scaleX
       const py = (e.clientY - rect.top) * scaleY
 
-      // Convert pixel to valence/arousal (-1 to +1)
-      const valence = ((px - PADDING) / INNER) * 2 - 1
-      const arousal = -(((py - PADDING) / INNER) * 2 - 1) // Invert Y: top = intense
-
-      // Clamp to field
-      const clampedV = Math.max(-1, Math.min(1, valence))
-      const clampedA = Math.max(-1, Math.min(1, arousal))
+      const valence = Math.max(-1, Math.min(1, ((px - PADDING) / INNER) * 2 - 1))
+      const arousal = Math.max(-1, Math.min(1, -(((py - PADDING) / INNER) * 2 - 1)))
 
       setCrosshair({ x: px, y: py })
-
-      const nearest = findNearest(clampedV, clampedA, emotionMap, 3)
-      setSuggestions(nearest)
+      setSuggestions(findNearest(valence, arousal, emotionMap, 3))
     },
     [emotionMap]
   )

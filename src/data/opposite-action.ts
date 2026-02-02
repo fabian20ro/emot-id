@@ -1,9 +1,3 @@
-/**
- * DBT-inspired opposite action suggestions.
- * After identifying an emotion, suggests the therapeutic "opposite action".
- * Framed as invitations, never directives.
- */
-
 type Language = 'ro' | 'en'
 
 interface OppositeAction {
@@ -63,10 +57,6 @@ const OPPOSITE_ACTIONS: OppositeAction[] = [
   },
 ]
 
-/**
- * Get an opposite action suggestion for the given emotion IDs.
- * Returns null if no matching pattern found.
- */
 export function getOppositeAction(
   emotionIds: string[],
   language: Language,

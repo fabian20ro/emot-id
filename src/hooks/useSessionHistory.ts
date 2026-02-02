@@ -2,10 +2,6 @@ import { useState, useCallback, useEffect } from 'react'
 import { saveSession, getAllSessions, deleteSession, clearAllSessions, exportSessionsJSON } from '../data/session-repo'
 import type { Session } from '../data/types'
 
-/**
- * Hook for reading/writing session history from IndexedDB.
- * Sessions load asynchronously on mount.
- */
 export function useSessionHistory() {
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
@@ -32,9 +28,7 @@ export function useSessionHistory() {
     setSessions([])
   }, [])
 
-  const exportJSON = useCallback(async () => {
-    return exportSessionsJSON()
-  }, [])
+  const exportJSON = useCallback(() => exportSessionsJSON(), [])
 
   return { sessions, loading, save, remove, clearAll, exportJSON }
 }

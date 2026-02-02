@@ -30,16 +30,16 @@ function calculatePositionsForNewEmotions(
     let attempts = 0
     let foundPosition = false
 
-    // Try random placement with collision detection (bias toward upper 70%)
+    const gap = 8
     while (attempts < 100 && !foundPosition) {
       x = padding + Math.random() * Math.max(0, availableWidth - w)
       y = padding + Math.random() * Math.max(0, availableHeight - h)
 
       const hasCollision = placed.some(p =>
-        x < p.x + p.w + 8 &&
-        x + w + 8 > p.x &&
-        y < p.y + p.h + 8 &&
-        y + h + 8 > p.y
+        x < p.x + p.w + gap &&
+        x + w + gap > p.x &&
+        y < p.y + p.h + gap &&
+        y + h + gap > p.y
       )
 
       if (!hasCollision) {

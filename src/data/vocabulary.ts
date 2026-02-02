@@ -1,19 +1,10 @@
-/**
- * Derives emotional vocabulary statistics from session history.
- * Research basis: Kashdan et al. (2015) — emotional granularity improves regulation.
- */
 import type { Session } from './types'
 
 export interface VocabularyStats {
-  /** Total unique emotion IDs identified across all sessions */
   uniqueEmotionCount: number
-  /** Unique emotion IDs per model */
   perModel: Record<string, number>
-  /** Unique model IDs used */
   modelsUsed: number
-  /** Total sessions completed */
   totalSessions: number
-  /** Milestone messages (localized key, not string) */
   milestone: VocabularyMilestone | null
 }
 
@@ -46,14 +37,14 @@ export function computeVocabulary(sessions: Session[]): VocabularyStats {
   }
 
   const uniqueEmotionCount = allEmotionIds.size
-
-  // Determine highest milestone reached
   let milestone: VocabularyMilestone | null = null
+
   for (const m of EMOTION_MILESTONES) {
     if (uniqueEmotionCount >= m) {
       milestone = { type: 'emotions', count: m }
     }
   }
+
   for (const m of MODEL_MILESTONES) {
     if (modelIds.size >= m) {
       const modelMilestone: VocabularyMilestone = { type: 'models', count: m }

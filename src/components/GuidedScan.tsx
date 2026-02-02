@@ -172,11 +172,11 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
     setCenteringDuration(EXTENDED_CENTERING_MS)
   }, [])
 
-  const progress = phase === 'scanning'
-    ? ((currentIndex + 1) / SCAN_ORDER.length) * 100
-    : phase === 'complete'
-      ? 100
-      : 0
+  const progress = useMemo(() => {
+    if (phase === 'complete') return 100
+    if (phase === 'scanning') return ((currentIndex + 1) / SCAN_ORDER.length) * 100
+    return 0
+  }, [phase, currentIndex])
 
   return (
     <div className="absolute inset-0 z-30 flex items-end justify-center pointer-events-none">
@@ -335,7 +335,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             exit={{ opacity: 0, y: -20 }}
             className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-6 mb-4 mx-4 max-w-sm text-center pointer-events-auto"
           >
-            {showNumbnessWarning && !pauseContext ? (
+            {showNumbnessWarning && !pauseContext && (
               <>
                 <p className="text-gray-200 text-sm leading-relaxed mb-4">
                   {somaticT.numbnessFlooding ?? 'Your body may be protecting you right now. Would you like to try a grounding exercise before continuing?'}
@@ -352,7 +352,8 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
                   {crisisT?.groundingBody ?? 'Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste.'}
                 </p>
               </>
-            ) : pauseContext ? (
+            )}
+            {pauseContext && (
               <>
                 <p className="text-gray-200 text-sm leading-relaxed mb-4">
                   {(somaticT.guidedPause ?? 'You noticed strong {sensation} in your {region}. Take a breath before continuing.')
@@ -366,7 +367,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
                   {somaticT.guidedPauseContinue ?? 'Ready to continue'}
                 </button>
               </>
-            ) : null}
+            )}
           </motion.div>
         )}
 

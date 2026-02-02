@@ -26,11 +26,10 @@ const strings: Record<Language, Strings> = {
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(() => {
+  const [language, setLanguage] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
       const saved = storage.get('language')
       if (saved === 'ro' || saved === 'en') return saved
-      // Detect browser language
       const browserLang = navigator.language
       if (browserLang.startsWith('ro')) return 'ro'
     }
@@ -40,10 +39,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     storage.set('language', language)
   }, [language])
-
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang)
-  }
 
   return (
     <LanguageContext.Provider value={{

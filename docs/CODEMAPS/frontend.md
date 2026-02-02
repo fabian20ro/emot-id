@@ -1,6 +1,6 @@
 # Frontend Codemap
 
-**Last Updated:** 2026-02-02
+**Last Updated:** 2026-02-03
 **Framework:** React 19 (App Router-less SPA), Framer Motion 12, Tailwind CSS 4
 
 ## Component Tree
@@ -10,10 +10,12 @@ App (src/App.tsx)
  +-- Onboarding                   # 4-screen overlay (shown once, persisted)
  +-- Header
  |    +-- MenuButton              # Animated hamburger (3 bars -> X)
- |    +-- SettingsMenu            # Dropdown: language toggle + model selector
- +-- AnalyzeButton                # Gradient CTA, disabled when no selections
- +-- "I don't know" link          # Opens DontKnowModal
+ |    +-- SettingsMenu            # Dropdown: language toggle + model selector + history access
+ +-- ModelBar                     # Visible model indicator bar below header
+ +-- AnalyzeButton                # Gradient CTA with selection count, disabled when empty
+ +-- "I don't know" button        # Opens DontKnowModal (styled secondary button)
  +-- SelectionBar                 # Horizontal strip of selected emotion chips + combo badges
+ |    +-- UndoToast               # 5-second undo toast after clear
  +-- FirstInteractionHint         # Per-model hint (flow-based, above visualization)
  +-- VisualizationErrorBoundary   # Class-based error boundary (bilingual)
  |    +-- Visualization*          # Resolved from registry per model ID
@@ -27,7 +29,11 @@ App (src/App.tsx)
  +-- ResultModal                  # Full-screen modal with analysis results
  |    +-- ResultCard[]            # Color-coded result cards
  |    +-- CrisisBanner            # Tiered crisis banner (tier1/2/3)
- +-- DontKnowModal               # Suggests Somatic or Dimensional model (src/components/DontKnowModal.tsx)
+ |    +-- MicroIntervention       # Breathing / savoring / curiosity exercise
+ |    +-- OppositeAction          # DBT opposite action suggestion (amber box)
+ |    +-- ModelBridge             # Cross-model bridge suggestion
+ +-- SessionHistory               # History modal (vocabulary, patterns, export)
+ +-- DontKnowModal               # Suggests Somatic or Dimensional model
 ```
 
 `*` Visualization component is dynamic: `getVisualization(modelId)` from registry.
@@ -71,7 +77,7 @@ Used by: Somatic model.
 ### BodyRegion (`src/components/BodyRegion.tsx`)
 
 - `motion.path` SVG element
-- Fill color from sensation type color map (8 colors) or base gray
+- Fill color from sensation type color map (9 colors including constriction) or base gray
 - Opacity encodes intensity (0.3 base + 0.2 per intensity level)
 - Spring transitions on hover/tap
 
@@ -84,8 +90,9 @@ Used by: Somatic model.
 ### SensationPicker (`src/components/SensationPicker.tsx`)
 
 - Fixed-position popover near click point
-- Two steps: sensation type (grid of 8) -> intensity (1-3 scale with anchor descriptions)
+- Two steps: sensation type (grid of 9 including constriction) -> intensity (1-3 scale with anchor descriptions)
 - Exports `SENSATION_CONFIG` (icon + bilingual label per sensation type)
+- Framer Motion `drag="y"` swipe-to-dismiss gesture
 
 ### IntensityPicker (`src/components/IntensityPicker.tsx`)
 
@@ -98,10 +105,11 @@ Used by: Somatic model.
 - Constants and pure utils extracted to `guided-scan-constants.ts`: `BODY_GROUPS`, `SCAN_ORDER`, timing constants, `getGroupForIndex()`, `getNextGroupStartIndex()`
 - Three phases: `centering` (10s breathing animation with progress bar) -> `scanning` (12 regions) -> `complete`
 - Centering includes skip button; breathing emoji pulses with scale+opacity
-- Scan order interleaves front/back by vertical level (head -> throat/shoulders/upper-back -> chest/stomach/lower-back -> arms -> legs)
-- 2-step sensation flow: pick sensation (icon + label from `SENSATION_CONFIG`) -> pick intensity (1/2/3 with dot indicators)
+- Scan order interleaves front/back by vertical level
+- 2-step sensation flow: pick sensation -> pick intensity (1/2/3 with dot indicators)
 - Shows all `commonSensations` per region (no truncation)
 - Progress bar tracks scan position; highlights current region via `onHighlight` callback
+- Somatic pause offered after intensity-3 selections
 
 ### DimensionalField (`src/components/DimensionalField.tsx`)
 
@@ -109,12 +117,33 @@ Used by: Dimensional model.
 
 - SVG scatter plot in 500x500 viewBox with 50px padding
 - Axes: X = valence (unpleasant to pleasant), Y = arousal (calm to intense)
-- Quadrant dividers + axis labels (bilingual)
+- Quadrant dividers + axis labels (bilingual via `section('dimensional')`)
 - Emotion dots: r=6 unselected, r=8 selected (with white stroke)
 - Labels: dynamic Y offset (10px unselected, 16px selected to clear dot radius)
 - Text halo via `paintOrder="stroke"` for readability in dense areas
 - Click-to-place crosshair: converts pixel to valence/arousal, finds 3 nearest emotions
 - Suggestion panel: shows nearest emotions as clickable chips (toggle select/deselect)
+
+## Post-Analysis Components
+
+### MicroIntervention (`src/components/MicroIntervention.tsx`)
+
+- Three types: `breathing`, `savoring`, `curiosity`
+- **Breathing**: 4-2-6 second guided cycle with animated circle, 3 rounds
+- **Savoring**: 4-step mindful moment (recall, notice, breathe, expand) with auto-advance
+- **Curiosity**: Reflective prompt for mixed-valence results
+- `getInterventionType()` pure function determines type from arousal/valence profile
+- Triggered from ResultModal after reflection flow
+
+### SessionHistory (`src/components/SessionHistory.tsx`)
+
+- Full-screen modal with focus trapping and backdrop dismiss
+- **Vocabulary summary**: unique emotion count, models used, milestones (via `computeVocabulary`)
+- **Valence ratio bar**: green/gray/red proportional bar for weekly pleasant/neutral/unpleasant
+- **Somatic patterns**: top 5 body region frequency bars (via `computeSomaticPatterns`)
+- **Session list**: `SessionRow` (memo'd) showing date, model, emotion names, reflection indicator
+- **Footer actions**: clear all data, export text (therapy-formatted), export JSON
+- Accessed via SettingsMenu > "Past sessions"
 
 ## Shared UI Components
 
@@ -126,60 +155,69 @@ Used by: Dimensional model.
 - Uses `isSomaticSelection()` type guard for conditional rendering
 - `AnimatePresence mode="popLayout"` for chip animations
 - Height capped: `max-h-[12vh] sm:max-h-[15vh]` to preserve visualization space
+- Clear button with 5-second undo toast (stores previous selections in ref)
 
 ### Header (`src/components/Header.tsx`)
 
 - App title + subtitle from i18n
 - Contains `MenuButton` + `SettingsMenu` as children
+- Passes `onOpenHistory` prop to SettingsMenu
 
 ### SettingsMenu (`src/components/SettingsMenu.tsx`)
 
 - Animated dropdown (Framer Motion) with backdrop dismiss
-- Two sections: language toggle (ro/en), model selector (all registered models)
+- Sections: language toggle (ro/en), model selector (all registered models), history access
+- Uses `section('menu')` for type-safe i18n
 - Reads model list from `getAvailableModels()`
 
 ### AnalyzeButton (`src/components/AnalyzeButton.tsx`)
 
 - Purple-to-pink gradient when enabled, gray when disabled
-- Text from i18n: `t.analyze.button` / `t.analyze.buttonDisabled`
+- Shows selection count: "Analyze (3)"
+- Haptic feedback on mobile via `navigator.vibrate(10)`
 
 ### ResultModal (`src/components/ResultModal.tsx`)
 
 - Backdrop blur overlay, spring-animated card
 - Renders `AnalysisResult[]` via `ResultCard` components
 - Narrative synthesis paragraph via `synthesize(results, language)`
-- Crisis tier detection via `CrisisBanner` component (extracted to `CrisisBanner.tsx`)
-- Cross-model bridge suggestions via `getModelBridge()` (extracted to `model-bridges.ts`)
+- Crisis tier detection + temporal escalation via `escalateCrisisTier`
+- Cross-model bridge suggestions via `getModelBridge()`
+- DBT opposite action suggestions via `getOppositeAction()`
+- Micro-intervention offer via `getInterventionType()`
 - 3-state reflection flow: results -> reflection prompt -> follow-up actions
 - Collapsible descriptions when >2 results
-- "Explore with AI" link -> Google AI search with emotion names
+- Fires `onSessionComplete(reflectionAnswer)` on close
 
 ### CrisisBanner (`src/components/CrisisBanner.tsx`)
 
 - Extracted from ResultModal for discoverability and independent testability
 - Receives `tier` (CrisisTier) and `crisisT` (i18n strings) as props
 - Tier 1: warm invitation with helpline numbers
-- Tier 2/3: adds collapsible 5-4-3-2-1 grounding technique
+- Tier 2/3: auto-expanded 5-4-3-2-1 grounding technique
 
 ### model-bridges.ts (`src/components/model-bridges.ts`)
 
 - Pure function `getModelBridge(modelId, resultIds, bridgesT)` — no React dependencies
 - Returns `{ message, targetModelId, buttonLabel }` or null
 - Bridge mapping: Plutchik/Wheel -> Somatic, Somatic -> Wheel, Dimensional -> Wheel
+- Pleasant emotion savoring bridges for embodiment
 
 ### ResultCard (`src/components/ResultCard.tsx`)
 
 - Reusable card for a single `AnalysisResult`
 - Shows: hierarchy path (Wheel), component labels (Plutchik dyads), match strength (Somatic), needs
 - Collapsible description via `<details>` when not expanded
+- Graduated exposure: high-distress results collapsed by default
 - Color-coded gradient background from `result.color`
 
 ### Onboarding (`src/components/Onboarding.tsx`)
 
 - 4-screen non-skippable onboarding overlay
-- Persisted to localStorage (`emot-id-onboarded`)
+- Persisted to localStorage via `storage.set('onboarded', 'true')`
 - Skip button hidden on last screen (must tap "Start")
 - Each screen: icon, title, body text from i18n
+- Includes normalization messaging
 
 ### VisualizationErrorBoundary (`src/components/VisualizationErrorBoundary.tsx`)
 
@@ -189,6 +227,18 @@ Used by: Dimensional model.
 - Keyed by `modelId` in App to auto-reset on model switch
 
 ## Hooks
+
+### useModelSelection (`src/hooks/useModelSelection.ts`)
+
+- Manages active model ID with localStorage persistence via `storage.ts`
+- Validates that saved model IDs reference valid registered models
+- Returns `{ modelId, switchModel }`
+
+### useHintState (`src/hooks/useHintState.ts`)
+
+- Manages per-model first-interaction hint visibility
+- Hints dismissed on first selection, persisted via `storage.ts`
+- Returns `{ showHint, dismissHint }`
 
 ### useEmotionModel (`src/hooks/useEmotionModel.ts`)
 
@@ -207,13 +257,25 @@ Central state machine. Inputs: `modelId`. Returns:
 
 Resets `selections` and `modelState` when `modelId` changes.
 
+### useSessionHistory (`src/hooks/useSessionHistory.ts`)
+
+- Wraps IndexedDB session repository with React state
+- Loads sessions asynchronously on mount
+- Returns `{ sessions, loading, save, remove, clearAll, exportJSON }`
+
 ### useSound (`src/hooks/useSound.ts`)
 
 - Web Audio API oscillator tones
 - `select` = C5 (523.25 Hz), `deselect` = G4 (392 Hz)
 - 150ms sine wave with exponential gain ramp
 - Lazy `AudioContext` initialization, silent failure
-- Mute state persisted to localStorage (`emot-id-sound-muted`)
+- Mute state persisted via `storage.ts`
+
+### useFocusTrap (`src/hooks/useFocusTrap.ts`)
+
+- Focus trapping for modals: Tab cycles within modal, Escape closes
+- Returns ref to attach to modal container
+- Restores focus to trigger element on close
 
 ## Animation Patterns
 
@@ -226,6 +288,9 @@ All animations use Framer Motion:
 - **Modals/menus:** `opacity` + `y` offset + `scale` transitions
 - **MenuButton:** 3 bars morph to X via `rotate` + `opacity`
 - **Onboarding:** slide transitions between screens
+- **MicroIntervention breathing:** scale 0.9-1.2 with 4/6s timing
+- **SensationPicker:** `drag="y"` swipe-to-dismiss gesture
+- **App:** `<MotionConfig reducedMotion="user">` respects OS preference
 
 ## Related Codemaps
 

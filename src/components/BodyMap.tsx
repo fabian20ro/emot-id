@@ -73,7 +73,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
 
   const handlePickerCancel = useCallback(() => {
     setActiveRegionId(null)
-  }, [setActiveRegionId])
+  }, [])
 
   const handleGuidedRegionSelect = useCallback(
     (regionId: string, sensation: SensationType, intensity: 1 | 2 | 3) => {
@@ -92,15 +92,15 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
 
   const handleGuidedComplete = useCallback(() => {
     setGuidedActive(false)
-  }, [setGuidedActive])
+  }, [])
 
   const handleHighlight = useCallback((regionId: string | null) => {
     setHighlightedRegionId(regionId)
-  }, [setHighlightedRegionId])
+  }, [])
 
   const startGuidedScan = useCallback(() => {
     setGuidedActive(true)
-  }, [setGuidedActive])
+  }, [])
 
   const activeRegion = activeRegionId ? regionMap.get(activeRegionId) : null
 

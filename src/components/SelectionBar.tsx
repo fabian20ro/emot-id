@@ -5,7 +5,7 @@ import { SENSATION_CONFIG } from './SensationPicker'
 import type { SomaticSelection } from '../models/somatic/types'
 
 function isSomaticSelection(e: BaseEmotion): e is SomaticSelection {
-  return 'selectedSensation' in e && 'selectedIntensity' in e
+  return 'selectedSensation' in e
 }
 
 interface SelectionBarProps {

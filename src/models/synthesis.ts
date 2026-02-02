@@ -46,7 +46,6 @@ function detectValence(results: AnalysisResult[]): ValenceProfile {
     .filter((v): v is number => v !== undefined)
 
   if (valences.length === 0) {
-    // Infer from descriptions if no explicit valence
     return { hasPositive: false, hasNegative: false, isMixed: false, avgValence: 0 }
   }
 
@@ -166,10 +165,11 @@ const templates = {
 
 function findPleasantCombo(ids: string[], lang: Lang): string | null {
   const sorted = [...ids].sort()
-  for (let i = 0; i < sorted.length; i++) {
+  for (let i = 0; i < sorted.length - 1; i++) {
     for (let j = i + 1; j < sorted.length; j++) {
       const key = `${sorted[i]}+${sorted[j]}`
-      if (PLEASANT_COMBOS[key]) return PLEASANT_COMBOS[key][lang]
+      const combo = PLEASANT_COMBOS[key]
+      if (combo) return combo[lang]
     }
   }
   return null
@@ -199,49 +199,42 @@ export function synthesize(results: AnalysisResult[], language: Lang): string {
     sentences.push(t.complexityMultiple(results.length))
   }
 
-  // 2. Valence balance (for 2+ emotions)
   if (results.length >= 2) {
-    // Check for specific pleasant combinations first
-    const pleasantCombo = findPleasantCombo(results.map((r) => r.id), language)
-
     if (valence.isMixed) {
       sentences.push(t.mixedValence(names))
     } else if (valence.hasPositive && !valence.hasNegative) {
+      const pleasantCombo = findPleasantCombo(results.map((r) => r.id), language)
       sentences.push(pleasantCombo ?? t.concordantPleasant(names))
     } else if (valence.hasNegative && !valence.hasPositive) {
-      sentences.push(isSevere ? t.concordantUnpleasantSevere(names) : t.concordantUnpleasant(names))
+      const template = isSevere ? t.concordantUnpleasantSevere : t.concordantUnpleasant
+      sentences.push(template(names))
     }
   }
 
-  // 3. Intensity pattern
   if (results.length === 1) {
     if (intensity.isHigh) {
       sentences.push(t.singleHighIntensity(names[0]))
     } else if (intensity.isLow) {
       sentences.push(t.singleLowIntensity(names[0]))
     }
-  } else {
-    if (intensity.isHigh) {
-      sentences.push(t.highIntensityGroup)
-    } else if (intensity.isLow) {
-      sentences.push(t.lowIntensityGroup)
-    }
+  } else if (intensity.isHigh) {
+    sentences.push(t.highIntensityGroup)
+  } else if (intensity.isLow) {
+    sentences.push(t.lowIntensityGroup)
   }
 
-  // 4. Adaptive function weaving (first sentence of description, max 2 emotions)
   const descriptive = results.filter((r) => r.description?.[language])
   for (const r of descriptive.slice(0, 2)) {
     const desc = r.description![language]
-    // Take first sentence only
     const firstSentence = desc.split(/[.!]/).filter(Boolean)[0]?.trim()
     if (firstSentence && firstSentence.length > 10) {
       sentences.push(t.adaptiveFunction(getLabel(r, language), firstSentence.toLowerCase()))
     }
   }
 
-  // 5. Needs integration
   if (needs.length > 0) {
-    sentences.push(isSevere ? t.needsClosingSevere(needs) : t.needsClosing(needs))
+    const closingTemplate = isSevere ? t.needsClosingSevere : t.needsClosing
+    sentences.push(closingTemplate(needs))
   }
 
   return sentences.join(' ')

@@ -44,7 +44,7 @@ Multi-perspective review synthesized into a prioritized roadmap.
 ## Phase E: Advanced Features (Partial)
 
 - [ ] E.1 Quick check-in mode — 30-sec grid of 8-12 words
-- [x] E.2 Model progression & scaffolding — `progression.ts` with suggested learning order
+- [ ] E.2 Model progression & scaffolding — suggested learning order (needs UI wiring)
 - [ ] E.3 Emotional granularity training — distinction prompts after 10+ sessions
 - [x] E.4 Export for therapy — clipboard copy + `.txt` download in SessionHistory
 - [ ] E.5 Master combination model — cross-model aggregation (needs F.2)

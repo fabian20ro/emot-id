@@ -8,6 +8,33 @@ import { computeValenceRatio } from '../data/valence-ratio'
 import { exportSessionsText, copyToClipboard, downloadAsText } from '../data/export'
 import type { Session } from '../data/types'
 
+function formatTemplate(template: string, count: number): string {
+  return template.replace('{count}', String(count))
+}
+
+function getReflectionIcon(answer: 'yes' | 'partly' | 'no'): string {
+  switch (answer) {
+    case 'yes':
+      return '✓'
+    case 'partly':
+      return '~'
+    case 'no':
+      return '✗'
+  }
+}
+
+function getReflectionColorClass(answer: 'yes' | 'partly' | 'no'): string {
+  const baseClass = 'text-xs mt-0.5 inline-block'
+  switch (answer) {
+    case 'yes':
+      return `${baseClass} text-green-400`
+    case 'partly':
+      return `${baseClass} text-yellow-400`
+    case 'no':
+      return `${baseClass} text-gray-500`
+  }
+}
+
 interface SessionHistoryProps {
   isOpen: boolean
   onClose: () => void
@@ -37,14 +64,8 @@ const SessionRow = memo(function SessionRow({ session }: { session: Session }) {
       </div>
       <p className="text-sm text-gray-200 truncate">{emotionNames || '—'}</p>
       {session.reflectionAnswer && (
-        <span className={`text-xs mt-0.5 inline-block ${
-          session.reflectionAnswer === 'yes'
-            ? 'text-green-400'
-            : session.reflectionAnswer === 'partly'
-              ? 'text-yellow-400'
-              : 'text-gray-500'
-        }`}>
-          {session.reflectionAnswer === 'yes' ? '✓' : session.reflectionAnswer === 'partly' ? '~' : '✗'}
+        <span className={getReflectionColorClass(session.reflectionAnswer)}>
+          {getReflectionIcon(session.reflectionAnswer)}
         </span>
       )}
     </div>
@@ -126,15 +147,15 @@ export function SessionHistory({
                     {historyT.vocabTitle ?? 'Your emotional vocabulary'}
                   </p>
                   <div className="flex items-center gap-4 text-sm text-gray-300">
-                    <span>{(historyT.vocabEmotions ?? '{count} emotions identified').replace('{count}', String(vocab.uniqueEmotionCount))}</span>
+                    <span>{formatTemplate(historyT.vocabEmotions ?? '{count} emotions identified', vocab.uniqueEmotionCount)}</span>
                     <span className="text-gray-600">·</span>
-                    <span className="text-gray-400 text-xs">{(historyT.vocabModels ?? 'across {count} models').replace('{count}', String(vocab.modelsUsed))}</span>
+                    <span className="text-gray-400 text-xs">{formatTemplate(historyT.vocabModels ?? 'across {count} models', vocab.modelsUsed)}</span>
                   </div>
                   {vocab.milestone && (
                     <p className="text-xs text-indigo-300 mt-1.5">
                       {vocab.milestone.type === 'emotions'
-                        ? (historyT.milestoneEmotions ?? "You've identified {count} different emotions!").replace('{count}', String(vocab.milestone.count))
-                        : (historyT.milestoneModels ?? "You've explored {count} different models!").replace('{count}', String(vocab.milestone.count))}
+                        ? formatTemplate(historyT.milestoneEmotions ?? "You've identified {count} different emotions!", vocab.milestone.count)
+                        : formatTemplate(historyT.milestoneModels ?? "You've explored {count} different models!", vocab.milestone.count)}
                     </p>
                   )}
                 </div>
@@ -147,9 +168,9 @@ export function SessionHistory({
                     {historyT.valenceTitle ?? "This week's emotions"}
                   </p>
                   <div className="flex items-center gap-3 text-sm">
-                    <span className="text-green-400">{(historyT.valencePleasant ?? '{count} pleasant').replace('{count}', String(valenceRatio.pleasant))}</span>
+                    <span className="text-green-400">{formatTemplate(historyT.valencePleasant ?? '{count} pleasant', valenceRatio.pleasant)}</span>
                     <span className="text-gray-600">·</span>
-                    <span className="text-red-400">{(historyT.valenceUnpleasant ?? '{count} unpleasant').replace('{count}', String(valenceRatio.unpleasant))}</span>
+                    <span className="text-red-400">{formatTemplate(historyT.valenceUnpleasant ?? '{count} unpleasant', valenceRatio.unpleasant)}</span>
                   </div>
                   {/* Simple bar */}
                   {valenceRatio.total > 0 && (

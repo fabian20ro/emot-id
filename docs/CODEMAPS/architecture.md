@@ -1,6 +1,6 @@
 # Architecture Codemap
 
-**Last Updated:** 2026-02-02
+**Last Updated:** 2026-02-03
 **Framework:** React 19 + TypeScript 5.9, Vite 7, Tailwind CSS 4
 **Entry Point:** `src/main.tsx`
 
@@ -14,9 +14,11 @@ main.tsx
                     +------+-------+-------+----------+----------+
                     |      |       |       |          |          |
                   Header  AnalyzeButton  SelectionBar  Visualization*  ResultModal  DontKnowModal
-                    |                      |               |
-              SettingsMenu           combo display    CrisisBanner
-              MenuButton
+                    |                      |               |               |
+              SettingsMenu           combo display    CrisisBanner    MicroIntervention
+              MenuButton                              OppositeAction
+                    |
+              SessionHistory
 ```
 
 `*` Visualization is resolved at runtime from the model registry.
@@ -48,12 +50,25 @@ No external state library. State lives in:
 
 | Location | What | Persistence |
 |----------|------|-------------|
-| `App` component state | `modelId`, `isModalOpen`, `analysisResults`, `showHint`, `showDontKnow` | `modelId` in localStorage, hint dismissed per model in localStorage |
+| `useModelSelection` hook | Active `modelId` | localStorage via `storage.ts` |
 | `useEmotionModel` hook | `selections`, `modelState` (visible IDs, generation) | none (resets on model change) |
-| `LanguageContext` | `language` ('ro' or 'en') | localStorage |
-| `useSound` | `muted` | localStorage (`emot-id-sound-muted`) |
+| `useHintState` hook | Per-model `showHint` flag | localStorage via `storage.ts` |
+| `useSessionHistory` hook | `sessions` array, CRUD operations | IndexedDB via `idb-keyval` |
+| `LanguageContext` | `language` ('ro' or 'en'), `section()` accessor | localStorage via `storage.ts` |
+| `useSound` | `muted` | localStorage via `storage.ts` |
 
-### Data Flow: Select / Deselect -> Analyze
+### Storage Architecture
+
+**Preferences** — `src/data/storage.ts` (localStorage facade):
+- Consolidated wrapper for all preference keys (`emot-id-model`, `emot-id-language`, etc.)
+- Graceful fallback when localStorage unavailable (private browsing)
+- Per-model hint dismissal flags
+
+**Sessions** — `src/data/session-repo.ts` (IndexedDB via `idb-keyval`):
+- `saveSession`, `getAllSessions`, `deleteSession`, `clearAllSessions`, `exportSessionsJSON`
+- Session data model in `src/data/types.ts`: `Session`, `SerializedSelection`
+
+### Data Flow: Select / Deselect -> Analyze -> Save
 
 ```
 User taps emotion (or body region, or dimensional dot)
@@ -63,13 +78,6 @@ User taps emotion (or body region, or dimensional dot)
         <- returns SelectionEffect { newState, newSelections? }
       -> updates modelState + selections
 
-User taps selected emotion (deselect)
-  -> App.handleDeselect (plays sound)
-    -> useEmotionModel.handleDeselect
-      -> model.onDeselect(emotion, state)
-        <- returns SelectionEffect { newState }
-      -> removes from selections, updates modelState
-
 User taps "Analyze"
   -> App.analyzeEmotions
     -> model.analyze(selections)
@@ -77,22 +85,46 @@ User taps "Analyze"
     -> opens ResultModal with results
       -> synthesize(results, language) generates narrative
       -> getCrisisTier(resultIds) determines safety response
+      -> escalateCrisisTier if temporal pattern detected
+      -> getOppositeAction for DBT nudges
+      -> getInterventionType for micro-intervention
+
+User completes reflection (ResultModal close)
+  -> App.handleSessionComplete(reflectionAnswer)
+    -> serializes selections + results into Session
+    -> useSessionHistory.save (writes to IndexedDB)
 ```
 
 **Somatic deselect routing:** BodyMap intercepts the deselect path. When a selected region is clicked, it calls `onDeselect(enrichedSelection)` with the `SomaticSelection` from its selection map, not `onSelect(plainRegion)`.
 
 ### Safety & Crisis Detection
 
-`src/models/distress.ts` exports shared constants:
+**Single-session** — `src/models/distress.ts`:
 - **`HIGH_DISTRESS_IDS`**: Set of emotion IDs indicating high distress
 - **`TIER3_COMBOS`**: Specific pairs triggering tier 3 (most severe) crisis response
 - **`getCrisisTier(resultIds)`**: Returns `'none' | 'tier1' | 'tier2' | 'tier3'`
 
-`src/models/synthesis.ts` generates narrative paragraphs:
+**Temporal pattern** — `src/data/temporal-crisis.ts`:
+- **`hasTemporalCrisisPattern(sessions)`**: 3+ tier2/3 sessions in 7-day window
+- **`escalateCrisisTier(currentTier, sessions)`**: Escalates by one level when pattern detected
+
+**Narrative synthesis** — `src/models/synthesis.ts`:
 - Detects valence profile (positive/negative/mixed), intensity profile (high/low)
 - Severity-aware: 2+ distress results shift tone from adaptive-function to acknowledgment-first
-- Weaves adaptive function descriptions, needs integration
 - Bilingual (ro/en) template system
+
+### Post-Identification Features
+
+**Micro-interventions** — `src/components/MicroIntervention.tsx`:
+- `breathing` (4-2-6 guided cycle, 3 rounds) for high-arousal results
+- `savoring` (4-step mindful moment) for pleasant emotions
+- `curiosity` (reflective prompt) for mixed valence
+- Triggered from ResultModal via `getInterventionType()`
+
+**Opposite action** — `src/data/opposite-action.ts`:
+- DBT-based suggestions: shame→approach, fear→gradual exposure, anger→gentle avoidance
+- Bilingual (ro/en), matched by emotion ID patterns
+- Displayed in amber box between results and bridge in ResultModal
 
 ### Cross-Model Bridges (`src/components/model-bridges.ts`)
 
@@ -100,10 +132,12 @@ Pure function `getModelBridge()` suggests contextual next models after analysis:
 - Plutchik/Wheel -> Somatic: "Where do you notice this in your body?"
 - Somatic -> Wheel: "Can you name the emotion more precisely?"
 - Dimensional -> Wheel: "Want to explore what this feeling is called?"
+- Pleasant emotion bridges: "Where do you feel that warmth?" (savoring)
 
-### Internationalization
+### Type-Safe i18n
 
-- **UI strings:** `src/i18n/ro.json`, `src/i18n/en.json` accessed via `useLanguage().t`
+- **UI strings:** `src/i18n/ro.json`, `src/i18n/en.json`
+- **Accessor:** `useLanguage().section('sectionName')` returns typed section object
 - **Emotion labels:** Inline `{ ro: string; en: string }` on each emotion object
 - **Default:** English (falls back from browser language detection)
 - **Provider:** `LanguageContext` wraps entire app
@@ -113,32 +147,50 @@ Pure function `getModelBridge()` suggests contextual next models after analysis:
 ```
 src/
   main.tsx                        # ReactDOM.createRoot, wraps App in LanguageProvider
-  App.tsx                         # Root: model switching, sound, hint, onboarding, modals
+  App.tsx                         # Root: model switching, sound, hint, onboarding, modals, session saving
   index.css                       # Global Tailwind styles
   context/
-    LanguageContext.tsx            # i18n provider + useLanguage hook
+    LanguageContext.tsx            # i18n provider + useLanguage hook (section() accessor)
   hooks/
+    useModelSelection.ts          # Model ID persistence (localStorage via storage.ts)
+    useHintState.ts               # Per-model hint dismissal (localStorage via storage.ts)
     useEmotionModel.ts            # Model state machine (selections, visibility, sizes)
+    useSessionHistory.ts          # Session CRUD (IndexedDB via idb-keyval)
     useSound.ts                   # Web Audio API tones (select/deselect)
+    useFocusTrap.ts               # Focus trapping for modals (Escape + Tab)
+  data/
+    storage.ts                    # localStorage facade (preferences, hint flags)
+    types.ts                      # Session, SerializedSelection interfaces
+    session-repo.ts               # IndexedDB CRUD via idb-keyval
+    vocabulary.ts                 # Emotion vocabulary tracking + milestones
+    temporal-crisis.ts            # 7-day rolling crisis pattern detection
+    somatic-patterns.ts           # Body region + sensation frequency analysis
+    valence-ratio.ts              # Weekly pleasant/unpleasant ratio
+    opposite-action.ts            # DBT opposite action suggestions (bilingual)
+    export.ts                     # Session export (text, clipboard, download)
   models/
-    types.ts                      # BaseEmotion, EmotionModel, ModelState, AnalysisResult, VisualizationProps
+    types.ts                      # BaseEmotion, EmotionModel, ModelState, AnalysisResult
     constants.ts                  # MODEL_IDS constant + ModelId type
     registry.ts                   # Model registry (model + visualization per ID)
-    distress.ts                   # Crisis tier detection (HIGH_DISTRESS_IDS, TIER3_COMBOS, getCrisisTier)
+    distress.ts                   # Crisis tier detection (HIGH_DISTRESS_IDS, getCrisisTier)
     synthesis.ts                  # Narrative synthesis (severity-aware bilingual templates)
     plutchik/                     # Plutchik wheel model
     wheel/                        # Emotion Wheel model
-    somatic/                      # Body Map model
+    somatic/                      # Body Map model (30+ emotions, 9 sensation types)
     dimensional/                  # Emotional Space model (2D valence x arousal)
   components/
     Header.tsx                    # App header with menu trigger
     MenuButton.tsx                # Animated hamburger button
-    SettingsMenu.tsx              # Language + model selector dropdown
-    AnalyzeButton.tsx             # Gradient CTA button
-    SelectionBar.tsx              # Selected emotions strip + combo display
-    ResultModal.tsx               # Analysis results modal (reflection flow, bridges, crisis)
+    SettingsMenu.tsx              # Language + model selector + history access
+    ModelBar.tsx                  # Visible model indicator bar below header
+    AnalyzeButton.tsx             # Gradient CTA with selection count
+    SelectionBar.tsx              # Selected emotions strip + combo display + undo
+    UndoToast.tsx                 # 5-second undo toast for clear actions
+    ResultModal.tsx               # Analysis results (reflection, bridges, crisis, interventions)
     ResultCard.tsx                # Reusable result card (extracted from ResultModal)
-    CrisisBanner.tsx              # Tiered crisis detection banner (safety-critical, extracted)
+    CrisisBanner.tsx              # Tiered crisis detection banner (safety-critical)
+    MicroIntervention.tsx         # Post-analysis breathing/savoring/curiosity exercises
+    SessionHistory.tsx            # Session history modal (vocabulary, patterns, export)
     model-bridges.ts              # Cross-model bridge suggestion logic (pure function)
     BubbleField.tsx               # Bubble-based visualization (Plutchik, Wheel)
     Bubble.tsx                    # Single animated emotion bubble
@@ -146,9 +198,9 @@ src/
     BodyRegion.tsx                # Single SVG body region path
     body-paths.ts                 # SVG path data for 12 body regions (seated pose)
     SensationPicker.tsx           # Sensation type + intensity popover
-    IntensityPicker.tsx           # Intensity selection (1-3 scale, detailed/compact variants)
+    IntensityPicker.tsx           # Intensity selection (1-3 scale, detailed/compact)
     GuidedScan.tsx                # Head-to-feet guided body scan overlay
-    guided-scan-constants.ts      # Body groups, scan order, timing constants, pure utils
+    guided-scan-constants.ts      # Body groups, scan order, timing constants
     DimensionalField.tsx          # 2D valence x arousal scatter plot (Dimensional)
     Onboarding.tsx                # 4-screen non-skippable onboarding overlay
     DontKnowModal.tsx             # "I don't know" modal (suggests Somatic or Dimensional)
@@ -156,7 +208,7 @@ src/
   i18n/
     ro.json                       # Romanian UI strings
     en.json                       # English UI strings
-  __tests__/                      # Vitest + Testing Library tests (32 files, 232 tests)
+  __tests__/                      # Vitest + Testing Library tests (37 files, 255 tests)
 ```
 
 ## Key Dependencies
@@ -166,6 +218,7 @@ src/
 | react | ^19.2.0 | UI framework |
 | framer-motion | ^12.29.2 | Animations (spring physics, AnimatePresence, layout) |
 | tailwindcss | ^4.1.18 | Utility-first CSS |
+| idb-keyval | ^6.2.2 | IndexedDB key-value storage for sessions |
 | vite | ^7.2.4 | Build tool + dev server |
 | vite-plugin-pwa | ^1.2.0 | Service worker + manifest for PWA |
 | vitest | ^4.0.18 | Test runner |
@@ -174,7 +227,7 @@ src/
 
 - PWA deployed to GitHub Pages at `/emot-id/`
 - Build: `tsc -b && vite build`
-- No backend, no database, no API calls (except Google Search link in ResultModal)
+- No backend, no database server, no API calls (client-side IndexedDB only)
 
 ## Related Codemaps
 

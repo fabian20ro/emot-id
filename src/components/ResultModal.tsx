@@ -14,6 +14,20 @@ import type { BaseEmotion, AnalysisResult } from '../models/types'
 type ReflectionState = 'results' | 'reflection' | 'warmClose' | 'followUp' | 'intervention'
 type ReflectionAnswer = 'yes' | 'partly' | 'no' | null
 
+function getInterventionOfferText(
+  type: 'breathing' | 'savoring' | 'curiosity',
+  t: Record<string, string>
+): string {
+  switch (type) {
+    case 'breathing':
+      return t.offerBreathing ?? 'Would you like to try something calming?'
+    case 'savoring':
+      return t.offerSavoring ?? 'Take a moment to savor this?'
+    case 'curiosity':
+      return t.offerCuriosity ?? 'What might these feelings be telling you?'
+  }
+}
+
 interface ResultModalProps {
   isOpen: boolean
   onClose: () => void
@@ -298,11 +312,7 @@ export function ResultModal({
                       onClick={() => setReflectionState('intervention')}
                       className="mt-3 text-sm text-indigo-400 hover:text-indigo-300 transition-colors text-center"
                     >
-                      {interventionType === 'breathing'
-                        ? (interventionT.offerBreathing ?? 'Would you like to try something calming?')
-                        : interventionType === 'savoring'
-                          ? (interventionT.offerSavoring ?? 'Take a moment to savor this?')
-                          : (interventionT.offerCuriosity ?? 'What might these feelings be telling you?')}
+                      {getInterventionOfferText(interventionType, interventionT)}
                     </button>
                   )}
 

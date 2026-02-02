@@ -10,7 +10,6 @@ export function useEmotionModel(modelId: string = defaultModelId) {
   const selectionsRef = useRef(selections)
   selectionsRef.current = selections
 
-  // Reset when model changes
   useEffect(() => {
     setSelections([])
     setModelState(model.initialState)
@@ -39,10 +38,9 @@ export function useEmotionModel(modelId: string = defaultModelId) {
         if (effect.newSelections !== undefined) {
           setSelections(effect.newSelections)
         } else {
-          setSelections((prev) => {
-            if (prev.find((e) => e.id === emotion.id)) return prev
-            return [...prev, emotion]
-          })
+          setSelections((prev) =>
+            prev.find((e) => e.id === emotion.id) ? prev : [...prev, emotion]
+          )
         }
 
         return effect.newState
@@ -79,13 +77,10 @@ export function useEmotionModel(modelId: string = defaultModelId) {
   }, [])
 
   const combos = useMemo(() => {
-    if (selections.length < 2) return []
-    return model.analyze(selections).filter((r) => r.componentLabels)
+    return selections.length < 2 ? [] : model.analyze(selections).filter((r) => r.componentLabels)
   }, [model, selections])
 
-  const analyze = useCallback((): AnalysisResult[] => {
-    return model.analyze(selections)
-  }, [model, selections])
+  const analyze = useCallback((): AnalysisResult[] => model.analyze(selections), [model, selections])
 
   return {
     selections,

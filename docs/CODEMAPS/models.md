@@ -1,6 +1,6 @@
 # Emotion Models Codemap
 
-**Last Updated:** 2026-02-02
+**Last Updated:** 2026-02-03
 **Location:** `src/models/`
 
 ## Type Hierarchy
@@ -32,7 +32,8 @@ EmotionModel<E extends BaseEmotion> {
   getEmotionSize?(emotionId, state): 'small' | 'medium' | 'large'
 }
 
-ModelState { visibleEmotionIds: Map<string, number>, currentGeneration: number }
+ModelState { visibleEmotionIds: Map<string, number>, currentGeneration: number,
+             custom?: Record<string, unknown> }
 SelectionEffect { newState: ModelState, newSelections?: BaseEmotion[] }
 AnalysisResult { id, label, color, description?, needs?, componentLabels?, hierarchyPath?,
                  matchStrength?, valence?, arousal? }
@@ -57,6 +58,12 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
   - tier2: 2+ matches (amber alert with grounding technique)
   - tier3: specific combos (direct acknowledgment)
 
+### Temporal Crisis (`src/data/temporal-crisis.ts`)
+
+- **`hasTemporalCrisisPattern(sessions)`**: 3+ tier2/3 sessions in last 7 days
+- **`escalateCrisisTier(currentTier, sessions)`**: Bumps tier by 1 when pattern detected (caps at tier3)
+- Integrated into ResultModal: crisis tier is escalated before display when temporal pattern exists
+
 ### Narrative Synthesis (`src/models/synthesis.ts`)
 
 - **`synthesize(results, language)`**: Generates narrative paragraph from analysis results
@@ -65,6 +72,14 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 - Severity-aware: 2+ distress results shift from adaptive-function to acknowledgment tone
 - Weaves: complexity framing, valence balance, intensity pattern, adaptive functions, needs
 - Bilingual template system (ro/en)
+- Combination-specific narratives for pleasant pairs (joy+gratitude, love+trust, etc.)
+
+### Opposite Action (`src/data/opposite-action.ts`)
+
+- **`getOppositeAction(emotionIds, language)`**: DBT-based opposite action suggestion
+- Pattern matching: shame→approach, fear→gradual exposure, anger→avoidance+kindness, sadness→activation, guilt→repair, jealousy→gratitude, loneliness→reach out
+- Returns bilingual string or null (no match for purely positive emotions)
+- Displayed in ResultModal amber box
 
 ## Model Implementations
 
@@ -106,7 +121,7 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 | Visualization | `BubbleField` |
 
 **onSelect behavior:**
-- Branch node (has children): replace visible set with children only, preserve existing selections (does not add branch to selections)
+- Branch node (has children): replace visible set with children only, preserve existing selections
 - Leaf node: add to selections, reset visible set to root
 
 **onDeselect behavior:**
@@ -128,6 +143,7 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 | Data | `data.json` -- regions with `emotionSignals[]` mapping sensation+intensity to emotions |
 | Visualization | `BodyMap` (not BubbleField) |
 | Scoring | `scoring.ts` -- weighted signal matching |
+| Emotions | 30+ candidate emotions (expanded from original 21) |
 
 **Files:**
 - `types.ts` -- `SomaticRegion`, `SomaticSelection`, `EmotionSignal`, `SensationType`, `BodyGroup`
@@ -137,11 +153,17 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 
 **onSelect / onDeselect:** No-op on state (all regions always visible). BodyMap component enriches selections with `selectedSensation` and `selectedIntensity` before passing upstream.
 
-**Sensation types (8):** tension, warmth, heaviness, lightness, tingling, numbness, churning, pressure
+**Sensation types (9):** tension, warmth, heaviness, lightness, tingling, numbness, churning, pressure, constriction
 
 **Body groups (4):** head (5 regions), torso (5), arms (2), legs (2)
 
+**Expanded emotions (added in C.1):** loneliness, tenderness, contempt, jealousy, frustration, relief, gratitude, hope, curiosity — each with somatic signatures based on Nummenmaa et al. (2014).
+
+**Constriction sensation (added in C.2):** Distinct from tension (held muscular effort) and pressure (external force). Constriction = tightening/narrowing, common in throat, chest, stomach during anxiety/shame/grief.
+
 **Adaptive descriptions:** Every `emotionDescription` includes an adaptive-function sentence.
+
+**Numbness flooding detection:** When numbness reported across 3+ body groups, offers grounding prompt.
 
 ### Dimensional / Emotional Space (`src/models/dimensional/`)
 
@@ -184,6 +206,27 @@ Tag with matchStrength: strong resonance (>=70%), possible connection (>=40%), w
 ```
 
 **Output:** `ScoredEmotion extends AnalysisResult` with `score` and `matchStrength` fields.
+
+## Data Layer (`src/data/`)
+
+### Session Persistence
+
+| Module | Purpose |
+|--------|---------|
+| `types.ts` | `Session`, `SerializedSelection` interfaces |
+| `session-repo.ts` | IndexedDB CRUD via `idb-keyval` |
+| `storage.ts` | localStorage facade for preferences |
+
+### Derived Analytics
+
+| Module | Input | Output |
+|--------|-------|--------|
+| `vocabulary.ts` | `Session[]` | Unique emotion count, per-model counts, milestones |
+| `temporal-crisis.ts` | `Session[]` | 7-day crisis pattern detection + tier escalation |
+| `somatic-patterns.ts` | `Session[]` | Body region frequency, sensation distribution |
+| `valence-ratio.ts` | `Session[]` | Weekly pleasant/unpleasant/neutral counts |
+| `opposite-action.ts` | `string[]` (emotion IDs) | DBT opposite action suggestion |
+| `export.ts` | `Session[]` | Human-readable text export, clipboard copy, file download |
 
 ## Data Files
 

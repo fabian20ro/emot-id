@@ -1,8 +1,3 @@
-/**
- * Tracks pleasant/unpleasant emotion identification patterns over time.
- * Non-judgmental visualization: "Neither is right or wrong."
- * Research basis: Fredrickson's broaden-and-build theory.
- */
 import type { Session } from './types'
 
 export interface ValenceRatio {
@@ -14,10 +9,6 @@ export interface ValenceRatio {
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 
-/**
- * Compute pleasant/unpleasant ratio from recent sessions (last 7 days).
- * Uses result valence when available, falls back to emotion id heuristics.
- */
 export function computeValenceRatio(sessions: Session[]): ValenceRatio {
   const cutoff = Date.now() - SEVEN_DAYS_MS
   const recentSessions = sessions.filter((s) => s.timestamp >= cutoff)
@@ -28,10 +19,14 @@ export function computeValenceRatio(sessions: Session[]): ValenceRatio {
 
   for (const session of recentSessions) {
     for (const result of session.results) {
-      if (result.valence !== undefined) {
-        if (result.valence > 0.1) pleasant++
-        else if (result.valence < -0.1) unpleasant++
-        else neutral++
+      if (result.valence === undefined) continue
+
+      if (result.valence > 0.1) {
+        pleasant++
+      } else if (result.valence < -0.1) {
+        unpleasant++
+      } else {
+        neutral++
       }
     }
   }

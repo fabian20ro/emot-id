@@ -1,7 +1,16 @@
 import type { CrisisTier } from '../models/distress'
 
 export function CrisisBanner({ tier, crisisT }: { tier: CrisisTier; crisisT: Record<string, string> }) {
-  const messageKey = tier === 'tier3' ? 'tier3' : tier === 'tier2' ? 'tier2' : 'tier1'
+  function getMessageKey(tier: CrisisTier): string {
+    switch (tier) {
+      case 'tier3': return 'tier3'
+      case 'tier2': return 'tier2'
+      case 'tier1': return 'tier1'
+      default: return 'tier1'
+    }
+  }
+
+  const messageKey = getMessageKey(tier)
   const message = crisisT[messageKey] ?? crisisT.tier2 ?? 'Support is available.'
 
   return (
