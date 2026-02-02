@@ -3,23 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import { SENSATION_CONFIG } from './SensationPicker'
 import { IntensityPicker } from './IntensityPicker'
+import {
+  BODY_GROUPS,
+  SCAN_ORDER,
+  CENTERING_DURATION_MS,
+  EXTENDED_CENTERING_MS,
+  BREATH_CYCLE_MS,
+  getGroupForIndex,
+  getNextGroupStartIndex,
+} from './guided-scan-constants'
 import type { SomaticRegion, SensationType } from '../models/somatic/types'
-
-/** Body groups with their region IDs, ordered head-to-feet */
-const BODY_GROUPS = [
-  { id: 'head', regions: ['head', 'jaw'] },
-  { id: 'neck', regions: ['throat', 'shoulders', 'upper-back'] },
-  { id: 'torso', regions: ['chest', 'stomach', 'lower-back'] },
-  { id: 'arms', regions: ['arms', 'hands'] },
-  { id: 'legs', regions: ['legs', 'feet'] },
-] as const
-
-/** Flat scan order derived from groups */
-const SCAN_ORDER = BODY_GROUPS.flatMap((g) => g.regions)
-
-const CENTERING_DURATION_MS = 10000
-const EXTENDED_CENTERING_MS = 30000
-const BREATH_CYCLE_MS = 5000
 
 interface GuidedScanProps {
   regions: Map<string, SomaticRegion>
@@ -29,27 +22,6 @@ interface GuidedScanProps {
 }
 
 type ScanPhase = 'centering' | 'scanning' | 'complete'
-
-/** Find which group a region index belongs to */
-function getGroupForIndex(index: number): string | undefined {
-  let offset = 0
-  for (const group of BODY_GROUPS) {
-    if (index < offset + group.regions.length) return group.id
-    offset += group.regions.length
-  }
-  return undefined
-}
-
-/** Get the next index after skipping the current group */
-function getNextGroupStartIndex(currentIndex: number): number {
-  let offset = 0
-  for (const group of BODY_GROUPS) {
-    const groupEnd = offset + group.regions.length
-    if (currentIndex < groupEnd) return groupEnd
-    offset = groupEnd
-  }
-  return SCAN_ORDER.length
-}
 
 export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }: GuidedScanProps) {
   const { language, t } = useLanguage()

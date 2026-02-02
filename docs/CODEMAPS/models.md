@@ -1,18 +1,19 @@
 # Emotion Models Codemap
 
-**Last Updated:** 2026-02-01
+**Last Updated:** 2026-02-02
 **Location:** `src/models/`
 
 ## Type Hierarchy
 
 ```
-BaseEmotion { id, label, description?, color, intensity? }
+BaseEmotion { id, label, description?, needs?, color, intensity? }
   |
   +-- PlutchikEmotion  { category, intensity, opposite?, spawns[], components? }
   +-- WheelEmotion     { level, parent?, children? }
   +-- SomaticRegion    { svgRegionId, group, commonSensations[], emotionSignals[] }
-       |
-       +-- SomaticSelection  { selectedSensation, selectedIntensity }  (runtime enrichment)
+  |    |
+  |    +-- SomaticSelection  { selectedSensation, selectedIntensity }  (runtime enrichment)
+  +-- DimensionalEmotion  { valence, arousal, quadrant }
 ```
 
 ## Core Interfaces (`src/models/types.ts`)
@@ -20,7 +21,7 @@ BaseEmotion { id, label, description?, color, intensity? }
 ```typescript
 EmotionModel<E extends BaseEmotion> {
   id: string
-  name: string
+  name: { ro; en }
   description: { ro; en }
   allEmotions: Record<string, E>
   initialState: ModelState
@@ -28,14 +29,42 @@ EmotionModel<E extends BaseEmotion> {
   onDeselect(emotion, state): SelectionEffect
   onClear(): ModelState
   analyze(selections): AnalysisResult[]
-  getEmotionSize(emotionId, state): 'small' | 'medium' | 'large'
+  getEmotionSize?(emotionId, state): 'small' | 'medium' | 'large'
 }
 
 ModelState { visibleEmotionIds: Map<string, number>, currentGeneration: number }
 SelectionEffect { newState: ModelState, newSelections?: BaseEmotion[] }
-AnalysisResult { id, label, color, description?, componentLabels?, hierarchyPath? }
+AnalysisResult { id, label, color, description?, needs?, componentLabels?, hierarchyPath?,
+                 matchStrength?, valence?, arousal? }
 VisualizationProps { emotions, onSelect, onDeselect?, sizes, selections? }
 ```
+
+## Shared Modules
+
+### Constants (`src/models/constants.ts`)
+
+```typescript
+MODEL_IDS = { PLUTCHIK: 'plutchik', WHEEL: 'wheel', SOMATIC: 'somatic', DIMENSIONAL: 'dimensional' }
+type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
+```
+
+### Distress Detection (`src/models/distress.ts`)
+
+- **`HIGH_DISTRESS_IDS`**: Set of ~14 emotion IDs (despair, grief, helpless, worthless, etc.)
+- **`TIER3_COMBOS`**: 10 specific pairs triggering most severe crisis response
+- **`getCrisisTier(resultIds)`**: Returns `'none' | 'tier1' | 'tier2' | 'tier3'`
+  - tier1: 1 distress match (warm invitation)
+  - tier2: 2+ matches (amber alert with grounding technique)
+  - tier3: specific combos (direct acknowledgment)
+
+### Narrative Synthesis (`src/models/synthesis.ts`)
+
+- **`synthesize(results, language)`**: Generates narrative paragraph from analysis results
+- Detects valence profile (positive/negative/mixed) from `result.valence`
+- Detects intensity profile (high/low) from `result.arousal`
+- Severity-aware: 2+ distress results shift from adaptive-function to acknowledgment tone
+- Weaves: complexity framing, valence balance, intensity pattern, adaptive functions, needs
+- Bilingual template system (ro/en)
 
 ## Model Implementations
 
@@ -91,11 +120,11 @@ VisualizationProps { emotions, onSelect, onDeselect?, sizes, selections? }
 
 ### Somatic / Body Map (`src/models/somatic/`)
 
-**Concept:** Identify emotions through physical body sensations in 14 regions.
+**Concept:** Identify emotions through physical body sensations in 12 regions.
 
 | Aspect | Detail |
 |--------|--------|
-| Initial state | All 14 regions always visible |
+| Initial state | All regions always visible |
 | Data | `data.json` -- regions with `emotionSignals[]` mapping sensation+intensity to emotions |
 | Visualization | `BodyMap` (not BubbleField) |
 | Scoring | `scoring.ts` -- weighted signal matching |
@@ -104,17 +133,36 @@ VisualizationProps { emotions, onSelect, onDeselect?, sizes, selections? }
 - `types.ts` -- `SomaticRegion`, `SomaticSelection`, `EmotionSignal`, `SensationType`, `BodyGroup`
 - `index.ts` -- model implementation (simple pass-through, delegates scoring)
 - `scoring.ts` -- `scoreSomaticSelections()` algorithm
-- `data.json` -- 14 body regions with sensation-to-emotion signal mappings
+- `data.json` -- body regions with sensation-to-emotion signal mappings
 
-**onSelect / onDeselect:** No-op on state (all regions always visible). BodyMap component enriches selections with `selectedSensation` and `selectedIntensity` before passing upstream. Deselect routes through `onDeselect` with the enriched `SomaticSelection`.
+**onSelect / onDeselect:** No-op on state (all regions always visible). BodyMap component enriches selections with `selectedSensation` and `selectedIntensity` before passing upstream.
 
 **Sensation types (8):** tension, warmth, heaviness, lightness, tingling, numbness, churning, pressure
 
 **Body groups (4):** head (5 regions), torso (5), arms (2), legs (2)
 
-**Emotion ID conventions:** All emotion IDs are true emotional states (not cognitive processes or clinical terms). Key renames: overthinking→merged into anxiety, concentration→removed, grounding→calm, burden→overwhelm, suppression→emotional-holding, dissociation→disconnection, numbness-emotion→emotional-withdrawal.
+**Adaptive descriptions:** Every `emotionDescription` includes an adaptive-function sentence.
 
-**Adaptive descriptions:** Every `emotionDescription` includes an adaptive-function sentence explaining why the emotion exists (e.g., "Anger signals an important boundary that has been crossed").
+### Dimensional / Emotional Space (`src/models/dimensional/`)
+
+**Concept:** 2D valence x arousal field. Place experience on pleasant/unpleasant and calm/intense axes.
+
+| Aspect | Detail |
+|--------|--------|
+| Initial state | All emotions always visible (static scatter plot) |
+| Data | `data.json` -- emotions with `valence` (-1..+1) and `arousal` (-1..+1) |
+| Visualization | `DimensionalField` |
+| Quadrants | pleasant-intense, pleasant-calm, unpleasant-intense, unpleasant-calm |
+
+**onSelect / onDeselect:** No-op (all dots always visible). DimensionalField handles selection directly.
+
+**Interaction:** Click field -> crosshair + 3 nearest emotions as suggestions. Click dot directly to toggle select.
+
+**`findNearest(valence, arousal, emotions, count)`**: Euclidean distance sort, returns closest N emotions.
+
+**analyze logic:** Maps selections to `AnalysisResult` with `valence` and `arousal` fields preserved.
+
+**getEmotionSize:** Always returns `'small'` (unused -- DimensionalField doesn't use BubbleField).
 
 ### Scoring Algorithm (`src/models/somatic/scoring.ts`)
 
@@ -126,15 +174,16 @@ For each selection:
       contribution = signal.weight * selectedIntensity
       accumulate into emotionScores map (tracks contributing BodyGroups)
 
-Apply coherence bonus: emotions matched from 2+ body groups get score * 1.2
+Apply coherence bonus (scaled):
+  2 body groups: score * 1.2
+  3 body groups: score * 1.3
+  4+ body groups: score * 1.4
 Filter scores >= MINIMUM_THRESHOLD (0.5)
 Sort descending, take top MAX_RESULTS (4)
-Tag each with matchStrength: strong resonance (>=70%), possible connection (>=40%), worth exploring
+Tag with matchStrength: strong resonance (>=70%), possible connection (>=40%), worth exploring
 ```
 
-**Output:** `ScoredEmotion extends AnalysisResult` with `score` and `matchStrength` fields. Uses `componentLabels` to carry contributing region labels.
-
-**Coherence bonus rationale:** Emotions that manifest across multiple body areas (e.g., chest + legs) are more likely to be the dominant emotional state than single-region signals.
+**Output:** `ScoredEmotion extends AnalysisResult` with `score` and `matchStrength` fields.
 
 ## Data Files
 
@@ -142,7 +191,8 @@ Tag each with matchStrength: strong resonance (>=70%), possible connection (>=40
 |------|---------|-------|
 | `plutchik/data.json` | ~30 emotions | `PlutchikEmotion` (id, label, color, category, spawns, components) |
 | `wheel/data.json` | ~50 emotions | `WheelEmotion` (id, label, color, level, parent, children) |
-| `somatic/data.json` | 14 regions | `SomaticRegion` (id, label, color, svgRegionId, group, commonSensations, emotionSignals[]) |
+| `somatic/data.json` | 12 regions | `SomaticRegion` (id, label, color, svgRegionId, group, commonSensations, emotionSignals[]) |
+| `dimensional/data.json` | ~35 emotions | `DimensionalEmotion` (id, label, color, valence, arousal, quadrant) |
 
 All data files use inline bilingual labels `{ ro, en }`.
 
@@ -164,7 +214,8 @@ defaultModelId = 'somatic'
 Adding a new model requires:
 1. Create `src/models/<id>/` with `types.ts`, `index.ts`, `data.json`
 2. Implement `EmotionModel<YourEmotion>` interface
-3. Register in `registry.ts` with a visualization component
+3. Add to `MODEL_IDS` in `constants.ts`
+4. Register in `registry.ts` with a visualization component
 
 ## Planned Models
 

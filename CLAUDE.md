@@ -30,17 +30,25 @@ src/
 │   ├── BodyRegion.tsx       # Single SVG body region with heat coloring
 │   ├── SensationPicker.tsx  # 2-step popover: sensation type → intensity
 │   ├── GuidedScan.tsx       # Sequential head-to-feet body scan overlay
+│   ├── guided-scan-constants.ts # Body groups, scan order, timing constants, pure utils
 │   ├── body-paths.ts        # SVG path constants for 12 body regions (seated meditation pose)
+│   ├── DimensionalField.tsx # 2D valence × arousal scatter plot (Dimensional)
+│   ├── IntensityPicker.tsx  # Reusable intensity selection (1-3, detailed/compact)
 │   ├── SelectionBar.tsx    # Selected emotions strip
 │   ├── Header.tsx          # App header
 │   ├── MenuButton.tsx      # Hamburger menu trigger
 │   ├── SettingsMenu.tsx    # Settings panel (model selector, language, sound toggle)
 │   ├── AnalyzeButton.tsx   # Triggers emotion analysis
-│   ├── ResultModal.tsx     # Analysis result display (tiered crisis, bridges, reflection)
+│   ├── ResultModal.tsx     # Analysis result display (reflection flow, bridges, crisis)
 │   ├── ResultCard.tsx       # Reusable result card (extracted from ResultModal)
+│   ├── CrisisBanner.tsx     # Tiered crisis detection banner (extracted from ResultModal)
+│   ├── model-bridges.ts     # Cross-model bridge suggestion logic (pure function)
+│   ├── Onboarding.tsx       # 4-screen non-skippable onboarding overlay
+│   ├── DontKnowModal.tsx    # "I don't know" modal (suggests Somatic or Dimensional)
 │   └── VisualizationErrorBoundary.tsx  # Bilingual error boundary for visualizations
 ├── models/            # Emotion classification models
 │   ├── types.ts            # BaseEmotion, EmotionModel, AnalysisResult interfaces
+│   ├── constants.ts        # MODEL_IDS constant + ModelId type
 │   ├── distress.ts         # Shared distress constants, crisis tier detection
 │   ├── synthesis.ts        # Narrative synthesis (severity-aware templates)
 │   ├── registry.ts         # Model registry (available models + visualizations)
@@ -52,11 +60,15 @@ src/
 │   │   ├── index.ts        # Model implementation (tree navigation)
 │   │   ├── types.ts        # WheelEmotion extends BaseEmotion
 │   │   └── data.json       # Emotion data with descriptions
-│   └── somatic/            # Body Map of Emotions model
-│       ├── index.ts        # Model implementation (region selection)
-│       ├── types.ts        # SomaticRegion, SomaticSelection, SensationType
-│       ├── scoring.ts      # Pattern → emotion scoring engine
-│       └── data.json       # 14 body regions with emotion signal mappings
+│   ├── somatic/            # Body Map of Emotions model
+│   │   ├── index.ts        # Model implementation (region selection)
+│   │   ├── types.ts        # SomaticRegion, SomaticSelection, SensationType
+│   │   ├── scoring.ts      # Pattern → emotion scoring engine
+│   │   └── data.json       # 12 body regions with emotion signal mappings
+│   └── dimensional/        # Emotional Space model (2D valence × arousal)
+│       ├── index.ts        # Model implementation (findNearest, pass-through state)
+│       ├── types.ts        # DimensionalEmotion extends BaseEmotion
+│       └── data.json       # ~35 emotions with valence, arousal, quadrant
 ├── context/
 │   └── LanguageContext.tsx  # i18n provider (ro/en, persisted to localStorage)
 ├── hooks/
@@ -80,13 +92,15 @@ interface BaseEmotion {
   id: string
   label: { ro: string; en: string }
   description?: { ro: string; en: string }
+  needs?: { ro: string; en: string }
   color: string
   intensity?: number
 }
 
 interface EmotionModel<E extends BaseEmotion> {
   id: string
-  name: string
+  name: { ro: string; en: string }
+  description: { ro: string; en: string }
   allEmotions: Record<string, E>
   initialState: ModelState
   onSelect(emotion, state, selections): SelectionEffect
@@ -97,13 +111,14 @@ interface EmotionModel<E extends BaseEmotion> {
 }
 ```
 
-Each model extends `BaseEmotion` with model-specific fields (e.g. Plutchik adds `spawns`, `components`, `category`; Wheel adds `level`, `parent`, `children`; Somatic adds `emotionSignals`, `group`, `commonSensations`).
+Each model extends `BaseEmotion` with model-specific fields (e.g. Plutchik adds `spawns`, `components`, `category`; Wheel adds `level`, `parent`, `children`; Somatic adds `emotionSignals`, `group`, `commonSensations`; Dimensional adds `valence`, `arousal`, `quadrant`).
 
 ### How It Works
 
 - **Model Registry** maps model IDs to model logic + visualization component
 - **BubbleField** renders emotion bubbles with physics-like positioning (Plutchik, Wheel)
-- **BodyMap** renders an SVG body silhouette with 14 interactive regions (Somatic)
+- **BodyMap** renders an SVG body silhouette with 12 interactive regions (Somatic)
+- **DimensionalField** renders a 2D valence×arousal scatter plot (Dimensional)
 - Plutchik: selecting a bubble spawns related emotions; dyads detected from components
 - Wheel: 3-level drill-down navigation; only leaf nodes become selections
 - Somatic: tap region → pick sensation type + intensity → scoring engine maps patterns to emotions
@@ -171,6 +186,26 @@ ResultModal suggests contextual next models after analysis:
 - React.memo on visualization components (Bubble, BodyRegion, BubbleField, BodyMap, DimensionalField)
 - Sound mute state persisted to localStorage (`emot-id-sound-muted`)
 - Onboarding disclaimer screen is non-skippable (skip button hidden on last screen)
+
+## Adding a New Model
+
+1. Create `src/models/<id>/` with `types.ts`, `index.ts`, `data.json`
+2. Extend `BaseEmotion` with model-specific fields
+3. Implement `EmotionModel<YourType>` interface
+4. Add ID to `MODEL_IDS` in `src/models/constants.ts`
+5. Register in `src/models/registry.ts` with a visualization component
+6. Add model-specific i18n keys to `src/i18n/ro.json` and `src/i18n/en.json`
+7. Add first-hint text to `firstHint.<modelId>` in both i18n files
+
+## localStorage Keys
+
+| Key | Purpose |
+|-----|---------|
+| `emot-id-model` | Last selected model ID |
+| `emot-id-sound-muted` | Sound mute preference |
+| `emot-id-onboarded` | Onboarding completed flag |
+| `emot-id-hint-<modelId>` | First interaction hint dismissed per model |
+| `emot-id-language` | UI language (`ro` or `en`) |
 
 ## Data Quality Notes
 
