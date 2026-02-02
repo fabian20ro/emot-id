@@ -16,7 +16,7 @@ function calculatePositionsForNewEmotions(
   const positions = new Map<string, { x: number; y: number }>()
   const placed = [...existingRects]
 
-  const padding = 8
+  const padding = 16
   const availableWidth = containerWidth - padding * 2
   const availableHeight = containerHeight - padding * 2
 
@@ -33,7 +33,7 @@ function calculatePositionsForNewEmotions(
     // Try random placement with collision detection (bias toward upper 70%)
     while (attempts < 100 && !foundPosition) {
       x = padding + Math.random() * Math.max(0, availableWidth - w)
-      y = padding + Math.random() * Math.max(0, availableHeight * 0.7 - h)
+      y = padding + Math.random() * Math.max(0, availableHeight - h)
 
       const hasCollision = placed.some(p =>
         x < p.x + p.w + 8 &&
@@ -108,8 +108,8 @@ function BubbleFieldBase({
         const size = sizes.get(id) || 'medium'
         const w = sizePixels[size]
         clamped.set(id, {
-          x: Math.min(pos.x, Math.max(0, containerSize.width - w - 8)),
-          y: Math.min(pos.y, Math.max(0, containerSize.height - bubbleHeight - 8)),
+          x: Math.max(16, Math.min(pos.x, containerSize.width - w - 16)),
+          y: Math.max(16, Math.min(pos.y, containerSize.height - bubbleHeight - 16)),
         })
       }
 
@@ -140,7 +140,7 @@ function BubbleFieldBase({
     <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-4">
       <div
         ref={containerRef}
-        className="relative w-full max-w-2xl flex-1 min-h-[120px] overflow-hidden"
+        className="relative w-full max-w-2xl flex-1 min-h-[200px] overflow-hidden"
       >
         <AnimatePresence mode="popLayout">
           {emotions.map((emotion, index) => (

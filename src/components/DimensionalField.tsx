@@ -169,11 +169,14 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
                 />
                 <text
                   x={px}
-                  y={py - 10}
+                  y={py - (isSelected ? 16 : 10)}
                   fill={isSelected ? '#fff' : 'rgba(156, 163, 175, 0.6)'}
                   fontSize={isSelected ? 11 : 9}
                   textAnchor="middle"
                   fontWeight={isSelected ? 'bold' : 'normal'}
+                  stroke="rgba(17, 24, 39, 0.8)"
+                  strokeWidth={isSelected ? 3 : 2}
+                  paintOrder="stroke"
                 >
                   {emotion.label[language]}
                 </text>

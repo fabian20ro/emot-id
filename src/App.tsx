@@ -25,7 +25,7 @@ function FirstInteractionHint({ modelId }: { modelId: string }) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      className="absolute top-2 left-1/2 -translate-x-1/2 z-20 px-4 py-2 bg-indigo-600/90 backdrop-blur-sm rounded-full text-sm text-white shadow-lg pointer-events-none"
+      className="mx-auto w-fit px-4 py-2 bg-indigo-600/90 backdrop-blur-sm rounded-full text-sm text-white shadow-lg pointer-events-none"
     >
       {text}
     </motion.div>
@@ -228,13 +228,14 @@ export default function App() {
         onClear={handleClear}
       />
 
+      <AnimatePresence>
+        {showHint && !showOnboarding && selections.length === 0 && (
+          <FirstInteractionHint modelId={modelId} />
+        )}
+      </AnimatePresence>
+
       <VisualizationErrorBoundary key={modelId} onReset={modelClear} language={language}>
-        <div className="relative flex-1">
-          <AnimatePresence>
-            {showHint && !showOnboarding && selections.length === 0 && (
-              <FirstInteractionHint modelId={modelId} />
-            )}
-          </AnimatePresence>
+        <div className="relative flex-1 min-h-0">
           <Visualization
             emotions={visibleEmotions}
             onSelect={handleSelect}
