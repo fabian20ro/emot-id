@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from 'react'
+import { Component, useState, useCallback, useEffect } from 'react'
+import type { ReactNode, ErrorInfo } from 'react'
 import { Onboarding } from './components/Onboarding'
 import { Header } from './components/Header'
 import { SelectionBar } from './components/SelectionBar'
@@ -9,6 +10,49 @@ import { useEmotionModel } from './hooks/useEmotionModel'
 import { defaultModelId, getVisualization } from './models/registry'
 import { BubbleField } from './components/BubbleField'
 import type { BaseEmotion, AnalysisResult } from './models/types'
+
+interface ErrorBoundaryProps {
+  children: ReactNode
+  onReset?: () => void
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean
+}
+
+class VisualizationErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  state: ErrorBoundaryState = { hasError: false }
+
+  static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('Visualization error:', error, info.componentStack)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex-1 flex items-center justify-center p-8">
+          <div className="text-center space-y-3">
+            <p className="text-gray-300">Something went wrong displaying this model.</p>
+            <button
+              onClick={() => {
+                this.setState({ hasError: false })
+                this.props.onReset?.()
+              }}
+              className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm hover:bg-indigo-500 transition-colors"
+            >
+              Try again
+            </button>
+          </div>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
 
 export default function App() {
   const [showOnboarding, setShowOnboarding] = useState(() => {
@@ -101,13 +145,15 @@ export default function App() {
         onClear={handleClear}
       />
 
-      <Visualization
-        emotions={visibleEmotions}
-        onSelect={handleSelect}
-        onDeselect={handleDeselect}
-        sizes={sizes}
-        selections={selections}
-      />
+      <VisualizationErrorBoundary key={modelId} onReset={modelClear}>
+        <Visualization
+          emotions={visibleEmotions}
+          onSelect={handleSelect}
+          onDeselect={handleDeselect}
+          sizes={sizes}
+          selections={selections}
+        />
+      </VisualizationErrorBoundary>
 
       <ResultModal
         isOpen={isModalOpen}

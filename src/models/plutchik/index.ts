@@ -1,4 +1,5 @@
 import type { EmotionModel, ModelState, SelectionEffect, AnalysisResult } from '../types'
+import { MODEL_IDS } from '../constants'
 import type { PlutchikEmotion } from './types'
 import emotionsData from './data.json'
 
@@ -16,7 +17,7 @@ const INITIAL_EMOTION_IDS = [
 ]
 
 export const plutchikModel: EmotionModel<PlutchikEmotion> = {
-  id: 'plutchik',
+  id: MODEL_IDS.PLUTCHIK,
   name: { ro: 'Roata emotiilor Plutchik', en: "Plutchik's Wheel of Emotions" },
   description: {
     ro: '8 emotii primare care se combina in diade — selecteaza doua emotii primare pentru a descoperi combinatia lor',

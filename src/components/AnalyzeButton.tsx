@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { MODEL_IDS } from '../models/constants'
 
 interface AnalyzeButtonProps {
   disabled: boolean
@@ -10,7 +11,7 @@ interface AnalyzeButtonProps {
 export function AnalyzeButton({ disabled, onClick, modelId }: AnalyzeButtonProps) {
   const { t } = useLanguage()
 
-  const disabledText = modelId === 'somatic'
+  const disabledText = modelId === MODEL_IDS.SOMATIC
     ? t.analyze.buttonDisabledSomatic
     : t.analyze.buttonDisabledDefault
 

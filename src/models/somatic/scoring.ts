@@ -17,7 +17,7 @@ const POSSIBLE_FLOOR = 0.6
 function getMatchStrength(score: number, maxScore: number): { ro: string; en: string } {
   const ratio = maxScore > 0 ? score / maxScore : 0
   // Apply absolute floor: even the top result can't claim "strong" if scores are low
-  if (ratio >= 0.7 && score >= STRONG_FLOOR) return { ro: 'rezonanță puternică', en: 'strong resonance' }
+  if (ratio >= 0.7 && score >= STRONG_FLOOR) return { ro: 'semnal clar', en: 'clear signal' }
   if (ratio >= 0.4 && score >= POSSIBLE_FLOOR) return { ro: 'conexiune posibilă', en: 'possible connection' }
   return { ro: 'merită explorat', en: 'worth exploring' }
 }

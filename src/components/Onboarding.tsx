@@ -8,7 +8,7 @@ interface OnboardingProps {
 
 const STORAGE_KEY = 'emot-id-onboarded'
 
-const SCREEN_ICONS = ['🔍', '💡', '🧭']
+const SCREEN_ICONS = ['🔍', '💡', '🧭', 'ℹ️']
 
 export function Onboarding({ onComplete }: OnboardingProps) {
   const { t } = useLanguage()
@@ -20,6 +20,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     { title: onboardingT.screen1Title, body: onboardingT.screen1Body },
     { title: onboardingT.screen2Title, body: onboardingT.screen2Body },
     { title: onboardingT.screen3Title, body: onboardingT.screen3Body },
+    { title: onboardingT.screen4Title, body: onboardingT.screen4Body },
   ]
 
   const finish = useCallback(() => {

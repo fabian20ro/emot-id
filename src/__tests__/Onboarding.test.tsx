@@ -54,7 +54,8 @@ describe('Onboarding', () => {
     const user = userEvent.setup()
     const { onComplete } = renderOnboarding()
 
-    // Advance through all 3 screens
+    // Advance through all 4 screens
+    await user.click(screen.getByRole('button', { name: /next/i }))
     await user.click(screen.getByRole('button', { name: /next/i }))
     await user.click(screen.getByRole('button', { name: /next/i }))
     await user.click(screen.getByRole('button', { name: /get started/i }))
@@ -73,11 +74,11 @@ describe('Onboarding', () => {
     expect(setItemSpy).toHaveBeenCalledWith('emot-id-onboarded', 'true')
   })
 
-  it('shows step indicators for 3 screens', () => {
+  it('shows step indicators for 4 screens', () => {
     renderOnboarding()
-    // 3 step dots
+    // 4 step dots (including disclaimer screen)
     const dots = document.querySelectorAll('[data-step]')
-    expect(dots.length).toBe(3)
+    expect(dots.length).toBe(4)
   })
 
   it('shows back button on screens 2 and 3', async () => {

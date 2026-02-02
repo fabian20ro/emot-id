@@ -1,4 +1,5 @@
 import type { EmotionModel, ModelState, SelectionEffect, AnalysisResult } from '../types'
+import { MODEL_IDS } from '../constants'
 import type { DimensionalEmotion } from './types'
 import emotionsData from './data.json'
 
@@ -22,7 +23,7 @@ export function findNearest(
 }
 
 export const dimensionalModel: EmotionModel<DimensionalEmotion> = {
-  id: 'dimensional',
+  id: MODEL_IDS.DIMENSIONAL,
   name: { ro: 'Spatiul emotional', en: 'Emotional Space' },
   description: {
     ro: 'Camp bidimensional — plaseaza-ti experienta pe axele placut/neplacut si calm/intens',

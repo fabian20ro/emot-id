@@ -231,14 +231,14 @@
     "id": "aroused",
     "label": {
       "ro": "Entuziasmat",
-      "en": "Aroused"
+      "en": "Energized"
     },
     "color": "#FFF0A0",
     "level": 2,
     "parent": "playful",
     "description": {
       "ro": "Entuziasmul este o stare de activare emotionala intensa si placuta — corpul este plin de energie, mintea este viva si simti un impuls puternic catre actiune sau experienta. Este forma cea mai vitala a starii de joc, unde creativitatea si spontaneitatea se manifesta la intensitate maxima.",
-      "en": "Arousal is a state of intense and pleasurable emotional activation — the body is full of energy, the mind is alive, and you feel a strong impulse toward action or experience. It is the most vital form of playfulness, where creativity and spontaneity manifest at maximum intensity."
+      "en": "Energized is a state of intense and pleasurable emotional activation — the body is full of energy, the mind is alive, and you feel a strong impulse toward action or experience. It is the most vital form of playfulness, where creativity and spontaneity manifest at maximum intensity."
     },
     "needs": {
       "ro": "exprimare si miscare",

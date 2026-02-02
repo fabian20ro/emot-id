@@ -1,12 +1,12 @@
-/** SVG path data for 12 body regions in a seated meditation pose.
- *  Body is centered in x: 30..170 of a 320×420 viewBox (with 60px left margin for labels). */
+/** SVG path data for 12 body regions in a standing upright relaxed pose.
+ *  Body is centered at x=100 within a viewBox with label margins on each side. */
 
 interface BodyRegionPath {
   id: string
   d: string
   /** Optional enlarged hit area path for small regions */
   hitD?: string
-  /** Anchor point for popover positioning (relative to viewBox) */
+  /** Anchor point for arrow endpoint (nearest edge to label side) */
   anchor: { x: number; y: number }
   /** Position for the label bubble (outside the silhouette) */
   labelAnchor: { x: number; y: number }
@@ -14,99 +14,101 @@ interface BodyRegionPath {
   labelSide: 'left' | 'right'
 }
 
-/** Widened viewBox: 60px left margin, 60px right margin for labels */
-export const VIEWBOX = '-60 -10 320 420'
+/** ViewBox with margins for labels: 60px left, 80px right */
+export const VIEWBOX = '-60 -10 320 450'
 
 export const bodyRegionPaths: BodyRegionPath[] = [
-  // HEAD GROUP — smooth oval head with natural neck
+  // HEAD GROUP — oval skull + face, jaw inside lower face, narrow throat
   {
     id: 'head',
-    d: 'M80 38 C80 16 88 4 100 4 C112 4 120 16 120 38 C120 54 114 64 100 64 C86 64 80 54 80 38 Z',
-    hitD: 'M74 38 C74 12 84 -2 100 -2 C116 -2 126 12 126 38 C126 58 118 70 100 70 C82 70 74 58 74 38 Z',
-    anchor: { x: 100, y: 24 },
-    labelAnchor: { x: 170, y: 24 },
+    d: 'M78 28 C78 8 87 -2 100 -2 C113 -2 122 8 122 28 L122 48 C122 64 114 72 100 72 C86 72 78 64 78 48 Z',
+    hitD: 'M72 28 C72 4 83 -8 100 -8 C117 -8 128 4 128 28 L128 50 C128 68 118 78 100 78 C82 78 72 68 72 50 Z',
+    anchor: { x: 122, y: 24 },
+    labelAnchor: { x: 172, y: 24 },
     labelSide: 'right',
   },
   {
     id: 'jaw',
-    d: 'M88 58 C88 54 93 50 100 50 C107 50 112 54 112 58 L112 76 C112 84 108 90 100 90 C92 90 88 84 88 76 Z',
-    hitD: 'M82 54 C82 48 89 44 100 44 C111 44 118 48 118 54 L118 80 C118 90 112 96 100 96 C88 96 82 90 82 80 Z',
-    anchor: { x: 100, y: 70 },
-    labelAnchor: { x: 170, y: 64 },
+    d: 'M88 48 C88 44 93 42 100 42 C107 42 112 44 112 48 L112 58 C112 66 107 70 100 70 C93 70 88 66 88 58 Z',
+    hitD: 'M84 44 C84 38 89 34 100 34 C111 34 116 38 116 44 L116 62 C116 72 111 76 100 76 C89 76 84 72 84 62 Z',
+    anchor: { x: 112, y: 56 },
+    labelAnchor: { x: 172, y: 56 },
     labelSide: 'right',
   },
   {
     id: 'throat',
-    d: 'M92 88 C92 85 95 82 100 82 C105 82 108 85 108 88 L108 110 C108 116 106 120 100 120 C94 120 92 116 92 110 Z',
-    hitD: 'M86 84 C86 79 91 76 100 76 C109 76 114 79 114 84 L114 114 C114 122 110 126 100 126 C90 126 86 122 86 114 Z',
-    anchor: { x: 100, y: 100 },
-    labelAnchor: { x: 170, y: 100 },
+    d: 'M94 70 C94 68 96 66 100 66 C104 66 106 68 106 70 L106 96 C106 102 104 106 100 106 C96 106 94 102 94 96 Z',
+    hitD: 'M88 66 C88 62 92 60 100 60 C108 60 112 62 112 66 L112 100 C112 108 108 112 100 112 C92 112 88 108 88 100 Z',
+    anchor: { x: 106, y: 86 },
+    labelAnchor: { x: 172, y: 86 },
     labelSide: 'right',
   },
-  // TORSO GROUP — natural rounded torso
+  // TORSO GROUP — shoulders yoke, front chest, back, stomach
   {
     id: 'shoulders',
-    d: 'M100 118 C86 118 70 122 54 132 C50 134 48 138 50 142 L50 150 C54 148 70 140 84 138 L84 126 C84 120 92 118 100 118 C108 118 116 120 116 126 L116 138 C130 140 146 148 150 150 L150 142 C152 138 150 134 146 132 C130 122 114 118 100 118 Z',
-    anchor: { x: 100, y: 134 },
-    labelAnchor: { x: -10, y: 134 },
+    d: 'M100 104 C86 104 68 108 54 116 C50 118 48 122 50 126 L52 132 C56 130 70 124 82 122 L82 114 C82 110 90 106 100 106 C110 106 118 110 118 114 L118 122 C130 124 144 130 148 132 L150 126 C152 122 150 118 146 116 C132 108 114 104 100 104 Z',
+    anchor: { x: 56, y: 118 },
+    labelAnchor: { x: 0, y: 118 },
     labelSide: 'left',
   },
   {
     id: 'chest',
-    d: 'M78 136 C78 130 88 126 100 126 C112 126 122 130 122 136 L122 200 C122 210 114 216 100 216 C86 216 78 210 78 200 Z',
-    anchor: { x: 100, y: 170 },
-    labelAnchor: { x: -10, y: 170 },
+    d: 'M80 120 C80 116 88 112 100 112 C112 112 120 116 120 120 L120 182 C120 188 112 192 100 192 C88 192 80 188 80 182 Z',
+    anchor: { x: 80, y: 152 },
+    labelAnchor: { x: 0, y: 148 },
     labelSide: 'left',
   },
   {
     id: 'upper-back',
-    d: 'M64 142 C64 138 80 132 100 132 C120 132 136 138 136 142 L136 200 C136 208 120 214 100 214 C80 214 64 208 64 200 Z',
-    anchor: { x: 100, y: 170 },
-    labelAnchor: { x: 180, y: 170 },
+    d: 'M66 124 C66 120 80 114 100 114 C120 114 134 120 134 124 L134 182 C134 188 120 192 100 192 C80 192 66 188 66 182 Z',
+    anchor: { x: 134, y: 152 },
+    labelAnchor: { x: 172, y: 152 },
     labelSide: 'right',
   },
   {
     id: 'stomach',
-    d: 'M82 214 C82 210 90 206 100 206 C110 206 118 210 118 214 L118 268 C118 278 112 284 100 284 C88 284 82 278 82 268 Z',
-    anchor: { x: 100, y: 245 },
-    labelAnchor: { x: -10, y: 245 },
+    d: 'M84 190 C84 186 90 184 100 184 C110 184 116 186 116 190 L116 238 C116 244 110 248 100 248 C90 248 84 244 84 238 Z',
+    anchor: { x: 84, y: 216 },
+    labelAnchor: { x: 0, y: 216 },
     labelSide: 'left',
   },
   {
     id: 'lower-back',
-    d: 'M68 216 C68 212 82 208 100 208 C118 208 132 212 132 216 L132 266 C132 276 118 282 100 282 C82 282 68 276 68 266 Z',
-    anchor: { x: 100, y: 245 },
-    labelAnchor: { x: 180, y: 245 },
+    d: 'M70 192 C70 188 82 184 100 184 C118 184 130 188 130 192 L130 238 C130 244 118 248 100 248 C82 248 70 244 70 238 Z',
+    anchor: { x: 130, y: 216 },
+    labelAnchor: { x: 172, y: 216 },
     labelSide: 'right',
   },
-  // ARMS GROUP — relaxed arms resting on lap
+  // ARMS GROUP — hanging at sides, slightly curved outward
   {
     id: 'arms',
-    d: 'M54 148 C48 152 42 160 38 172 C34 184 32 196 34 206 C36 212 40 216 44 214 C46 212 46 204 46 194 C46 182 50 168 56 158 Z M146 148 C152 152 158 160 162 172 C166 184 168 196 166 206 C164 212 160 216 156 214 C154 212 154 204 154 194 C154 182 150 168 144 158 Z',
-    anchor: { x: 38, y: 180 },
-    labelAnchor: { x: -10, y: 200 },
+    d: 'M52 124 C46 136 42 156 42 182 L42 252 C42 262 46 268 50 268 C54 268 56 264 56 256 L56 182 C56 158 56 140 54 130 Z M148 124 C154 136 158 156 158 182 L158 252 C158 262 154 268 150 268 C146 268 144 264 144 256 L144 182 C144 158 144 140 146 130 Z',
+    anchor: { x: 50, y: 190 },
+    labelAnchor: { x: 0, y: 180 },
     labelSide: 'left',
   },
   {
     id: 'hands',
-    d: 'M40 212 C36 214 32 220 34 228 C36 236 42 240 50 238 C58 236 64 230 68 224 C70 220 68 216 64 216 C58 216 50 216 44 214 Z M160 212 C164 214 168 220 166 228 C164 236 158 240 150 238 C142 236 136 230 132 224 C130 220 132 216 136 216 C142 216 150 216 156 214 Z',
-    anchor: { x: 46, y: 226 },
-    labelAnchor: { x: 180, y: 226 },
-    labelSide: 'right',
+    d: 'M36 264 C32 268 28 276 30 284 C32 292 40 296 48 294 C54 292 58 286 56 278 C54 272 48 268 42 266 Z M164 264 C168 268 172 276 170 284 C168 292 160 296 152 294 C146 292 142 286 144 278 C146 272 152 268 158 266 Z',
+    hitD: 'M30 260 C24 264 20 274 22 286 C24 298 34 304 46 302 C56 300 62 292 60 280 C58 270 52 264 44 262 Z M170 260 C176 264 180 274 178 286 C176 298 166 304 154 302 C144 300 138 292 140 280 C142 270 148 264 156 262 Z',
+    anchor: { x: 42, y: 278 },
+    labelAnchor: { x: 0, y: 278 },
+    labelSide: 'left',
   },
-  // LEGS GROUP — gently folded/crossed legs
+  // LEGS GROUP — long, straight, slight gap between
   {
     id: 'legs',
-    d: 'M76 280 C70 284 58 292 48 304 C38 316 32 330 30 340 C28 346 30 350 34 350 C38 350 44 346 50 338 C60 322 70 308 80 298 C84 294 84 288 82 284 Z M124 280 C130 284 142 292 152 304 C162 316 168 330 170 340 C172 346 170 350 166 350 C162 350 156 346 150 338 C140 322 130 308 120 298 C116 294 116 288 118 284 Z',
-    anchor: { x: 100, y: 316 },
-    labelAnchor: { x: -10, y: 316 },
+    d: 'M82 246 C78 256 76 276 76 302 C76 336 78 366 80 386 C82 394 86 398 90 398 C94 398 96 394 96 386 C96 366 96 336 96 302 C96 276 96 258 94 248 Z M118 246 C122 256 124 276 124 302 C124 336 122 366 120 386 C118 394 114 398 110 398 C106 398 104 394 104 386 C104 366 104 336 104 302 C104 276 104 258 106 248 Z',
+    anchor: { x: 78, y: 330 },
+    labelAnchor: { x: 0, y: 330 },
     labelSide: 'left',
   },
   {
     id: 'feet',
-    d: 'M30 346 C26 348 22 354 24 362 C26 368 32 372 40 372 C50 372 60 368 66 362 C70 358 68 352 64 350 C56 346 44 344 34 346 Z M170 346 C174 348 178 354 176 362 C174 368 168 372 160 372 C150 372 140 368 134 362 C130 358 132 352 136 350 C144 346 156 344 166 346 Z',
-    anchor: { x: 100, y: 362 },
-    labelAnchor: { x: -10, y: 362 },
+    d: 'M68 394 C64 396 60 402 62 408 C64 414 72 418 86 416 C94 414 98 408 96 402 C94 398 86 394 78 394 Z M132 394 C136 396 140 402 138 408 C136 414 128 418 114 416 C106 414 102 408 104 402 C106 398 114 394 122 394 Z',
+    hitD: 'M62 390 C56 392 52 400 54 410 C56 418 66 424 84 422 C96 420 102 412 100 404 C98 396 90 390 80 390 Z M138 390 C144 392 148 400 146 410 C144 418 134 424 116 422 C104 420 98 412 100 404 C102 396 110 390 120 390 Z',
+    anchor: { x: 72, y: 406 },
+    labelAnchor: { x: 0, y: 400 },
     labelSide: 'left',
   },
 ]

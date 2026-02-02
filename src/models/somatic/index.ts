@@ -1,4 +1,5 @@
 import type { EmotionModel, ModelState, SelectionEffect, AnalysisResult } from '../types'
+import { MODEL_IDS } from '../constants'
 import type { SomaticRegion, SomaticSelection } from './types'
 import { scoreSomaticSelections } from './scoring'
 import regionsData from './data.json'
@@ -12,7 +13,7 @@ function makeVisibleMap(): Map<string, number> {
 }
 
 export const somaticModel: EmotionModel<SomaticRegion> = {
-  id: 'somatic',
+  id: MODEL_IDS.SOMATIC,
   name: { ro: 'Harta corporala', en: 'Body Map' },
   description: {
     ro: 'Harta corporala a emotiilor — identifica emotii prin senzatii fizice in 14 regiuni ale corpului',

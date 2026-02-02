@@ -158,7 +158,7 @@ describe('scoreSomaticSelections', () => {
     const results = scoreSomaticSelections([selection])
 
     const strong = results.find(r => r.id === 'joy')
-    expect(strong?.matchStrength.en).toBe('strong resonance')
+    expect(strong?.matchStrength.en).toBe('clear signal')
 
     const weak = results.find(r => r.id === 'calm')
     expect(weak?.matchStrength.en).toBe('worth exploring')

@@ -452,8 +452,8 @@
     "id": "guilt",
     "label": { "ro": "vinovăție", "en": "guilt" },
     "description": {
-      "ro": "Vinovatia este diada secundara a bucuriei si fricii — paradoxul de a te simti bine si a te teme simultan ca nu meriti acea stare. Apare cand fericirea ta intra in conflict cu un simt al obligatiei sau cu suferinta altora. Vinovatia sanatoasa te ghideaza moral; vinovatia nevrotica te saboteaza si te impiedica sa primesti binele din viata ta.",
-      "en": "Guilt is the secondary dyad of joy and fear — the paradox of feeling good while simultaneously fearing you don't deserve that state. It arises when your happiness conflicts with a sense of obligation or others' suffering. Healthy guilt guides you morally; neurotic guilt sabotages you and prevents you from receiving the good in your life."
+      "ro": "Vinovatia este diada secundara a bucuriei si fricii — paradoxul de a te simti bine si a te teme simultan ca nu meriti acea stare. Apare cand fericirea ta intra in conflict cu un simt al obligatiei sau cu suferinta altora. Vinovatia sanatoasa te ghideaza moral; vinovatia disproportionata te saboteaza si te impiedica sa primesti binele din viata ta.",
+      "en": "Guilt is the secondary dyad of joy and fear — the paradox of feeling good while simultaneously fearing you don't deserve that state. It arises when your happiness conflicts with a sense of obligation or others' suffering. Healthy guilt guides you morally; disproportionate guilt sabotages you and prevents you from receiving the good in your life."
     },
     "needs": { "ro": "auto-permisiune si claritate morala", "en": "self-permission and moral clarity" },
     "category": "secondary_dyad",

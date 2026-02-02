@@ -7,8 +7,8 @@ import type { BaseEmotion, AnalysisResult } from '../models/types'
 /** Emotion IDs considered high-distress across all models */
 const HIGH_DISTRESS_IDS = new Set([
   'despair', 'rage', 'terror', 'grief', 'shame', 'loathing',
-  // Somatic scoring may produce these IDs:
-  'panic', 'hopelessness',
+  // Wheel leaf emotions signalling severe distress:
+  'worthless', 'helpless', 'apathetic',
 ])
 
 function isHighDistress(results: AnalysisResult[]): boolean {

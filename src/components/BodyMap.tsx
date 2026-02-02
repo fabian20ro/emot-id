@@ -204,8 +204,8 @@ export function BodyMap({ emotions, onSelect, onDeselect, selections = [] }: Bod
             // Arrow endpoints: from label edge toward body anchor
             const arrowStartX = labelSide === 'left' ? labelAnchor.x + 20 : labelAnchor.x - 20
             const arrowEndX = labelSide === 'left'
-              ? Math.min(anchor.x, arrowStartX + 30)
-              : Math.max(anchor.x, arrowStartX - 30)
+              ? Math.min(anchor.x, arrowStartX + 80)
+              : Math.max(anchor.x, arrowStartX - 80)
 
             return (
               <g

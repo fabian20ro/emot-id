@@ -68,7 +68,7 @@ describe('Wheel analyze with hierarchy path', () => {
     expect(results[0].hierarchyPath).toBeDefined()
     // aroused → playful → happy
     const pathIds = results[0].hierarchyPath!.map((p) => p.en)
-    expect(pathIds).toEqual(['Happy', 'Playful', 'Aroused'])
+    expect(pathIds).toEqual(['Happy', 'Playful', 'Energized'])
   })
 
   it('does not include hierarchy path for root emotions', () => {
