@@ -2,10 +2,6 @@
 
 Multi-perspective review synthesized into a prioritized roadmap.
 
-## Phases A–D: Complete ✅
-
-Safety, accessibility, navigation UX, psychological depth, session history — all done.
-
 ## Phase E: Advanced Features (Partial)
 
 - [ ] E.1 Quick check-in mode — 30-sec grid of 8-12 words
@@ -21,22 +17,51 @@ Safety, accessibility, navigation UX, psychological depth, session history — a
 - [ ] F.6 E2E tests (Playwright) — happy path for each model
 - [ ] F.7 PWA improvements — offline indicator, install prompt, update notification
 
-## Phase G: Mobile UX Stabilization ✅
+## Phase H: Mobile UX Round 2 ← Active
 
-Comprehensive mobile usability audit + targeted fixes. No new features.
+Targeted fixes from psychologist + architect review of live Chrome audit at 375x812 and 320x568.
 
-- [x] G.1 SelectionBar height & scrolling — increase `max-h-[12vh]` to `max-h-[20vh]`
-- [x] G.2 Bubble minimum touch targets — add `min-h-[44px] min-w-[44px]`
-- [x] G.3 DimensionalField touch precision — invisible hit circles (r=18) behind dots
-- [x] G.4 SettingsMenu responsive width — `max-w-[calc(100vw-2rem)]`
-- [x] G.5 Safe-area-inset for notched devices — `env(safe-area-inset-*)`
-- [x] G.6 BodyMap label overlap on narrow screens — responsive font/offset
-- [x] G.7 ResultModal height on short screens — increase to `max-h-[90vh]`
+### P0 — Critical
+
+- [ ] **H.1** Dimensional label overlap in calm quadrant
+  - **Files:** `src/models/dimensional/data.json`, `src/components/DimensionalField.tsx`
+  - **(A) Data: nudge duplicate coordinates.** "sad" and "lonely" both at `(-0.6, -0.4)`; "gloomy" and "resigned" both at `(-0.5, -0.5)`. Shift lonely → `(-0.7, -0.35)`, resigned → `(-0.55, -0.55)`. Preserves quadrant membership and semantic distance.
+  - **(B) Render: label collision avoidance.** After computing label y-positions, greedy pass that bumps overlapping labels (within ~14px at similar x) by ±12px on y-axis.
+  - **Psych:** Unpleasant-calm quadrant is where distressed users look first. Overlapping labels make those emotions unreachable.
+
+- [ ] **H.2** Plutchik bubbles off-screen at 320px
+  - **File:** `src/components/BubbleField.tsx` (line ~57)
+  - Clamp `x` in grid fallback: `x = Math.min(x, availableWidth - w - padding)`. One-line fix.
+  - **Psych:** Hidden emotion options cause disengagement — users conclude "this tool doesn't have what I feel."
+
+### P1 — High
+
+- [ ] **H.3** BodyMap no scroll affordance on short screens
+  - **File:** `src/components/BodyMap.tsx` (line ~133)
+  - Change `min-h-[200px]` → `min-h-0` + `overflow-hidden`. SVG scales down via viewBox.
+  - **Psych:** On 568px height, legs/feet hidden below fold — blocks somatic pathway for shame, guilt, restlessness.
+
+- [ ] **H.4** ModelBar cramped at 320px
+  - **Files:** `src/models/types.ts`, model registrations, `src/components/ModelBar.tsx`
+  - Add optional `shortName` to model type. Below 360px, render short names ("Plutchik", "Wheel", "Body", "Space").
+  - **Psych:** Cramped tabs discourage model switching, effectively locking users into first model.
+
+### P2 — Low
+
+- [ ] **H.5** Hint and "I don't know" button redundancy
+  - **File:** `src/App.tsx` (line ~183)
+  - Hide "I don't know" while hint visible: `selections.length === 0 && !showHint`. Saves ~50px vertical.
+  - **Psych:** Both elements compete for vertical space on first visit. Hint is more important for orientation.
+
+- [ ] **H.6** Privacy notice — session data stays on device
+  - **Files:** Onboarding component or SettingsMenu disclaimer section
+  - Add a visible message explaining that all session data (emotion selections, history, somatic maps) is stored locally in IndexedDB/localStorage and never leaves the device. No server, no analytics, no cloud sync.
+  - **Psych:** Users exploring vulnerable emotional states need trust that their data is private. Explicit reassurance reduces inhibition and encourages honest self-exploration.
 
 ## Implementation Order
 
 ```
-Phase G (mobile stabilization)  ← Done ✅
+Phase H (mobile UX round 2)     ← Next: H.2 → H.5 → H.3 → H.4 → H.1
   ↓
 Phase E (advanced features)
   ↓
