@@ -1,14 +1,17 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { useFocusTrap } from '../hooks/useFocusTrap'
 import { synthesize } from '../models/synthesis'
-import { getCrisisTier } from '../models/distress'
+import { getCrisisTier, type CrisisTier } from '../models/distress'
+import { getOppositeAction } from '../data/opposite-action'
 import { ResultCard } from './ResultCard'
 import { getModelBridge } from './model-bridges'
 import { CrisisBanner } from './CrisisBanner'
+import { MicroIntervention, getInterventionType } from './MicroIntervention'
 import type { BaseEmotion, AnalysisResult } from '../models/types'
 
-type ReflectionState = 'results' | 'reflection' | 'followUp'
+type ReflectionState = 'results' | 'reflection' | 'warmClose' | 'followUp' | 'intervention'
 type ReflectionAnswer = 'yes' | 'partly' | 'no' | null
 
 interface ResultModalProps {
@@ -16,6 +19,9 @@ interface ResultModalProps {
   onClose: () => void
   onExploreMore?: () => void
   onSwitchModel?: (modelId: string) => void
+  onSessionComplete?: (reflectionAnswer: ReflectionAnswer) => void
+  /** When true, escalates crisis tier by one level (temporal pattern detected) */
+  escalateCrisis?: boolean
   currentModelId?: string
   selections: BaseEmotion[]
   results: AnalysisResult[]
@@ -26,25 +32,44 @@ export function ResultModal({
   onClose,
   onExploreMore,
   onSwitchModel,
+  onSessionComplete,
+  escalateCrisis,
   currentModelId,
   selections,
   results,
 }: ResultModalProps) {
-  const { language, t } = useLanguage()
+  const { language, section } = useLanguage()
   const [reflectionState, setReflectionState] = useState<ReflectionState>('results')
   const [reflectionAnswer, setReflectionAnswer] = useState<ReflectionAnswer>(null)
 
-  const reflectionT = (t as Record<string, Record<string, string>>).reflection ?? {}
-  const crisisT = (t as Record<string, Record<string, string>>).crisis ?? {}
-  const modalT = (t as Record<string, Record<string, string>>).modal ?? {}
-  const analyzeT = (t as Record<string, Record<string, string>>).analyze ?? {}
-  const resultsT = (t as Record<string, Record<string, string>>).results ?? {}
-  const bridgesT = (t as Record<string, Record<string, string>>).bridges ?? {}
+  const handleClose = useCallback(() => {
+    onSessionComplete?.(reflectionAnswer)
+    setReflectionState('results')
+    setReflectionAnswer(null)
+    onClose()
+  }, [onClose, onSessionComplete, reflectionAnswer])
 
-  const crisisTier = useMemo(
-    () => getCrisisTier(results.map((r) => r.id)),
-    [results],
-  )
+  const focusTrapRef = useFocusTrap(isOpen, handleClose)
+
+  const reflectionT = section('reflection')
+  const crisisT = section('crisis')
+  const modalT = section('modal')
+  const analyzeT = section('analyze')
+  const resultsT = section('results')
+  const bridgesT = section('bridges')
+  const interventionT = section('intervention')
+
+  const crisisTier = useMemo(() => {
+    const baseTier = getCrisisTier(results.map((r) => r.id))
+    if (!escalateCrisis) return baseTier
+    const escalation: Record<CrisisTier, CrisisTier> = {
+      none: 'tier1',
+      tier1: 'tier2',
+      tier2: 'tier3',
+      tier3: 'tier3',
+    }
+    return escalation[baseTier]
+  }, [results, escalateCrisis])
   const hasCrisis = crisisTier !== 'none'
 
   const synthesisText = useMemo(
@@ -58,6 +83,24 @@ export function ResultModal({
       : null,
     [currentModelId, results, bridgesT],
   )
+
+  // Opposite action suggestion (DBT) — skip during crisis
+  const oppositeAction = useMemo(() => {
+    if (crisisTier !== 'none') return null
+    return getOppositeAction(results.map((r) => r.id), language)
+  }, [results, language, crisisTier])
+
+  // Determine if a micro-intervention should be offered (skip during crisis)
+  const interventionType = useMemo(() => {
+    if (crisisTier !== 'none') return null
+    const arousals = results.map((r) => r.arousal).filter((a): a is number => a !== undefined)
+    const avgArousal = arousals.length > 0 ? arousals.reduce((s, a) => s + a, 0) / arousals.length : undefined
+    const valences = results.map((r) => r.valence).filter((v): v is number => v !== undefined)
+    const hasPositive = valences.some((v) => v > 0.1)
+    const hasNegative = valences.some((v) => v < -0.1)
+    const isMixed = hasPositive && hasNegative
+    return getInterventionType(avgArousal, hasPositive, hasNegative, isMixed)
+  }, [results, crisisTier])
 
   const getAILink = () => {
     if (results.length === 0) return '#'
@@ -74,16 +117,10 @@ export function ResultModal({
     return `https://www.google.com/search?udm=50&q=${query}`
   }
 
-  const handleClose = () => {
-    setReflectionState('results')
-    setReflectionAnswer(null)
-    onClose()
-  }
-
   const handleReflection = (answer: 'yes' | 'partly' | 'no') => {
     setReflectionAnswer(answer)
     if (answer === 'yes') {
-      handleClose()
+      setReflectionState('warmClose')
     } else {
       setReflectionState('followUp')
     }
@@ -95,6 +132,13 @@ export function ResultModal({
     onExploreMore?.()
     onClose()
   }
+
+  // Auto-dismiss warm close after 3 seconds
+  useEffect(() => {
+    if (reflectionState !== 'warmClose') return
+    const timer = setTimeout(handleClose, 3000)
+    return () => clearTimeout(timer)
+  }, [reflectionState, handleClose])
 
   const handleSwitchModel = (targetModelId: string) => {
     setReflectionState('results')
@@ -114,6 +158,7 @@ export function ResultModal({
           onClick={handleClose}
         >
           <motion.div
+            ref={focusTrapRef}
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -178,6 +223,7 @@ export function ResultModal({
                             language={language}
                             expanded={results.length <= 2}
                             showDescriptionLabel={modalT.showDescription}
+                            readMoreLabel={modalT.readMore}
                             needsLabel={modalT.needsLabel}
                           />
                         ))}
@@ -224,6 +270,15 @@ export function ResultModal({
                     )}
                   </div>
 
+                  {/* Opposite action nudge (DBT) */}
+                  {oppositeAction && (
+                    <div className="mt-3 p-3 rounded-xl bg-amber-900/10 border border-amber-700/20">
+                      <p className="text-xs text-amber-300/80 leading-relaxed">
+                        {oppositeAction}
+                      </p>
+                    </div>
+                  )}
+
                   {/* Cross-model bridge suggestion */}
                   {bridge && onSwitchModel && (
                     <div className="mt-3 p-3 rounded-xl bg-indigo-900/20 border border-indigo-700/30">
@@ -235,6 +290,20 @@ export function ResultModal({
                         {bridge.buttonLabel} &rarr;
                       </button>
                     </div>
+                  )}
+
+                  {/* Micro-intervention offer */}
+                  {interventionType && (
+                    <button
+                      onClick={() => setReflectionState('intervention')}
+                      className="mt-3 text-sm text-indigo-400 hover:text-indigo-300 transition-colors text-center"
+                    >
+                      {interventionType === 'breathing'
+                        ? (interventionT.offerBreathing ?? 'Would you like to try something calming?')
+                        : interventionType === 'savoring'
+                          ? (interventionT.offerSavoring ?? 'Take a moment to savor this?')
+                          : (interventionT.offerCuriosity ?? 'What might these feelings be telling you?')}
+                    </button>
                   )}
 
                   {/* Reflection trigger */}
@@ -286,6 +355,44 @@ export function ResultModal({
                       {reflectionT.no ?? 'Not quite'}
                     </button>
                   </div>
+                </motion.div>
+              )}
+
+              {/* Warm close — brief acknowledgment after "Yes" */}
+              {reflectionState === 'warmClose' && (
+                <motion.div
+                  key="warmClose"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex-1 flex flex-col items-center justify-center py-12"
+                >
+                  <p className="text-lg text-gray-200 text-center leading-relaxed px-4">
+                    {reflectionT.warmClose ?? 'Take a moment with this. Your feelings are valid.'}
+                  </p>
+                  <button
+                    onClick={handleClose}
+                    className="mt-6 text-sm text-gray-500 hover:text-gray-400 transition-colors"
+                  >
+                    {modalT.close ?? 'Close'}
+                  </button>
+                </motion.div>
+              )}
+
+              {/* Micro-intervention view */}
+              {reflectionState === 'intervention' && interventionType && (
+                <motion.div
+                  key="intervention"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="flex-1 flex flex-col"
+                >
+                  <MicroIntervention
+                    type={interventionType}
+                    t={interventionT}
+                    onDismiss={() => setReflectionState('results')}
+                  />
                 </motion.div>
               )}
 

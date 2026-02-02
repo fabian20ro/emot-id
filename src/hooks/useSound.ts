@@ -1,33 +1,20 @@
 import { useCallback, useRef, useState } from 'react'
+import { storage } from '../data/storage'
 
 type SoundType = 'select' | 'deselect'
-
-const STORAGE_KEY = 'emot-id-sound-muted'
 
 const frequencies: Record<SoundType, number> = {
   select: 523.25, // C5
   deselect: 392.0, // G4
 }
 
-function readMuted(): boolean {
-  try {
-    return localStorage.getItem(STORAGE_KEY) === 'true'
-  } catch {
-    return false
-  }
-}
-
 export function useSound() {
   const audioContextRef = useRef<AudioContext | null>(null)
-  const [muted, setMutedState] = useState(readMuted)
+  const [muted, setMutedState] = useState(() => storage.get('soundMuted') === 'true')
 
   const setMuted = useCallback((value: boolean) => {
     setMutedState(value)
-    try {
-      localStorage.setItem(STORAGE_KEY, String(value))
-    } catch {
-      // localStorage may be unavailable
-    }
+    storage.set('soundMuted', String(value))
   }, [])
 
   const getAudioContext = useCallback(() => {

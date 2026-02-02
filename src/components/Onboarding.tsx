@@ -1,20 +1,21 @@
 import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { useFocusTrap } from '../hooks/useFocusTrap'
+import { storage } from '../data/storage'
 
 interface OnboardingProps {
   onComplete: () => void
 }
 
-const STORAGE_KEY = 'emot-id-onboarded'
-
 const SCREEN_ICONS = ['🔍', '💡', '🧭', 'ℹ️']
 
 export function Onboarding({ onComplete }: OnboardingProps) {
-  const { t } = useLanguage()
-  const onboardingT = (t as Record<string, Record<string, string>>).onboarding ?? {}
+  const { section } = useLanguage()
+  const onboardingT = section('onboarding')
 
   const [step, setStep] = useState(0)
+  const focusTrapRef = useFocusTrap(true)
 
   const screens = [
     { title: onboardingT.screen1Title, body: onboardingT.screen1Body },
@@ -24,11 +25,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   ]
 
   const finish = useCallback(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, 'true')
-    } catch {
-      // localStorage may be unavailable
-    }
+    storage.set('onboarded', 'true')
     onComplete()
   }, [onComplete])
 
@@ -48,8 +45,8 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   const isLast = step === screens.length - 1
 
   return (
-    <div className="fixed inset-0 z-50 bg-gray-900/95 flex items-center justify-center p-6">
-      <div className="max-w-sm w-full flex flex-col items-center text-center gap-6">
+    <div className="fixed inset-0 z-50 bg-gray-900/95 flex items-center justify-center p-6" role="dialog" aria-modal="true">
+      <div ref={focusTrapRef} className="max-w-sm w-full flex flex-col items-center text-center gap-6">
         {/* Step indicators */}
         <div className="flex gap-2">
           {screens.map((_, i) => (

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { useFocusTrap } from '../hooks/useFocusTrap'
 import { IntensityPicker } from './IntensityPicker'
 import type { SensationType } from '../models/somatic/types'
 
@@ -20,6 +21,7 @@ const SENSATION_CONFIG: Record<SensationType, { icon: string; label: { ro: strin
   numbness: { icon: '○', label: { ro: 'Amorțeală', en: 'Numbness' } },
   churning: { icon: '◎', label: { ro: 'Răscolire', en: 'Churning' } },
   pressure: { icon: '⊛', label: { ro: 'Presiune', en: 'Pressure' } },
+  constriction: { icon: '⊘', label: { ro: 'Constrictie', en: 'Constriction' } },
 }
 
 type PickerStep = 'sensation' | 'intensity'
@@ -30,9 +32,10 @@ export function SensationPicker({
   onSelect,
   onCancel,
 }: SensationPickerProps) {
-  const { language, t } = useLanguage()
+  const { language, section } = useLanguage()
   const [step, setStep] = useState<PickerStep>('sensation')
   const [selectedSensation, setSelectedSensation] = useState<SensationType | null>(null)
+  const focusTrapRef = useFocusTrap(true, onCancel)
 
   const handleSensationPick = (sensation: SensationType) => {
     setSelectedSensation(sensation)
@@ -50,7 +53,7 @@ export function SensationPicker({
     setSelectedSensation(null)
   }
 
-  const somaticT = (t as Record<string, Record<string, string>>).somatic ?? {}
+  const somaticT = section('somatic')
 
   return (
     <AnimatePresence>
@@ -64,13 +67,25 @@ export function SensationPicker({
         onClick={onCancel}
       />
 
-      {/* Bottom sheet */}
+      {/* Bottom sheet with swipe-to-dismiss */}
       <motion.div
         key="sheet"
+        ref={focusTrapRef}
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+        drag="y"
+        dragConstraints={{ top: 0 }}
+        dragElastic={0.2}
+        onDragEnd={(_e, info) => {
+          if (info.offset.y > 100 || info.velocity.y > 500) {
+            onCancel()
+          }
+        }}
+        role="dialog"
+        aria-modal="true"
+        aria-label={regionLabel}
         className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-md border-t border-gray-600 rounded-t-2xl shadow-2xl p-4 pb-8 max-w-md mx-auto"
       >
         {/* Drag handle */}

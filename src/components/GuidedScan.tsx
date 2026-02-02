@@ -21,11 +21,12 @@ interface GuidedScanProps {
   onHighlight: (regionId: string | null) => void
 }
 
-type ScanPhase = 'centering' | 'scanning' | 'complete'
+type ScanPhase = 'centering' | 'scanning' | 'pause' | 'complete'
 
 export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }: GuidedScanProps) {
-  const { language, t } = useLanguage()
-  const somaticT = (t as Record<string, Record<string, string>>).somatic ?? {}
+  const { language, section } = useLanguage()
+  const somaticT = section('somatic')
+  const crisisT = section('crisis')
 
   const [phase, setPhase] = useState<ScanPhase>('centering')
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -33,6 +34,9 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   const [centeringDuration, setCenteringDuration] = useState(CENTERING_DURATION_MS)
   const [breathPhase, setBreathPhase] = useState<'in' | 'out'>('in')
   const [skipCount, setSkipCount] = useState(0)
+  const [pauseContext, setPauseContext] = useState<{ sensation: string; region: string } | null>(null)
+  const [numbnessGroups, setNumbnessGroups] = useState<Set<string>>(new Set())
+  const [showNumbnessWarning, setShowNumbnessWarning] = useState(false)
 
   const currentRegionId = SCAN_ORDER[currentIndex]
   const currentRegion = currentRegionId ? regions.get(currentRegionId) : undefined
@@ -128,10 +132,37 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
       if (currentRegionId && selectedSensation) {
         onRegionSelect(currentRegionId, selectedSensation, intensity)
       }
-      advanceOrComplete()
+
+      // Track numbness across body groups for flooding detection
+      if (selectedSensation === 'numbness' && currentGroupId) {
+        const updated = new Set(numbnessGroups)
+        updated.add(currentGroupId)
+        setNumbnessGroups(updated)
+        if (updated.size >= 3 && !showNumbnessWarning) {
+          setShowNumbnessWarning(true)
+          setPhase('pause')
+          return
+        }
+      }
+
+      // Offer a breathing pause after high-intensity selections
+      if (intensity === 3 && selectedSensation && currentRegion) {
+        const sensationLabel = SENSATION_CONFIG[selectedSensation].label[language].toLowerCase()
+        const regionLabel = currentRegion.label[language].toLowerCase()
+        setPauseContext({ sensation: sensationLabel, region: regionLabel })
+        setPhase('pause')
+      } else {
+        advanceOrComplete()
+      }
     },
-    [currentRegionId, selectedSensation, onRegionSelect, advanceOrComplete]
+    [currentRegionId, selectedSensation, currentRegion, currentGroupId, language, numbnessGroups, showNumbnessWarning, onRegionSelect, advanceOrComplete]
   )
+
+  const handleResumeScan = useCallback(() => {
+    setPauseContext(null)
+    setPhase('scanning')
+    advanceOrComplete()
+  }, [advanceOrComplete])
 
   const handleSkipCentering = useCallback(() => {
     setPhase('scanning')
@@ -292,6 +323,50 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
                 </button>
               )}
             </div>
+          </motion.div>
+        )}
+
+        {/* Pause phase — after high-intensity selection or numbness flooding */}
+        {phase === 'pause' && (
+          <motion.div
+            key="pause"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-6 mb-4 mx-4 max-w-sm text-center pointer-events-auto"
+          >
+            {showNumbnessWarning && !pauseContext ? (
+              <>
+                <p className="text-gray-200 text-sm leading-relaxed mb-4">
+                  {somaticT.numbnessFlooding ?? 'Your body may be protecting you right now. Would you like to try a grounding exercise before continuing?'}
+                </p>
+                <div className="flex gap-3 justify-center">
+                  <button
+                    onClick={() => { setShowNumbnessWarning(false); setPauseContext(null); setPhase('scanning'); advanceOrComplete() }}
+                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-xl text-sm transition-colors"
+                  >
+                    {somaticT.numbnessContinue ?? 'Continue scanning'}
+                  </button>
+                </div>
+                <p className="text-xs text-amber-200/70 mt-3 leading-relaxed">
+                  {crisisT?.groundingBody ?? 'Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste.'}
+                </p>
+              </>
+            ) : pauseContext ? (
+              <>
+                <p className="text-gray-200 text-sm leading-relaxed mb-4">
+                  {(somaticT.guidedPause ?? 'You noticed strong {sensation} in your {region}. Take a breath before continuing.')
+                    .replace('{sensation}', pauseContext.sensation)
+                    .replace('{region}', pauseContext.region)}
+                </p>
+                <button
+                  onClick={handleResumeScan}
+                  className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm transition-colors"
+                >
+                  {somaticT.guidedPauseContinue ?? 'Ready to continue'}
+                </button>
+              </>
+            ) : null}
           </motion.div>
         )}
 

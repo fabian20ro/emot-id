@@ -8,9 +8,10 @@ interface HeaderProps {
   onModelChange: (id: string) => void
   soundMuted: boolean
   onSoundMutedChange: (muted: boolean) => void
+  onOpenHistory?: () => void
 }
 
-export function Header({ modelId, onModelChange, soundMuted, onSoundMutedChange }: HeaderProps) {
+export function Header({ modelId, onModelChange, soundMuted, onSoundMutedChange, onOpenHistory }: HeaderProps) {
   const { t } = useLanguage()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -30,6 +31,7 @@ export function Header({ modelId, onModelChange, soundMuted, onSoundMutedChange 
               onModelChange={onModelChange}
               soundMuted={soundMuted}
               onSoundMutedChange={onSoundMutedChange}
+              onOpenHistory={onOpenHistory}
             />
           </div>
           <div>

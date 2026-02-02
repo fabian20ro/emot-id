@@ -15,7 +15,8 @@ function toPixel(value: number): number {
 }
 
 function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] }: VisualizationProps) {
-  const { language, t } = useLanguage()
+  const { language, section } = useLanguage()
+  const dimensionalT = section('dimensional')
   const dimEmotions = useMemo(
     () => emotions as DimensionalEmotion[],
     [emotions]
@@ -90,7 +91,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
   return (
     <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-2 sm:p-4">
       <p className="text-xs text-gray-400 text-center mb-2 px-2">
-        {(t as Record<string, Record<string, string>>).dimensional?.instructions}
+        {dimensionalT.instructions}
       </p>
       <div className="relative w-full max-w-2xl flex-1 min-h-[200px] flex flex-col items-center justify-center">
         <svg

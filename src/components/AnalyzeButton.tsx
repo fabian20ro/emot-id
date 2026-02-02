@@ -6,14 +6,19 @@ interface AnalyzeButtonProps {
   disabled: boolean
   onClick: () => void
   modelId: string
+  selectionCount?: number
 }
 
-export function AnalyzeButton({ disabled, onClick, modelId }: AnalyzeButtonProps) {
+export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0 }: AnalyzeButtonProps) {
   const { t } = useLanguage()
 
   const disabledText = modelId === MODEL_IDS.SOMATIC
     ? t.analyze.buttonDisabledSomatic
     : t.analyze.buttonDisabledDefault
+
+  const label = selectionCount > 0
+    ? `${t.analyze.button} (${selectionCount})`
+    : t.analyze.button
 
   return (
     <motion.button
@@ -27,7 +32,7 @@ export function AnalyzeButton({ disabled, onClick, modelId }: AnalyzeButtonProps
           : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 cursor-pointer'
       }`}
     >
-      {disabled ? disabledText : t.analyze.button}
+      {disabled ? disabledText : label}
     </motion.button>
   )
 }

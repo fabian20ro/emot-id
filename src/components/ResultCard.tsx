@@ -1,3 +1,4 @@
+import { HIGH_DISTRESS_IDS } from '../models/distress'
 import type { AnalysisResult } from '../models/types'
 
 interface ResultCardProps {
@@ -5,10 +6,14 @@ interface ResultCardProps {
   language: 'ro' | 'en'
   expanded: boolean
   showDescriptionLabel?: string
+  readMoreLabel?: string
   needsLabel?: string
 }
 
-export function ResultCard({ result, language, expanded, showDescriptionLabel, needsLabel }: ResultCardProps) {
+export function ResultCard({ result, language, expanded, showDescriptionLabel, readMoreLabel, needsLabel }: ResultCardProps) {
+  // High-distress results always start collapsed (graduated exposure)
+  const isHighDistress = HIGH_DISTRESS_IDS.has(result.id)
+  const shouldExpand = expanded && !isHighDistress
   return (
     <div
       className="py-4 px-4 rounded-xl"
@@ -43,14 +48,16 @@ export function ResultCard({ result, language, expanded, showDescriptionLabel, n
         </span>
       )}
       {result.description && (
-        expanded ? (
+        shouldExpand ? (
           <p className="text-sm text-gray-300 mt-2 leading-relaxed">
             {result.description[language]}
           </p>
         ) : (
           <details className="mt-2 group">
             <summary className="text-xs text-gray-400 cursor-pointer hover:text-gray-300 transition-colors select-none">
-              {showDescriptionLabel ?? 'Show description'}
+              {isHighDistress
+                ? (readMoreLabel ?? 'Would you like to read more about this?')
+                : (showDescriptionLabel ?? 'Show description')}
             </summary>
             <p className="text-sm text-gray-300 mt-1 leading-relaxed">
               {result.description[language]}

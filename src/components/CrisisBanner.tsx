@@ -22,9 +22,9 @@ export function CrisisBanner({ tier, crisisT }: { tier: CrisisTier; crisisT: Rec
         {crisisT.disclaimer ?? 'If you are in immediate danger, please call emergency services.'}
       </p>
 
-      {/* Micro-grounding technique for tier 2/3 */}
+      {/* Grounding technique — auto-expanded for tier 2/3 (distressed users may not click a toggle) */}
       {(tier === 'tier2' || tier === 'tier3') && (
-        <details className="mt-2">
+        <details className="mt-2" open>
           <summary className="text-xs text-amber-300/70 cursor-pointer hover:text-amber-300 transition-colors select-none">
             {crisisT.groundingTitle ?? 'A quick grounding technique (5-4-3-2-1)'}
           </summary>

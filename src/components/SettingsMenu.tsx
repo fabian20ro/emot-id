@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { useFocusTrap } from '../hooks/useFocusTrap'
 import { getAvailableModels } from '../models/registry'
 
 interface SettingsMenuProps {
@@ -9,13 +10,17 @@ interface SettingsMenuProps {
   onModelChange: (id: string) => void
   soundMuted: boolean
   onSoundMutedChange: (muted: boolean) => void
+  onOpenHistory?: () => void
 }
 
-export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMuted, onSoundMutedChange }: SettingsMenuProps) {
-  const { language, setLanguage, t } = useLanguage()
+export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMuted, onSoundMutedChange, onOpenHistory }: SettingsMenuProps) {
+  const { language, setLanguage, section } = useLanguage()
   const availableModels = getAvailableModels()
-  const disclaimerT = (t as Record<string, Record<string, string>>).disclaimer ?? {}
-  const settingsT = (t as Record<string, Record<string, string>>).settings ?? {}
+  const menuT = section('menu')
+  const disclaimerT = section('disclaimer')
+  const settingsT = section('settings')
+  const historyT = section('history')
+  const focusTrapRef = useFocusTrap(isOpen, onClose)
 
   return (
     <AnimatePresence>
@@ -32,17 +37,20 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
 
           {/* Menu */}
           <motion.div
+            ref={focusTrapRef}
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.15 }}
+            role="dialog"
+            aria-modal="true"
             className="absolute left-0 top-full mt-2 w-72 bg-gray-800 rounded-xl shadow-xl border border-gray-700 overflow-hidden z-50"
           >
             <div className="p-2">
               {/* Language Section */}
               <div className="px-3 py-2">
                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
-                  {t.menu.language}
+                  {menuT.language}
                 </span>
               </div>
               <div className="flex gap-1 px-2 pb-2">
@@ -71,7 +79,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
               {/* Model Section */}
               <div className="px-3 py-2">
                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
-                  {t.menu.model}
+                  {menuT.model}
                 </span>
               </div>
               <div className="flex flex-col gap-1 px-2 pb-2">
@@ -124,8 +132,20 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
                 </button>
               </div>
 
+              {/* Past Sessions */}
+              {onOpenHistory && (
+                <div className="px-2 pb-1 pt-1 border-t border-gray-700 mt-1">
+                  <button
+                    onClick={() => { onOpenHistory(); onClose() }}
+                    className="w-full px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-gray-700 transition-colors text-left"
+                  >
+                    {historyT.menuLabel ?? 'Past sessions'}
+                  </button>
+                </div>
+              )}
+
               {/* Disclaimer */}
-              <div className="px-2 pb-2 pt-1 border-t border-gray-700 mt-1">
+              <div className={`px-2 pb-2 pt-1 border-t border-gray-700 ${onOpenHistory ? '' : 'mt-1'}`}>
                 <details className="group">
                   <summary className="px-3 py-2 text-xs text-gray-500 cursor-pointer hover:text-gray-400 transition-colors select-none">
                     {disclaimerT.label ?? 'Disclaimer'}

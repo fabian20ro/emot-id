@@ -11,6 +11,7 @@ export type SensationType =
   | 'numbness'
   | 'churning'
   | 'pressure'
+  | 'constriction'
 
 export interface EmotionSignal {
   emotionId: string

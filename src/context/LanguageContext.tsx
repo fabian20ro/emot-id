@@ -1,15 +1,21 @@
 import { createContext, useState, useEffect, useContext, type ReactNode } from 'react'
 import roStrings from '../i18n/ro.json'
 import enStrings from '../i18n/en.json'
+import { storage } from '../data/storage'
 
 type Language = 'ro' | 'en'
 
 type Strings = typeof roStrings
 
+/** Type-safe section accessor — returns the flat string record for a given i18n section */
+type StringSection = keyof Strings
+
 interface LanguageContextType {
   language: Language
   setLanguage: (lang: Language) => void
   t: Strings
+  /** Type-safe section accessor: `section('reflection')` returns `Strings['reflection']` */
+  section: <K extends StringSection>(key: K) => Strings[K]
 }
 
 const LanguageContext = createContext<LanguageContextType | null>(null)
@@ -22,12 +28,8 @@ const strings: Record<Language, Strings> = {
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('emot-id-language')
-        if (saved === 'ro' || saved === 'en') return saved
-      } catch {
-        // localStorage may be unavailable in private browsing
-      }
+      const saved = storage.get('language')
+      if (saved === 'ro' || saved === 'en') return saved
       // Detect browser language
       const browserLang = navigator.language
       if (browserLang.startsWith('ro')) return 'ro'
@@ -36,11 +38,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   })
 
   useEffect(() => {
-    try {
-      localStorage.setItem('emot-id-language', language)
-    } catch {
-      // localStorage may be unavailable in private browsing
-    }
+    storage.set('language', language)
   }, [language])
 
   const setLanguage = (lang: Language) => {
@@ -48,7 +46,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t: strings[language] }}>
+    <LanguageContext.Provider value={{
+      language,
+      setLanguage,
+      t: strings[language],
+      section: <K extends StringSection>(key: K) => strings[language][key],
+    }}>
       {children}
     </LanguageContext.Provider>
   )

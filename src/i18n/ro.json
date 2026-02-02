@@ -10,7 +10,9 @@
   "selectionBar": {
     "title": "Selectiile tale",
     "empty": "Nicio selectie",
-    "clear": "Sterge tot"
+    "clear": "Sterge tot",
+    "cleared": "Sters",
+    "undo": "Anuleaza"
   },
   "analyze": {
     "button": "Analizeaza",
@@ -29,7 +31,8 @@
     "combinationsFound": "Combinatii gasite",
     "showDescription": "Arata descrierea",
     "needsLabel": "Aceasta emotie are nevoie adesea de",
-    "matchStrengthLabel": "Potrivire"
+    "matchStrengthLabel": "Potrivire",
+    "readMore": "Doresti sa citesti mai mult despre aceasta?"
   },
   "reflection": {
     "prompt": "Rezonezi cu acest rezultat?",
@@ -40,7 +43,8 @@
     "backToModel": "Inapoi la explorare",
     "stayHere": "E bine asa deocamdata",
     "notQuiteValidation": "Experienta ta traita este cel mai bun ghid. Etichetele emotionale sunt aproximari — ceea ce simti este real si valid.",
-    "tryDifferentModel": "Incearca un alt model"
+    "tryDifferentModel": "Incearca un alt model",
+    "warmClose": "Ia un moment cu ceea ce simti. Emotiile tale sunt valide."
   },
   "crisis": {
     "tier1": "Daca ceea ce simti pare coplesitor, exista sprijin disponibil. Nu trebuie sa navighezi singur/a.",
@@ -85,7 +89,12 @@
     "cognitiveFromDimensional": "Vrei sa explorezi cum se numeste aceasta stare?",
     "trySomatic": "Incearca Harta Corporala",
     "tryWheel": "Incearca Roata Emotiilor",
-    "tryPlutchik": "Incearca Roata Plutchik"
+    "tryPlutchik": "Incearca Roata Plutchik",
+    "tryDimensional": "Incearca Spatiul Emotional",
+    "dimensionalFromCognitive": "Cat de intens si placut/neplacut este?",
+    "somaticFromDimensional": "Unde simti aceasta in corpul tau?",
+    "dimensionalFromSomatic": "Cat de placuta si intensa este aceasta senzatie?",
+    "pleasantEmbodiment": "Unde simti acea caldura? Ia un moment sa observi."
   },
   "firstHint": {
     "somatic": "Atinge zona unde observi o senzatie",
@@ -95,6 +104,7 @@
   },
   "dontKnow": {
     "link": "Nu stiu ce simt",
+    "normalization": "Multor oameni le este greu sa numeasca ceea ce simt — este normal si este o abilitate care se dezvolta cu practica.",
     "title": "E in regula — iata doua moduri de a incepe",
     "bodyOption": "Incepe cu corpul",
     "bodyDesc": "Observa mai intai senzatiile fizice",
@@ -116,9 +126,58 @@
     "guidedTraumaNote": "Daca vreo zona te face sa te simti inconfortabil, o poti sari oricand.",
     "guidedNothingNormal": "Este normal sa nu observi senzatii. Constiinta corporala se dezvolta cu practica.",
     "guidedMode": "Scanare ghidata",
-    "freeMode": "Selectie libera"
+    "freeMode": "Selectie libera",
+    "guidedPause": "Ai observat {sensation} intensa in zona {region}. Respira inainte de a continua.",
+    "guidedPauseContinue": "Sunt gata sa continui",
+    "numbnessFlooding": "Corpul tau s-ar putea sa te protejeze acum. Ai vrea sa incerci un exercitiu de ancorare inainte de a continua?",
+    "numbnessGrounding": "Incearca ancorarea",
+    "numbnessContinue": "Continua scanarea"
+  },
+  "intervention": {
+    "interventionTitle": "Un moment pentru tine",
+    "interventionDismiss": "Continua",
+    "offer": "Doresti sa faci o pauza?",
+    "breathIn": "Inspira...",
+    "breathHold": "Tine...",
+    "breathOut": "Expira...",
+    "savorStep1": "Inchide ochii pentru un moment.",
+    "savorStep2": "Reaminteste-ti situatia care a adus aceasta stare.",
+    "savorStep3": "Observa unde o simti in corp.",
+    "savorStep4": "Respira si las-o sa se extinda.",
+    "curiosityPrompt": "Ce ar putea sa iti transmita aceste emotii? Ia un moment sa te intrebi fara sa ai nevoie de un raspuns.",
+    "offerBreathing": "Doresti sa incerci ceva care calmeaza?",
+    "offerSavoring": "Ia un moment sa savurezi aceasta stare?",
+    "offerCuriosity": "Ce ar putea sa iti transmita aceste sentimente?",
+    "yes": "Da",
+    "noThanks": "Nu, multumesc"
   },
   "dimensional": {
     "instructions": "Localizeaza-ti starea pe cele doua axe: cat de placut/neplacut si cat de intens/calm te simti"
+  },
+  "history": {
+    "title": "Sesiuni anterioare",
+    "empty": "Nicio sesiune inca",
+    "clearAll": "Sterge toate datele",
+    "export": "Exporta JSON",
+    "menuLabel": "Sesiuni anterioare",
+    "vocabTitle": "Vocabularul tau emotional",
+    "vocabEmotions": "{count} emotii identificate",
+    "vocabModels": "in {count} modele",
+    "vocabSessions": "{count} sesiuni",
+    "milestoneEmotions": "Ai identificat {count} emotii diferite!",
+    "milestoneModels": "Ai explorat {count} modele diferite!",
+    "somaticTitle": "Tiparele tale corporale",
+    "somaticRegion": "{region} — de {count} ori",
+    "valenceTitle": "Emotiile din aceasta saptamana",
+    "valencePleasant": "{count} placute",
+    "valenceUnpleasant": "{count} neplacute",
+    "valenceNote": "Nici una nu e buna sau rea.",
+    "exportText": "Partajeaza cu terapeutul",
+    "copied": "Copiat!",
+    "suggestNext": "Vrei sa incerci ceva nou?",
+    "suggestSomatic": "Exploreaza semnalele corpului cu Harta Corporala",
+    "suggestDimensional": "Plaseaza-ti emotiile pe un spatiu 2D",
+    "suggestWheel": "Numeste emotiile mai precis cu Roata Emotiilor",
+    "suggestPlutchik": "Descopera cum se conecteaza emotiile"
   }
 }

@@ -3,6 +3,26 @@ import { HIGH_DISTRESS_IDS } from './distress'
 
 type Lang = 'ro' | 'en'
 
+/** Specific pleasant-emotion combinations with richer narratives */
+const PLEASANT_COMBOS: Record<string, { en: string; ro: string }> = {
+  'joy+gratitude': {
+    en: 'Joy meeting gratitude — you are recognizing a gift in your life. This combination builds lasting satisfaction and deepens appreciation.',
+    ro: 'Bucuria intalneste recunostinta — recunosti un dar in viata ta. Aceasta combinatie construieste satisfactie durabila si aprofundeaza aprecierea.',
+  },
+  'love+trust': {
+    en: 'Love woven with trust — this is the experience of deep relational safety, the foundation of secure connection.',
+    ro: 'Iubirea impaletita cu increderea — aceasta este experienta sigurantei relationale profunde, fundamentul conectarii sigure.',
+  },
+  'joy+serenity': {
+    en: 'Joy settling into serenity — a state of quiet contentment. This is what wellbeing feels like when it has room to breathe.',
+    ro: 'Bucuria se asaza in serenitate — o stare de multumire linistita. Asa se simte bunastarea cand are loc sa respire.',
+  },
+  'gratitude+serenity': {
+    en: 'Gratitude in serenity — a peaceful recognition of what matters. This combination nourishes emotional resilience.',
+    ro: 'Recunostinta in serenitate — o recunoastere pasnica a ceea ce conteaza. Aceasta combinatie hraneste rezilienta emotionala.',
+  },
+}
+
 interface ValenceProfile {
   hasPositive: boolean
   hasNegative: boolean
@@ -144,6 +164,17 @@ const templates = {
   },
 }
 
+function findPleasantCombo(ids: string[], lang: Lang): string | null {
+  const sorted = [...ids].sort()
+  for (let i = 0; i < sorted.length; i++) {
+    for (let j = i + 1; j < sorted.length; j++) {
+      const key = `${sorted[i]}+${sorted[j]}`
+      if (PLEASANT_COMBOS[key]) return PLEASANT_COMBOS[key][lang]
+    }
+  }
+  return null
+}
+
 /**
  * Synthesize a narrative paragraph from analysis results.
  * Pure function — no side effects, no diagnostic language.
@@ -170,10 +201,13 @@ export function synthesize(results: AnalysisResult[], language: Lang): string {
 
   // 2. Valence balance (for 2+ emotions)
   if (results.length >= 2) {
+    // Check for specific pleasant combinations first
+    const pleasantCombo = findPleasantCombo(results.map((r) => r.id), language)
+
     if (valence.isMixed) {
       sentences.push(t.mixedValence(names))
     } else if (valence.hasPositive && !valence.hasNegative) {
-      sentences.push(t.concordantPleasant(names))
+      sentences.push(pleasantCombo ?? t.concordantPleasant(names))
     } else if (valence.hasNegative && !valence.hasPositive) {
       sentences.push(isSevere ? t.concordantUnpleasantSevere(names) : t.concordantUnpleasant(names))
     }

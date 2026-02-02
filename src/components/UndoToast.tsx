@@ -1,0 +1,41 @@
+import { useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { useLanguage } from '../context/LanguageContext'
+
+interface UndoToastProps {
+  visible: boolean
+  onUndo: () => void
+  onDismiss: () => void
+}
+
+const UNDO_TIMEOUT_MS = 5000
+
+export function UndoToast({ visible, onUndo, onDismiss }: UndoToastProps) {
+  const { section } = useLanguage()
+  const selectionBarT = section('selectionBar')
+
+  useEffect(() => {
+    if (!visible) return
+    const timer = setTimeout(onDismiss, UNDO_TIMEOUT_MS)
+    return () => clearTimeout(timer)
+  }, [visible, onDismiss])
+
+  if (!visible) return null
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-gray-700 text-white px-4 py-2 rounded-xl shadow-lg flex items-center gap-3 text-sm"
+    >
+      <span>{selectionBarT.cleared ?? 'Cleared'}</span>
+      <button
+        onClick={onUndo}
+        className="font-semibold text-indigo-300 hover:text-indigo-200 transition-colors"
+      >
+        {selectionBarT.undo ?? 'Undo'}
+      </button>
+    </motion.div>
+  )
+}

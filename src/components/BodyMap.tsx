@@ -13,8 +13,8 @@ interface BodyMapProps extends VisualizationProps {
 }
 
 function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMapProps) {
-  const { language, t } = useLanguage()
-  const somaticT = (t as Record<string, Record<string, string>>).somatic ?? {}
+  const { language, section } = useLanguage()
+  const somaticT = section('somatic')
 
   const [activeRegionId, setActiveRegionId] = useState<string | null>(null)
   const [highlightedRegionId, setHighlightedRegionId] = useState<string | null>(null)

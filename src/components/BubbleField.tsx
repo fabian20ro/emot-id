@@ -55,7 +55,7 @@ function calculatePositionsForNewEmotions(
       const col = index % cols
       const row = Math.floor(index / cols)
       x = padding + col * (w + 16)
-      y = padding + row * (h + 16)
+      y = Math.min(padding + row * (h + 16), containerHeight - h - padding)
     }
 
     positions.set(emotion.id, { x, y })
@@ -74,23 +74,30 @@ function BubbleFieldBase({
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
   const [positions, setPositions] = useState<Map<string, { x: number; y: number }>>(new Map())
 
-  // Track container size with ResizeObserver
+  // Track container size with ResizeObserver (debounced via rAF)
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
 
+    let rafId = 0
     const observer = new ResizeObserver((entries) => {
-      const entry = entries[0]
-      if (entry) {
-        setContainerSize({
-          width: entry.contentRect.width,
-          height: entry.contentRect.height
-        })
-      }
+      cancelAnimationFrame(rafId)
+      rafId = requestAnimationFrame(() => {
+        const entry = entries[0]
+        if (entry) {
+          setContainerSize({
+            width: entry.contentRect.width,
+            height: entry.contentRect.height
+          })
+        }
+      })
     })
 
     observer.observe(container)
-    return () => observer.disconnect()
+    return () => {
+      cancelAnimationFrame(rafId)
+      observer.disconnect()
+    }
   }, [])
 
   // Update positions when emotions change or container resizes

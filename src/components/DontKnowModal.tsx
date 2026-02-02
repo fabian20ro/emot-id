@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { useFocusTrap } from '../hooks/useFocusTrap'
 import { MODEL_IDS } from '../models/constants'
 
 export function DontKnowModal({ onSelectModel, onClose }: { onSelectModel: (id: string) => void; onClose: () => void }) {
-  const { t } = useLanguage()
-  const dontKnowT = (t as Record<string, Record<string, string>>).dontKnow ?? {}
+  const { section } = useLanguage()
+  const dontKnowT = section('dontKnow')
+  const focusTrapRef = useFocusTrap(true, onClose)
 
   return (
     <motion.div
@@ -15,15 +17,21 @@ export function DontKnowModal({ onSelectModel, onClose }: { onSelectModel: (id: 
       onClick={onClose}
     >
       <motion.div
+        ref={focusTrapRef}
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
+        role="dialog"
+        aria-modal="true"
         onClick={(e) => e.stopPropagation()}
         className="bg-gray-800 rounded-2xl shadow-2xl max-w-sm w-full p-6"
       >
-        <h3 className="text-lg font-semibold text-white mb-4">
+        <h3 className="text-lg font-semibold text-white mb-2">
           {dontKnowT.title ?? "That's okay — here are two ways to start"}
         </h3>
+        <p className="text-sm text-gray-400 mb-4 leading-relaxed">
+          {dontKnowT.normalization ?? 'Many people find it hard to name what they feel — this is normal and a skill that develops with practice.'}
+        </p>
         <div className="space-y-3">
           <button
             onClick={() => { onSelectModel(MODEL_IDS.SOMATIC); onClose() }}

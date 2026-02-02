@@ -17,7 +17,7 @@
         "emotionLabel": { "ro": "Furie", "en": "Anger" },
         "emotionColor": "#ef4444",
         "emotionDescription": { "ro": "Presiune sau căldură în cap, asociată cu frustrare intensă sau furie. Furia semnalează o limită importantă care a fost depășită.", "en": "Pressure or heat in the head, associated with intense frustration or anger. Anger signals an important boundary that has been crossed." },
-        "emotionNeeds": { "ro": "pauza si respiratie inainte de actiune", "en": "pause and breathe before acting" },
+        "emotionNeeds": { "ro": "pauza si respiratie inainte de actiune", "en": "pause and breathing before action" },
         "sensationType": "pressure",
         "minIntensity": 2,
         "weight": 0.8
@@ -53,7 +53,7 @@
         "emotionLabel": { "ro": "Tristete", "en": "Sadness" },
         "emotionColor": "#3b82f6",
         "emotionDescription": { "ro": "Presiune în spatele ochilor, lacrimi, usturime. Tristețea semnalează pierderea a ceva valoros — lacrimile sunt un mod natural de procesare.", "en": "Pressure behind the eyes, tears, stinging. Sadness signals the loss of something valued — tears are a natural way of processing." },
-        "emotionNeeds": { "ro": "permisiune de a plange si compasiune", "en": "permission to cry and compassion" },
+        "emotionNeeds": { "ro": "permisiune de a plange si compasiune", "en": "permission to grieve and compassion" },
         "sensationType": "pressure",
         "minIntensity": 1,
         "weight": 0.8
@@ -81,7 +81,7 @@
         "emotionLabel": { "ro": "Ingrijorare", "en": "Worry" },
         "emotionColor": "#a78bfa",
         "emotionDescription": { "ro": "Tensiune persistentă în frunte, anticipare negativă. Îngrijorarea semnalează că îți pasă de ceva important.", "en": "Persistent forehead tension, negative anticipation. Worry signals that you care about something important." },
-        "emotionNeeds": { "ro": "redirectare spre prezent, nu viitor", "en": "redirect to present, not future" },
+        "emotionNeeds": { "ro": "redirectare spre prezent, nu viitor", "en": "present-moment focus and grounding" },
         "sensationType": "tension",
         "minIntensity": 2,
         "weight": 0.6
@@ -95,6 +95,36 @@
         "sensationType": "tingling",
         "minIntensity": 1,
         "weight": 0.6
+      },
+      {
+        "emotionId": "frustration",
+        "emotionLabel": { "ro": "Frustrare", "en": "Frustration" },
+        "emotionColor": "#e57373",
+        "emotionDescription": { "ro": "Tensiune în frunte și tâmple, presiune fără căldură. Frustrarea semnalează un obstacol între tine și un scop important.", "en": "Forehead and temple tension, pressure without heat. Frustration signals an obstacle between you and an important goal." },
+        "emotionNeeds": { "ro": "claritate si pasi mici", "en": "clarity and small steps" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.5
+      },
+      {
+        "emotionId": "jealousy",
+        "emotionLabel": { "ro": "Gelozie", "en": "Jealousy" },
+        "emotionColor": "#7e57c2",
+        "emotionDescription": { "ro": "Tensiune în cap, gânduri obsesive, vigilență intensă. Gelozia semnalează teamă de pierdere în relațiile importante.", "en": "Head tension, obsessive thoughts, intense vigilance. Jealousy signals fear of loss in important relationships." },
+        "emotionNeeds": { "ro": "siguranta relationala si comunicare", "en": "relational safety and communication" },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.5
+      },
+      {
+        "emotionId": "curiosity",
+        "emotionLabel": { "ro": "Curiozitate", "en": "Curiosity" },
+        "emotionColor": "#4dd0e1",
+        "emotionDescription": { "ro": "Ușoară activare în cap, atenție deschisă, senzație de vioiciune mentală. Curiozitatea semnalează deschiderea către necunoscut.", "en": "Mild activation in the head, open attention, mental alertness. Curiosity signals openness to the unknown." },
+        "emotionNeeds": { "ro": "explorare si siguranta", "en": "exploration and safety" },
+        "sensationType": "tingling",
+        "minIntensity": 1,
+        "weight": 0.5
       }
     ]
   },
@@ -109,7 +139,7 @@
     "color": "#dc2626",
     "svgRegionId": "jaw",
     "group": "head",
-    "commonSensations": ["tension", "pressure", "numbness"],
+    "commonSensations": ["tension", "pressure", "constriction", "heaviness", "numbness"],
     "emotionSignals": [
       {
         "emotionId": "anger",
@@ -138,6 +168,16 @@
         "sensationType": "numbness",
         "minIntensity": 1,
         "weight": 0.5
+      },
+      {
+        "emotionId": "contempt",
+        "emotionLabel": { "ro": "Dispreț", "en": "Contempt" },
+        "emotionColor": "#795548",
+        "emotionDescription": { "ro": "Tensiune asimetrică în maxilar, strângerea buzelor, senzație de superioritate. Disprețul creează distanță emoțională — poate semnala o nevoie neîmplinită de respect.", "en": "Asymmetric jaw tension, lip tightening, sense of superiority. Contempt creates emotional distance — it may signal an unmet need for respect." },
+        "emotionNeeds": { "ro": "empatie si schimbare de perspectiva", "en": "empathy and perspective shift" },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.6
       }
     ]
   },
@@ -159,7 +199,7 @@
         "emotionLabel": { "ro": "Doliu", "en": "Grief" },
         "emotionColor": "#1e40af",
         "emotionDescription": { "ro": "Nod în gât, dificultate de a înghiți, plâns reținut. Doliul în gât semnalează cuvinte nerostite sau pierdere neexprimată.", "en": "Lump in throat, difficulty swallowing, held-back crying. Throat grief signals unspoken words or unexpressed loss." },
-        "emotionNeeds": { "ro": "permisiune de a vorbi sau plange", "en": "permission to speak or cry" },
+        "emotionNeeds": { "ro": "permisiune de a vorbi sau plange", "en": "permission for expression and release" },
         "sensationType": "pressure",
         "minIntensity": 1,
         "weight": 0.8
@@ -193,6 +233,38 @@
         "sensationType": "churning",
         "minIntensity": 1,
         "weight": 0.5
+      },
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "sensationType": "constriction",
+        "minIntensity": 1,
+        "weight": 0.8
+      },
+      {
+        "emotionId": "shame",
+        "emotionLabel": { "ro": "Rusine", "en": "Shame" },
+        "emotionColor": "#be185d",
+        "sensationType": "constriction",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "grief",
+        "emotionLabel": { "ro": "Doliu", "en": "Grief" },
+        "emotionColor": "#1e40af",
+        "sensationType": "constriction",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "contempt",
+        "emotionLabel": { "ro": "Dispreț", "en": "Contempt" },
+        "emotionColor": "#795548",
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.5
       }
     ]
   },
@@ -207,7 +279,7 @@
     "color": "#ec4899",
     "svgRegionId": "chest",
     "group": "torso",
-    "commonSensations": ["tension", "warmth", "heaviness", "lightness", "pressure", "tingling"],
+    "commonSensations": ["tension", "warmth", "heaviness", "lightness", "pressure", "constriction", "tingling"],
     "emotionSignals": [
       {
         "emotionId": "anxiety",
@@ -278,6 +350,88 @@
         "sensationType": "tingling",
         "minIntensity": 1,
         "weight": 0.7
+      },
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "sensationType": "constriction",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "grief",
+        "emotionLabel": { "ro": "Doliu", "en": "Grief" },
+        "emotionColor": "#1e40af",
+        "sensationType": "constriction",
+        "minIntensity": 2,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "loneliness",
+        "emotionLabel": { "ro": "Singurătate", "en": "Loneliness" },
+        "emotionColor": "#5c6bc0",
+        "emotionDescription": { "ro": "Gol în piept, răceală, senzație de vid. Singurătatea semnalează nevoia profundă de conectare — ești creat pentru relații.", "en": "Chest hollowness, coldness, feeling of emptiness. Loneliness signals the deep need for connection — you are wired for relationship." },
+        "emotionNeeds": { "ro": "conexiune si prezenta umana", "en": "connection and human presence" },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "tenderness",
+        "emotionLabel": { "ro": "Tandrețe", "en": "Tenderness" },
+        "emotionColor": "#f48fb1",
+        "emotionDescription": { "ro": "Căldură moale în piept, senzație de deschidere blândă, dorința de a proteja. Tandrețea semnalează grija autentică și legătura profundă.", "en": "Soft warmth in chest, gentle opening sensation, desire to protect. Tenderness signals genuine care and deep bonding." },
+        "emotionNeeds": { "ro": "exprimare blanda si apropiere", "en": "gentle expression and closeness" },
+        "sensationType": "warmth",
+        "minIntensity": 1,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "gratitude",
+        "emotionLabel": { "ro": "Recunoștință", "en": "Gratitude" },
+        "emotionColor": "#66bb6a",
+        "emotionDescription": { "ro": "Căldură moderată în piept, senzație de plenitudine liniștită. Recunoștința amplifică bunăstarea — cercetările arată că practicarea ei consolidează reziliența emoțională.", "en": "Moderate chest warmth, quiet fullness sensation. Gratitude amplifies wellbeing — research shows practicing it strengthens emotional resilience." },
+        "emotionNeeds": { "ro": "savurare si exprimare", "en": "savoring and expression" },
+        "sensationType": "warmth",
+        "minIntensity": 1,
+        "weight": 0.5
+      },
+      {
+        "emotionId": "hope",
+        "emotionLabel": { "ro": "Speranță", "en": "Hope" },
+        "emotionColor": "#aed581",
+        "emotionDescription": { "ro": "Ușurință în piept, deschidere orientată înainte, energie subtilă. Speranța semnalează că viitorul merită efortul — este resursa care susține acțiunea în ciuda incertitudinii.", "en": "Chest lightness, forward-oriented opening, subtle energy. Hope signals that the future is worth the effort — it sustains action despite uncertainty." },
+        "emotionNeeds": { "ro": "rabdare si pasi mici", "en": "patience and small steps" },
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "relief",
+        "emotionLabel": { "ro": "Ușurare", "en": "Relief" },
+        "emotionColor": "#81c784",
+        "emotionDescription": { "ro": "Deschidere bruscă în piept, expirație profundă, eliberarea tensiunii. Ușurarea semnalează trecerea unei amenințări — corpul revine la siguranță.", "en": "Sudden chest opening, deep exhale, tension release. Relief signals that a threat has passed — the body returns to safety." },
+        "emotionNeeds": { "ro": "odihna si revenire", "en": "rest and recovery" },
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "curiosity",
+        "emotionLabel": { "ro": "Curiozitate", "en": "Curiosity" },
+        "emotionColor": "#4dd0e1",
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.4
+      },
+      {
+        "emotionId": "jealousy",
+        "emotionLabel": { "ro": "Gelozie", "en": "Jealousy" },
+        "emotionColor": "#7e57c2",
+        "sensationType": "pressure",
+        "minIntensity": 2,
+        "weight": 0.6
       }
     ]
   },
@@ -292,7 +446,7 @@
     "color": "#eab308",
     "svgRegionId": "stomach",
     "group": "torso",
-    "commonSensations": ["churning", "tension", "warmth", "heaviness", "tingling", "numbness"],
+    "commonSensations": ["churning", "tension", "warmth", "heaviness", "constriction", "tingling", "numbness"],
     "emotionSignals": [
       {
         "emotionId": "fear",
@@ -343,6 +497,32 @@
         "sensationType": "heaviness",
         "minIntensity": 1,
         "weight": 0.7
+      },
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": { "ro": "Anxietate", "en": "Anxiety" },
+        "emotionColor": "#f59e0b",
+        "sensationType": "constriction",
+        "minIntensity": 1,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "jealousy",
+        "emotionLabel": { "ro": "Gelozie", "en": "Jealousy" },
+        "emotionColor": "#7e57c2",
+        "emotionDescription": { "ro": "Stomac răscolit, senzație de nod, neliniște viscerală. Gelozia este un semnal de alarmă privind siguranța relațională — arată cât de mult contează legătura.", "en": "Churning stomach, knotted feeling, visceral unease. Jealousy is an alarm signal about relational safety — it shows how much the bond matters." },
+        "emotionNeeds": { "ro": "siguranta relationala si comunicare", "en": "relational safety and communication" },
+        "sensationType": "churning",
+        "minIntensity": 1,
+        "weight": 0.7
+      },
+      {
+        "emotionId": "loneliness",
+        "emotionLabel": { "ro": "Singurătate", "en": "Loneliness" },
+        "emotionColor": "#5c6bc0",
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.5
       }
     ]
   },
@@ -357,7 +537,7 @@
     "color": "#f43f5e",
     "svgRegionId": "shoulders",
     "group": "torso",
-    "commonSensations": ["tension", "heaviness", "pressure", "numbness"],
+    "commonSensations": ["tension", "heaviness", "lightness", "pressure", "numbness"],
     "emotionSignals": [
       {
         "emotionId": "stress",
@@ -388,6 +568,16 @@
         "sensationType": "tension",
         "minIntensity": 2,
         "weight": 0.6
+      },
+      {
+        "emotionId": "relief",
+        "emotionLabel": { "ro": "Ușurare", "en": "Relief" },
+        "emotionColor": "#81c784",
+        "emotionDescription": { "ro": "Umeri care coboară, eliberare bruscă a tensiunii. Ușurarea în umeri indică trecerea unei poveri — corpul se destinde.", "en": "Shoulders dropping, sudden tension release. Shoulder relief indicates a burden has lifted — the body is unwinding." },
+        "emotionNeeds": { "ro": "odihna si revenire", "en": "rest and recovery" },
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.7
       }
     ]
   },
@@ -531,6 +721,26 @@
         "sensationType": "numbness",
         "minIntensity": 1,
         "weight": 0.6
+      },
+      {
+        "emotionId": "tenderness",
+        "emotionLabel": { "ro": "Tandrețe", "en": "Tenderness" },
+        "emotionColor": "#f48fb1",
+        "emotionDescription": { "ro": "Căldură în palme, dorința de a atinge cu grijă. Tandrețea în mâini reflectă impulsul de a oferi confort și protecție.", "en": "Warm palms, desire to touch with care. Hand tenderness reflects the impulse to offer comfort and protection." },
+        "emotionNeeds": { "ro": "exprimare blanda si apropiere", "en": "gentle expression and closeness" },
+        "sensationType": "warmth",
+        "minIntensity": 1,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "frustration",
+        "emotionLabel": { "ro": "Frustrare", "en": "Frustration" },
+        "emotionColor": "#e57373",
+        "emotionDescription": { "ro": "Tensiune în mâini fără căldură, strângere a pumnilor. Frustrarea în mâini semnalează energia blocată — ai nevoie de acțiune, dar ceva te oprește.", "en": "Hand tension without warmth, fist clenching. Hand frustration signals blocked energy — you need action, but something is stopping you." },
+        "emotionNeeds": { "ro": "claritate si pasi mici", "en": "clarity and small steps" },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.6
       }
     ]
   },
@@ -576,6 +786,26 @@
         "sensationType": "tension",
         "minIntensity": 2,
         "weight": 0.6
+      },
+      {
+        "emotionId": "loneliness",
+        "emotionLabel": { "ro": "Singurătate", "en": "Loneliness" },
+        "emotionColor": "#5c6bc0",
+        "emotionDescription": { "ro": "Brațe grele, senzație de gol, dorința de a fi ținut. Singurătatea în brațe reflectă lipsa contactului fizic și a conexiunii.", "en": "Heavy arms, empty feeling, longing to be held. Arm loneliness reflects the absence of physical contact and connection." },
+        "emotionNeeds": { "ro": "conexiune si prezenta umana", "en": "connection and human presence" },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.6
+      },
+      {
+        "emotionId": "gratitude",
+        "emotionLabel": { "ro": "Recunoștință", "en": "Gratitude" },
+        "emotionColor": "#66bb6a",
+        "emotionDescription": { "ro": "Brațe ușoare, dorința de a oferi, energie caldă. Recunoștința în brațe exprimă impulsul de a dărui și de a te conecta.", "en": "Light arms, desire to give, warm energy. Arm gratitude expresses the impulse to give and connect." },
+        "emotionNeeds": { "ro": "savurare si exprimare", "en": "savoring and expression" },
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.5
       }
     ]
   },
@@ -631,6 +861,14 @@
         "sensationType": "numbness",
         "minIntensity": 2,
         "weight": 0.6
+      },
+      {
+        "emotionId": "relief",
+        "emotionLabel": { "ro": "Ușurare", "en": "Relief" },
+        "emotionColor": "#81c784",
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.5
       }
     ]
   },

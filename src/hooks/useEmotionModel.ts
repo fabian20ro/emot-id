@@ -73,6 +73,11 @@ export function useEmotionModel(modelId: string = defaultModelId) {
     setModelState(model.onClear())
   }, [model])
 
+  const restore = useCallback((savedSelections: BaseEmotion[], savedState: ModelState) => {
+    setSelections(savedSelections)
+    setModelState(savedState)
+  }, [])
+
   const combos = useMemo(() => {
     if (selections.length < 2) return []
     return model.analyze(selections).filter((r) => r.componentLabels)
@@ -84,12 +89,14 @@ export function useEmotionModel(modelId: string = defaultModelId) {
 
   return {
     selections,
+    modelState,
     visibleEmotions,
     sizes,
     combos,
     handleSelect,
     handleDeselect,
     handleClear,
+    restore,
     analyze,
   }
 }

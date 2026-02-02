@@ -23,6 +23,8 @@ export interface AnalysisResult {
 export interface ModelState {
   visibleEmotionIds: Map<string, number>
   currentGeneration: number
+  /** Model-specific extension data — typed by each model's implementation */
+  custom?: Record<string, unknown>
 }
 
 export interface SelectionEffect {

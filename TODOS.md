@@ -1,56 +1,81 @@
-# TODOS
+# Emot-ID Improvement Plan
 
-Unimplemented features and deferred items from the comprehensive improvement plan (Phases 1-4 complete, Phase 5 planned only).
+Multi-perspective review synthesized into a prioritized roadmap.
 
-## Phase 5: Future Features
+## Phase A: Safety, Accessibility & Polish ✅
 
-### 5.1 Quick Check-In Mode
-- 30-second path: grid of 8-12 emotion words, tap 1-3, brief synthesis
-- Personalized word selection based on session history
-- New component (~200 lines)
+- [x] A.1 Modal Accessibility — focus trapping, Escape key, focus return, aria-live region
+- [x] A.2 Reduced Motion Support — `MotionConfig reducedMotion="user"` wrapper
+- [x] A.3 Crisis Banner auto-expand grounding for tier 2/3
+- [x] A.4 Somatic pause after high-intensity (intensity-3) selections in Guided Scan
+- [x] A.5 Somatic numbness flooding detection (3+ body groups → grounding prompt)
+- [x] A.6 Graduated exposure for high-distress results (collapsed by default)
 
-### 5.2 Session History + Personal Vocabulary
-- IndexedDB via `idb-keyval` for session persistence
-- Emotion vocabulary growth tracking over time
-- "Clear all data" button + JSON export for privacy compliance
-- ~400 lines, prerequisite for 5.5 and 5.6
+## Phase B: Navigation & Interaction UX ✅
 
-### 5.3 Master Combination Model
-- Aggregator pattern (NOT an EmotionModel — different interface)
-- Emotion equivalence mapping between models (e.g., Plutchik's "anger" = Wheel's "angry")
-- SessionContext for multi-model results within a session
-- Convergence/divergence analysis across models
-- ~500 lines
+- [x] B.1 Model indicator & selector — visible model bar below header
+- [x] B.2 Clear selections undo — 5-second undo toast
+- [x] B.3 "Yes" reflection warm close — acknowledgment screen before dismiss
+- [x] B.4 "I Don't Know" prominence — upgrade to styled button
+- [x] B.5 SensationPicker swipe-to-dismiss — Framer Motion `drag="y"`
+- [x] B.6 BubbleField overflow fix — guard grid fallback y-overflow + rAF debounce
+- [x] B.7 Selection count on Analyze button — "Analyze (3)"
+- [x] B.8 Haptic feedback on mobile — `navigator.vibrate(10)`
 
-### 5.4 Model Progression Labels
-- Suggested learning order in settings: Somatic -> Dimensional -> Wheel -> Plutchik
-- Brief explanation of why this order supports emotional literacy growth
-- ~30 lines
+## Phase C: Psychological Depth ✅
 
-### 5.5 Emotional Granularity Training
-- After 10+ sessions, distinction prompts for similar emotions (e.g., "How is this different from frustration?")
-- Depends on 5.2 (session history)
+- [x] C.1 Expand Somatic Model (21 → 30+ emotions) — loneliness, tenderness, contempt, jealousy, frustration, relief, gratitude, hope, curiosity
+- [x] C.2 Add sensation type: Constriction — throat, chest, stomach with emotion signals
+- [x] C.3 Bidirectional & valence-aware cross-model bridges — pleasant emotion savoring bridge
+- [x] C.4 Post-identification micro-interventions — breathing, savoring, curiosity prompts (MicroIntervention.tsx)
+- [x] C.5 Richer pleasant emotion synthesis — combination-specific narratives (joy+gratitude, love+trust, etc.)
+- [x] C.6 Normalize the "I Don't Know" experience — psychoeducation in DontKnowModal
+- [x] C.7 Standardize needs field phrasing — noun/state form across all data.json
 
-### 5.6 Export for Therapy
-- Clipboard copy of session summary in structured format
-- "Share with your therapist" framing — non-clinical, empowering tone
-- Depends on 5.2 (session history)
+## Phase D: Session History & Longitudinal Features ✅
 
-## Deferred Items
+- [x] D.1 Storage consolidation — `src/data/storage.ts`, centralized localStorage wrapper
+- [x] D.2 Session history (IndexedDB) — `idb-keyval`, session repository, useSessionHistory hook, SessionHistory UI
+- [x] D.3 Emotional vocabulary tracker — growth visualization with milestones
+- [x] D.4 Temporal crisis pattern detection — escalate if 3+ tier 2/3 in 7 days
+- [x] D.5 Somatic heat map over time — recurring region/sensation frequency bars
+- [x] D.6 Positive emotion ratio awareness — weekly pleasant/unpleasant bar
 
-### 3.6 Standardize Needs Field Phrasing
-- Audit all `data.json` files across models
-- Normalize phrasing to noun/state form ("safety and validation") rather than imperatives ("be safe")
-- Low priority, cosmetic consistency improvement
+## Phase E: Advanced Features (Partial)
 
-### Architecture Decisions Deferred
-- **Generic ModelState**: Currently each model uses the same `ModelState` shape. Future models may need custom state (e.g., image overlay coordinates). Consider making `ModelState` generic when adding non-standard models.
-- **Lazy Loading**: Visualization components could be lazy-loaded per model to reduce initial bundle (~612KB currently). Consider `React.lazy()` + `Suspense` when bundle grows past 800KB.
-- **Co-located Visualization Components**: Currently all components are flat in `components/`. As model count grows, consider co-locating visualization components within their model directories (e.g., `models/somatic/BodyMap.tsx`).
+- [ ] E.1 Quick check-in mode — 30-sec grid of 8-12 words
+- [x] E.2 Model progression & scaffolding — `progression.ts` with suggested learning order
+- [ ] E.3 Emotional granularity training — distinction prompts after 10+ sessions
+- [x] E.4 Export for therapy — clipboard copy + `.txt` download in SessionHistory
+- [ ] E.5 Master combination model — cross-model aggregation (needs F.2)
+- [x] E.6 Opposite action nudges (DBT) — context-sensitive suggestions in ResultModal
+- [ ] E.7 Chain analysis mode (DBT)
+- [ ] E.8 Simple language mode
 
-### Psychology Agent Recommendations (Deferred)
-- **Emotion journaling prompts**: After results, offer a brief reflection prompt ("What situation triggered this?")
-- **Normalization messaging**: Add "All emotions are valid" messaging throughout the app, not just in crisis moments
-- **Cultural sensitivity**: Review emotion labels and descriptions for cultural bias; consider regional variants beyond RO/EN
-- **Accessibility audit**: Screen reader support for BodyMap SVG regions, keyboard navigation for BubbleField
-- **Guided breathing**: Full 4-7-8 breathing animation as a coping tool (currently only 5-4-3-2-1 grounding is included)
+## Phase F: Architecture & Quality
+
+- [x] F.1 Extract App.tsx state into hooks — useModelSelection, useHintState
+- [x] F.2 Generic ModelState — `custom?: Record<string, unknown>` extension point
+- [x] F.3 Type-safe i18n — `section()` accessor replacing unsafe casts
+- [ ] F.4 Lazy loading models — `React.lazy` + `Suspense` per model
+- [x] F.5 Integration tests — vocabulary, temporal-crisis, opposite-action, valence-ratio, export (23 new tests)
+- [ ] F.6 E2E tests (Playwright) — happy path for each model
+- [ ] F.7 PWA improvements — offline indicator, install prompt, update notification
+
+## Implementation Order
+
+```
+Phase A (safety/a11y)     ← Done ✅
+  ↓
+Phase B (UX polish)       ← Done ✅
+  ↓
+Phase C (content/models)  ← Done ✅
+  ↓
+Phase F.1-F.3 (arch)      ← Done ✅
+  ↓
+Phase D (data layer)      ← Done ✅
+  ↓
+Phase E (advanced)        ← Partial (E.2, E.4, E.6 done)
+  ↓
+Phase F.4-F.7 (quality)   ← Partial (F.5 done)
+```

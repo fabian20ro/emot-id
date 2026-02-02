@@ -1,24 +1,34 @@
-import { useState, useCallback, useEffect } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useState, useCallback, useRef, useMemo } from 'react'
+import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import { Onboarding } from './components/Onboarding'
 import { Header } from './components/Header'
 import { SelectionBar } from './components/SelectionBar'
 import { AnalyzeButton } from './components/AnalyzeButton'
 import { ResultModal } from './components/ResultModal'
 import { DontKnowModal } from './components/DontKnowModal'
+import { UndoToast } from './components/UndoToast'
+import { SessionHistory } from './components/SessionHistory'
 import { VisualizationErrorBoundary } from './components/VisualizationErrorBoundary'
 import { useSound } from './hooks/useSound'
 import { useEmotionModel } from './hooks/useEmotionModel'
+import { useModelSelection } from './hooks/useModelSelection'
+import { useHintState } from './hooks/useHintState'
+import { useSessionHistory } from './hooks/useSessionHistory'
 import { useLanguage } from './context/LanguageContext'
-import { defaultModelId, getVisualization } from './models/registry'
+import { getVisualization } from './models/registry'
 import { BubbleField } from './components/BubbleField'
-import type { BaseEmotion, AnalysisResult } from './models/types'
+import { ModelBar } from './components/ModelBar'
+import { storage } from './data/storage'
+import { getCrisisTier } from './models/distress'
+import { hasTemporalCrisisPattern } from './data/temporal-crisis'
+import type { BaseEmotion, AnalysisResult, ModelState } from './models/types'
+import type { Session, SerializedSelection } from './data/types'
 
 function FirstInteractionHint({ modelId }: { modelId: string }) {
-  const { t } = useLanguage()
-  const hintsT = (t as Record<string, Record<string, string>>).firstHint ?? {}
+  const { section } = useLanguage()
+  const hintsT = section('firstHint')
 
-  const text = hintsT[modelId] ?? hintsT.wheel ?? 'Tap an emotion that resonates with you'
+  const text = (hintsT as Record<string, string | undefined>)[modelId] ?? hintsT.wheel ?? 'Tap an emotion that resonates with you'
 
   return (
     <motion.div
@@ -32,48 +42,26 @@ function FirstInteractionHint({ modelId }: { modelId: string }) {
   )
 }
 
-function getHintStorageKey(modelId: string): string {
-  return `emot-id-hint-${modelId}`
-}
-
 export default function App() {
-  const { language, t } = useLanguage()
-  const dontKnowT = (t as Record<string, Record<string, string>>).dontKnow ?? {}
+  const { language, section } = useLanguage()
+  const dontKnowT = section('dontKnow')
 
   const [showOnboarding, setShowOnboarding] = useState(() => {
-    try {
-      return localStorage.getItem('emot-id-onboarded') !== 'true'
-    } catch {
-      return false
-    }
+    return storage.get('onboarded') !== 'true'
   })
 
-  const [modelId, setModelId] = useState(() => {
-    try {
-      const saved = localStorage.getItem('emot-id-model')
-      if (saved && getVisualization(saved)) return saved
-    } catch {
-      // localStorage may be unavailable in private browsing
-    }
-    return defaultModelId
-  })
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('emot-id-model', modelId)
-    } catch {
-      // localStorage may be unavailable in private browsing
-    }
-  }, [modelId])
+  const { modelId, switchModel } = useModelSelection()
 
   const {
     selections,
+    modelState,
     visibleEmotions,
     sizes,
     combos,
     handleSelect: modelSelect,
     handleDeselect: modelDeselect,
     handleClear: modelClear,
+    restore,
     analyze,
   } = useEmotionModel(modelId)
 
@@ -82,39 +70,19 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [analysisResults, setAnalysisResults] = useState<AnalysisResult[]>([])
   const [showDontKnow, setShowDontKnow] = useState(false)
+  const [showUndoToast, setShowUndoToast] = useState(false)
+  const undoSnapshotRef = useRef<{ selections: BaseEmotion[]; state: ModelState } | null>(null)
   const { playSound, muted, setMuted } = useSound()
 
-  // First interaction hint — per model, dismissed on first selection
-  const [showHint, setShowHint] = useState(() => {
-    try {
-      return !localStorage.getItem(getHintStorageKey(modelId))
-    } catch {
-      return false
-    }
-  })
-
-  // Reset hint state when model changes
-  useEffect(() => {
-    try {
-      setShowHint(!localStorage.getItem(getHintStorageKey(modelId)))
-    } catch {
-      setShowHint(false)
-    }
-  }, [modelId])
-
-  const dismissHint = useCallback(() => {
-    setShowHint(false)
-    try {
-      localStorage.setItem(getHintStorageKey(modelId), 'true')
-    } catch {
-      // ignore
-    }
-  }, [modelId])
+  const { showHint, dismissHint } = useHintState(modelId)
+  const { sessions, loading: sessionsLoading, save: saveSession, clearAll: clearAllSessions, exportJSON: exportSessionsJSON } = useSessionHistory()
+  const [showHistory, setShowHistory] = useState(false)
 
   const handleSelect = useCallback(
     (emotion: BaseEmotion) => {
       if (showHint) dismissHint()
       playSound('select')
+      navigator.vibrate?.(10)
       modelSelect(emotion)
     },
     [playSound, modelSelect, showHint, dismissHint],
@@ -129,9 +97,31 @@ export default function App() {
   )
 
   const handleClear = useCallback(() => {
+    if (selections.length === 0) return
+    undoSnapshotRef.current = { selections, state: modelState }
     playSound('deselect')
     modelClear()
-  }, [playSound, modelClear])
+    setShowUndoToast(true)
+  }, [selections, modelState, playSound, modelClear])
+
+  const handleUndo = useCallback(() => {
+    const snapshot = undoSnapshotRef.current
+    if (snapshot) {
+      restore(snapshot.selections, snapshot.state)
+      undoSnapshotRef.current = null
+    }
+    setShowUndoToast(false)
+  }, [restore])
+
+  const dismissUndo = useCallback(() => {
+    undoSnapshotRef.current = null
+    setShowUndoToast(false)
+  }, [])
+
+  const shouldEscalateCrisis = useMemo(
+    () => hasTemporalCrisisPattern(sessions),
+    [sessions],
+  )
 
   const analyzeEmotions = useCallback(() => {
     if (selections.length === 0) return
@@ -140,30 +130,60 @@ export default function App() {
     setIsModalOpen(true)
   }, [selections, analyze])
 
-  const handleSwitchModel = useCallback((newModelId: string) => {
-    setModelId(newModelId)
-  }, [])
+  const handleSessionComplete = useCallback(
+    (reflectionAnswer: 'yes' | 'partly' | 'no' | null) => {
+      if (analysisResults.length === 0) return
+      const serialized: SerializedSelection[] = selections.map((s) => {
+        const base: SerializedSelection = { emotionId: s.id, label: s.label }
+        // Preserve somatic extras for heat map tracking
+        if ('selectedSensation' in s && 'selectedIntensity' in s) {
+          base.extras = {
+            sensationType: (s as { selectedSensation: string }).selectedSensation,
+            intensity: (s as { selectedIntensity: number }).selectedIntensity,
+          }
+        }
+        return base
+      })
+      const session: Session = {
+        id: crypto.randomUUID(),
+        timestamp: Date.now(),
+        modelId,
+        selections: serialized,
+        results: analysisResults,
+        crisisTier: getCrisisTier(analysisResults.map((r) => r.id)),
+        reflectionAnswer: reflectionAnswer ?? undefined,
+      }
+      saveSession(session)
+    },
+    [analysisResults, selections, modelId, saveSession],
+  )
+
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="h-dvh overflow-hidden flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
       <Header
         modelId={modelId}
-        onModelChange={setModelId}
+        onModelChange={switchModel}
         soundMuted={muted}
         onSoundMutedChange={setMuted}
+        onOpenHistory={() => setShowHistory(true)}
       />
 
-      <div className="px-4 pt-2 max-w-md mx-auto w-full">
+      <ModelBar modelId={modelId} onModelChange={switchModel} />
+
+      <div className="px-4 pt-1 max-w-md mx-auto w-full">
         <AnalyzeButton
           disabled={selections.length === 0}
           onClick={analyzeEmotions}
           modelId={modelId}
+          selectionCount={selections.length}
         />
-        {/* "I don't know" entry point */}
+        {/* "I don't know" entry point — prominent secondary button */}
         {selections.length === 0 && (
           <button
             onClick={() => setShowDontKnow(true)}
-            className="block mx-auto mt-1 text-xs text-gray-500 hover:text-gray-400 transition-colors"
+            className="block mx-auto mt-2 px-4 py-1.5 text-sm text-gray-300 bg-gray-700/60 hover:bg-gray-700 border border-gray-600 rounded-full transition-colors"
           >
             {dontKnowT.link ?? "I don't know what I'm feeling"}
           </button>
@@ -199,7 +219,9 @@ export default function App() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onExploreMore={handleClear}
-        onSwitchModel={handleSwitchModel}
+        onSwitchModel={switchModel}
+        onSessionComplete={handleSessionComplete}
+        escalateCrisis={shouldEscalateCrisis}
         currentModelId={modelId}
         selections={selections}
         results={analysisResults}
@@ -208,15 +230,40 @@ export default function App() {
       <AnimatePresence>
         {showDontKnow && (
           <DontKnowModal
-            onSelectModel={handleSwitchModel}
+            onSelectModel={switchModel}
             onClose={() => setShowDontKnow(false)}
           />
         )}
       </AnimatePresence>
 
+      <AnimatePresence>
+        <UndoToast
+          visible={showUndoToast}
+          onUndo={handleUndo}
+          onDismiss={dismissUndo}
+        />
+      </AnimatePresence>
+
+      {/* Accessible live region for screen readers */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {selections.length > 0
+          ? `${selections.length} ${selections.length === 1 ? 'emotion' : 'emotions'} selected`
+          : ''}
+      </div>
+
+      <SessionHistory
+        isOpen={showHistory}
+        onClose={() => setShowHistory(false)}
+        sessions={sessions}
+        loading={sessionsLoading}
+        onClearAll={clearAllSessions}
+        onExportJSON={exportSessionsJSON}
+      />
+
       {showOnboarding && (
         <Onboarding onComplete={() => setShowOnboarding(false)} />
       )}
     </div>
+    </MotionConfig>
   )
 }

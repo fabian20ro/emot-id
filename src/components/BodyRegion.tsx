@@ -25,6 +25,7 @@ const SENSATION_COLORS: Record<SensationType, string> = {
   numbness: '#9ca3af',
   churning: '#84cc16',
   pressure: '#ec4899',
+  constriction: '#a855f7',
 }
 
 const BASE_COLOR = '#4b5563'

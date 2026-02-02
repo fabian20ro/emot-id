@@ -10,7 +10,9 @@
   "selectionBar": {
     "title": "Your selections",
     "empty": "No selection",
-    "clear": "Clear all"
+    "clear": "Clear all",
+    "cleared": "Cleared",
+    "undo": "Undo"
   },
   "analyze": {
     "button": "Analyze",
@@ -29,7 +31,8 @@
     "combinationsFound": "Found combinations",
     "showDescription": "Show description",
     "needsLabel": "This emotion often needs",
-    "matchStrengthLabel": "Match"
+    "matchStrengthLabel": "Match",
+    "readMore": "Would you like to read more about this?"
   },
   "reflection": {
     "prompt": "Does this feel right?",
@@ -40,7 +43,8 @@
     "backToModel": "Go back and explore",
     "stayHere": "That's okay for now",
     "notQuiteValidation": "Your felt experience is the best guide. Emotion labels are approximations — what you feel is real and valid.",
-    "tryDifferentModel": "Try a different model"
+    "tryDifferentModel": "Try a different model",
+    "warmClose": "Take a moment with this. Your feelings are valid."
   },
   "crisis": {
     "tier1": "If what you're feeling feels overwhelming, support is available. You don't have to navigate this alone.",
@@ -85,7 +89,12 @@
     "cognitiveFromDimensional": "Want to explore what this feeling is called?",
     "trySomatic": "Try the Body Map",
     "tryWheel": "Try the Emotion Wheel",
-    "tryPlutchik": "Try Plutchik's Wheel"
+    "tryPlutchik": "Try Plutchik's Wheel",
+    "tryDimensional": "Try the Emotional Space",
+    "dimensionalFromCognitive": "How intense and pleasant/unpleasant is this?",
+    "somaticFromDimensional": "Where do you feel this in your body?",
+    "dimensionalFromSomatic": "How pleasant and intense is this sensation?",
+    "pleasantEmbodiment": "Where do you feel that warmth? Take a moment to notice."
   },
   "firstHint": {
     "somatic": "Tap where you notice a sensation",
@@ -95,6 +104,7 @@
   },
   "dontKnow": {
     "link": "I don't know what I'm feeling",
+    "normalization": "Many people find it hard to name what they feel — this is normal and a skill that develops with practice.",
     "title": "That's okay — here are two ways to start",
     "bodyOption": "Start with your body",
     "bodyDesc": "Notice physical sensations first",
@@ -116,9 +126,58 @@
     "guidedTraumaNote": "If any area feels uncomfortable, you can skip it at any time.",
     "guidedNothingNormal": "Not noticing sensations is common. Body awareness develops with practice.",
     "guidedMode": "Guided scan",
-    "freeMode": "Free selection"
+    "freeMode": "Free selection",
+    "guidedPause": "You noticed strong {sensation} in your {region}. Take a breath before continuing.",
+    "guidedPauseContinue": "Ready to continue",
+    "numbnessFlooding": "Your body may be protecting you right now. Would you like to try a grounding exercise before continuing?",
+    "numbnessGrounding": "Try grounding",
+    "numbnessContinue": "Continue scanning"
+  },
+  "intervention": {
+    "interventionTitle": "A moment for you",
+    "interventionDismiss": "Continue",
+    "offer": "Would you like to pause for a moment?",
+    "breathIn": "Breathe in...",
+    "breathHold": "Hold...",
+    "breathOut": "Breathe out...",
+    "savorStep1": "Close your eyes for a moment.",
+    "savorStep2": "Recall the situation that brought this feeling.",
+    "savorStep3": "Notice where you feel it in your body.",
+    "savorStep4": "Breathe and let it expand.",
+    "curiosityPrompt": "What might these emotions be telling you? Take a moment to wonder without needing an answer.",
+    "offerBreathing": "Would you like to try something calming?",
+    "offerSavoring": "Take a moment to savor this?",
+    "offerCuriosity": "What might these feelings be telling you?",
+    "yes": "Yes",
+    "noThanks": "No thanks"
   },
   "dimensional": {
     "instructions": "Locate your state on two axes: how pleasant/unpleasant and how intense/calm you feel"
+  },
+  "history": {
+    "title": "Past Sessions",
+    "empty": "No sessions yet",
+    "clearAll": "Clear all data",
+    "export": "Export JSON",
+    "menuLabel": "Past sessions",
+    "vocabTitle": "Your emotional vocabulary",
+    "vocabEmotions": "{count} emotions identified",
+    "vocabModels": "across {count} models",
+    "vocabSessions": "{count} sessions",
+    "milestoneEmotions": "You've identified {count} different emotions!",
+    "milestoneModels": "You've explored {count} different models!",
+    "somaticTitle": "Your body patterns",
+    "somaticRegion": "{region} — {count} times",
+    "valenceTitle": "This week's emotions",
+    "valencePleasant": "{count} pleasant",
+    "valenceUnpleasant": "{count} unpleasant",
+    "valenceNote": "Neither is right or wrong.",
+    "exportText": "Share with therapist",
+    "copied": "Copied!",
+    "suggestNext": "Ready to try something new?",
+    "suggestSomatic": "Explore your body's signals with the Body Map",
+    "suggestDimensional": "Map your feelings on a 2D space",
+    "suggestWheel": "Name emotions more precisely with the Wheel",
+    "suggestPlutchik": "Discover how emotions connect and combine"
   }
 }
