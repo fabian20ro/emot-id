@@ -181,7 +181,7 @@ export function ResultModal({
             aria-modal="true"
             aria-label={modalT.title ?? 'Analysis result'}
             onClick={(e) => e.stopPropagation()}
-            className="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6 max-h-[80vh] flex flex-col"
+            className="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6 max-h-[80vh] sm:max-h-[80vh] max-sm:max-h-[90vh] flex flex-col"
           >
             <div className="flex justify-between items-start mb-4">
               <h2 className="text-xl font-bold text-white">

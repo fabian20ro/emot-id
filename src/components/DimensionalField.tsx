@@ -147,6 +147,13 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
                 onClick={(e) => handleEmotionDotClick(emotion, e)}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); handleEmotionDotClick(emotion, e as unknown as React.MouseEvent) } }}
               >
+                {/* Invisible larger hit area for touch targets (44px equivalent) */}
+                <circle
+                  cx={px}
+                  cy={py}
+                  r={18}
+                  fill="transparent"
+                />
                 <motion.circle
                   cx={px}
                   cy={py}

@@ -44,7 +44,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
             transition={{ duration: 0.15 }}
             role="dialog"
             aria-modal="true"
-            className="absolute left-0 top-full mt-2 w-72 bg-gray-800 rounded-xl shadow-xl border border-gray-700 overflow-hidden z-50"
+            className="absolute left-0 top-full mt-2 w-72 max-w-[calc(100vw-2rem)] bg-gray-800 rounded-xl shadow-xl border border-gray-700 overflow-hidden z-50"
           >
             <div className="p-2">
               {/* Language Section */}

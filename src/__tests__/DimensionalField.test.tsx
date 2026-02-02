@@ -81,8 +81,8 @@ describe('DimensionalField', () => {
   it('renders circles for each emotion', () => {
     renderField()
     const circles = document.querySelectorAll('circle')
-    // 3 emotion dots (crosshair not rendered yet)
-    expect(circles.length).toBe(3)
+    // 3 emotions × 2 circles each (invisible hit area + visible dot)
+    expect(circles.length).toBe(6)
   })
 
   it('emotion dots have ARIA attributes for accessibility', () => {

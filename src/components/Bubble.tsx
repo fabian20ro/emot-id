@@ -57,7 +57,7 @@ function BubbleBase({ emotion, onClick, size = 'medium', index = 0, position }: 
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={() => onClick(emotion)}
-      className={`rounded-full font-medium shadow-lg cursor-pointer select-none touch-manipulation ${sizeClasses[size]}`}
+      className={`rounded-full font-medium shadow-lg cursor-pointer select-none touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center ${sizeClasses[size]}`}
       style={{
         position: position ? 'absolute' : 'relative',
         left: position?.x,

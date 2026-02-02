@@ -202,7 +202,9 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
             const { labelAnchor, labelSide, anchor } = path
 
             // Arrow endpoints: from label edge toward body anchor
-            const arrowStartX = labelSide === 'left' ? labelAnchor.x + 20 : labelAnchor.x - 20
+            const labelW = 54
+            const labelH = 16
+            const arrowStartX = labelSide === 'left' ? labelAnchor.x + (labelW / 2 - 10) : labelAnchor.x - (labelW / 2 - 10)
             const arrowEndX = labelSide === 'left'
               ? Math.min(anchor.x, arrowStartX + 80)
               : Math.max(anchor.x, arrowStartX - 80)
@@ -225,11 +227,11 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
                 />
                 {/* Label background */}
                 <rect
-                  x={labelSide === 'left' ? labelAnchor.x - 40 : labelAnchor.x - 20}
-                  y={labelAnchor.y - 9}
-                  width={60}
-                  height={18}
-                  rx={9}
+                  x={labelSide === 'left' ? labelAnchor.x - (labelW / 2 + 10) : labelAnchor.x - (labelW / 2 - 10)}
+                  y={labelAnchor.y - labelH / 2}
+                  width={labelW}
+                  height={labelH}
+                  rx={labelH / 2}
                   fill={isSelected ? 'rgba(129,140,248,0.25)' : 'rgba(55,65,81,0.6)'}
                   stroke={isSelected ? 'rgba(129,140,248,0.5)' : 'rgba(107,114,128,0.3)'}
                   strokeWidth={0.5}
@@ -237,9 +239,9 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
                 {/* Label text */}
                 <text
                   x={labelSide === 'left' ? labelAnchor.x - 10 : labelAnchor.x + 10}
-                  y={labelAnchor.y + 3.5}
+                  y={labelAnchor.y + 3}
                   fill={isSelected ? '#c7d2fe' : '#9ca3af'}
-                  fontSize={8}
+                  fontSize={7}
                   fontWeight={isSelected ? 600 : 400}
                   textAnchor="middle"
                 >
