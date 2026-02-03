@@ -16,6 +16,8 @@ function ModelBarBase({ modelId, onModelChange }: ModelBarProps) {
     <div className="flex gap-1 px-4 py-1.5 overflow-x-auto scrollbar-hide">
       {models.map((m) => {
         const isActive = m.id === modelId
+        const fullName = m.name[language]
+        const shortName = m.shortName?.[language]
         return (
           <button
             key={m.id}
@@ -33,7 +35,11 @@ function ModelBarBase({ modelId, onModelChange }: ModelBarProps) {
                 transition={{ type: 'spring', stiffness: 400, damping: 30 }}
               />
             )}
-            <span className="relative z-10">{m.name[language]}</span>
+            <span className="relative z-10">
+              {shortName
+                ? (<><span className="hidden min-[360px]:inline">{fullName}</span><span className="inline min-[360px]:hidden">{shortName}</span></>)
+                : fullName}
+            </span>
           </button>
         )
       })}

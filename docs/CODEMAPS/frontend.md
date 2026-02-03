@@ -10,10 +10,11 @@ App (src/App.tsx)
  +-- Onboarding                   # 4-screen overlay (shown once, persisted)
  +-- Header
  |    +-- MenuButton              # Animated hamburger (3 bars -> X)
- |    +-- SettingsMenu            # Dropdown: language toggle + model selector + history access
- +-- ModelBar                     # Visible model indicator bar below header
+ |    +-- SettingsMenu            # Dropdown: language, model, sound, history, privacy, disclaimer
+ |         +-- InfoButton[]       # Privacy + disclaimer info modals (portal to body)
+ +-- ModelBar                     # Model indicator bar (responsive shortName at <360px)
  +-- AnalyzeButton                # Gradient CTA with selection count, disabled when empty
- +-- "I don't know" button        # Opens DontKnowModal (styled secondary button)
+ +-- "I don't know" button        # Opens DontKnowModal (hidden while showHint visible)
  +-- SelectionBar                 # Horizontal strip of selected emotion chips + combo badges
  |    +-- UndoToast               # 5-second undo toast after clear
  +-- FirstInteractionHint         # Per-model hint (flow-based, above visualization)
@@ -27,7 +28,7 @@ App (src/App.tsx)
  |         |    +-- GuidedScan    # Sequential body scan overlay
  |         +-- DimensionalField   # For dimensional (2D scatter plot)
  +-- ResultModal                  # Full-screen modal with analysis results
- |    +-- ResultCard[]            # Color-coded result cards
+ |    +-- ResultCard[]            # Color-coded result cards (InfoButton for collapsed descriptions)
  |    +-- CrisisBanner            # Tiered crisis banner (tier1/2/3)
  |    +-- MicroIntervention       # Breathing / savoring / curiosity exercise
  |    +-- OppositeAction          # DBT opposite action suggestion (amber box)
@@ -50,6 +51,7 @@ Used by: Plutchik, Wheel models.
 - 16px padding from edges, min-height 200px
 - Positions are memoized: existing bubbles keep position, only new ones are placed
 - Clamping: `Math.max(16, Math.min(pos, containerSize - bubbleSize - 16))` prevents edge clipping
+- Grid fallback: when random placement fails after 100 attempts, lays out in a grid; x/y clamped to `containerWidth - w - padding` to prevent overflow
 - `AnimatePresence mode="popLayout"` for enter/exit animations
 
 **Props:** `VisualizationProps { emotions, onSelect, onDeselect?, sizes, selections? }`
@@ -73,6 +75,7 @@ Used by: Somatic model.
 - Routes deselect through `onDeselect(enrichedSelection)` using selection map lookup
 - Region rendering order: back-facing first (upper-back, lower-back), then front-facing
 - Back regions widened ~15px beyond front regions for visible/clickable slivers
+- `min-h-0 overflow-hidden` on inner container prevents SVG from expanding beyond flex parent
 
 ### BodyRegion (`src/components/BodyRegion.tsx`)
 
@@ -119,7 +122,8 @@ Used by: Dimensional model.
 - Axes: X = valence (unpleasant to pleasant), Y = arousal (calm to intense)
 - Quadrant dividers + axis labels (bilingual via `section('dimensional')`)
 - Emotion dots: r=6 unselected, r=8 selected (with white stroke)
-- Labels: dynamic Y offset (10px unselected, 16px selected to clear dot radius)
+- Labels: dynamic Y offset (10px unselected, 16px selected to clear dot radius) with collision avoidance
+- Label collision avoidance: greedy sort-and-bump algorithm (sort by y then x, bump by `MIN_GAP=14` when labels overlap within 40px horizontal proximity, clamp to viewBox bounds)
 - Text halo via `paintOrder="stroke"` for readability in dense areas
 - Click-to-place crosshair: converts pixel to valence/arousal, finds 3 nearest emotions
 - Suggestion panel: shows nearest emotions as clickable chips (toggle select/deselect)
@@ -165,9 +169,10 @@ Used by: Dimensional model.
 
 ### SettingsMenu (`src/components/SettingsMenu.tsx`)
 
-- Animated dropdown (Framer Motion) with backdrop dismiss
-- Sections: language toggle (ro/en), model selector (all registered models), history access
-- Uses `section('menu')` for type-safe i18n
+- Animated dropdown (Framer Motion) with backdrop dismiss and focus trap
+- Sections: language toggle (ro/en), model selector, sound on/off, past sessions, privacy, disclaimer
+- Privacy and disclaimer sections use `InfoButton` (portal-based info modals) instead of inline `<details>`
+- Uses `section('menu')`, `section('settings')`, `section('privacy')`, `section('disclaimer')` for i18n
 - Reads model list from `getAvailableModels()`
 
 ### AnalyzeButton (`src/components/AnalyzeButton.tsx`)
@@ -207,9 +212,18 @@ Used by: Dimensional model.
 
 - Reusable card for a single `AnalysisResult`
 - Shows: hierarchy path (Wheel), component labels (Plutchik dyads), match strength (Somatic), needs
-- Collapsible description via `<details>` when not expanded
-- Graduated exposure: high-distress results collapsed by default
+- Collapsed descriptions use `InfoButton` (portal-based info modal) instead of `<details>`
+- Graduated exposure: high-distress results collapsed by default with gentler aria-label
 - Color-coded gradient background from `result.color`
+
+### InfoButton (`src/components/InfoButton.tsx`)
+
+- Reusable info trigger + modal for contextual detail (replaces inline `<details>`)
+- Props: `title`, `ariaLabel`, `children` (ReactNode), optional `className`
+- Renders trigger as 44x44px touch target with SVG info icon
+- Dialog rendered via `createPortal(…, document.body)` at `z-[9999]` to escape parent stacking contexts
+- Focus trap via `useFocusTrap`, backdrop dismiss, Framer Motion `AnimatePresence` enter/exit
+- Used in: SettingsMenu (privacy, disclaimer), ResultCard (collapsed descriptions)
 
 ### Onboarding (`src/components/Onboarding.tsx`)
 

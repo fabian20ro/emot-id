@@ -15,6 +15,7 @@ function makeVisibleMap(): Map<string, number> {
 export const somaticModel: EmotionModel<SomaticRegion> = {
   id: MODEL_IDS.SOMATIC,
   name: { ro: 'Harta corporala', en: 'Body Map' },
+  shortName: { ro: 'Corp', en: 'Body' },
   description: {
     ro: 'Harta corporala a emotiilor — identifica emotii prin senzatii fizice in 14 regiuni ale corpului',
     en: 'Body Map of Emotions — identify emotions through physical sensations in 14 body regions',

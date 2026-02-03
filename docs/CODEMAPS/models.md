@@ -22,6 +22,7 @@ BaseEmotion { id, label, description?, needs?, color, intensity? }
 EmotionModel<E extends BaseEmotion> {
   id: string
   name: { ro; en }
+  shortName?: { ro; en }       // optional abbreviated name for narrow viewports
   description: { ro; en }
   allEmotions: Record<string, E>
   initialState: ModelState
@@ -180,6 +181,8 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 
 **Interaction:** Click field -> crosshair + 3 nearest emotions as suggestions. Click dot directly to toggle select.
 
+**Coordinate nudges:** `lonely` and `resigned` coordinates were adjusted to reduce overlap in the unpleasant-calm quadrant (5 emotions added earlier to fill that gap).
+
 **`findNearest(valence, arousal, emotions, count)`**: Euclidean distance sort, returns closest N emotions.
 
 **analyze logic:** Maps selections to `AnalysisResult` with `valence` and `arousal` fields preserved.
@@ -250,7 +253,7 @@ interface ModelRegistryEntry {
 // Exports
 getModel(id: string): EmotionModel | undefined
 getVisualization(id: string): ComponentType | undefined
-getAvailableModels(): { id, name, description }[]
+getAvailableModels(): { id, name, shortName?, description }[]
 defaultModelId = 'somatic'
 ```
 

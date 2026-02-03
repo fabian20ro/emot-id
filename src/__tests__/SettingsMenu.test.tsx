@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { SettingsMenu } from '../components/SettingsMenu'
 import { LanguageProvider } from '../context/LanguageContext'
 
@@ -43,8 +44,35 @@ describe('SettingsMenu', () => {
     expect(screen.queryByText('Language')).not.toBeInTheDocument()
   })
 
-  it('renders disclaimer section', () => {
+  it('renders disclaimer section with InfoButton', () => {
     renderMenu()
     expect(screen.getByText('Disclaimer')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Disclaimer' })).toBeInTheDocument()
+  })
+
+  it('opens disclaimer modal on InfoButton click', async () => {
+    const user = userEvent.setup()
+    renderMenu()
+
+    await user.click(screen.getByRole('button', { name: 'Disclaimer' }))
+    // SettingsMenu dialog + InfoButton modal = 2 dialogs
+    const dialogs = screen.getAllByRole('dialog')
+    expect(dialogs.length).toBe(2)
+    expect(screen.getByText(/supports emotional self-awareness/)).toBeInTheDocument()
+  })
+
+  it('renders privacy headline', () => {
+    renderMenu()
+    expect(screen.getByText('Your data stays on this device')).toBeInTheDocument()
+  })
+
+  it('opens privacy modal on InfoButton click', async () => {
+    const user = userEvent.setup()
+    renderMenu()
+
+    await user.click(screen.getByRole('button', { name: 'Your data stays on this device' }))
+    const dialogs = screen.getAllByRole('dialog')
+    expect(dialogs.length).toBe(2)
+    expect(screen.getByText(/stored locally on your device/)).toBeInTheDocument()
   })
 })

@@ -255,8 +255,8 @@
     "description": { "ro": "Singuratatea semnaleaza o nevoie fundamentala de conexiune umana. Este diferita de izolare — poti fi singur fara sa fii singuratic si singuratic intr-o multime.", "en": "Loneliness signals a fundamental need for human connection. It is different from solitude — you can be alone without being lonely and lonely in a crowd." },
     "needs": { "ro": "conexiune autentica si apartenenta", "en": "authentic connection and belonging" },
     "color": "#5C6BC0",
-    "valence": -0.6,
-    "arousal": -0.4,
+    "valence": -0.7,
+    "arousal": -0.35,
     "quadrant": "unpleasant-calm"
   },
   "lethargic": {
@@ -345,8 +345,8 @@
     "description": { "ro": "Resemnarea este renuntarea la lupta — o acceptare pasiva ca lucrurile nu se vor schimba. Poate fi o forma de protectie dupa esecuri repetate, dar daca persista, poate impiedica cresterea si schimbarea.", "en": "Resignation is giving up the fight — a passive acceptance that things won't change. It can be a form of protection after repeated failures, but if it persists, it may prevent growth and change." },
     "needs": { "ro": "speranta si pasi mici", "en": "hope and small steps" },
     "color": "#9575CD",
-    "valence": -0.5,
-    "arousal": -0.5,
+    "valence": -0.55,
+    "arousal": -0.55,
     "quadrant": "unpleasant-calm"
   },
   "pensive": {

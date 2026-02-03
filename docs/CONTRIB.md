@@ -41,10 +41,23 @@ Key directories:
 1. Create `src/models/<id>/` with `types.ts`, `index.ts`, `data.json`
 2. Extend `BaseEmotion` with model-specific fields in `types.ts`
 3. Implement `EmotionModel<YourType>` interface in `index.ts`
+   - Set `shortName` (optional `{ ro, en }`) for compact display in ModelBar on narrow screens
 4. Add model ID to `MODEL_IDS` in `src/models/constants.ts`
 5. Register in `src/models/registry.ts` with a visualization component
 6. Add i18n keys to `src/i18n/ro.json` and `src/i18n/en.json`
 7. Add first-hint text to `firstHint.<modelId>` in both i18n files
+
+## Key Components
+
+| Component | Purpose |
+|-----------|---------|
+| `InfoButton` | Reusable info icon (circled "i") that opens a portal modal with title + children content. Uses focus trap and Escape-to-close. Replaces `<details>` for inline disclosures (disclaimer, result descriptions, privacy). |
+| `BubbleField` | Plutchik bubble visualization (clamped to viewport bounds) |
+| `BodyMap` | Somatic body outline with selectable regions |
+| `DimensionalField` | 2D valence/arousal field with label collision avoidance |
+| `ModelBar` | Tab bar for switching models; shows `shortName` on narrow screens |
+| `SettingsMenu` | Language toggle, sound toggle, privacy info, session history link |
+| `ResultCard` | Analysis results with expandable descriptions via InfoButton |
 
 ## Conventions
 
@@ -55,12 +68,12 @@ Key directories:
 - **React.memo** on visualization components (Bubble, BodyRegion, BubbleField, BodyMap, DimensionalField)
 - **Functional state updates** to avoid stale closures in callbacks
 - **Type-safe i18n** — use `section('sectionName')` from `useLanguage()` instead of casting `t`
+- **Portal modals** — use `InfoButton` (or `createPortal`) for overlays so they escape parent overflow/z-index
 
 ## Testing
 
 - Test runner: Vitest + Testing Library + jsdom
 - Test files: `src/__tests__/*.test.ts(x)`
-- Current coverage: 37 files, 255 tests
 - Run `npm test` before committing
 
 ## Environment

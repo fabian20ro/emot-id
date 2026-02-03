@@ -151,6 +151,14 @@
     "yes": "Da",
     "noThanks": "Nu, multumesc"
   },
+  "infoButton": {
+    "close": "Inchide"
+  },
+  "privacy": {
+    "headline": "Datele tale raman pe acest dispozitiv",
+    "title": "Confidentialitate",
+    "detail": "Toate datele tale — selectiile de emotii, istoricul sesiunilor, hartile corporale si preferintele — sunt stocate local pe dispozitivul tau folosind IndexedDB si localStorage. Nimic nu este trimis catre vreun server. Nu exista analize, conturi sau sincronizare in cloud. Poti sterge toate datele oricand din Sesiuni anterioare."
+  },
   "dimensional": {
     "instructions": "Localizeaza-ti starea pe cele doua axe: cat de placut/neplacut si cat de intens/calm te simti"
   },

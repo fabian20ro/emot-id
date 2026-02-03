@@ -46,6 +46,8 @@ indexedDB.deleteDatabase('keyval-store')
 2. Access via `useLanguage().section('sectionName').keyName`
 3. The `i18n-completeness.test.ts` test verifies both files have matching keys
 
+Current top-level i18n sections include: `app`, `disclaimer`, `onboarding`, `firstHint`, `results`, `microIntervention`, `infoButton`, `privacy`, `dimensional`, `history`, `somatic`, among others.
+
 ### Debug crisis detection
 
 Crisis tiers are determined by `getCrisisTier()` in `src/models/distress.ts`:
@@ -85,6 +87,16 @@ The service worker caches aggressively. Users may need to:
 
 If `idb-keyval` fails (e.g., in private browsing), the app gracefully degrades — sessions aren't saved but the app remains functional. Check `useSessionHistory` hook error handling.
 
+### Mobile layout issues
+
+Common mobile viewport problems and their fixes:
+
+- **BubbleField overflow** — Bubbles are clamped to container bounds; if they escape, check the clamping logic in BubbleField
+- **BodyMap too short** — Component has a `min-height` to prevent collapse on small screens
+- **ModelBar names overflow** — Models define `shortName` for narrow viewports (< 360px); names swap automatically
+- **DimensionalField label overlap** — Axis labels use collision-avoidance offsets at small widths
+- **Safe-area insets** — Bottom nav and fixed elements use `env(safe-area-inset-bottom)` for notched devices
+
 ## Monitoring
 
 No server-side monitoring (client-only app). Key health indicators:
@@ -99,3 +111,4 @@ No server-side monitoring (client-only app). Key health indicators:
 - No telemetry, no analytics, no external API calls
 - "Clear all data" button in SessionHistory removes all IndexedDB records
 - JSON export lets users download and manage their own data
+- Privacy disclosure accessible in SettingsMenu via InfoButton (i18n key: `privacy`)

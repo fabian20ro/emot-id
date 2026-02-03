@@ -130,7 +130,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
         </button>
       </div>
 
-      <div className="relative w-full max-w-sm flex-1 min-h-[200px] flex items-center justify-center">
+      <div className="relative w-full max-w-sm flex-1 min-h-0 overflow-hidden flex items-center justify-center">
         <svg
           viewBox={VIEWBOX}
           className="w-full h-full"

@@ -43,6 +43,7 @@ export interface VisualizationProps {
 export interface EmotionModel<E extends BaseEmotion = BaseEmotion> {
   id: string
   name: { ro: string; en: string }
+  shortName?: { ro: string; en: string }
   description: { ro: string; en: string }
   allEmotions: Record<string, E>
   initialState: ModelState

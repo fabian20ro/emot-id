@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import { useFocusTrap } from '../hooks/useFocusTrap'
 import { getAvailableModels } from '../models/registry'
+import { InfoButton } from './InfoButton'
 
 interface SettingsMenuProps {
   isOpen: boolean
@@ -13,6 +14,12 @@ interface SettingsMenuProps {
   onOpenHistory?: () => void
 }
 
+function toggleClass(active: boolean): string {
+  return active
+    ? 'bg-purple-500 text-white'
+    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+}
+
 export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMuted, onSoundMutedChange, onOpenHistory }: SettingsMenuProps) {
   const { language, setLanguage, section } = useLanguage()
   const availableModels = getAvailableModels()
@@ -20,6 +27,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
   const disclaimerT = section('disclaimer')
   const settingsT = section('settings')
   const historyT = section('history')
+  const privacyT = section('privacy')
   const focusTrapRef = useFocusTrap(isOpen, onClose)
 
   return (
@@ -56,21 +64,13 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
               <div className="flex gap-1 px-2 pb-2">
                 <button
                   onClick={() => { setLanguage('ro'); onClose() }}
-                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    language === 'ro'
-                      ? 'bg-purple-500 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
+                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${toggleClass(language === 'ro')}`}
                 >
                   Romana
                 </button>
                 <button
                   onClick={() => { setLanguage('en'); onClose() }}
-                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    language === 'en'
-                      ? 'bg-purple-500 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
+                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${toggleClass(language === 'en')}`}
                 >
                   English
                 </button>
@@ -87,11 +87,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
                   <button
                     key={m.id}
                     onClick={() => { onModelChange(m.id); onClose() }}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-left ${
-                      modelId === m.id
-                        ? 'bg-purple-500 text-white'
-                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                    }`}
+                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-left ${toggleClass(modelId === m.id)}`}
                   >
                     <span className="block">{m.name[language]}</span>
                     <span className={`block text-xs mt-0.5 ${
@@ -112,21 +108,13 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
               <div className="flex gap-1 px-2 pb-2">
                 <button
                   onClick={() => { onSoundMutedChange(false); onClose() }}
-                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    !soundMuted
-                      ? 'bg-purple-500 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
+                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${toggleClass(!soundMuted)}`}
                 >
                   {settingsT.soundOn ?? 'On'}
                 </button>
                 <button
                   onClick={() => { onSoundMutedChange(true); onClose() }}
-                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    soundMuted
-                      ? 'bg-purple-500 text-white'
-                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  }`}
+                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${toggleClass(soundMuted)}`}
                 >
                   {settingsT.soundOff ?? 'Off'}
                 </button>
@@ -144,16 +132,34 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
                 </div>
               )}
 
+              {/* Privacy */}
+              <div className="px-2 pb-1 pt-1 border-t border-gray-700 mt-1">
+                <div className="flex items-center justify-between px-3 py-1">
+                  <span className="text-xs text-gray-400">
+                    {privacyT.headline ?? 'Your data stays on this device'}
+                  </span>
+                  <InfoButton
+                    title={privacyT.title ?? 'Privacy'}
+                    ariaLabel={privacyT.headline ?? 'Your data stays on this device'}
+                  >
+                    <p>{privacyT.detail ?? ''}</p>
+                  </InfoButton>
+                </div>
+              </div>
+
               {/* Disclaimer */}
-              <div className={`px-2 pb-2 pt-1 border-t border-gray-700 ${onOpenHistory ? '' : 'mt-1'}`}>
-                <details className="group">
-                  <summary className="px-3 py-2 text-xs text-gray-500 cursor-pointer hover:text-gray-400 transition-colors select-none">
+              <div className="px-2 pb-2 pt-1 border-t border-gray-700">
+                <div className="flex items-center justify-between px-3 py-1">
+                  <span className="text-xs text-gray-500">
                     {disclaimerT.label ?? 'Disclaimer'}
-                  </summary>
-                  <p className="px-3 py-2 text-xs text-gray-500 leading-relaxed">
-                    {disclaimerT.text ?? 'This app supports emotional self-awareness. It is not a diagnostic tool and does not replace professional mental health support.'}
-                  </p>
-                </details>
+                  </span>
+                  <InfoButton
+                    title={disclaimerT.title ?? 'About this app'}
+                    ariaLabel={disclaimerT.label ?? 'Disclaimer'}
+                  >
+                    <p>{disclaimerT.text ?? ''}</p>
+                  </InfoButton>
+                </div>
               </div>
             </div>
           </motion.div>

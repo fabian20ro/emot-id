@@ -54,7 +54,7 @@ function calculatePositionsForNewEmotions(
       const index = placed.length
       const col = index % cols
       const row = Math.floor(index / cols)
-      x = padding + col * (w + 16)
+      x = Math.min(padding + col * (w + 16), containerWidth - w - padding)
       y = Math.min(padding + row * (h + 16), containerHeight - h - padding)
     }
 

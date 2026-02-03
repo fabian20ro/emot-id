@@ -1,5 +1,6 @@
 import { HIGH_DISTRESS_IDS } from '../models/distress'
 import type { AnalysisResult } from '../models/types'
+import { InfoButton } from './InfoButton'
 
 interface ResultCardProps {
   result: AnalysisResult
@@ -10,10 +11,26 @@ interface ResultCardProps {
   needsLabel?: string
 }
 
+function NeedsBadge({ needs, language, label, className = 'text-xs text-gray-400 mt-2 italic' }: {
+  needs: AnalysisResult['needs']
+  language: 'ro' | 'en'
+  label: string
+  className?: string
+}) {
+  if (!needs) return null
+  return (
+    <p className={className}>
+      {label}:{' '}
+      <span className="text-gray-300">{needs[language]}</span>
+    </p>
+  )
+}
+
 export function ResultCard({ result, language, expanded, showDescriptionLabel, readMoreLabel, needsLabel }: ResultCardProps) {
   // High-distress results always start collapsed (graduated exposure)
   const isHighDistress = HIGH_DISTRESS_IDS.has(result.id)
   const shouldExpand = expanded && !isHighDistress
+  const needsText = needsLabel ?? 'This emotion often needs'
   return (
     <div
       className="py-4 px-4 rounded-xl"
@@ -49,27 +66,28 @@ export function ResultCard({ result, language, expanded, showDescriptionLabel, r
       )}
       {result.description && (
         shouldExpand ? (
-          <p className="text-sm text-gray-300 mt-2 leading-relaxed">
-            {result.description[language]}
-          </p>
-        ) : (
-          <details className="mt-2 group">
-            <summary className="text-xs text-gray-400 cursor-pointer hover:text-gray-300 transition-colors select-none">
-              {isHighDistress
-                ? (readMoreLabel ?? 'Would you like to read more about this?')
-                : (showDescriptionLabel ?? 'Show description')}
-            </summary>
-            <p className="text-sm text-gray-300 mt-1 leading-relaxed">
+          <>
+            <p className="text-sm text-gray-300 mt-2 leading-relaxed">
               {result.description[language]}
             </p>
-          </details>
+            <NeedsBadge needs={result.needs} language={language} label={needsText} />
+          </>
+        ) : (
+          <div className="flex items-center gap-1 mt-1">
+            <InfoButton
+              title={result.label[language]}
+              ariaLabel={isHighDistress
+                ? (readMoreLabel ?? 'Would you like to read more about this?')
+                : (showDescriptionLabel ?? 'Show description')}
+            >
+              <p>{result.description[language]}</p>
+              <NeedsBadge needs={result.needs} language={language} label={needsText} className="mt-3 italic text-gray-400" />
+            </InfoButton>
+          </div>
         )
       )}
-      {result.needs && (
-        <p className="text-xs text-gray-400 mt-2 italic">
-          {needsLabel ?? 'This emotion often needs'}:{' '}
-          <span className="text-gray-300">{result.needs[language]}</span>
-        </p>
+      {!result.description && (
+        <NeedsBadge needs={result.needs} language={language} label={needsText} />
       )}
     </div>
   )

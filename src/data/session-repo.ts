@@ -7,10 +7,6 @@ export async function saveSession(session: Session): Promise<void> {
   await set(session.id, session, store)
 }
 
-export async function getSession(id: string): Promise<Session | undefined> {
-  return get<Session>(id, store)
-}
-
 export async function getAllSessions(): Promise<Session[]> {
   const allKeys = await keys(store)
   const sessions: Session[] = []

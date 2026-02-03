@@ -158,7 +158,6 @@ export default function App() {
     [analysisResults, selections, modelId, saveSession],
   )
 
-
   return (
     <MotionConfig reducedMotion="user">
     <div className="h-dvh overflow-hidden flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
@@ -179,8 +178,8 @@ export default function App() {
           modelId={modelId}
           selectionCount={selections.length}
         />
-        {/* "I don't know" entry point — prominent secondary button */}
-        {selections.length === 0 && (
+        {/* "I don't know" entry point — hidden while hint visible to save vertical space */}
+        {selections.length === 0 && !showHint && (
           <button
             onClick={() => setShowDontKnow(true)}
             className="block mx-auto mt-2 px-4 py-1.5 text-sm text-gray-300 bg-gray-700/60 hover:bg-gray-700 border border-gray-600 rounded-full transition-colors"

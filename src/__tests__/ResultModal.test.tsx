@@ -59,18 +59,14 @@ describe('ResultModal', () => {
     expect(screen.getByText('desc_trust_en')).toBeInTheDocument()
   })
 
-  it('uses collapsible details for 3+ results', () => {
+  it('uses InfoButton for 3+ results (collapsed descriptions)', () => {
     const results = [makeResult('a'), makeResult('b'), makeResult('c')]
     const selections = results.map((r) => makeEmotion(r.id))
     renderModal({ results, selections })
 
-    // Descriptions should be inside <details> elements (collapsed by default)
-    const details = document.querySelectorAll('details')
-    expect(details.length).toBe(3)
-
-    // Summary should show "Show description"
-    const summaries = screen.getAllByText('Show description')
-    expect(summaries.length).toBe(3)
+    // Descriptions should be behind InfoButton (collapsed by default)
+    const infoButtons = screen.getAllByRole('button', { name: 'Show description' })
+    expect(infoButtons.length).toBe(3)
   })
 
   it('shows no combinations message when results empty', () => {

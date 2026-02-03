@@ -19,6 +19,7 @@ const INITIAL_EMOTION_IDS = [
 export const plutchikModel: EmotionModel<PlutchikEmotion> = {
   id: MODEL_IDS.PLUTCHIK,
   name: { ro: 'Roata emotiilor Plutchik', en: "Plutchik's Wheel of Emotions" },
+  shortName: { ro: 'Plutchik', en: 'Plutchik' },
   description: {
     ro: '8 emotii primare care se combina in diade — selecteaza doua emotii primare pentru a descoperi combinatia lor',
     en: '8 primary emotions that combine into dyads — select two primary emotions to discover their combination',

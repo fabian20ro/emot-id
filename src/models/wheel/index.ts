@@ -18,6 +18,7 @@ const CENTER_IDS = [
 export const wheelModel: EmotionModel<WheelEmotion> = {
   id: MODEL_IDS.WHEEL,
   name: { ro: 'Roata emotiilor', en: 'Emotion Wheel' },
+  shortName: { ro: 'Roata', en: 'Wheel' },
   description: {
     ro: 'Navigare ierarhica pe 3 nivele — de la emotii generale la specifice prin explorare in profunzime',
     en: '3-level hierarchical navigation — from general to specific emotions through drill-down exploration',

@@ -126,6 +126,10 @@ User completes reflection (ResultModal close)
 - Bilingual (ro/en), matched by emotion ID patterns
 - Displayed in amber box between results and bridge in ResultModal
 
+### InfoButton Portal Pattern (`src/components/InfoButton.tsx`)
+
+`InfoButton` renders its dialog via `createPortal(…, document.body)` at `z-[9999]` to escape any parent stacking context (e.g. SettingsMenu's `z-50`, ResultModal's backdrop). The dialog uses `useFocusTrap` for accessibility, Framer Motion `AnimatePresence` for enter/exit, and backdrop dismiss.
+
 ### Cross-Model Bridges (`src/components/model-bridges.ts`)
 
 Pure function `getModelBridge()` suggests contextual next models after analysis:
@@ -181,13 +185,14 @@ src/
   components/
     Header.tsx                    # App header with menu trigger
     MenuButton.tsx                # Animated hamburger button
-    SettingsMenu.tsx              # Language + model selector + history access
+    SettingsMenu.tsx              # Language, model, sound, history, privacy (InfoButton), disclaimer
     ModelBar.tsx                  # Visible model indicator bar below header
     AnalyzeButton.tsx             # Gradient CTA with selection count
     SelectionBar.tsx              # Selected emotions strip + combo display + undo
     UndoToast.tsx                 # 5-second undo toast for clear actions
     ResultModal.tsx               # Analysis results (reflection, bridges, crisis, interventions)
-    ResultCard.tsx                # Reusable result card (extracted from ResultModal)
+    ResultCard.tsx                # Reusable result card (InfoButton for collapsed descriptions)
+    InfoButton.tsx                # Reusable info modal (portal to body, z-[9999], focus trap)
     CrisisBanner.tsx              # Tiered crisis detection banner (safety-critical)
     MicroIntervention.tsx         # Post-analysis breathing/savoring/curiosity exercises
     SessionHistory.tsx            # Session history modal (vocabulary, patterns, export)

@@ -48,10 +48,11 @@ export function getVisualization(id: string): ComponentType<VisualizationProps> 
   return isModelId(id) ? models[id].Visualization : undefined
 }
 
-export function getAvailableModels(): { id: string; name: { ro: string; en: string }; description: { ro: string; en: string } }[] {
+export function getAvailableModels(): { id: string; name: { ro: string; en: string }; shortName?: { ro: string; en: string }; description: { ro: string; en: string } }[] {
   return Object.values(models).map((entry) => ({
     id: entry.model.id,
     name: entry.model.name,
+    shortName: entry.model.shortName,
     description: entry.model.description,
   }))
 }

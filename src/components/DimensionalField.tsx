@@ -32,6 +32,34 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
     [selections]
   )
 
+  // Compute label y-offsets with collision avoidance
+  const labelOffsets = useMemo(() => {
+    const MIN_GAP = 14
+    const entries = dimEmotions.map((e) => {
+      const px = toPixel(e.valence)
+      const py = toPixel(-e.arousal)
+      const isSelected = selectedIds.has(e.id)
+      return { id: e.id, x: px, baseY: py - (isSelected ? 16 : 10) }
+    })
+    // Sort by y then x for greedy pass
+    entries.sort((a, b) => a.baseY - b.baseY || a.x - b.x)
+    const adjusted = new Map<string, number>()
+    const placed: { x: number; y: number }[] = []
+    for (const entry of entries) {
+      let labelY = entry.baseY
+      for (const prev of placed) {
+        if (Math.abs(prev.x - entry.x) < 40 && Math.abs(prev.y - labelY) < MIN_GAP) {
+          labelY = prev.y + MIN_GAP
+        }
+      }
+      // Clamp to viewBox bounds so labels don't overflow
+      labelY = Math.max(PADDING, Math.min(labelY, FIELD_SIZE - PADDING - 5))
+      adjusted.set(entry.id, labelY)
+      placed.push({ x: entry.x, y: labelY })
+    }
+    return adjusted
+  }, [dimEmotions, selectedIds])
+
   const svgRef = useRef<SVGSVGElement>(null)
   const [crosshair, setCrosshair] = useState<{ x: number; y: number } | null>(null)
   const [suggestions, setSuggestions] = useState<DimensionalEmotion[]>([])
@@ -170,7 +198,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
                 />
                 <text
                   x={px}
-                  y={py - (isSelected ? 16 : 10)}
+                  y={labelOffsets.get(emotion.id) ?? (py - (isSelected ? 16 : 10))}
                   fill={isSelected ? '#fff' : 'rgba(156, 163, 175, 0.6)'}
                   fontSize={isSelected ? 11 : 9}
                   textAnchor="middle"

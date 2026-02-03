@@ -151,6 +151,14 @@
     "yes": "Yes",
     "noThanks": "No thanks"
   },
+  "infoButton": {
+    "close": "Close"
+  },
+  "privacy": {
+    "headline": "Your data stays on this device",
+    "title": "Privacy",
+    "detail": "All your data — emotion selections, session history, body maps, and preferences — is stored locally on your device using IndexedDB and localStorage. Nothing is sent to any server. There are no analytics, no accounts, and no cloud sync. You can delete all data anytime from Past Sessions."
+  },
   "dimensional": {
     "instructions": "Locate your state on two axes: how pleasant/unpleasant and how intense/calm you feel"
   },

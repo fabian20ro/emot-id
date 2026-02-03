@@ -1,6 +1,6 @@
 import type { Session } from './types'
 
-export interface RegionFrequency {
+interface RegionFrequency {
   regionId: string
   count: number
   sensations: Record<string, number>
