@@ -12,6 +12,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@playwright/test": "^1.58.1",
     "@tailwindcss/vite": "^4.1.18",
     "framer-motion": "^12.29.2",
     "idb-keyval": "^6.2.2",
