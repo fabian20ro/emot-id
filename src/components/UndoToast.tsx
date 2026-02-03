@@ -27,7 +27,7 @@ export function UndoToast({ visible, onUndo, onDismiss }: UndoToastProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-gray-700 text-white px-4 py-2 rounded-xl shadow-lg flex items-center gap-3 text-sm"
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[var(--z-toast)] bg-gray-700 text-white px-4 py-2 rounded-xl shadow-lg flex items-center gap-3 text-sm"
     >
       <span>{selectionBarT.cleared ?? 'Cleared'}</span>
       <button

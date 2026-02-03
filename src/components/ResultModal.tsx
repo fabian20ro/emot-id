@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import { useFocusTrap } from '../hooks/useFocusTrap'
@@ -147,13 +147,6 @@ export function ResultModal({
     onClose()
   }
 
-  // Auto-dismiss warm close after 3 seconds
-  useEffect(() => {
-    if (reflectionState !== 'warmClose') return
-    const timer = setTimeout(handleClose, 3000)
-    return () => clearTimeout(timer)
-  }, [reflectionState, handleClose])
-
   const handleSwitchModel = (targetModelId: string) => {
     setReflectionState('results')
     setReflectionAnswer(null)
@@ -168,7 +161,7 @@ export function ResultModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
           onClick={handleClose}
         >
           <motion.div
@@ -322,7 +315,7 @@ export function ResultModal({
                       onClick={() => setReflectionState('reflection')}
                       className="mt-3 text-sm text-gray-400 hover:text-gray-300 transition-colors text-center"
                     >
-                      {reflectionT.prompt ?? 'Does this feel right?'}
+                      {reflectionT.prompt ?? 'Does this resonate with your experience?'}
                     </button>
                   )}
 
@@ -343,26 +336,26 @@ export function ResultModal({
                   className="flex-1 flex flex-col items-center justify-center py-8"
                 >
                   <p className="text-lg text-gray-200 mb-6 text-center">
-                    {reflectionT.prompt ?? 'Does this feel right?'}
+                    {reflectionT.prompt ?? 'Does this resonate with your experience?'}
                   </p>
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                     <button
                       onClick={() => handleReflection('yes')}
-                      className="px-4 py-2 rounded-xl bg-green-600/20 border border-green-600/50 text-green-300 hover:bg-green-600/30 transition-colors text-sm"
+                      className="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl bg-gray-600/20 border border-gray-600/50 text-gray-300 hover:bg-gray-600/30 transition-colors text-sm"
                     >
-                      {reflectionT.yes ?? 'Yes, this resonates'}
+                      {reflectionT.yes ?? 'Yes'}
                     </button>
                     <button
                       onClick={() => handleReflection('partly')}
-                      className="px-4 py-2 rounded-xl bg-amber-600/20 border border-amber-600/50 text-amber-300 hover:bg-amber-600/30 transition-colors text-sm"
+                      className="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl bg-gray-600/20 border border-gray-600/50 text-gray-300 hover:bg-gray-600/30 transition-colors text-sm"
                     >
-                      {reflectionT.partly ?? 'Partly'}
+                      {reflectionT.partly ?? 'Somewhat'}
                     </button>
                     <button
                       onClick={() => handleReflection('no')}
-                      className="px-4 py-2 rounded-xl bg-gray-600/20 border border-gray-600/50 text-gray-300 hover:bg-gray-600/30 transition-colors text-sm"
+                      className="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl bg-gray-600/20 border border-gray-600/50 text-gray-300 hover:bg-gray-600/30 transition-colors text-sm"
                     >
-                      {reflectionT.no ?? 'Not quite'}
+                      {reflectionT.no ?? 'Not really'}
                     </button>
                   </div>
                 </motion.div>

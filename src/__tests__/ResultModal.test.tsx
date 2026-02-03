@@ -121,7 +121,7 @@ describe('ResultModal', () => {
   it('shows reflection prompt', () => {
     const results = [makeResult('joy')]
     renderModal({ results, selections: [makeEmotion('joy')] })
-    expect(screen.getByText('Does this feel right?')).toBeInTheDocument()
+    expect(screen.getByText('Does this resonate with your experience?')).toBeInTheDocument()
   })
 
   it('shows crisis resources for high-distress results', () => {

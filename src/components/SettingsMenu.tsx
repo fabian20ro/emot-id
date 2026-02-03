@@ -39,7 +39,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-[var(--z-backdrop)] bg-black/60 backdrop-blur-sm"
             onClick={onClose}
           />
 
@@ -52,7 +52,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
             transition={{ duration: 0.15 }}
             role="dialog"
             aria-modal="true"
-            className="absolute left-0 top-full mt-2 w-72 max-w-[calc(100vw-2rem)] bg-gray-800 rounded-xl shadow-xl border border-gray-700 overflow-hidden z-50"
+            className="absolute left-0 top-full mt-2 w-72 max-w-[calc(100vw-2rem)] bg-gray-800 rounded-xl shadow-xl border border-gray-700 overflow-hidden z-[var(--z-modal)]"
           >
             <div className="p-2">
               {/* Language Section */}
@@ -131,6 +131,21 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
                   </button>
                 </div>
               )}
+
+              {/* Crisis support */}
+              <div className="px-2 pb-1 pt-1 border-t border-gray-700 mt-1">
+                <div className="flex items-center justify-between px-3 py-1">
+                  <span className="text-xs text-gray-400">
+                    {menuT.crisisSupport ?? 'Need support?'}
+                  </span>
+                  <InfoButton
+                    title={menuT.crisisSupport ?? 'Need support?'}
+                    ariaLabel={menuT.crisisSupport ?? 'Need support?'}
+                  >
+                    <p>{menuT.crisisDetail ?? 'Call 116 123 (Romania, free, 24/7) or visit findahelpline.com'}</p>
+                  </InfoButton>
+                </div>
+              </div>
 
               {/* Privacy */}
               <div className="px-2 pb-1 pt-1 border-t border-gray-700 mt-1">

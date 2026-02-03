@@ -113,7 +113,7 @@ export function SessionHistory({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-black/50"
+            className="fixed inset-0 z-[var(--z-backdrop)] bg-black/50"
             onClick={onClose}
           />
           <motion.div
@@ -123,7 +123,7 @@ export function SessionHistory({
             exit={{ opacity: 0, y: 20 }}
             role="dialog"
             aria-modal="true"
-            className="fixed inset-x-4 top-16 bottom-16 z-50 max-w-md mx-auto bg-gray-900 rounded-2xl border border-gray-700 shadow-2xl flex flex-col overflow-hidden"
+            className="fixed inset-x-4 top-16 bottom-16 z-[var(--z-modal)] max-w-md mx-auto bg-gray-900 rounded-2xl border border-gray-700 shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">

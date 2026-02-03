@@ -1,69 +1,14 @@
 import { memo, useRef, useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { Bubble } from './Bubble'
-import type { BaseEmotion, VisualizationProps } from '../models/types'
-
-const sizePixels = { small: 80, medium: 100, large: 120 }
-const bubbleHeight = 40
-
-function calculatePositionsForNewEmotions(
-  newEmotions: BaseEmotion[],
-  containerWidth: number,
-  containerHeight: number,
-  sizes: Map<string, 'small' | 'medium' | 'large'>,
-  existingRects: { x: number; y: number; w: number; h: number }[]
-): Map<string, { x: number; y: number }> {
-  const positions = new Map<string, { x: number; y: number }>()
-  const placed = [...existingRects]
-
-  const padding = 16
-  const availableWidth = containerWidth - padding * 2
-  const availableHeight = containerHeight - padding * 2
-
-  for (const emotion of newEmotions) {
-    const size = sizes.get(emotion.id) || 'medium'
-    const w = sizePixels[size]
-    const h = bubbleHeight
-
-    let x = 0
-    let y = 0
-    let attempts = 0
-    let foundPosition = false
-
-    const gap = 8
-    while (attempts < 100 && !foundPosition) {
-      x = padding + Math.random() * Math.max(0, availableWidth - w)
-      y = padding + Math.random() * Math.max(0, availableHeight - h)
-
-      const hasCollision = placed.some(p =>
-        x < p.x + p.w + gap &&
-        x + w + gap > p.x &&
-        y < p.y + p.h + gap &&
-        y + h + gap > p.y
-      )
-
-      if (!hasCollision) {
-        foundPosition = true
-      }
-      attempts++
-    }
-
-    // If no position found after 100 attempts, use grid fallback
-    if (!foundPosition) {
-      const cols = Math.floor(availableWidth / (w + 16)) || 1
-      const index = placed.length
-      const col = index % cols
-      const row = Math.floor(index / cols)
-      x = Math.min(padding + col * (w + 16), containerWidth - w - padding)
-      y = Math.min(padding + row * (h + 16), containerHeight - h - padding)
-    }
-
-    positions.set(emotion.id, { x, y })
-    placed.push({ x, y, w, h })
-  }
-
-  return positions
-}
+import {
+  MOBILE_BREAKPOINT,
+  bubbleHeight,
+  getSizePixels,
+  calculateDeterministicPositions,
+  calculateRandomPositions,
+} from './bubble-layout'
+import type { VisualizationProps } from '../models/types'
 
 function BubbleFieldBase({
   emotions,
@@ -104,7 +49,17 @@ function BubbleFieldBase({
   useEffect(() => {
     if (containerSize.width === 0 || containerSize.height === 0) return
 
+    // On mobile, recompute all positions deterministically on every change
+    if (containerSize.width < MOBILE_BREAKPOINT) {
+      setPositions(
+        calculateDeterministicPositions(emotions, containerSize.width, containerSize.height, sizes)
+      )
+      return
+    }
+
+    // On desktop, use incremental random scatter
     setPositions(prevPositions => {
+      const sizeMap = getSizePixels(containerSize.width)
       const currentIds = new Set(emotions.map(e => e.id))
       const newEmotions = emotions.filter(e => !prevPositions.has(e.id))
 
@@ -113,7 +68,7 @@ function BubbleFieldBase({
       for (const [id, pos] of prevPositions) {
         if (!currentIds.has(id)) continue
         const size = sizes.get(id) || 'medium'
-        const w = sizePixels[size]
+        const w = sizeMap[size]
         clamped.set(id, {
           x: Math.max(16, Math.min(pos.x, containerSize.width - w - 16)),
           y: Math.max(16, Math.min(pos.y, containerSize.height - bubbleHeight - 16)),
@@ -126,12 +81,12 @@ function BubbleFieldBase({
         const pos = clamped.get(emotion.id)
         if (pos) {
           const size = sizes.get(emotion.id) || 'medium'
-          existingRects.push({ x: pos.x, y: pos.y, w: sizePixels[size], h: bubbleHeight })
+          existingRects.push({ x: pos.x, y: pos.y, w: sizeMap[size], h: bubbleHeight })
         }
       }
 
       // Calculate positions for new emotions
-      const newPositions = calculatePositionsForNewEmotions(
+      const newPositions = calculateRandomPositions(
         newEmotions, containerSize.width, containerSize.height, sizes, existingRects
       )
 

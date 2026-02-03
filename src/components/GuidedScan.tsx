@@ -179,7 +179,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   }, [phase, currentIndex])
 
   return (
-    <div className="absolute inset-0 z-30 flex items-end justify-center pointer-events-none">
+    <div className="absolute inset-0 z-[var(--z-dropdown)] flex items-end justify-center pointer-events-none">
       <AnimatePresence mode="wait">
         {/* Centering phase — breathing cycle */}
         {phase === 'centering' && (

@@ -41,7 +41,7 @@ export function InfoButton({ title, ariaLabel, children, className = '' }: InfoB
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
-              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm"
+              className="fixed inset-0 z-[var(--z-onboarding)] flex items-center justify-center bg-black/40 backdrop-blur-sm"
               onClick={close}
             >
               <motion.div

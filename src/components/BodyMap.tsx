@@ -202,8 +202,8 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
             const { labelAnchor, labelSide, anchor } = path
 
             // Arrow endpoints: from label edge toward body anchor
-            const labelW = 54
-            const labelH = 16
+            const labelW = 62
+            const labelH = 20
             const arrowStartX = labelSide === 'left' ? labelAnchor.x + (labelW / 2 - 10) : labelAnchor.x - (labelW / 2 - 10)
             const arrowEndX = labelSide === 'left'
               ? Math.min(anchor.x, arrowStartX + 80)
@@ -222,7 +222,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
                   x2={arrowEndX}
                   y2={anchor.y}
                   stroke={isSelected ? 'rgba(129,140,248,0.6)' : 'rgba(156,163,175,0.3)'}
-                  strokeWidth={1}
+                  strokeWidth={1.5}
                   markerEnd="url(#arrow-end)"
                 />
                 {/* Label background */}
@@ -241,7 +241,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
                   x={labelSide === 'left' ? labelAnchor.x - 10 : labelAnchor.x + 10}
                   y={labelAnchor.y + 3}
                   fill={isSelected ? '#c7d2fe' : '#9ca3af'}
-                  fontSize={7}
+                  fontSize={9}
                   fontWeight={isSelected ? 600 : 400}
                   textAnchor="middle"
                 >

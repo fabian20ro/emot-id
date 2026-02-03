@@ -63,7 +63,7 @@ export function SensationPicker({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-40 bg-black/40"
+        className="fixed inset-0 z-[var(--z-backdrop)] bg-black/40"
         onClick={onCancel}
       />
 
@@ -86,7 +86,7 @@ export function SensationPicker({
         role="dialog"
         aria-modal="true"
         aria-label={regionLabel}
-        className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-md border-t border-gray-600 rounded-t-2xl shadow-2xl p-4 pb-8 max-w-md mx-auto"
+        className="fixed bottom-0 left-0 right-0 z-[var(--z-modal)] bg-gray-900/95 backdrop-blur-md border-t border-gray-600 rounded-t-2xl shadow-2xl p-4 pb-8 max-w-md mx-auto"
       >
         {/* Drag handle */}
         <div className="flex justify-center mb-3">

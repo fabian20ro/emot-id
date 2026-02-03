@@ -5,7 +5,9 @@
   },
   "menu": {
     "model": "Model",
-    "language": "Limba"
+    "language": "Limba",
+    "crisisSupport": "Ai nevoie de sprijin?",
+    "crisisDetail": "Suna la 116 123 (gratuit, 24/7) sau viziteaza findahelpline.com"
   },
   "selectionBar": {
     "title": "Selectiile tale",
@@ -17,7 +19,7 @@
   "analyze": {
     "button": "Analizeaza",
     "buttonDisabledSomatic": "Atinge o zona a corpului unde observi o senzatie",
-    "buttonDisabledDefault": "Selecteaza o emotie care rezoneaza cel mai mult cu tine acum",
+    "buttonDisabledDefault": "Selecteaza o emotie care rezoneaza cu tine",
     "resultPrefix": "Selectiile tale",
     "exploreAI": "Afla mai multe despre aceste emotii",
     "aiPrompt": "Simt {emotions}. Ce inseamna aceasta emotie si cum o pot intelege mai bine?",
@@ -35,8 +37,8 @@
     "readMore": "Doresti sa citesti mai mult despre aceasta?"
   },
   "reflection": {
-    "prompt": "Rezonezi cu acest rezultat?",
-    "yes": "Da, rezonez",
+    "prompt": "Rezonezi cu aceasta descriere?",
+    "yes": "Da",
     "partly": "Partial",
     "no": "Nu prea",
     "followUp": "Doresti sa explorezi mai departe?",
@@ -65,11 +67,11 @@
     "screen1Title": "Aceasta este o explorare, nu un test",
     "screen1Body": "Nu exista raspunsuri corecte sau gresite. Emotiile sunt complexe si stratificate. Ia-ti timpul necesar — acesta este un spatiu pentru curiozitate, nu pentru judecata.",
     "screen2Title": "Fiecare emotie are un scop",
-    "screen2Body": "Nicio emotie nu este buna sau rea. Furia protejeaza limitele. Tristetea ajuta la procesarea pierderii. Frica te tine in siguranta. In loc sa intrebi \"ce e in neregula,\" intreaba \"ce imi transmite sistemul meu?\"",
+    "screen2Body": "Nicio emotie nu este buna sau rea. Furia protejeaza limitele. Tristetea ajuta la procesarea pierderii. Frica te tine in siguranta. In loc sa intrebi \"ce e in neregula,\" intreaba \"ce imi transmite corpul meu?\"",
     "screen3Title": "Alege calea ta",
     "screen3Body": "Harta Corporala — simte unde traiesc emotiile in corpul tau. Roata Emotiilor — navigheaza de la sentimente generale la specifice. Plutchik — descopera cum se combina si interactioneaza emotiile. Fiecare reveleaza aspecte diferite. Incepe de unde simti ca e natural.",
     "screen4Title": "Despre aceasta aplicatie",
-    "screen4Body": "Aceasta aplicatie sprijina constientizarea emotionala. Nu este un instrument de diagnostic si nu inlocuieste sprijinul profesional de sanatate mintala. Daca treci printr-o perioada dificila, te rugam sa apelezi la un specialist.",
+    "screen4Body": "Aceasta aplicatie sprijina constientizarea emotionala. Nu este un instrument de diagnostic si nu inlocuieste sprijinul profesional. Daca vrei vreodata sa vorbesti cu cineva, poti suna la 116 123 (gratuit, 24/7) sau vizita findahelpline.com.",
     "next": "Inainte",
     "back": "Inapoi",
     "skip": "Sari peste",
@@ -155,7 +157,7 @@
     "close": "Inchide"
   },
   "privacy": {
-    "headline": "Datele tale raman pe acest dispozitiv",
+    "headline": "Viata ta emotionala este profund personala. De aceea, Emot-ID pastreaza totul pe dispozitivul tau.",
     "title": "Confidentialitate",
     "detail": "Toate datele tale — selectiile de emotii, istoricul sesiunilor, hartile corporale si preferintele — sunt stocate local pe dispozitivul tau folosind IndexedDB si localStorage. Nimic nu este trimis catre vreun server. Nu exista analize, conturi sau sincronizare in cloud. Poti sterge toate datele oricand din Sesiuni anterioare."
   },

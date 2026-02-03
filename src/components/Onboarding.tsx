@@ -45,7 +45,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   const isLast = step === screens.length - 1
 
   return (
-    <div className="fixed inset-0 z-50 bg-gray-900/95 flex items-center justify-center p-6" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 z-[var(--z-onboarding)] bg-gray-900 flex items-center justify-center p-6" role="dialog" aria-modal="true">
       <div ref={focusTrapRef} className="max-w-sm w-full flex flex-col items-center text-center gap-6">
         {/* Step indicators */}
         <div className="flex gap-2">

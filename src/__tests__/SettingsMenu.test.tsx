@@ -63,14 +63,14 @@ describe('SettingsMenu', () => {
 
   it('renders privacy headline', () => {
     renderMenu()
-    expect(screen.getByText('Your data stays on this device')).toBeInTheDocument()
+    expect(screen.getByText(/Emot-ID keeps everything on your device/)).toBeInTheDocument()
   })
 
   it('opens privacy modal on InfoButton click', async () => {
     const user = userEvent.setup()
     renderMenu()
 
-    await user.click(screen.getByRole('button', { name: 'Your data stays on this device' }))
+    await user.click(screen.getByRole('button', { name: /Emot-ID keeps everything on your device/ }))
     const dialogs = screen.getAllByRole('dialog')
     expect(dialogs.length).toBe(2)
     expect(screen.getByText(/stored locally on your device/)).toBeInTheDocument()

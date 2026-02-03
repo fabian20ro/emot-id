@@ -16,7 +16,7 @@ export function Header({ modelId, onModelChange, soundMuted, onSoundMutedChange,
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="relative z-50 bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-3 py-2 sm:px-4 sm:py-3">
+    <header className="relative z-[var(--z-header)] bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-3 py-2 sm:px-4 sm:py-3">
       <div className="flex items-center justify-between max-w-2xl mx-auto">
         <div className="flex items-center gap-3">
           <div className="relative">

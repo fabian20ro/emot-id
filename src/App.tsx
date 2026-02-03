@@ -130,6 +130,17 @@ export default function App() {
     setIsModalOpen(true)
   }, [selections, analyze])
 
+  // Early return: render only onboarding when not yet completed (once per device lifetime)
+  if (showOnboarding) {
+    return (
+      <MotionConfig reducedMotion="user">
+        <div className="h-dvh overflow-hidden flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
+          <Onboarding onComplete={() => setShowOnboarding(false)} />
+        </div>
+      </MotionConfig>
+    )
+  }
+
   const handleSessionComplete = useCallback(
     (reflectionAnswer: 'yes' | 'partly' | 'no' | null) => {
       if (analysisResults.length === 0) return
@@ -182,7 +193,7 @@ export default function App() {
         {selections.length === 0 && !showHint && (
           <button
             onClick={() => setShowDontKnow(true)}
-            className="block mx-auto mt-2 px-4 py-1.5 text-sm text-gray-300 bg-gray-700/60 hover:bg-gray-700 border border-gray-600 rounded-full transition-colors"
+            className="block mx-auto mt-2 px-4 py-2.5 min-h-[44px] text-sm text-gray-300 bg-gray-700/60 hover:bg-gray-700 border border-gray-600 rounded-full transition-colors"
           >
             {dontKnowT.link ?? "I don't know what I'm feeling"}
           </button>
@@ -259,9 +270,6 @@ export default function App() {
         onExportJSON={exportSessionsJSON}
       />
 
-      {showOnboarding && (
-        <Onboarding onComplete={() => setShowOnboarding(false)} />
-      )}
     </div>
     </MotionConfig>
   )

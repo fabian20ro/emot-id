@@ -39,7 +39,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
       const px = toPixel(e.valence)
       const py = toPixel(-e.arousal)
       const isSelected = selectedIds.has(e.id)
-      return { id: e.id, x: px, baseY: py - (isSelected ? 16 : 10) }
+      return { id: e.id, x: px, baseY: py - (isSelected ? 20 : 14) }
     })
     // Sort by y then x for greedy pass
     entries.sort((a, b) => a.baseY - b.baseY || a.x - b.x)
@@ -179,28 +179,28 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
                 <circle
                   cx={px}
                   cy={py}
-                  r={18}
+                  r={24}
                   fill="transparent"
                 />
                 <motion.circle
                   cx={px}
                   cy={py}
-                  r={isSelected ? 8 : 6}
+                  r={isSelected ? 13 : 10}
                   fill={emotion.color}
-                  fillOpacity={isSelected ? 0.9 : 0.4}
+                  fillOpacity={isSelected ? 0.9 : 0.6}
                   stroke={isSelected ? '#fff' : 'none'}
                   strokeWidth={isSelected ? 1.5 : 0}
                   animate={{
-                    r: isSelected ? 8 : 6,
-                    fillOpacity: isSelected ? 0.9 : 0.4,
+                    r: isSelected ? 13 : 10,
+                    fillOpacity: isSelected ? 0.9 : 0.6,
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 />
                 <text
                   x={px}
-                  y={labelOffsets.get(emotion.id) ?? (py - (isSelected ? 16 : 10))}
-                  fill={isSelected ? '#fff' : 'rgba(156, 163, 175, 0.6)'}
-                  fontSize={isSelected ? 11 : 9}
+                  y={labelOffsets.get(emotion.id) ?? (py - (isSelected ? 20 : 14))}
+                  fill={isSelected ? '#fff' : 'rgba(156, 163, 175, 0.7)'}
+                  fontSize={isSelected ? 12 : 11}
                   textAnchor="middle"
                   fontWeight={isSelected ? 'bold' : 'normal'}
                   stroke="rgba(17, 24, 39, 0.8)"
