@@ -23,16 +23,10 @@ function getReflectionIcon(answer: 'yes' | 'partly' | 'no'): string {
   }
 }
 
-function getReflectionColorClass(answer: 'yes' | 'partly' | 'no'): string {
-  const baseClass = 'text-xs mt-0.5 inline-block'
-  switch (answer) {
-    case 'yes':
-      return `${baseClass} text-green-400`
-    case 'partly':
-      return `${baseClass} text-yellow-400`
-    case 'no':
-      return `${baseClass} text-gray-500`
-  }
+const REFLECTION_COLORS: Record<'yes' | 'partly' | 'no', string> = {
+  yes: 'text-green-400',
+  partly: 'text-yellow-400',
+  no: 'text-gray-500',
 }
 
 interface SessionHistoryProps {
@@ -64,7 +58,7 @@ const SessionRow = memo(function SessionRow({ session }: { session: Session }) {
       </div>
       <p className="text-sm text-gray-200 truncate">{emotionNames || '—'}</p>
       {session.reflectionAnswer && (
-        <span className={getReflectionColorClass(session.reflectionAnswer)}>
+        <span className={`text-xs mt-0.5 inline-block ${REFLECTION_COLORS[session.reflectionAnswer]}`}>
           {getReflectionIcon(session.reflectionAnswer)}
         </span>
       )}

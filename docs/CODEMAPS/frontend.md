@@ -1,6 +1,6 @@
 # Frontend Codemap
 
-**Last Updated:** 2026-02-03
+**Last Updated:** 2026-02-04
 **Framework:** React 19 (App Router-less SPA), Framer Motion 12, Tailwind CSS 4
 
 ## Component Tree

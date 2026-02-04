@@ -150,47 +150,28 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
             </marker>
           </defs>
 
-          {/* Back-facing regions first */}
-          {bodyRegionPaths
-            .filter((p) => p.id === 'upper-back' || p.id === 'lower-back')
-            .map((path) => {
-              const sel = selectionMap.get(path.id)
-              return (
-                <BodyRegion
-                  key={path.id}
-                  id={path.id}
-                  d={path.d}
-                  hitD={path.hitD}
-                  label={regionMap.get(path.id)?.label[language]}
-                  isSelected={!!sel}
-                  isHighlighted={highlightedRegionId === path.id || activeRegionId === path.id}
-                  sensation={sel?.selectedSensation}
-                  intensity={sel?.selectedIntensity}
-                  onClick={handleRegionClick}
-                />
-              )
-            })}
-
-          {/* Front-facing regions */}
-          {bodyRegionPaths
-            .filter((p) => p.id !== 'upper-back' && p.id !== 'lower-back')
-            .map((path) => {
-              const sel = selectionMap.get(path.id)
-              return (
-                <BodyRegion
-                  key={path.id}
-                  id={path.id}
-                  d={path.d}
-                  hitD={path.hitD}
-                  label={regionMap.get(path.id)?.label[language]}
-                  isSelected={!!sel}
-                  isHighlighted={highlightedRegionId === path.id || activeRegionId === path.id}
-                  sensation={sel?.selectedSensation}
-                  intensity={sel?.selectedIntensity}
-                  onClick={handleRegionClick}
-                />
-              )
-            })}
+          {/* Back-facing regions first, then front-facing */}
+          {[...bodyRegionPaths].sort((a, b) => {
+            const isBackA = a.id === 'upper-back' || a.id === 'lower-back'
+            const isBackB = b.id === 'upper-back' || b.id === 'lower-back'
+            return isBackA === isBackB ? 0 : isBackA ? -1 : 1
+          }).map((path) => {
+            const sel = selectionMap.get(path.id)
+            return (
+              <BodyRegion
+                key={path.id}
+                id={path.id}
+                d={path.d}
+                hitD={path.hitD}
+                label={regionMap.get(path.id)?.label[language]}
+                isSelected={!!sel}
+                isHighlighted={highlightedRegionId === path.id || activeRegionId === path.id}
+                sensation={sel?.selectedSensation}
+                intensity={sel?.selectedIntensity}
+                onClick={handleRegionClick}
+              />
+            )
+          })}
 
           {/* Label bubbles with arrows */}
           {bodyRegionPaths.map((path) => {
@@ -204,7 +185,8 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
             // Arrow endpoints: from label edge toward body anchor
             const labelW = 62
             const labelH = 20
-            const arrowStartX = labelSide === 'left' ? labelAnchor.x + (labelW / 2 - 10) : labelAnchor.x - (labelW / 2 - 10)
+            const dir = labelSide === 'left' ? 1 : -1
+            const arrowStartX = labelAnchor.x + dir * (labelW / 2 - 10)
             const arrowEndX = labelSide === 'left'
               ? Math.min(anchor.x, arrowStartX + 80)
               : Math.max(anchor.x, arrowStartX - 80)
@@ -227,7 +209,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
                 />
                 {/* Label background */}
                 <rect
-                  x={labelSide === 'left' ? labelAnchor.x - (labelW / 2 + 10) : labelAnchor.x - (labelW / 2 - 10)}
+                  x={labelAnchor.x - labelW / 2 + dir * -10}
                   y={labelAnchor.y - labelH / 2}
                   width={labelW}
                   height={labelH}
@@ -238,7 +220,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
                 />
                 {/* Label text */}
                 <text
-                  x={labelSide === 'left' ? labelAnchor.x - 10 : labelAnchor.x + 10}
+                  x={labelAnchor.x + dir * -10}
                   y={labelAnchor.y + 3}
                   fill={isSelected ? '#c7d2fe' : '#9ca3af'}
                   fontSize={9}

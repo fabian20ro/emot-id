@@ -1,6 +1,6 @@
 # Emotion Models Codemap
 
-**Last Updated:** 2026-02-03
+**Last Updated:** 2026-02-04
 **Location:** `src/models/`
 
 ## Type Hierarchy
@@ -52,7 +52,7 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 
 ### Distress Detection (`src/models/distress.ts`)
 
-- **`HIGH_DISTRESS_IDS`**: Set of ~14 emotion IDs (despair, grief, helpless, worthless, etc.)
+- **`HIGH_DISTRESS_IDS`**: Set of 17 emotion IDs (despair, rage, terror, grief, shame, loathing, worthless, helpless, apathetic, empty, powerless, abandoned, victimized, numb, violated, depressed, distressed)
 - **`TIER3_COMBOS`**: 10 specific pairs triggering most severe crisis response
 - **`getCrisisTier(resultIds)`**: Returns `'none' | 'tier1' | 'tier2' | 'tier3'`
   - tier1: 1 distress match (warm invitation)
@@ -91,7 +91,7 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 | Aspect | Detail |
 |--------|--------|
 | Initial state | 8 primaries visible: joy, trust, fear, surprise, sadness, disgust, anger, anticipation |
-| Data | `data.json` -- flat map of ~30 emotions with spawns and components |
+| Data | `data.json` -- flat map of ~55 emotions with spawns and components |
 | Visualization | `BubbleField` |
 
 **onSelect behavior:**
@@ -118,7 +118,7 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 | Aspect | Detail |
 |--------|--------|
 | Initial state | 7 root emotions: happy, surprised, bad, fearful, angry, disgusted, sad |
-| Data | `data.json` -- tree structure with `parent`/`children` links, `level` 0-2 |
+| Data | `data.json` -- tree structure with ~135 emotions, `parent`/`children` links, `level` 0-2 |
 | Visualization | `BubbleField` |
 
 **onSelect behavior:**
@@ -173,7 +173,7 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 | Aspect | Detail |
 |--------|--------|
 | Initial state | All emotions always visible (static scatter plot) |
-| Data | `data.json` -- emotions with `valence` (-1..+1) and `arousal` (-1..+1) |
+| Data | `data.json` -- ~38 emotions with `valence` (-1..+1) and `arousal` (-1..+1) |
 | Visualization | `DimensionalField` |
 | Quadrants | pleasant-intense, pleasant-calm, unpleasant-intense, unpleasant-calm |
 
@@ -235,10 +235,10 @@ Tag with matchStrength: strong resonance (>=70%), possible connection (>=40%), w
 
 | File | Records | Shape |
 |------|---------|-------|
-| `plutchik/data.json` | ~30 emotions | `PlutchikEmotion` (id, label, color, category, spawns, components) |
-| `wheel/data.json` | ~50 emotions | `WheelEmotion` (id, label, color, level, parent, children) |
+| `plutchik/data.json` | ~55 emotions | `PlutchikEmotion` (id, label, color, category, spawns, components) |
+| `wheel/data.json` | ~135 emotions | `WheelEmotion` (id, label, color, level, parent, children) |
 | `somatic/data.json` | 12 regions | `SomaticRegion` (id, label, color, svgRegionId, group, commonSensations, emotionSignals[]) |
-| `dimensional/data.json` | ~35 emotions | `DimensionalEmotion` (id, label, color, valence, arousal, quadrant) |
+| `dimensional/data.json` | ~38 emotions | `DimensionalEmotion` (id, label, color, valence, arousal, quadrant) |
 
 All data files use inline bilingual labels `{ ro, en }`.
 

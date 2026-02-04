@@ -1,6 +1,6 @@
 # Architecture Codemap
 
-**Last Updated:** 2026-02-03
+**Last Updated:** 2026-02-04
 **Framework:** React 19 + TypeScript 5.9, Vite 7, Tailwind CSS 4
 **Entry Point:** `src/main.tsx`
 
@@ -172,6 +172,8 @@ src/
     valence-ratio.ts              # Weekly pleasant/unpleasant ratio
     opposite-action.ts            # DBT opposite action suggestions (bilingual)
     export.ts                     # Session export (text, clipboard, download)
+  e2e/
+    smoke.spec.ts                 # Playwright E2E smoke tests (mobile Safari + Chrome)
   models/
     types.ts                      # BaseEmotion, EmotionModel, ModelState, AnalysisResult
     constants.ts                  # MODEL_IDS constant + ModelId type
@@ -213,7 +215,7 @@ src/
   i18n/
     ro.json                       # Romanian UI strings
     en.json                       # English UI strings
-  __tests__/                      # Vitest + Testing Library tests (37 files, 255 tests)
+  __tests__/                      # Vitest + Testing Library tests (40 files, ~270 tests)
 ```
 
 ## Key Dependencies

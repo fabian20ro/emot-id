@@ -10,6 +10,8 @@ Interactive emotion identification PWA (React 19, TypeScript 5.9, Vite 7, Tailwi
 | `npm run build` | `tsc -b && vite build` |
 | `npm test` | `vitest run` |
 | `npm run test:watch` | `vitest` (watch mode) |
+| `npm run test:e2e` | Playwright E2E tests |
+| `npm run test:e2e:ui` | Playwright E2E with UI |
 | `npm run lint` | ESLint |
 | `npm run preview` | Preview production build |
 

@@ -2,116 +2,131 @@
 
 Multi-perspective review synthesized into a prioritized roadmap.
 
-## Phase I: Mobile UX Round 3 + Safety
+## Phase J: Mobile Layout & Settings Fix (CURRENT)
 
-Findings from psychologist, UX expert, and architect audit at iPhone 14 (390x844) using Playwright-emulated screenshots and automated interaction testing.
+Two critical issues visible on iPhone 14 (390×844):
+1. **Settings menu is unusable** — clips content, backdrop doesn't block UI, z-index broken
+2. **Body map overflows viewport** — legs cut off, sensation picker covers the entire body
+
+### Vertical space budget (iPhone 14, 390×844)
+
+```
+Status bar              ~50px
+Header                  ~56px
+ModelBar                ~44px
+Hint / AnalyzeButton    ~46px
+"Nu stiu ce simt"       ~52px  (hidden after first selection)
+SelectionBar            ~50px
+Mode toggle (in BodyMap) ~36px
+─────────────────────────────
+Total consumed          ~334px
+Available for body SVG  ~460px  (but SVG viewBox is 200×440 + labels need ~80px extra)
+SensationPicker         ~350px  (when open, leaves ~110px for body = unusable)
+```
+
+### P0 — Critical
+
+- [ ] **J.1** Settings menu clips content — disclaimer/privacy/crisis invisible
+  - **File:** `src/components/SettingsMenu.tsx`
+  - **Root cause:** Menu panel is `position: absolute; overflow-hidden` inside Header's `relative` container. Content (language + 4 model cards + sound + history + crisis + privacy + disclaimer) exceeds viewport height. `overflow-hidden` clips the bottom.
+  - **Fix:** Convert to full-screen fixed panel with `overflow-y-auto`. Use `fixed inset-x-0 top-0 bottom-0 z-[var(--z-modal)]` (same pattern as SessionHistory). Slide-in from left with Framer Motion.
+
+- [ ] **J.2** Settings backdrop doesn't block underlying UI
+  - **Files:** `src/components/SettingsMenu.tsx`, `src/components/Header.tsx`
+  - **Root cause:** Menu panel is `absolute z-[var(--z-modal)]` (z-40) but trapped inside Header's `z-[var(--z-header)]` (z-10) stacking context. Other `fixed` elements (SensationPicker, body map) paint outside the Header context, appearing above the backdrop.
+  - **Fix:** Solved by J.1 — converting menu to `fixed` positioning escapes the Header stacking context. Both backdrop (`z-[var(--z-backdrop)]`) and panel (`z-[var(--z-modal)]`) become viewport-relative.
+
+- [ ] **J.3** Body map legs/feet cut off in viewport
+  - **Files:** `src/components/BodyMap.tsx`, `src/App.tsx`
+  - **Root cause:** ~334px consumed above body map leaves ~460px for the SVG on iPhone 14. The SVG viewBox (200×440) plus external labels (~80px below lowest path) requires ~520px minimum. Legs ("Picioare") are always off-screen.
+  - **Fix — reduce vertical space above body:**
+    - (a) Move AnalyzeButton into a fixed bottom bar or float it over the body map (saves ~46px)
+    - (b) Collapse hint text into the visualization area instead of stacking above it
+    - (c) Hide "Nu stiu ce simt" button on somatic model (it's redundant — guided scan already covers that use case) (saves ~52px)
+    - (d) Make SelectionBar collapsible — show chip count instead of full strip when empty (saves ~20px)
+  - **Goal:** Get total consumed to ~240px, leaving ~554px for body + labels.
+
+- [ ] **J.4** SensationPicker covers entire body — can't see selected region
+  - **Files:** `src/components/SensationPicker.tsx`, `src/components/BodyMap.tsx`
+  - **Root cause:** Picker is a bottom sheet (`fixed bottom-0`) ~350px tall. With only ~460px for the body, the picker covers 75% of it. User taps a region but can't see which one because the picker obscures it.
+  - **Fix — make picker more compact or contextual:**
+    - (a) Reduce picker height: use compact 1-row horizontal scroll for sensations instead of 2-column grid (saves ~150px)
+    - (b) Show selected region name prominently in picker header (already done) + highlight the region on the body map behind the picker (body scrolls/repositions so tapped region is visible above picker)
+    - (c) Alternative: inline the picker next to the tapped region as a popover instead of bottom sheet (complex but ideal)
+  - **Minimum:** Option (a) — compact horizontal layout reduces picker from ~350px to ~180px.
+
+### P1 — High
+
+- [ ] **J.5** Settings panel UX polish
+  - After converting to full-screen panel:
+    - Slide-in animation from left (Framer Motion `x: "-100%"` → `x: 0`)
+    - Close button (×) at top-right, sticky
+    - Grouped sections with spacing
+    - Safe-area padding for notched devices (`pb-[env(safe-area-inset-bottom)]`)
+
+- [ ] **J.6** Dismiss SensationPicker when settings menu opens
+  - **Files:** `src/components/BodyMap.tsx`, `src/App.tsx`
+  - When both are open, they compete at same z-level. Simplest fix: close active picker (reset `activeRegionId`) when settings opens.
+
+## Phase I: Mobile UX Round 3 (remaining items)
 
 ### P0 — Critical
 
 - [ ] **I.1** BubbleField overlap and viewport escape at 390px
   - **File:** `src/components/BubbleField.tsx`
-  - Bubbles overlap (Happy intercepted by Angry) and escape viewport after selection (Fearful outside screen). Random placement algorithm fails at 390px: 8 bubbles averaging 100px each need ~800px total but only 358px available.
-  - **Fix:** Replace random scatter with deterministic grid or radial layout on mobile (<480px). Measure actual bubble DOM widths instead of hardcoded `sizePixels`. Re-run collision detection (not just clamping) when container resizes.
-
-- [ ] **I.2** Onboarding overlay is semi-transparent — UI bleeds through
-  - **Files:** `src/components/Onboarding.tsx`, `src/App.tsx`
-  - Body Map labels, ModelBar tabs, and SelectionBar text visible behind onboarding at 95% opacity. OLED displays amplify the bleed.
-  - **Fix:** Use early return in App.tsx: if `showOnboarding`, render only `<Onboarding>` and skip mounting the entire app. Eliminates bleed-through and saves unnecessary hook/render cycles.
+  - Bubbles overlap and escape viewport. Random placement fails at 390px.
+  - **Fix:** Deterministic grid/radial layout on mobile (<480px). Measure actual bubble DOM widths.
 
 ### P1 — High
 
 - [ ] **I.3** ModelBar shows full names at 390px — truncates "Body Ma..."
   - **File:** `src/components/ModelBar.tsx`
-  - Breakpoint `min-[360px]` is too low — at 390px full names are shown but overflow. "Body Ma..." is truncated.
-  - **Fix:** Raise breakpoint to `min-[480px]` or `sm` (640px). Show short names by default on all phones. Add scroll fade indicator on right edge.
-
-- [ ] **I.4** Settings menu backdrop is transparent — content bleeds through
-  - **File:** `src/components/SettingsMenu.tsx`
-  - Backdrop div `z-40` has no background color; right 102px of screen shows full app content.
-  - **Fix:** Add `bg-black/60 backdrop-blur-sm` to backdrop. Consider full-screen slide-in panel on mobile.
-
-- [ ] **I.5** No crisis resources accessible before completing a flow
-  - **Files:** `src/components/SettingsMenu.tsx`, `src/i18n/en.json`, `src/i18n/ro.json`
-  - Crisis banner only appears in ResultModal after analysis. Users in acute distress who cannot navigate the interface never see help.
-  - **Fix:** Add persistent subtle crisis resource link in settings menu or as header icon. Include specific crisis line (116 123 Romania, findahelpline.com).
-  - **Psych:** Users in distress need help before completing an interaction flow, not after.
-
-- [ ] **I.6** Onboarding disclaimer lacks concrete crisis contact
-  - **Files:** `src/components/Onboarding.tsx`, `src/i18n/en.json`, `src/i18n/ro.json`
-  - Screen 4 says "reach out to a qualified professional" but gives no number, link, or next step.
-  - **Fix:** Add "Call 116 123 (Romania, free, 24/7) or visit findahelpline.com" directly on this screen.
+  - Breakpoint `min-[360px]` too low. Already fixed to `min-[480px]` — verify on device.
 
 - [ ] **I.7** Dimensional model dots too small to tap on mobile
   - **File:** `src/components/DimensionalField.tsx`
-  - Dots are below 44x44px minimum touch target on 390px screen. Labels overlap densely.
-  - **Fix:** Increase touch target to 44px minimum. Consider two-step interaction: tap quadrant first, then see enlarged options within that region.
-
-- [ ] **I.8** "I don't know" button below 44px touch target
-  - **File:** `src/App.tsx` (line 183-189)
-  - Button uses `py-1.5` = ~36px height. Critical entry point for uncertain users.
-  - **Fix:** Increase to `py-2.5` or `min-h-[44px]`. Increase font from `text-sm` to `text-base`.
+  - Dots below 44px touch target. Increase or add two-step interaction.
 
 ### P2 — Medium
 
-- [ ] **I.9** Z-index stacking conflicts
-  - **Files:** `src/components/Header.tsx`, `src/components/SettingsMenu.tsx`, `src/components/Onboarding.tsx`
-  - Header, settings panel, and onboarding all share `z-50`. Settings backdrop is `z-40` (below header). Stacking depends on DOM order.
-  - **Fix:** Define explicit z-index scale: header=10, dropdown=20, backdrop=30, modal=40, toast=50. Apply consistently.
-
-- [ ] **I.10** Body Map SVG labels too small (fontSize 7)
-  - **File:** `src/components/BodyMap.tsx`
-  - SVG text labels use `fontSize={7}` — too small for mobile readability. Arrow lines at `strokeWidth={1}` are faint.
-  - **Fix:** Increase fontSize to 9-10. Increase strokeWidth to 1.5.
-
 - [ ] **I.11** Warm close auto-dismiss too fast (3 seconds)
   - **File:** `src/components/ResultModal.tsx`
-  - "Take a moment with this. Your feelings are valid" auto-dismisses after 3 seconds. The message asks the user to pause, then removes the pause.
-  - **Fix:** Extend to 5-6 seconds, or remove auto-dismiss and let user close manually.
-  - **Psych:** Emotional validation needs time to land. Rushing dismissal contradicts the message.
+  - Extend to 5-6s, or remove auto-dismiss.
 
-- [ ] **I.12** Onboarding "system" wording may confuse non-clinical users
-  - **Files:** `src/i18n/en.json`, `src/i18n/ro.json`
-  - Screen 2: "what is my system telling me?" uses polyvagal language unfamiliar to most users.
-  - **Fix:** Change to "what is my body telling me?" or "what might this feeling be signaling?"
+- [ ] **I.12** Onboarding "system" wording
+  - "what is my system telling me?" → "what is my body telling me?"
 
 - [ ] **I.13** Reflection button colors imply judgment hierarchy
-  - **File:** `src/components/ResultModal.tsx`
-  - Green=Yes, amber=Partly, gray=No creates implicit correctness ranking.
-  - **Fix:** Use same neutral color (indigo/gray palette) for all three buttons.
+  - Use neutral indigo/gray for all three.
 
 ### P3 — Low
 
-- [ ] **I.14** Privacy modal could frame choice in emotional safety terms
-  - **Files:** `src/i18n/en.json`, `src/i18n/ro.json`
-  - Add: "We believe your emotional life is deeply personal, so we designed Emot-ID to keep everything on your device."
+- [ ] **I.14** Privacy modal framing
+- [ ] **I.15** "the most" selection pressure
 
-- [ ] **I.15** Instruction text "the most" adds selection pressure
-  - **Files:** `src/i18n/en.json`, `src/i18n/ro.json`
-  - "Select an emotion that resonates with you the most right now" → drop "the most" to reduce perfectionism pressure.
-
-## Phase E: Advanced Features (Partial)
+## Phase E: Advanced Features
 
 - [ ] E.1 Quick check-in mode — 30-sec grid of 8-12 words
-- [ ] E.2 Model progression & scaffolding — suggested learning order (needs UI wiring)
-- [ ] E.3 Emotional granularity training — distinction prompts after 10+ sessions
-- [ ] E.5 Master combination model — cross-model aggregation (needs F.2)
+- [ ] E.2 Model progression & scaffolding
+- [ ] E.3 Emotional granularity training
+- [ ] E.5 Master combination model
 - [ ] E.7 Chain analysis mode (DBT)
 - [ ] E.8 Simple language mode
 
-## Phase F: Architecture & Quality (Partial)
+## Phase F: Architecture & Quality
 
-- [ ] F.4 Lazy loading models — `React.lazy` + `Suspense` per model
-- [x] F.6 E2E tests (Playwright) — smoke tests for each model ✓
-- [ ] F.7 PWA improvements — offline indicator, install prompt, update notification
-
-## Phase H: Mobile UX Round 2 ✓ Complete
-
-Targeted fixes from psychologist + architect review at 375x812 and 320x568. All 9 items implemented.
+- [ ] F.4 Lazy loading models — `React.lazy` + `Suspense`
+- [ ] F.7 PWA improvements — offline indicator, install prompt
 
 ## Implementation Order
 
 ```
-Phase I (mobile UX round 3 + safety)
+Phase J (settings menu + body map layout) ← CURRENT PRIORITY
+  J.1-J.2: Settings → full-screen panel (fixes clip + backdrop)
+  J.3-J.4: Body map vertical space + compact picker
+  J.5-J.6: Polish
+  ↓
+Phase I (remaining mobile UX)
   ↓
 Phase E (advanced features)
   ↓

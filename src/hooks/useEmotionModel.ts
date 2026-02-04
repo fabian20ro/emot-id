@@ -8,7 +8,9 @@ export function useEmotionModel(modelId: string = defaultModelId) {
   const [selections, setSelections] = useState<BaseEmotion[]>([])
   const [modelState, setModelState] = useState<ModelState>(() => model.initialState)
   const selectionsRef = useRef(selections)
-  selectionsRef.current = selections
+  useEffect(() => {
+    selectionsRef.current = selections
+  }, [selections])
 
   useEffect(() => {
     setSelections([])

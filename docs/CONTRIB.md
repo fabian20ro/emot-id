@@ -19,8 +19,10 @@ npm install
 |---------|-------------|
 | `npm run dev` | Start Vite dev server (http://localhost:5173) |
 | `npm run build` | TypeScript check + Vite production build |
-| `npm test` | Run all tests once (Vitest) |
-| `npm run test:watch` | Run tests in watch mode |
+| `npm test` | Run all unit tests once (Vitest) |
+| `npm run test:watch` | Run unit tests in watch mode |
+| `npm run test:e2e` | Run Playwright E2E tests (mobile Safari + Chrome) |
+| `npm run test:e2e:ui` | Run E2E tests with Playwright UI |
 | `npm run lint` | Run ESLint |
 | `npm run preview` | Preview production build locally |
 
@@ -32,9 +34,10 @@ Key directories:
 - `src/models/` — Emotion classification models (Plutchik, Wheel, Somatic, Dimensional)
 - `src/components/` — All React components (flat structure)
 - `src/hooks/` — Custom React hooks
-- `src/data/` — Storage, session persistence, derived analytics
+- `src/data/` — Storage, session persistence, derived analytics, export
 - `src/i18n/` — Bilingual UI strings (English + Romanian)
-- `src/__tests__/` — Vitest + Testing Library tests
+- `src/__tests__/` — Vitest + Testing Library unit tests
+- `e2e/` — Playwright E2E tests (mobile viewports)
 
 ## Adding a New Emotion Model
 
@@ -51,13 +54,22 @@ Key directories:
 
 | Component | Purpose |
 |-----------|---------|
-| `InfoButton` | Reusable info icon (circled "i") that opens a portal modal with title + children content. Uses focus trap and Escape-to-close. Replaces `<details>` for inline disclosures (disclaimer, result descriptions, privacy). |
-| `BubbleField` | Plutchik bubble visualization (clamped to viewport bounds) |
+| `BubbleField` | Bubble visualization for Plutchik/Wheel (clamped to viewport bounds) |
 | `BodyMap` | Somatic body outline with selectable regions |
 | `DimensionalField` | 2D valence/arousal field with label collision avoidance |
+| `GuidedScan` | Guided body scan flow (centering breath, 5 body groups, numbness/flooding detection) |
 | `ModelBar` | Tab bar for switching models; shows `shortName` on narrow screens |
+| `ResultModal` | Analysis results with reflection prompts |
+| `ResultCard` | Individual result with expandable descriptions via InfoButton |
+| `CrisisBanner` | Tiered crisis support resources (3 tiers + grounding technique) |
+| `MicroIntervention` | Brief coping interventions (breathing, savoring, curiosity) |
+| `DontKnowModal` | Entry point for users unsure what they feel |
+| `SelectionBar` | Current selections display with clear/undo |
 | `SettingsMenu` | Language toggle, sound toggle, privacy info, session history link |
-| `ResultCard` | Analysis results with expandable descriptions via InfoButton |
+| `SessionHistory` | Past sessions with vocabulary stats, somatic patterns, valence ratio, export |
+| `InfoButton` | Reusable portal modal (focus trap, Escape-to-close) for inline disclosures |
+| `UndoToast` | Undo notification after clearing selections |
+| `VisualizationErrorBoundary` | Error boundary wrapping visualization components |
 
 ## Conventions
 
@@ -72,9 +84,20 @@ Key directories:
 
 ## Testing
 
-- Test runner: Vitest + Testing Library + jsdom
-- Test files: `src/__tests__/*.test.ts(x)`
-- Run `npm test` before committing
+### Unit Tests
+- Runner: Vitest + Testing Library + jsdom
+- Location: `src/__tests__/*.test.ts(x)`
+- Run: `npm test`
+
+### E2E Tests
+- Runner: Playwright
+- Location: `e2e/*.spec.ts`
+- Viewports: iPhone 14 (Safari), Pixel 7 (Chrome)
+- Run: `npm run test:e2e`
+- Dev server starts automatically via Playwright config
+
+### Pre-commit
+- Run `npm test && npm run lint` before committing
 
 ## Environment
 
@@ -82,4 +105,4 @@ No environment variables needed — this is a client-only PWA with no backend.
 
 ## Deployment
 
-Deployed automatically to GitHub Pages at `/emot-id/` via GitHub Actions on push to `main`.
+Deployed automatically to GitHub Pages at `/emot-id/` via GitHub Actions on push to `main`. The CI pipeline runs unit tests before building.

@@ -4,7 +4,7 @@
 
 Client-only PWA (Progressive Web App). No backend, no API server, no database server. All data lives in the browser:
 - **Preferences**: localStorage (model, language, sound, onboarding, hints)
-- **Session history**: IndexedDB via `idb-keyval`
+- **Session history**: IndexedDB via `idb-keyval` (store: `emot-id-sessions`)
 
 Deployed to GitHub Pages at `https://fabian20ro.github.io/emot-id/`.
 
@@ -19,15 +19,34 @@ npm run preview      # serves dist/ on localhost
 
 # Deploy
 # Automatic via GitHub Actions on push to main
+# Pipeline: npm ci → npm test → npm run build → deploy to Pages
 ```
 
-## Common Tasks
+## Testing
+
+### Unit tests
+
+```bash
+npm test             # Run all Vitest tests once
+npm run test:watch   # Watch mode for iterating
+```
+
+### E2E tests
+
+```bash
+npm run test:e2e     # Playwright: mobile Safari (iPhone 14) + Chrome (Pixel 7)
+npm run test:e2e:ui  # Same tests with Playwright UI for debugging
+```
+
+E2E tests live in `e2e/` and auto-start the dev server. Base URL: `http://localhost:5173/emot-id/`.
 
 ### Verify build health
 
 ```bash
 npm run build && npm test && npm run lint
 ```
+
+## Common Tasks
 
 ### Clear user data (development)
 
@@ -37,7 +56,7 @@ In browser DevTools console:
 localStorage.clear()
 
 // Clear session history (IndexedDB)
-indexedDB.deleteDatabase('keyval-store')
+indexedDB.deleteDatabase('emot-id-sessions')
 ```
 
 ### Add i18n strings
@@ -46,14 +65,18 @@ indexedDB.deleteDatabase('keyval-store')
 2. Access via `useLanguage().section('sectionName').keyName`
 3. The `i18n-completeness.test.ts` test verifies both files have matching keys
 
-Current top-level i18n sections include: `app`, `disclaimer`, `onboarding`, `firstHint`, `results`, `microIntervention`, `infoButton`, `privacy`, `dimensional`, `history`, `somatic`, among others.
+Current top-level i18n sections: `app`, `menu`, `selectionBar`, `analyze`, `modal`, `reflection`, `crisis`, `disclaimer`, `onboarding`, `results`, `settings`, `bridges`, `firstHint`, `dontKnow`, `somatic`, `intervention`, `infoButton`, `privacy`, `dimensional`, `history`.
 
 ### Debug crisis detection
 
 Crisis tiers are determined by `getCrisisTier()` in `src/models/distress.ts`:
-- Check `HIGH_DISTRESS_IDS` set for the emotion IDs in question
-- Check `TIER3_COMBOS` for specific pair combinations
-- Temporal escalation in `src/data/temporal-crisis.ts` requires 3+ tier2/3 sessions in 7 days
+- **tier1** — 1 high-distress match (warm invitation)
+- **tier2** — 2+ high-distress matches (amber alert)
+- **tier3** — specific severe combinations (most direct), e.g. despair+helpless, shame+worthless
+
+High-distress IDs: `despair`, `rage`, `terror`, `grief`, `shame`, `loathing`, `worthless`, `helpless`, `apathetic`, `empty`, `powerless`, `abandoned`, `victimized`, `numb`, `violated`, `depressed`, `distressed`.
+
+Temporal escalation in `src/data/temporal-crisis.ts` requires 3+ tier2/3 sessions in 7 days.
 
 ### Debug somatic scoring
 
@@ -62,6 +85,23 @@ The scoring algorithm in `src/models/somatic/scoring.ts`:
 2. Accumulates weighted scores per emotion across body groups
 3. Applies coherence bonus (1.2x for 2 groups, 1.3x for 3, 1.4x for 4+)
 4. Filters by threshold (0.5), takes top 4
+
+### Data export
+
+Export functionality in `src/data/export.ts`:
+- **JSON export**: full session data as `emot-id-sessions-{timestamp}.json`
+- **Text summary**: readable summary as `emot-id-summary-{timestamp}.txt`
+- **Clipboard copy**: for sharing with therapist
+
+Accessible from SessionHistory component.
+
+### Session history analytics
+
+Analytics derived from session history (`src/data/`):
+- **Vocabulary** (`vocabulary.ts`): unique emotion count, milestones (5/10/15/25/40/60 emotions, 2/3/4 models)
+- **Somatic patterns** (`somatic-patterns.ts`): body region frequencies and sensation types
+- **Valence ratio** (`valence-ratio.ts`): pleasant/unpleasant/neutral counts (7-day window)
+- **Opposite action** (`opposite-action.ts`): DBT-inspired suggestions for 7 emotion patterns
 
 ## Troubleshooting
 
@@ -100,7 +140,7 @@ Common mobile viewport problems and their fixes:
 ## Monitoring
 
 No server-side monitoring (client-only app). Key health indicators:
-- GitHub Actions build status
+- GitHub Actions build status (unit tests run in CI)
 - Manual testing on mobile (375px viewport)
 - Keyboard-only navigation through full flow
 - Crisis path: select distress emotions → verify banner appears
