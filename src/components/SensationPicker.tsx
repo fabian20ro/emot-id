@@ -67,7 +67,7 @@ export function SensationPicker({
         onClick={onCancel}
       />
 
-      {/* Bottom sheet with swipe-to-dismiss */}
+      {/* Compact bottom sheet with swipe-to-dismiss */}
       <motion.div
         key="sheet"
         ref={focusTrapRef}
@@ -86,15 +86,15 @@ export function SensationPicker({
         role="dialog"
         aria-modal="true"
         aria-label={regionLabel}
-        className="fixed bottom-0 left-0 right-0 z-[var(--z-modal)] bg-gray-900/95 backdrop-blur-md border-t border-gray-600 rounded-t-2xl shadow-2xl p-4 pb-8 max-w-md mx-auto"
+        className="fixed bottom-0 left-0 right-0 z-[var(--z-modal)] bg-gray-900/95 backdrop-blur-md border-t border-gray-600 rounded-t-2xl shadow-2xl px-3 pt-2 pb-4 max-w-md mx-auto"
       >
         {/* Drag handle */}
-        <div className="flex justify-center mb-3">
+        <div className="flex justify-center mb-1.5">
           <div className="w-10 h-1 rounded-full bg-gray-600" />
         </div>
 
-        {/* Header */}
-        <div className="flex items-center justify-between mb-3">
+        {/* Header — compact */}
+        <div className="flex items-center justify-between mb-1.5">
           <div className="flex items-center gap-2">
             {step === 'intensity' && (
               <button
@@ -107,57 +107,54 @@ export function SensationPicker({
             <span className="text-sm font-medium text-gray-200">
               {regionLabel}
             </span>
+            <span className="text-xs text-gray-500">
+              {step === 'sensation'
+                ? somaticT.pickSensation ?? 'What do you feel here?'
+                : somaticT.pickIntensity ?? 'How intense?'}
+            </span>
           </div>
           <button
             onClick={onCancel}
-            className="text-gray-500 hover:text-gray-300 text-lg leading-none"
+            className="text-gray-500 hover:text-gray-300 text-lg leading-none w-11 h-11 flex items-center justify-center"
           >
             ×
           </button>
         </div>
 
-        {/* Prompt */}
-        <p className="text-xs text-gray-400 mb-3">
-          {step === 'sensation'
-            ? somaticT.pickSensation ?? 'What do you feel here?'
-            : somaticT.pickIntensity ?? 'How intense?'}
-        </p>
-
-        {/* Step 1: Sensation type */}
+        {/* Step 1: Sensation type — horizontal scroll row */}
         {step === 'sensation' && (
-          <div className="grid grid-cols-2 gap-2">
+          <div className="flex gap-1.5 overflow-x-auto pb-1.5 scrollbar-hide -mx-1 px-1">
             {availableSensations.map((sensation) => {
               const config = SENSATION_CONFIG[sensation]
               return (
                 <motion.button
                   key={sensation}
-                  whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleSensationPick(sensation)}
-                  className="flex items-center gap-2 px-3 py-3 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-500 text-sm text-gray-200 transition-colors"
+                  className="flex-none flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-500 text-gray-200 transition-colors min-w-[4.5rem]"
                 >
-                  <span className="text-base">{config.icon}</span>
-                  <span>{config.label[language]}</span>
+                  <span className="text-lg">{config.icon}</span>
+                  <span className="text-[10px] leading-tight whitespace-nowrap">{config.label[language]}</span>
                 </motion.button>
               )
             })}
           </div>
         )}
 
-        {/* Step 2: Intensity */}
+        {/* Step 2: Intensity — compact variant */}
         {step === 'intensity' && selectedSensation && (
           <IntensityPicker
             sensationIcon={SENSATION_CONFIG[selectedSensation].icon}
             sensationLabel={SENSATION_CONFIG[selectedSensation].label}
             onPick={handleIntensityPick}
-            variant="detailed"
+            variant="compact"
           />
         )}
 
         {/* Skip button */}
         <button
           onClick={onCancel}
-          className="w-full mt-3 text-xs text-gray-500 hover:text-gray-400 transition-colors"
+          className="w-full mt-1.5 text-xs text-gray-500 hover:text-gray-400 transition-colors"
         >
           {somaticT.nothingHere ?? 'Nothing here'}
         </button>

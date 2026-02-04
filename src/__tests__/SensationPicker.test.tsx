@@ -100,15 +100,16 @@ describe('SensationPicker', () => {
     expect(onCancel).toHaveBeenCalledTimes(1)
   })
 
-  it('shows intensity anchor descriptions', async () => {
+  it('shows compact intensity labels', async () => {
     const user = userEvent.setup()
     renderPicker()
 
     await user.click(screen.getByText('Tension'))
 
-    expect(screen.getByText('barely noticeable')).toBeInTheDocument()
-    expect(screen.getByText('clearly present')).toBeInTheDocument()
-    expect(screen.getByText('hard to ignore')).toBeInTheDocument()
+    // Compact variant shows short labels instead of anchor descriptions
+    expect(screen.getByText('Mild')).toBeInTheDocument()
+    expect(screen.getByText('Moderate')).toBeInTheDocument()
+    expect(screen.getByText('Strong')).toBeInTheDocument()
   })
 
   it('shows selected sensation icon in intensity step', async () => {

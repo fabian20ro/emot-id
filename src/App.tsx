@@ -18,6 +18,7 @@ import { useLanguage } from './context/LanguageContext'
 import { getVisualization } from './models/registry'
 import { BubbleField } from './components/BubbleField'
 import { ModelBar } from './components/ModelBar'
+import { MODEL_IDS } from './models/constants'
 import { storage } from './data/storage'
 import { getCrisisTier } from './models/distress'
 import { hasTemporalCrisisPattern } from './data/temporal-crisis'
@@ -178,27 +179,10 @@ export default function App() {
         soundMuted={muted}
         onSoundMutedChange={setMuted}
         onOpenHistory={() => setShowHistory(true)}
+        onMenuOpenChange={(open) => { if (open) window.dispatchEvent(new Event('emot-id:dismiss-picker')) }}
       />
 
       <ModelBar modelId={modelId} onModelChange={switchModel} />
-
-      <div className="px-4 pt-1 max-w-md mx-auto w-full">
-        <AnalyzeButton
-          disabled={selections.length === 0}
-          onClick={analyzeEmotions}
-          modelId={modelId}
-          selectionCount={selections.length}
-        />
-        {/* "I don't know" entry point — hidden while hint visible to save vertical space */}
-        {selections.length === 0 && !showHint && (
-          <button
-            onClick={() => setShowDontKnow(true)}
-            className="block mx-auto mt-2 px-4 py-2.5 min-h-[44px] text-sm text-gray-300 bg-gray-700/60 hover:bg-gray-700 border border-gray-600 rounded-full transition-colors"
-          >
-            {dontKnowT.link ?? "I don't know what I'm feeling"}
-          </button>
-        )}
-      </div>
 
       <SelectionBar
         selections={selections}
@@ -207,14 +191,17 @@ export default function App() {
         onClear={handleClear}
       />
 
-      <AnimatePresence>
-        {showHint && !showOnboarding && selections.length === 0 && (
-          <FirstInteractionHint modelId={modelId} />
-        )}
-      </AnimatePresence>
-
       <VisualizationErrorBoundary key={modelId} onReset={modelClear} language={language}>
         <div className="relative flex-1 min-h-0">
+          {/* Floating hint overlay — inside visualization area to avoid stacking above */}
+          <AnimatePresence>
+            {showHint && !showOnboarding && selections.length === 0 && (
+              <div className="absolute inset-x-0 top-2 z-10 flex justify-center pointer-events-none">
+                <FirstInteractionHint modelId={modelId} />
+              </div>
+            )}
+          </AnimatePresence>
+
           <Visualization
             emotions={visibleEmotions}
             onSelect={handleSelect}
@@ -224,6 +211,25 @@ export default function App() {
           />
         </div>
       </VisualizationErrorBoundary>
+
+      {/* Bottom bar: analyze + "I don't know" — fixed at bottom to free vertical space for body map */}
+      <div className="shrink-0 px-4 py-2 max-w-md mx-auto w-full bg-gray-900/80 backdrop-blur-sm border-t border-gray-700/50 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+        <AnalyzeButton
+          disabled={selections.length === 0}
+          onClick={analyzeEmotions}
+          modelId={modelId}
+          selectionCount={selections.length}
+        />
+        {/* "I don't know" — hidden on somatic (guided scan covers it) and while hint visible */}
+        {selections.length === 0 && !showHint && modelId !== MODEL_IDS.SOMATIC && (
+          <button
+            onClick={() => setShowDontKnow(true)}
+            className="block mx-auto mt-1.5 px-4 py-2 min-h-[44px] text-sm text-gray-300 bg-gray-700/60 hover:bg-gray-700 border border-gray-600 rounded-full transition-colors"
+          >
+            {dontKnowT.link ?? "I don't know what I'm feeling"}
+          </button>
+        )}
+      </div>
 
       <ResultModal
         isOpen={isModalOpen}

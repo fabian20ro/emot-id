@@ -34,7 +34,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop — fixed to viewport, escapes Header stacking context */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -43,18 +43,33 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
             onClick={onClose}
           />
 
-          {/* Menu */}
+          {/* Full-screen slide-in panel — fixed to viewport */}
           <motion.div
             ref={focusTrapRef}
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            transition={{ duration: 0.15 }}
+            initial={{ x: '-100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '-100%' }}
+            transition={{ type: 'spring', stiffness: 400, damping: 35 }}
             role="dialog"
             aria-modal="true"
-            className="absolute left-0 top-full mt-2 w-72 max-w-[calc(100vw-2rem)] bg-gray-800 rounded-xl shadow-xl border border-gray-700 overflow-hidden z-[var(--z-modal)]"
+            className="fixed inset-y-0 left-0 z-[var(--z-modal)] w-80 max-w-[85vw] bg-gray-800 shadow-2xl border-r border-gray-700 flex flex-col"
           >
-            <div className="p-2">
+            {/* Sticky header with close button */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
+              <h2 className="text-sm font-semibold text-gray-200">
+                {settingsT.title ?? 'Settings'}
+              </h2>
+              <button
+                onClick={onClose}
+                className="text-gray-500 hover:text-gray-300 text-lg leading-none w-11 h-11 flex items-center justify-center"
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Scrollable content */}
+            <div className="flex-1 overflow-y-auto p-3 pb-[env(safe-area-inset-bottom,0.75rem)] space-y-1">
               {/* Language Section */}
               <div className="px-3 py-2">
                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">

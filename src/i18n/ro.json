@@ -81,6 +81,7 @@
     "microDisclaimer": "Pentru auto-explorare, nu diagnostic"
   },
   "settings": {
+    "title": "Setari",
     "soundLabel": "Efecte sonore",
     "soundOn": "Pornit",
     "soundOff": "Oprit"

@@ -33,9 +33,9 @@ describe('SettingsMenu', () => {
     expect(screen.getByText('Model')).toBeInTheDocument()
   })
 
-  it('has w-72 width class on the menu container', () => {
+  it('has w-80 width class on the slide-in panel', () => {
     const { container } = renderMenu()
-    const menu = container.querySelector('.w-72')
+    const menu = container.querySelector('.w-80')
     expect(menu).toBeInTheDocument()
   })
 

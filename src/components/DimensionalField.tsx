@@ -39,7 +39,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
       const px = toPixel(e.valence)
       const py = toPixel(-e.arousal)
       const isSelected = selectedIds.has(e.id)
-      return { id: e.id, x: px, baseY: py - (isSelected ? 20 : 14) }
+      return { id: e.id, x: px, baseY: py - (isSelected ? 22 : 16) }
     })
     // Sort by y then x for greedy pass
     entries.sort((a, b) => a.baseY - b.baseY || a.x - b.x)
@@ -175,30 +175,30 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
                 onClick={(e) => handleEmotionDotClick(emotion, e)}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); handleEmotionDotClick(emotion, e as unknown as React.MouseEvent) } }}
               >
-                {/* Invisible larger hit area for touch targets (44px equivalent) */}
+                {/* Invisible hit area for touch targets (~44px at mobile scale) */}
                 <circle
                   cx={px}
                   cy={py}
-                  r={24}
+                  r={32}
                   fill="transparent"
                 />
                 <motion.circle
                   cx={px}
                   cy={py}
-                  r={isSelected ? 13 : 10}
+                  r={isSelected ? 14 : 11}
                   fill={emotion.color}
                   fillOpacity={isSelected ? 0.9 : 0.6}
                   stroke={isSelected ? '#fff' : 'none'}
                   strokeWidth={isSelected ? 1.5 : 0}
                   animate={{
-                    r: isSelected ? 13 : 10,
+                    r: isSelected ? 14 : 11,
                     fillOpacity: isSelected ? 0.9 : 0.6,
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 />
                 <text
                   x={px}
-                  y={labelOffsets.get(emotion.id) ?? (py - (isSelected ? 20 : 14))}
+                  y={labelOffsets.get(emotion.id) ?? (py - (isSelected ? 22 : 16))}
                   fill={isSelected ? '#fff' : 'rgba(156, 163, 175, 0.7)'}
                   fontSize={isSelected ? 12 : 11}
                   textAnchor="middle"

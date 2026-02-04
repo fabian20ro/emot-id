@@ -81,6 +81,7 @@
     "microDisclaimer": "For self-exploration, not diagnosis"
   },
   "settings": {
+    "title": "Settings",
     "soundLabel": "Sound effects",
     "soundOn": "On",
     "soundOff": "Off"

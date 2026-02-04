@@ -18,10 +18,15 @@ interface SelectionBarProps {
 export function SelectionBar({ selections, combos, onDeselect, onClear }: SelectionBarProps) {
   const { language, t } = useLanguage()
 
+  // Compact mode: hide entirely when empty to save vertical space on mobile
+  if (selections.length === 0 && combos.length === 0) {
+    return null
+  }
+
   return (
-    <div className="bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-3 py-2 sm:p-3 max-h-[20vh] sm:max-h-[15vh] overflow-y-auto">
-      <div className="flex items-center justify-between mb-2">
-        <h2 className="text-sm font-medium text-gray-300">
+    <div className="bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-3 py-1.5 sm:p-3 max-h-[15vh] sm:max-h-[15vh] overflow-y-auto">
+      <div className="flex items-center justify-between mb-1">
+        <h2 className="text-xs font-medium text-gray-400">
           {t.selectionBar.title}
         </h2>
         {selections.length > 0 && (
@@ -34,7 +39,7 @@ export function SelectionBar({ selections, combos, onDeselect, onClear }: Select
           </button>
         )}
       </div>
-      <div className="flex flex-wrap gap-2 min-h-[32px]">
+      <div className="flex flex-wrap gap-1.5 min-h-[28px]">
         <AnimatePresence mode="popLayout">
           {selections.length === 0 ? (
             <motion.span
@@ -42,7 +47,7 @@ export function SelectionBar({ selections, combos, onDeselect, onClear }: Select
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-sm text-gray-500"
+              className="text-xs text-gray-500"
             >
               {t.selectionBar.empty}
             </motion.span>

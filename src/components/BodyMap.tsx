@@ -1,4 +1,4 @@
-import { memo, useState, useCallback, useMemo } from 'react'
+import { memo, useState, useCallback, useMemo, useEffect } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { BodyRegion } from './BodyRegion'
 import { SensationPicker } from './SensationPicker'
@@ -20,6 +20,13 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
   const [highlightedRegionId, setHighlightedRegionId] = useState<string | null>(null)
   const [isGuidedMode, setIsGuidedMode] = useState(false)
   const [guidedActive, setGuidedActive] = useState(false)
+
+  // Dismiss picker when settings menu opens (J.6)
+  useEffect(() => {
+    const dismiss = () => setActiveRegionId(null)
+    window.addEventListener('emot-id:dismiss-picker', dismiss)
+    return () => window.removeEventListener('emot-id:dismiss-picker', dismiss)
+  }, [])
 
   const selectionMap = useMemo(() => {
     const map = new Map<string, SomaticSelection>()

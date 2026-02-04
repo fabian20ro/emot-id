@@ -25,14 +25,15 @@ function renderWithProviders(ui: React.ReactElement) {
 }
 
 describe('SelectionBar', () => {
-  it('shows empty state when no selections', () => {
+  it('renders nothing when no selections', () => {
     const onDeselect = vi.fn()
     const onClear = vi.fn()
-    renderWithProviders(
+    const { container } = renderWithProviders(
       <SelectionBar selections={[]} combos={[]} onDeselect={onDeselect} onClear={onClear} />
     )
 
-    expect(screen.getByText(/no selection/i)).toBeInTheDocument()
+    // SelectionBar returns null when empty to save vertical space
+    expect(container.innerHTML).toBe('')
   })
 
   it('displays selected emotions', () => {
