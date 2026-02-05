@@ -2,6 +2,7 @@ import { useState, useCallback, useRef, useMemo } from 'react'
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import { Onboarding } from './components/Onboarding'
 import { Header } from './components/Header'
+import { SettingsMenu } from './components/SettingsMenu'
 import { SelectionBar } from './components/SelectionBar'
 import { AnalyzeButton } from './components/AnalyzeButton'
 import { ResultModal } from './components/ResultModal'
@@ -17,7 +18,6 @@ import { useSessionHistory } from './hooks/useSessionHistory'
 import { useLanguage } from './context/LanguageContext'
 import { getVisualization } from './models/registry'
 import { BubbleField } from './components/BubbleField'
-import { ModelBar } from './components/ModelBar'
 import { MODEL_IDS } from './models/constants'
 import { storage } from './data/storage'
 import { getCrisisTier } from './models/distress'
@@ -74,6 +74,21 @@ export default function App() {
   const [showUndoToast, setShowUndoToast] = useState(false)
   const undoSnapshotRef = useRef<{ selections: BaseEmotion[]; state: ModelState } | null>(null)
   const { playSound, muted, setMuted } = useSound()
+
+  // Menu state owned by App so SettingsMenu can render at top level via portal
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const toggleMenu = useCallback(() => {
+    setMenuOpen((prev) => {
+      const next = !prev
+      if (next) window.dispatchEvent(new Event('emot-id:dismiss-picker'))
+      return next
+    })
+  }, [])
+
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false)
+  }, [])
 
   const { showHint, dismissHint } = useHintState(modelId)
   const { sessions, loading: sessionsLoading, save: saveSession, clearAll: clearAllSessions, exportJSON: exportSessionsJSON } = useSessionHistory()
@@ -142,47 +157,50 @@ export default function App() {
     )
   }
 
-  const handleSessionComplete = useCallback(
-    (reflectionAnswer: 'yes' | 'partly' | 'no' | null) => {
-      if (analysisResults.length === 0) return
-      const serialized: SerializedSelection[] = selections.map((s) => {
-        const base: SerializedSelection = { emotionId: s.id, label: s.label }
-        // Preserve somatic extras for heat map tracking
-        if ('selectedSensation' in s && 'selectedIntensity' in s) {
-          base.extras = {
-            sensationType: (s as { selectedSensation: string }).selectedSensation,
-            intensity: (s as { selectedIntensity: number }).selectedIntensity,
-          }
+  const handleSessionComplete = (reflectionAnswer: 'yes' | 'partly' | 'no' | null) => {
+    if (analysisResults.length === 0) return
+    const serialized: SerializedSelection[] = selections.map((s) => {
+      const base: SerializedSelection = { emotionId: s.id, label: s.label }
+      // Preserve somatic extras for heat map tracking
+      if ('selectedSensation' in s && 'selectedIntensity' in s) {
+        base.extras = {
+          sensationType: (s as { selectedSensation: string }).selectedSensation,
+          intensity: (s as { selectedIntensity: number }).selectedIntensity,
         }
-        return base
-      })
-      const session: Session = {
-        id: crypto.randomUUID(),
-        timestamp: Date.now(),
-        modelId,
-        selections: serialized,
-        results: analysisResults,
-        crisisTier: getCrisisTier(analysisResults.map((r) => r.id)),
-        reflectionAnswer: reflectionAnswer ?? undefined,
       }
-      saveSession(session)
-    },
-    [analysisResults, selections, modelId, saveSession],
-  )
+      return base
+    })
+    const session: Session = {
+      id: crypto.randomUUID(),
+      timestamp: Date.now(),
+      modelId,
+      selections: serialized,
+      results: analysisResults,
+      crisisTier: getCrisisTier(analysisResults.map((r) => r.id)),
+      reflectionAnswer: reflectionAnswer ?? undefined,
+    }
+    saveSession(session)
+  }
 
   return (
     <MotionConfig reducedMotion="user">
     <div className="h-dvh overflow-hidden flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
       <Header
+        menuOpen={menuOpen}
+        onMenuToggle={toggleMenu}
+        modelId={modelId}
+        onModelChange={switchModel}
+      />
+
+      <SettingsMenu
+        isOpen={menuOpen}
+        onClose={closeMenu}
         modelId={modelId}
         onModelChange={switchModel}
         soundMuted={muted}
         onSoundMutedChange={setMuted}
         onOpenHistory={() => setShowHistory(true)}
-        onMenuOpenChange={(open) => { if (open) window.dispatchEvent(new Event('emot-id:dismiss-picker')) }}
       />
-
-      <ModelBar modelId={modelId} onModelChange={switchModel} />
 
       <SelectionBar
         selections={selections}
@@ -212,19 +230,19 @@ export default function App() {
         </div>
       </VisualizationErrorBoundary>
 
-      {/* Bottom bar: analyze + "I don't know" — fixed at bottom to free vertical space for body map */}
-      <div className="shrink-0 px-4 py-2 max-w-md mx-auto w-full bg-gray-900/80 backdrop-blur-sm border-t border-gray-700/50 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+      {/* Bottom bar: analyze + "I don't know" */}
+      <div className="shrink-0 px-4 py-1.5 max-w-md mx-auto w-full bg-gray-900/80 backdrop-blur-sm border-t border-gray-700/50 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
         <AnalyzeButton
           disabled={selections.length === 0}
           onClick={analyzeEmotions}
           modelId={modelId}
           selectionCount={selections.length}
         />
-        {/* "I don't know" — hidden on somatic (guided scan covers it) and while hint visible */}
+        {/* "I don't know" — compact text link, hidden on somatic and while hint visible */}
         {selections.length === 0 && !showHint && modelId !== MODEL_IDS.SOMATIC && (
           <button
             onClick={() => setShowDontKnow(true)}
-            className="block mx-auto mt-1.5 px-4 py-2 min-h-[44px] text-sm text-gray-300 bg-gray-700/60 hover:bg-gray-700 border border-gray-600 rounded-full transition-colors"
+            className="block mx-auto mt-1 px-4 py-1 text-xs text-gray-500 hover:text-gray-300 transition-colors"
           >
             {dontKnowT.link ?? "I don't know what I'm feeling"}
           </button>

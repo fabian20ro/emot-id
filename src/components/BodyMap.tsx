@@ -112,12 +112,12 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
   const activeRegion = activeRegionId ? regionMap.get(activeRegionId) : null
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-4">
+    <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-1 sm:p-4">
       {/* Mode toggle */}
-      <div className="flex items-center gap-3 mb-3">
+      <div className="flex items-center gap-2 mb-1">
         <button
           onClick={() => { setIsGuidedMode(false); setGuidedActive(false) }}
-          className={`text-xs px-3 py-1 rounded-full transition-colors ${
+          className={`min-h-[44px] text-sm px-4 py-2 rounded-full transition-colors ${
             !isGuidedMode
               ? 'bg-indigo-600 text-white'
               : 'bg-gray-800 text-gray-400 hover:text-gray-200'
@@ -127,7 +127,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
         </button>
         <button
           onClick={() => { setIsGuidedMode(true); startGuidedScan() }}
-          className={`text-xs px-3 py-1 rounded-full transition-colors ${
+          className={`min-h-[44px] text-sm px-4 py-2 rounded-full transition-colors ${
             isGuidedMode
               ? 'bg-indigo-600 text-white'
               : 'bg-gray-800 text-gray-400 hover:text-gray-200'
@@ -204,6 +204,15 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
                 style={{ cursor: 'pointer' }}
                 onClick={() => handleRegionClick(path.id)}
               >
+                {/* Invisible touch expansion rectangle (44px CSS target) */}
+                <rect
+                  x={labelAnchor.x - labelW / 2 + dir * -10 - 4}
+                  y={labelAnchor.y - 17}
+                  width={labelW + 8}
+                  height={34}
+                  fill="transparent"
+                  style={{ cursor: 'pointer' }}
+                />
                 {/* Connector line */}
                 <line
                   x1={arrowStartX}

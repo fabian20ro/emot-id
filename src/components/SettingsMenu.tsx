@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import { useFocusTrap } from '../hooks/useFocusTrap'
@@ -30,11 +31,11 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
   const privacyT = section('privacy')
   const focusTrapRef = useFocusTrap(isOpen, onClose)
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop — fixed to viewport, escapes Header stacking context */}
+          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -43,21 +44,34 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
             onClick={onClose}
           />
 
-          {/* Full-screen slide-in panel — fixed to viewport */}
+          {/* Bottom sheet drawer */}
           <motion.div
             ref={focusTrapRef}
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
             transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+            drag="y"
+            dragConstraints={{ top: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(_e, info) => {
+              if (info.offset.y > 100 || info.velocity.y > 500) {
+                onClose()
+              }
+            }}
             role="dialog"
             aria-modal="true"
-            className="fixed inset-y-0 left-0 z-[var(--z-modal)] w-80 max-w-[85vw] bg-gray-800 shadow-2xl border-r border-gray-700 flex flex-col"
+            className="fixed inset-x-0 bottom-0 z-[var(--z-modal)] max-h-[85dvh] bg-gray-800 rounded-t-2xl shadow-2xl flex flex-col overflow-hidden"
           >
-            {/* Sticky header with close button */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
-              <h2 className="text-sm font-semibold text-gray-200">
-                {settingsT.title ?? 'Settings'}
+            {/* Drag handle */}
+            <div className="flex justify-center pt-2 pb-1">
+              <div className="w-10 h-1 rounded-full bg-gray-600" />
+            </div>
+
+            {/* Sticky header with title and close button */}
+            <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+              <h2 className="text-base font-semibold text-gray-200">
+                Emot-ID
               </h2>
               <button
                 onClick={onClose}
@@ -69,7 +83,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
             </div>
 
             {/* Scrollable content */}
-            <div className="flex-1 overflow-y-auto p-3 pb-[env(safe-area-inset-bottom,0.75rem)] space-y-1">
+            <div className="flex-1 overflow-y-auto overscroll-contain p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] space-y-1">
               {/* Language Section */}
               <div className="px-3 py-2">
                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
@@ -79,13 +93,13 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
               <div className="flex gap-1 px-2 pb-2">
                 <button
                   onClick={() => { setLanguage('ro'); onClose() }}
-                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${toggleClass(language === 'ro')}`}
+                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(language === 'ro')}`}
                 >
                   Romana
                 </button>
                 <button
                   onClick={() => { setLanguage('en'); onClose() }}
-                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${toggleClass(language === 'en')}`}
+                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(language === 'en')}`}
                 >
                   English
                 </button>
@@ -102,7 +116,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
                   <button
                     key={m.id}
                     onClick={() => { onModelChange(m.id); onClose() }}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-left ${toggleClass(modelId === m.id)}`}
+                    className={`px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors text-left ${toggleClass(modelId === m.id)}`}
                   >
                     <span className="block">{m.name[language]}</span>
                     <span className={`block text-xs mt-0.5 ${
@@ -123,13 +137,13 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
               <div className="flex gap-1 px-2 pb-2">
                 <button
                   onClick={() => { onSoundMutedChange(false); onClose() }}
-                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${toggleClass(!soundMuted)}`}
+                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(!soundMuted)}`}
                 >
                   {settingsT.soundOn ?? 'On'}
                 </button>
                 <button
                   onClick={() => { onSoundMutedChange(true); onClose() }}
-                  className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${toggleClass(soundMuted)}`}
+                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(soundMuted)}`}
                 >
                   {settingsT.soundOff ?? 'Off'}
                 </button>
@@ -140,7 +154,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
                 <div className="px-2 pb-1 pt-1 border-t border-gray-700 mt-1">
                   <button
                     onClick={() => { onOpenHistory(); onClose() }}
-                    className="w-full px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-gray-700 transition-colors text-left"
+                    className="w-full px-3 py-2 min-h-[44px] rounded-lg text-sm text-gray-300 hover:bg-gray-700 transition-colors text-left"
                   >
                     {historyT.menuLabel ?? 'Past sessions'}
                   </button>
@@ -149,7 +163,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
 
               {/* Crisis support */}
               <div className="px-2 pb-1 pt-1 border-t border-gray-700 mt-1">
-                <div className="flex items-center justify-between px-3 py-1">
+                <div className="flex items-center justify-between px-3 py-1 min-h-[44px]">
                   <span className="text-xs text-gray-400">
                     {menuT.crisisSupport ?? 'Need support?'}
                   </span>
@@ -164,7 +178,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
 
               {/* Privacy */}
               <div className="px-2 pb-1 pt-1 border-t border-gray-700 mt-1">
-                <div className="flex items-center justify-between px-3 py-1">
+                <div className="flex items-center justify-between px-3 py-1 min-h-[44px]">
                   <span className="text-xs text-gray-400">
                     {privacyT.headline ?? 'Your data stays on this device'}
                   </span>
@@ -179,7 +193,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
 
               {/* Disclaimer */}
               <div className="px-2 pb-2 pt-1 border-t border-gray-700">
-                <div className="flex items-center justify-between px-3 py-1">
+                <div className="flex items-center justify-between px-3 py-1 min-h-[44px]">
                   <span className="text-xs text-gray-500">
                     {disclaimerT.label ?? 'Disclaimer'}
                   </span>
@@ -195,6 +209,7 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }

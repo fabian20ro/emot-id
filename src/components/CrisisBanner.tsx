@@ -23,11 +23,11 @@ export function CrisisBanner({ tier, crisisT }: { tier: CrisisTier; crisisT: Rec
         href="https://findahelpline.com"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-xs text-amber-300 hover:text-amber-200 underline"
+        className="flex items-center justify-center min-h-[48px] mt-2 px-4 py-2 rounded-lg bg-amber-700/30 text-base font-semibold text-amber-200 hover:bg-amber-700/50 transition-colors"
       >
         {crisisT.intLine ?? 'International: findahelpline.com'}
       </a>
-      <p className="text-xs text-amber-400/60 mt-1">
+      <p className="text-xs text-amber-400/60 mt-2">
         {crisisT.disclaimer ?? 'If you are in immediate danger, please call emergency services.'}
       </p>
 

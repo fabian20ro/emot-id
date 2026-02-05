@@ -6,14 +6,20 @@ import { getAvailableModels } from '../models/registry'
 interface ModelBarProps {
   modelId: string
   onModelChange: (id: string) => void
+  /** Render inline inside header (no own padding, flex-1) */
+  inline?: boolean
 }
 
-function ModelBarBase({ modelId, onModelChange }: ModelBarProps) {
+function ModelBarBase({ modelId, onModelChange, inline }: ModelBarProps) {
   const { language } = useLanguage()
   const models = getAvailableModels()
 
   return (
-    <div className="flex gap-2 px-4 py-1.5 overflow-x-auto scrollbar-hide">
+    <div className={
+      inline
+        ? 'flex-1 flex gap-1 overflow-x-auto scrollbar-hide'
+        : 'flex gap-2 px-4 py-1.5 overflow-x-auto scrollbar-hide'
+    }>
       {models.map((m) => {
         const isActive = m.id === modelId
         const fullName = m.name[language]
@@ -22,7 +28,7 @@ function ModelBarBase({ modelId, onModelChange }: ModelBarProps) {
           <button
             key={m.id}
             onClick={() => onModelChange(m.id)}
-            className={`relative px-3 py-1 min-h-[44px] flex items-center rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
+            className={`relative ${inline ? 'flex-1' : ''} px-3 py-1 min-h-[44px] flex items-center justify-center rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
               isActive
                 ? 'text-white'
                 : 'text-gray-400 hover:text-gray-200 bg-gray-800/50'

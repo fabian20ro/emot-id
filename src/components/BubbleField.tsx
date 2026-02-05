@@ -99,7 +99,7 @@ function BubbleFieldBase({
   }, [emotions, sizes, containerSize.width, containerSize.height])
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-4">
+    <div className="flex-1 min-h-0 flex flex-col items-center justify-start sm:justify-center p-2 sm:p-4">
       <div
         ref={containerRef}
         className="relative w-full max-w-2xl flex-1 min-h-[200px] overflow-hidden"

@@ -1,6 +1,6 @@
 # Architecture Codemap
 
-**Last Updated:** 2026-02-04
+**Last Updated:** 2026-02-06
 **Framework:** React 19 + TypeScript 5.9, Vite 7, Tailwind CSS 4
 **Entry Point:** `src/main.tsx`
 
@@ -11,17 +11,17 @@ main.tsx
   |
   StrictMode > LanguageProvider > App
                                    |
-                    +------+-------+-------+----------+----------+
-                    |      |       |       |          |          |
-                  Header  AnalyzeButton  SelectionBar  Visualization*  ResultModal  DontKnowModal
-                    |                      |               |               |
-              SettingsMenu           combo display    CrisisBanner    MicroIntervention
-              MenuButton                              OppositeAction
-                    |
-              SessionHistory
+                    +------+-------+-------+----------+----------+----------+
+                    |      |       |       |          |          |          |
+                  Header  SettingsMenu*  AnalyzeButton  SelectionBar  Visualization**  ResultModal  DontKnowModal
+                  |  |       |                |               |               |
+          MenuButton ModelBar InfoButton[]  combo display  CrisisBanner    MicroIntervention
+                             SessionHistory               OppositeAction
 ```
 
-`*` Visualization is resolved at runtime from the model registry.
+`*` SettingsMenu renders via `createPortal(…, document.body)` — a sibling of the main layout div, not a child of Header.
+
+`**` Visualization is resolved at runtime from the model registry.
 
 ## Core Patterns
 
@@ -126,9 +126,15 @@ User completes reflection (ResultModal close)
 - Bilingual (ro/en), matched by emotion ID patterns
 - Displayed in amber box between results and bridge in ResultModal
 
-### InfoButton Portal Pattern (`src/components/InfoButton.tsx`)
+### Portal Pattern for Fixed Overlays
 
-`InfoButton` renders its dialog via `createPortal(…, document.body)` at `z-[9999]` to escape any parent stacking context (e.g. SettingsMenu's `z-50`, ResultModal's backdrop). The dialog uses `useFocusTrap` for accessibility, Framer Motion `AnimatePresence` for enter/exit, and backdrop dismiss.
+All `position: fixed` overlays render via `createPortal(…, document.body)` to escape parent stacking contexts (e.g. WebKit's `backdrop-filter` on `<header>` creates a new stacking context):
+
+- **SettingsMenu** — bottom sheet drawer, portal to body, `z-[var(--z-modal)]`
+- **InfoButton** — info dialog, portal to body, `z-[9999]`
+- **SensationPicker** — uses `fixed` positioning inside BodyMap (works because BodyMap has no stacking context triggers)
+
+The dialog pattern uses `useFocusTrap` for accessibility, Framer Motion `AnimatePresence` for enter/exit, and backdrop dismiss.
 
 ### Cross-Model Bridges (`src/components/model-bridges.ts`)
 
@@ -152,7 +158,7 @@ Pure function `getModelBridge()` suggests contextual next models after analysis:
 src/
   main.tsx                        # ReactDOM.createRoot, wraps App in LanguageProvider
   App.tsx                         # Root: model switching, sound, hint, onboarding, modals, session saving
-  index.css                       # Global Tailwind styles
+  index.css                       # Global Tailwind, z-index scale, layout CSS custom properties
   context/
     LanguageContext.tsx            # i18n provider + useLanguage hook (section() accessor)
   hooks/
@@ -185,12 +191,12 @@ src/
     somatic/                      # Body Map model (30+ emotions, 9 sensation types)
     dimensional/                  # Emotional Space model (2D valence x arousal)
   components/
-    Header.tsx                    # App header with menu trigger
+    Header.tsx                    # 48px merged header: MenuButton + ModelBar (inline)
     MenuButton.tsx                # Animated hamburger button
-    SettingsMenu.tsx              # Language, model, sound, history, privacy (InfoButton), disclaimer
-    ModelBar.tsx                  # Visible model indicator bar below header
+    SettingsMenu.tsx              # Bottom sheet drawer (portal to body): language, model, sound, history, privacy, disclaimer
+    ModelBar.tsx                  # Model tab bar (inline in Header, or standalone)
     AnalyzeButton.tsx             # Gradient CTA with selection count
-    SelectionBar.tsx              # Selected emotions strip + combo display + undo
+    SelectionBar.tsx              # Horizontal scroll strip: selected emotion chips + combo badges + undo
     UndoToast.tsx                 # 5-second undo toast for clear actions
     ResultModal.tsx               # Analysis results (reflection, bridges, crisis, interventions)
     ResultCard.tsx                # Reusable result card (InfoButton for collapsed descriptions)
@@ -203,7 +209,7 @@ src/
     Bubble.tsx                    # Single animated emotion bubble
     BodyMap.tsx                   # SVG body silhouette visualization (Somatic)
     BodyRegion.tsx                # Single SVG body region path
-    body-paths.ts                 # SVG path data for 12 body regions (seated pose)
+    body-paths.ts                 # SVG path data for 12 body regions (standing pose, 300x450 viewBox)
     SensationPicker.tsx           # Sensation type + intensity popover
     IntensityPicker.tsx           # Intensity selection (1-3 scale, detailed/compact)
     GuidedScan.tsx                # Head-to-feet guided body scan overlay
@@ -215,7 +221,7 @@ src/
   i18n/
     ro.json                       # Romanian UI strings
     en.json                       # English UI strings
-  __tests__/                      # Vitest + Testing Library tests (40 files, ~270 tests)
+  __tests__/                      # Vitest + Testing Library tests (40+ files, ~290 tests)
 ```
 
 ## Key Dependencies

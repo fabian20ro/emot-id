@@ -99,7 +99,7 @@ export function SensationPicker({
             {step === 'intensity' && (
               <button
                 onClick={handleBack}
-                className="text-gray-400 hover:text-white text-sm"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 hover:text-white text-sm"
               >
                 ←
               </button>
@@ -154,7 +154,7 @@ export function SensationPicker({
         {/* Skip button */}
         <button
           onClick={onCancel}
-          className="w-full mt-1.5 text-xs text-gray-500 hover:text-gray-400 transition-colors"
+          className="w-full mt-1.5 min-h-[44px] text-xs text-gray-500 hover:text-gray-400 transition-colors"
         >
           {somaticT.nothingHere ?? 'Nothing here'}
         </button>

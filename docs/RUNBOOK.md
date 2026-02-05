@@ -129,19 +129,32 @@ If `idb-keyval` fails (e.g., in private browsing), the app gracefully degrades �
 
 ### Mobile layout issues
 
+**Target testing viewport**: 393×742 (Pixel 9a Chrome, 9:17 visible ratio after browser chrome). Also verify on 320×604 (smallest phone).
+
+**Chrome DevTools setup**: Open DevTools → Toggle device toolbar → Add custom device: 393×742, mobile, touch.
+
+**Settings drawer testing**:
+- Tap hamburger → bottom sheet slides up from bottom
+- Verify all items are scrollable and tappable
+- Swipe down on drawer → dismisses
+- Tap backdrop → dismisses
+- Press Escape → dismisses
+- Tab key cycles within drawer (focus trap)
+
 Common mobile viewport problems and their fixes:
 
-- **BubbleField overflow** — Bubbles are clamped to container bounds; if they escape, check the clamping logic in BubbleField
-- **BodyMap too short** — Component has a `min-height` to prevent collapse on small screens
-- **ModelBar names overflow** — Models define `shortName` for narrow viewports (< 360px); names swap automatically
+- **BubbleField overflow** — Bubbles are clamped to container bounds; if they escape, check the clamping logic in BubbleField and `bubble-layout.ts`
+- **BodyMap regions untappable** — Small regions (throat, jaw) have expanded `hitD` paths. Label pills have invisible `<rect>` touch targets. Check `body-paths.ts` hitD values
+- **ModelBar names overflow** — Models define `shortName` for narrow viewports (<480px); names swap automatically
 - **DimensionalField label overlap** — Axis labels use collision-avoidance offsets at small widths
-- **Safe-area insets** — Bottom nav and fixed elements use `env(safe-area-inset-bottom)` for notched devices
+- **Safe-area double padding** — Safe-area insets are per-component (Header top, BottomBar bottom), NOT on `#root`. If bottom content is cut off, check for duplicate `env(safe-area-inset-bottom)` application
+- **Settings menu invisible** — If the menu renders but is hidden behind content, it's likely trapped in a stacking context. The fix is `createPortal(…, document.body)`. This was the root cause of the Phase K stabilization
 
 ## Monitoring
 
 No server-side monitoring (client-only app). Key health indicators:
 - GitHub Actions build status (unit tests run in CI)
-- Manual testing on mobile (375px viewport)
+- Manual testing on mobile (393×742 viewport, also verify 320px minimum)
 - Keyboard-only navigation through full flow
 - Crisis path: select distress emotions → verify banner appears
 

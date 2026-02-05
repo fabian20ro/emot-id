@@ -24,7 +24,6 @@ function renderMenu(overrides: Partial<React.ComponentProps<typeof SettingsMenu>
 describe('SettingsMenu', () => {
   it('renders language header from i18n (English)', () => {
     renderMenu()
-    // English default: should show "Language"
     expect(screen.getByText('Language')).toBeInTheDocument()
   })
 
@@ -33,10 +32,18 @@ describe('SettingsMenu', () => {
     expect(screen.getByText('Model')).toBeInTheDocument()
   })
 
-  it('has w-80 width class on the slide-in panel', () => {
-    const { container } = renderMenu()
-    const menu = container.querySelector('.w-80')
-    expect(menu).toBeInTheDocument()
+  it('renders into document.body portal (bottom sheet)', () => {
+    renderMenu()
+    // The dialog should be in document.body, not inside the test container
+    const dialog = document.body.querySelector('[role="dialog"]')
+    expect(dialog).toBeInTheDocument()
+    // Bottom sheet uses rounded-t-2xl instead of old w-80
+    expect(dialog?.classList.contains('rounded-t-2xl')).toBe(true)
+  })
+
+  it('renders Emot-ID as drawer title', () => {
+    renderMenu()
+    expect(screen.getByText('Emot-ID')).toBeInTheDocument()
   })
 
   it('does not render when closed', () => {
@@ -74,5 +81,35 @@ describe('SettingsMenu', () => {
     const dialogs = screen.getAllByRole('dialog')
     expect(dialogs.length).toBe(2)
     expect(screen.getByText(/stored locally on your device/)).toBeInTheDocument()
+  })
+
+  it('calls onClose when backdrop is clicked', async () => {
+    const user = userEvent.setup()
+    const onClose = vi.fn()
+    renderMenu({ onClose })
+
+    // The backdrop is the first element with bg-black/60
+    const backdrop = document.body.querySelector('.bg-black\\/60')
+    expect(backdrop).toBeInTheDocument()
+    await user.click(backdrop!)
+    expect(onClose).toHaveBeenCalled()
+  })
+
+  it('has min-h-[44px] on all interactive menu items', () => {
+    renderMenu()
+    const dialog = document.body.querySelector('[role="dialog"]')!
+    const buttons = dialog.querySelectorAll('button')
+    // Filter out the close button (has w-11 h-11)
+    const menuButtons = Array.from(buttons).filter(
+      (btn) => !btn.getAttribute('aria-label')?.includes('Close')
+    )
+    for (const btn of menuButtons) {
+      const hasMinHeight = btn.classList.contains('min-h-[44px]')
+      // InfoButtons use explicit w-[44px] h-[44px]
+      const hasExplicit44 = btn.classList.contains('h-[44px]') || btn.classList.contains('w-[44px]')
+      // Close-like buttons with w-11 h-11 (= 44px)
+      const hasExplicitSize = btn.classList.contains('h-11') || btn.classList.contains('w-11')
+      expect(hasMinHeight || hasExplicit44 || hasExplicitSize).toBe(true)
+    }
   })
 })

@@ -110,11 +110,11 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
   )
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-2 sm:p-4">
-      <p className="text-xs text-gray-400 text-center mb-2 px-2">
+    <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-1 sm:p-4">
+      <p className="hidden sm:block text-xs text-gray-400 text-center mb-2 px-2">
         {dimensionalT.instructions}
       </p>
-      <div className="relative w-full max-w-2xl flex-1 min-h-[200px] flex flex-col items-center justify-center">
+      <div className="w-full max-w-2xl aspect-square max-h-full relative">
         <svg
           ref={svgRef}
           viewBox={`0 0 ${FIELD_SIZE} ${FIELD_SIZE}`}
@@ -234,18 +234,18 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
           )}
         </svg>
 
-        {/* Suggestion panel */}
+        {/* Suggestion chips — overlaid at bottom of SVG container */}
         {suggestions.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-2 flex gap-2 flex-wrap justify-center"
+            className="absolute bottom-2 left-0 right-0 flex gap-2 flex-wrap justify-center px-2"
           >
             {suggestions.map((s) => (
               <button
                 key={s.id}
                 onClick={() => handleSuggestionClick(s)}
-                className="px-3 py-1.5 rounded-full text-xs font-medium transition-colors"
+                className="px-4 py-2.5 min-h-[44px] rounded-full text-sm font-medium transition-colors"
                 style={{
                   backgroundColor: selectedIds.has(s.id) ? s.color : `${s.color}30`,
                   color: selectedIds.has(s.id) ? '#000' : s.color,
@@ -257,7 +257,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
             ))}
             <button
               onClick={() => { setCrosshair(null); setSuggestions([]) }}
-              className="px-3 py-1.5 rounded-full text-xs text-gray-400 hover:text-gray-200 bg-gray-800 transition-colors"
+              className="px-4 py-2.5 min-h-[44px] rounded-full text-sm text-gray-400 hover:text-gray-200 bg-gray-800 transition-colors"
             >
               ✕
             </button>

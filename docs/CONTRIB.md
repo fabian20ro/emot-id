@@ -58,14 +58,14 @@ Key directories:
 | `BodyMap` | Somatic body outline with selectable regions |
 | `DimensionalField` | 2D valence/arousal field with label collision avoidance |
 | `GuidedScan` | Guided body scan flow (centering breath, 5 body groups, numbness/flooding detection) |
-| `ModelBar` | Tab bar for switching models; shows `shortName` on narrow screens |
+| `ModelBar` | Tab bar for switching models; renders inline in Header, shows `shortName` on <480px |
 | `ResultModal` | Analysis results with reflection prompts |
 | `ResultCard` | Individual result with expandable descriptions via InfoButton |
 | `CrisisBanner` | Tiered crisis support resources (3 tiers + grounding technique) |
 | `MicroIntervention` | Brief coping interventions (breathing, savoring, curiosity) |
 | `DontKnowModal` | Entry point for users unsure what they feel |
-| `SelectionBar` | Current selections display with clear/undo |
-| `SettingsMenu` | Language toggle, sound toggle, privacy info, session history link |
+| `SelectionBar` | Horizontal scroll strip: selections + combos with clear/undo |
+| `SettingsMenu` | Bottom sheet drawer: language, model, sound, history, crisis, privacy, disclaimer |
 | `SessionHistory` | Past sessions with vocabulary stats, somatic patterns, valence ratio, export |
 | `InfoButton` | Reusable portal modal (focus trap, Escape-to-close) for inline disclosures |
 | `UndoToast` | Undo notification after clearing selections |
@@ -80,7 +80,12 @@ Key directories:
 - **React.memo** on visualization components (Bubble, BodyRegion, BubbleField, BodyMap, DimensionalField)
 - **Functional state updates** to avoid stale closures in callbacks
 - **Type-safe i18n** — use `section('sectionName')` from `useLanguage()` instead of casting `t`
-- **Portal modals** — use `InfoButton` (or `createPortal`) for overlays so they escape parent overflow/z-index
+- **Portal modals** — all `position: fixed` overlays must use `createPortal(content, document.body)` to escape parent stacking contexts (WebKit's `backdrop-filter` creates new stacking contexts)
+- **44px touch targets** — all interactive elements must have `min-h-[44px] min-w-[44px]`. SVG elements use invisible `<rect>` elements behind visible paths for hit expansion
+- **Safe-area insets** — applied per-component, NOT on `#root`. Header gets `pt-[env(safe-area-inset-top)]`, bottom bar gets `pb-[max(0.5rem,env(safe-area-inset-bottom))]`, `#root` only has horizontal insets
+- **Mobile breakpoint** — 480px is the "compact phone" breakpoint (`MOBILE_BREAKPOINT` in `bubble-layout.ts`, `min-[480px]:` in Tailwind). Standard Tailwind `sm:` (640px) for desktop
+- **Z-index scale** — use CSS custom properties from `index.css` (`--z-base`, `--z-header`, `--z-dropdown`, `--z-backdrop`, `--z-modal`, `--z-toast`, `--z-onboarding`). Never use raw z-index numbers
+- **Layout constants** — `--viz-padding` and `--chrome-height` in `index.css` for consistent spacing
 
 ## Testing
 

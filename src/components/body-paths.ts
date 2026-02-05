@@ -14,8 +14,8 @@ interface BodyRegionPath {
   labelSide: 'left' | 'right'
 }
 
-/** ViewBox with margins for labels: 60px left, 80px right */
-export const VIEWBOX = '-60 -10 320 450'
+/** ViewBox with margins for labels: 50px left, 50px right */
+export const VIEWBOX = '-50 -10 300 450'
 
 export const bodyRegionPaths: BodyRegionPath[] = [
   // HEAD GROUP — oval skull + face, jaw inside lower face, narrow throat
@@ -30,7 +30,7 @@ export const bodyRegionPaths: BodyRegionPath[] = [
   {
     id: 'jaw',
     d: 'M88 48 C88 44 93 42 100 42 C107 42 112 44 112 48 L112 58 C112 66 107 70 100 70 C93 70 88 66 88 58 Z',
-    hitD: 'M84 44 C84 38 89 34 100 34 C111 34 116 38 116 44 L116 62 C116 72 111 76 100 76 C89 76 84 72 84 62 Z',
+    hitD: 'M83 44 C83 38 89 34 100 34 C111 34 117 38 117 44 L117 62 C117 72 111 76 100 76 C89 76 83 72 83 62 Z',
     anchor: { x: 112, y: 56 },
     labelAnchor: { x: 172, y: 56 },
     labelSide: 'right',
@@ -38,7 +38,7 @@ export const bodyRegionPaths: BodyRegionPath[] = [
   {
     id: 'throat',
     d: 'M94 70 C94 68 96 66 100 66 C104 66 106 68 106 70 L106 96 C106 102 104 106 100 106 C96 106 94 102 94 96 Z',
-    hitD: 'M88 66 C88 62 92 60 100 60 C108 60 112 62 112 66 L112 100 C112 108 108 112 100 112 C92 112 88 108 88 100 Z',
+    hitD: 'M83 66 C83 62 89 58 100 58 C111 58 117 62 117 66 L117 100 C117 108 111 112 100 112 C89 112 83 108 83 100 Z',
     anchor: { x: 106, y: 86 },
     labelAnchor: { x: 172, y: 86 },
     labelSide: 'right',

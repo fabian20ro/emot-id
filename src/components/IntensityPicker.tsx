@@ -75,7 +75,7 @@ export function IntensityPicker({
           <button
             key={intensity}
             onClick={() => onPick(intensity)}
-            className="flex-1 flex flex-col items-center gap-1 px-2 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition-colors"
+            className="flex-1 flex flex-col items-center gap-1 px-2 py-2 min-h-[44px] rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition-colors"
           >
             <IntensityDots level={intensity} />
             <span className="text-xs text-gray-400">

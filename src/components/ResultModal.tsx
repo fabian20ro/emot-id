@@ -207,6 +207,9 @@ export function ResultModal({
                   </p>
 
                   <div className="flex-1 overflow-y-auto mb-4">
+                    {/* Crisis resources — above results so distressed users see them first */}
+                    {hasCrisis && <CrisisBanner tier={crisisTier} crisisT={crisisT} />}
+
                     {/* Synthesis narrative */}
                     {synthesisText && (
                       <div className="mb-4 p-4 rounded-xl bg-gray-700/50">
@@ -243,9 +246,6 @@ export function ResultModal({
                       </div>
                     )}
                   </div>
-
-                  {/* Crisis resources — tiered */}
-                  {hasCrisis && <CrisisBanner tier={crisisTier} crisisT={crisisT} />}
 
                   {/* AI link — demoted during crisis */}
                   <div className="space-y-2">

@@ -1,9 +1,9 @@
 import type { BaseEmotion } from '../models/types'
 
-const MOBILE_BREAKPOINT = 500
+const MOBILE_BREAKPOINT = 480
 
 const desktopSizePixels = { small: 80, medium: 100, large: 120 }
-const mobileSizePixels = { small: 70, medium: 88, large: 100 }
+const mobileSizePixels = { small: 78, medium: 96, large: 110 }
 export const bubbleHeight = 48
 
 export function getSizePixels(containerWidth: number) {
@@ -24,8 +24,9 @@ export function calculateDeterministicPositions(
   sizes: Map<string, 'small' | 'medium' | 'large'>,
 ): Map<string, { x: number; y: number }> {
   const sizeMap = getSizePixels(containerWidth)
-  const padding = 16
-  const gap = 10
+  const isMobile = containerWidth < MOBILE_BREAKPOINT
+  const padding = isMobile ? 8 : 16
+  const gap = isMobile ? 8 : 10
   const availableWidth = containerWidth - padding * 2
 
   // Sort by size descending for better packing

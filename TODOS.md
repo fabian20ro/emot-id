@@ -2,6 +2,22 @@
 
 Multi-perspective review synthesized into a prioritized roadmap.
 
+## Phase K: Mobile Stabilization
+
+Target: Pixel 9a Chrome (393×742 visible). Must also work on 320×604 minimum.
+
+- [x] K.1 Fix settings menu — portal out of Header + bottom sheet drawer
+- [x] K.2 Merge Header + ModelBar into single 48px row
+- [x] K.3 SelectionBar horizontal scroll strip (single row, 48px max)
+- [x] K.4 Compact BottomBar + fix double safe-area inset
+- [x] K.5 BubbleField canvas maximization (reduced padding, bigger bubbles, top-align)
+- [x] K.6 DimensionalField canvas maximization (aspect-square, overlay suggestions)
+- [x] K.7 BodyMap canvas maximization + touch targets (hitD expand, label pills, mode toggle)
+- [x] K.8 CrisisBanner positioning (above results) + helpline touch target
+- [x] K.9 Technical debt reduction (CSS custom properties, breakpoint unification)
+- [x] K.10 Comprehensive touch target audit (all interactive elements ≥ 44px)
+- [x] K.11 Documentation & codemap updates
+
 ## Phase E: Advanced Features
 
 - [ ] E.1 Quick check-in mode — 30-sec grid of 8-12 words
@@ -19,7 +35,9 @@ Multi-perspective review synthesized into a prioritized roadmap.
 ## Implementation Order
 
 ```
-Phase E (advanced features) ← NEXT
+Phase K (mobile stabilization) ← CURRENT
+  ↓
+Phase E (advanced features)
   ↓
 Phase F (architecture/quality)
 ```

@@ -1,6 +1,6 @@
 # Frontend Codemap
 
-**Last Updated:** 2026-02-04
+**Last Updated:** 2026-02-06
 **Framework:** React 19 (App Router-less SPA), Framer Motion 12, Tailwind CSS 4
 
 ## Component Tree
@@ -8,36 +8,37 @@
 ```
 App (src/App.tsx)
  +-- Onboarding                   # 4-screen overlay (shown once, persisted)
- +-- Header
+ +-- Header                       # 48px merged row
  |    +-- MenuButton              # Animated hamburger (3 bars -> X)
- |    +-- SettingsMenu            # Dropdown: language, model, sound, history, privacy, disclaimer
- |         +-- InfoButton[]       # Privacy + disclaimer info modals (portal to body)
- +-- ModelBar                     # Model indicator bar (responsive shortName at <360px)
+ |    +-- ModelBar (inline)       # Model tab bar (flex-1, responsive shortName at <480px)
+ +-- SettingsMenu*                # Bottom sheet drawer (portal to body)
+ |    +-- InfoButton[]            # Privacy + disclaimer info modals (portal to body)
+ |    +-- SessionHistory          # History modal (vocabulary, patterns, export)
  +-- AnalyzeButton                # Gradient CTA with selection count, disabled when empty
- +-- "I don't know" button        # Opens DontKnowModal (hidden while showHint visible)
- +-- SelectionBar                 # Horizontal strip of selected emotion chips + combo badges
+ +-- "I don't know" text link     # Opens DontKnowModal (hidden while showHint visible)
+ +-- SelectionBar                 # Horizontal scroll strip: emotion chips + combo badges (48px max)
  |    +-- UndoToast               # 5-second undo toast after clear
  +-- FirstInteractionHint         # Per-model hint (flow-based, above visualization)
  +-- VisualizationErrorBoundary   # Class-based error boundary (bilingual)
- |    +-- Visualization*          # Resolved from registry per model ID
- |         +-- BubbleField        # For plutchik, wheel
+ |    +-- Visualization**         # Resolved from registry per model ID
+ |         +-- BubbleField        # For plutchik, wheel (top-aligned on mobile)
  |         |    +-- Bubble[]      # Animated pill buttons with emotion color
- |         +-- BodyMap            # For somatic
+ |         +-- BodyMap            # For somatic (reduced padding, expanded hit areas)
  |         |    +-- BodyRegion[]  # SVG path elements (12 regions)
- |         |    +-- SensationPicker  # 2-step popover (sensation -> intensity)
+ |         |    +-- SensationPicker  # Bottom sheet: sensation -> intensity
  |         |    +-- GuidedScan    # Sequential body scan overlay
- |         +-- DimensionalField   # For dimensional (2D scatter plot)
+ |         +-- DimensionalField   # For dimensional (aspect-square, overlay suggestions)
  +-- ResultModal                  # Full-screen modal with analysis results
+ |    +-- CrisisBanner            # Tiered crisis banner — renders ABOVE results (tier1/2/3)
  |    +-- ResultCard[]            # Color-coded result cards (InfoButton for collapsed descriptions)
- |    +-- CrisisBanner            # Tiered crisis banner (tier1/2/3)
  |    +-- MicroIntervention       # Breathing / savoring / curiosity exercise
  |    +-- OppositeAction          # DBT opposite action suggestion (amber box)
  |    +-- ModelBridge             # Cross-model bridge suggestion
- +-- SessionHistory               # History modal (vocabulary, patterns, export)
  +-- DontKnowModal               # Suggests Somatic or Dimensional model
 ```
 
-`*` Visualization component is dynamic: `getVisualization(modelId)` from registry.
+`*` SettingsMenu renders via `createPortal(…, document.body)` — portal sibling, not child of Header.
+`**` Visualization component is dynamic: `getVisualization(modelId)` from registry.
 
 ## Visualization System
 
@@ -47,8 +48,9 @@ Used by: Plutchik, Wheel models.
 
 - Renders emotion `Bubble` components with absolute positioning
 - Uses `ResizeObserver` to track container dimensions
-- Placement: random with collision detection (100 attempts), grid fallback
-- 16px padding from edges, min-height 200px
+- Placement: deterministic wrapped-row on mobile (<480px), random with collision detection on desktop
+- Mobile padding 8px, desktop 16px; min-height 200px
+- Top-aligned on mobile (`justify-start`), centered on desktop
 - Positions are memoized: existing bubbles keep position, only new ones are placed
 - Clamping: `Math.max(16, Math.min(pos, containerSize - bubbleSize - 16))` prevents edge clipping
 - Grid fallback: when random placement fails after 100 attempts, lays out in a grid; x/y clamped to `containerWidth - w - padding` to prevent overflow
@@ -86,16 +88,17 @@ Used by: Somatic model.
 
 ### body-paths.ts (`src/components/body-paths.ts`)
 
-- 12 SVG path definitions in 200x440 viewBox (seated meditation pose)
-- Groups: head (5), torso (5), arms (2), legs (2)
-- Each entry: `{ id, d (SVG path), anchor (popover position) }`
+- 12 SVG path definitions in 300x450 viewBox (`-50 -10 300 450`)
+- Groups: head (3: head, jaw, throat), torso (4: shoulders, chest, upper-back, stomach, lower-back), arms (2: arms, hands), legs (2: legs, feet)
+- Each entry: `{ id, d, hitD? (enlarged hit area), anchor, labelAnchor, labelSide }`
+- Small regions (throat, jaw) have expanded `hitD` paths for 44px mobile touch targets
 
 ### SensationPicker (`src/components/SensationPicker.tsx`)
 
-- Fixed-position popover near click point
-- Two steps: sensation type (grid of 9 including constriction) -> intensity (1-3 scale with anchor descriptions)
+- Bottom sheet with `drag="y"` swipe-to-dismiss gesture
+- Two steps: sensation type (horizontal scroll row of 9) -> intensity (1-3 scale, compact variant)
+- All interactive elements meet 44px minimum touch target (back button, "Nothing here", sensation buttons)
 - Exports `SENSATION_CONFIG` (icon + bilingual label per sensation type)
-- Framer Motion `drag="y"` swipe-to-dismiss gesture
 
 ### IntensityPicker (`src/components/IntensityPicker.tsx`)
 
@@ -118,7 +121,9 @@ Used by: Somatic model.
 
 Used by: Dimensional model.
 
-- SVG scatter plot in 500x500 viewBox with 50px padding
+- SVG scatter plot in 500x500 viewBox with 50px padding, `aspect-square` CSS constraint
+- Container maximizes width on mobile (fills ~391px on 393px viewport)
+- Instructions hidden on mobile (`hidden sm:block`), shown on desktop
 - Axes: X = valence (unpleasant to pleasant), Y = arousal (calm to intense)
 - Quadrant dividers + axis labels (bilingual via `section('dimensional')`)
 - Emotion dots: r=6 unselected, r=8 selected (with white stroke)
@@ -126,7 +131,7 @@ Used by: Dimensional model.
 - Label collision avoidance: greedy sort-and-bump algorithm (sort by y then x, bump by `MIN_GAP=14` when labels overlap within 40px horizontal proximity, clamp to viewBox bounds)
 - Text halo via `paintOrder="stroke"` for readability in dense areas
 - Click-to-place crosshair: converts pixel to valence/arousal, finds 3 nearest emotions
-- Suggestion panel: shows nearest emotions as clickable chips (toggle select/deselect)
+- Suggestion chips: absolute overlay at bottom of SVG container (44px touch targets)
 
 ## Post-Analysis Components
 
@@ -153,31 +158,40 @@ Used by: Dimensional model.
 
 ### SelectionBar (`src/components/SelectionBar.tsx`)
 
+- Single horizontal scroll row (`overflow-x-auto scrollbar-hide`, max-h 48px)
+- Layout: `[Clear button] [Emotion chips...] [Combo badges...]` — all inline
+- Right-edge gradient fade when content overflows
 - Displays selected emotions as colored chip buttons (click to deselect)
-- Shows combo badges (dyads for Plutchik, match strengths for Somatic)
+- Shows combo badges inline (dyads for Plutchik, match strengths for Somatic)
 - Somatic selections show sensation icon + intensity via `SENSATION_CONFIG`
 - Uses `isSomaticSelection()` type guard for conditional rendering
 - `AnimatePresence mode="popLayout"` for chip animations
-- Height capped: `max-h-[12vh] sm:max-h-[15vh]` to preserve visualization space
+- All interactive elements: `min-h-[44px]` touch targets
 - Clear button with 5-second undo toast (stores previous selections in ref)
 
 ### Header (`src/components/Header.tsx`)
 
-- App title + subtitle from i18n
-- Contains `MenuButton` + `SettingsMenu` as children
-- Passes `onOpenHistory` prop to SettingsMenu
+- Single 48px row: `[MenuButton] [ModelBar (inline)]`
+- No title/subtitle on main screen (app name moved to SettingsMenu drawer header)
+- Applies `pt-[env(safe-area-inset-top)]` for notched devices
+- Accepts `menuOpen`, `onMenuToggle`, `modelId`, `onModelChange` props from App
 
 ### SettingsMenu (`src/components/SettingsMenu.tsx`)
 
-- Animated dropdown (Framer Motion) with backdrop dismiss and focus trap
-- Sections: language toggle (ro/en), model selector, sound on/off, past sessions, privacy, disclaimer
-- Privacy and disclaimer sections use `InfoButton` (portal-based info modals) instead of inline `<details>`
-- Uses `section('menu')`, `section('settings')`, `section('privacy')`, `section('disclaimer')` for i18n
+- Bottom sheet drawer rendered via `createPortal(…, document.body)` at `z-[var(--z-modal)]`
+- Spring animation: `y: '100%' → y: 0`, swipe-to-dismiss (`drag="y"`, offset.y > 100 || velocity.y > 500)
+- Drag handle bar at top, "Emot-ID" as drawer title, max-h `85dvh`, `overscroll-contain`
+- Focus trap via `useFocusTrap`, backdrop dismiss, Escape closes
+- Sections: language toggle (ro/en), model selector, sound on/off, past sessions, crisis support, privacy, disclaimer
+- All interactive elements: `min-h-[44px]` touch targets
+- Privacy and disclaimer sections use `InfoButton` (portal-based info modals)
+- Uses `section('menu')`, `section('settings')`, `section('privacy')`, `section('disclaimer')`, `section('history')` for i18n
 - Reads model list from `getAvailableModels()`
 
 ### AnalyzeButton (`src/components/AnalyzeButton.tsx`)
 
 - Purple-to-pink gradient when enabled, gray when disabled
+- Compact mobile sizing: `py-2.5 text-base` (~48px, meets 44px minimum)
 - Shows selection count: "Analyze (3)"
 - Haptic feedback on mobile via `navigator.vibrate(10)`
 
@@ -185,6 +199,7 @@ Used by: Dimensional model.
 
 - Backdrop blur overlay, spring-animated card
 - Renders `AnalysisResult[]` via `ResultCard` components
+- CrisisBanner renders first (above results) when crisis tier detected
 - Narrative synthesis paragraph via `synthesize(results, language)`
 - Crisis tier detection + temporal escalation via `escalateCrisisTier`
 - Cross-model bridge suggestions via `getModelBridge()`
@@ -196,10 +211,11 @@ Used by: Dimensional model.
 
 ### CrisisBanner (`src/components/CrisisBanner.tsx`)
 
-- Extracted from ResultModal for discoverability and independent testability
+- Renders ABOVE results and synthesis narrative in ResultModal (first visible element in crisis)
 - Receives `tier` (CrisisTier) and `crisisT` (i18n strings) as props
 - Tier 1: warm invitation with helpline numbers
 - Tier 2/3: auto-expanded 5-4-3-2-1 grounding technique
+- Helpline link: full-width 48px amber button for easy mobile tapping
 
 ### model-bridges.ts (`src/components/model-bridges.ts`)
 

@@ -13,6 +13,16 @@
   --z-modal: 40;
   --z-toast: 50;
   --z-onboarding: 60;
+
+  /* Layout constants — single source of truth */
+  --viz-padding: 0.25rem;    /* 4px mobile */
+  --chrome-height: 48px;      /* merged header bar */
+  /* Mobile compact breakpoint: 480px (matches bubble-layout.ts MOBILE_BREAKPOINT) */
+}
+@media (min-width: 640px) {
+  :root {
+    --viz-padding: 1rem;      /* 16px desktop */
+  }
 }
 
 * {
@@ -27,9 +37,8 @@ body {
 #root {
   min-height: 100vh;
   min-height: 100dvh;
-  /* Safe-area padding for notched devices (iPhone X+, Dynamic Island) */
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+  /* Horizontal safe-area for landscape/notch side insets only.
+     Vertical insets applied per-component: Header (top), BottomBar (bottom). */
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
 }

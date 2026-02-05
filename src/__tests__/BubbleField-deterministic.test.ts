@@ -21,8 +21,8 @@ function makeSizes(emotions: BaseEmotion[], pattern: ('small' | 'medium' | 'larg
 const bubbleHeight = 48
 
 function hasOverlap(positions: Map<string, { x: number; y: number }>, sizes: Map<string, 'small' | 'medium' | 'large'>, containerWidth: number): boolean {
-  const mobileSizePixels = { small: 70, medium: 88, large: 100 }
-  const sizeMap = containerWidth < 500 ? mobileSizePixels : { small: 80, medium: 100, large: 120 }
+  const mobileSizePixels = { small: 78, medium: 96, large: 110 }
+  const sizeMap = containerWidth < 480 ? mobileSizePixels : { small: 80, medium: 100, large: 120 }
 
   const rects = Array.from(positions.entries()).map(([id, pos]) => ({
     id,
@@ -86,7 +86,7 @@ describe('BubbleField deterministic layout', () => {
     const emotions = makeEmotions(12)
     const sizes = makeSizes(emotions, ['small', 'medium', 'large'])
     const positions = calculateDeterministicPositions(emotions, width, height, sizes)
-    const mobileSizePixels = { small: 70, medium: 88, large: 100 }
+    const mobileSizePixels = { small: 78, medium: 96, large: 110 }
 
     for (const [id, pos] of positions) {
       const w = mobileSizePixels[sizes.get(id) || 'medium']
