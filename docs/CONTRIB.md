@@ -17,7 +17,7 @@ npm install
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start Vite dev server (http://localhost:5173) |
+| `npm run dev` | Start Vite dev server (`http://localhost:5173/emot-id/`) |
 | `npm run build` | TypeScript check + Vite production build |
 | `npm test` | Run all unit tests once (Vitest) |
 | `npm run test:watch` | Run unit tests in watch mode |
@@ -84,8 +84,15 @@ Key directories:
 - **44px touch targets** — all interactive elements must have `min-h-[44px] min-w-[44px]`. SVG elements use invisible `<rect>` elements behind visible paths for hit expansion
 - **Safe-area insets** — applied per-component, NOT on `#root`. Header gets `pt-[env(safe-area-inset-top)]`, bottom bar gets `pb-[max(0.5rem,env(safe-area-inset-bottom))]`, `#root` only has horizontal insets
 - **Mobile breakpoint** — 480px is the "compact phone" breakpoint (`MOBILE_BREAKPOINT` in `bubble-layout.ts`, `min-[480px]:` in Tailwind). Standard Tailwind `sm:` (640px) for desktop
-- **Z-index scale** — use CSS custom properties from `index.css` (`--z-base`, `--z-header`, `--z-dropdown`, `--z-backdrop`, `--z-modal`, `--z-toast`, `--z-onboarding`). Never use raw z-index numbers
+- **Z-index scale** — use CSS custom properties from `index.css` (`--z-base`, `--z-header`, `--z-dropdown`, `--z-backdrop`, `--z-modal`, `--z-toast`, `--z-onboarding`)
 - **Layout constants** — `--viz-padding` and `--chrome-height` in `index.css` for consistent spacing
+
+## Documentation Sync Rule
+
+If behavior changes, update docs in the same PR:
+- `README.md` for user-visible feature or workflow changes
+- `docs/RUNBOOK.md` for operations/troubleshooting changes
+- `docs/CODEMAPS/*.md` for architecture/component/model changes
 
 ## Testing
 

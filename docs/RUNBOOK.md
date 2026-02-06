@@ -8,6 +8,8 @@ Client-only PWA (Progressive Web App). No backend, no API server, no database se
 
 Deployed to GitHub Pages at `https://fabian20ro.github.io/emot-id/`.
 
+Local dev URL (because Vite `base` is `/emot-id/`): `http://localhost:5173/emot-id/`
+
 ## Build & Deploy
 
 ```bash
@@ -161,7 +163,8 @@ No server-side monitoring (client-only app). Key health indicators:
 ## Data Privacy
 
 - All data stored locally in user's browser
-- No telemetry, no analytics, no external API calls
+- No telemetry, no analytics, no automatic external API calls
+- External links open only on explicit user action (e.g. helpline resources, Google query)
 - "Clear all data" button in SessionHistory removes all IndexedDB records
 - JSON export lets users download and manage their own data
 - Privacy disclosure accessible in SettingsMenu via InfoButton (i18n key: `privacy`)

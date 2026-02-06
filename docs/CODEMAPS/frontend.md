@@ -7,17 +7,15 @@
 
 ```
 App (src/App.tsx)
- +-- Onboarding                   # 4-screen overlay (shown once, persisted)
+ +-- Onboarding                   # 4-screen overlay (shown once, persisted; supports skip)
  +-- Header                       # 48px merged row
  |    +-- MenuButton              # Animated hamburger (3 bars -> X)
  |    +-- ModelBar (inline)       # Model tab bar (flex-1, responsive shortName at <480px)
  +-- SettingsMenu*                # Bottom sheet drawer (portal to body)
  |    +-- InfoButton[]            # Privacy + disclaimer info modals (portal to body)
- |    +-- SessionHistory          # History modal (vocabulary, patterns, export)
  +-- AnalyzeButton                # Gradient CTA with selection count, disabled when empty
  +-- "I don't know" text link     # Opens DontKnowModal (hidden while showHint visible)
  +-- SelectionBar                 # Horizontal scroll strip: emotion chips + combo badges (48px max)
- |    +-- UndoToast               # 5-second undo toast after clear
  +-- FirstInteractionHint         # Per-model hint (flow-based, above visualization)
  +-- VisualizationErrorBoundary   # Class-based error boundary (bilingual)
  |    +-- Visualization**         # Resolved from registry per model ID
@@ -35,6 +33,8 @@ App (src/App.tsx)
  |    +-- OppositeAction          # DBT opposite action suggestion (amber box)
  |    +-- ModelBridge             # Cross-model bridge suggestion
  +-- DontKnowModal               # Suggests Somatic or Dimensional model
+ +-- UndoToast                   # 5-second undo toast after clear
+ +-- SessionHistory              # History modal (vocabulary, patterns, export)
 ```
 
 `*` SettingsMenu renders via `createPortal(…, document.body)` — portal sibling, not child of Header.
@@ -90,7 +90,7 @@ Used by: Somatic model.
 ### body-paths.ts (`src/components/body-paths.ts`)
 
 - 12 SVG path definitions in 300x450 viewBox (`-50 -10 300 450`)
-- Groups: head (3: head, jaw, throat), torso (4: shoulders, chest, upper-back, stomach, lower-back), arms (2: arms, hands), legs (2: legs, feet)
+- Groups: head (3: head, jaw, throat), torso (5: shoulders, chest, upper-back, stomach, lower-back), arms (2: arms, hands), legs (2: legs, feet)
 - Each entry: `{ id, d, hitD? (enlarged hit area), anchor, labelAnchor, labelSide }`
 - Labels alternate R,L,R,L by y-position with anatomical pair constraints (chest/upper-back and stomach/lower-back placed on opposite sides). Sides: head(R), jaw(L), throat(R), shoulders(L), chest(R), upper-back(L), stomach(L), lower-back(R), arms(R), hands(L), legs(R), feet(L)
 - Small regions (throat, jaw) have expanded `hitD` paths for 44px mobile touch targets
@@ -227,7 +227,7 @@ Used by: Dimensional model.
 
 - Pure function `getModelBridge(modelId, resultIds, bridgesT)` — no React dependencies
 - Returns `{ message, targetModelId, buttonLabel }` or null
-- Bridge mapping: Plutchik/Wheel -> Somatic, Somatic -> Wheel, Dimensional -> Wheel
+- Bridge mapping: Plutchik/Wheel -> Somatic, Somatic -> Wheel, Dimensional -> Somatic
 - Pleasant emotion savoring bridges for embodiment
 
 ### ResultCard (`src/components/ResultCard.tsx`)
@@ -243,15 +243,15 @@ Used by: Dimensional model.
 - Reusable info trigger + modal for contextual detail (replaces inline `<details>`)
 - Props: `title`, `ariaLabel`, `children` (ReactNode), optional `className`
 - Renders trigger as 44x44px touch target with SVG info icon
-- Dialog rendered via `createPortal(…, document.body)` at `z-[9999]` to escape parent stacking contexts
+- Dialog rendered via `createPortal(…, document.body)` at `z-[var(--z-onboarding)]` to escape parent stacking contexts
 - Focus trap via `useFocusTrap`, backdrop dismiss, Framer Motion `AnimatePresence` enter/exit
 - Used in: SettingsMenu (privacy, disclaimer), ResultCard (collapsed descriptions)
 
 ### Onboarding (`src/components/Onboarding.tsx`)
 
-- 4-screen non-skippable onboarding overlay
+- 4-screen onboarding overlay
 - Persisted to localStorage via `storage.set('onboarded', 'true')`
-- Skip button hidden on last screen (must tap "Start")
+- Skip button shown on first 3 screens (hidden on last screen)
 - Each screen: icon, title, body text from i18n
 - Includes normalization messaging
 

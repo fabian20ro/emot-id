@@ -11,12 +11,11 @@ main.tsx
   |
   StrictMode > LanguageProvider > App
                                    |
-                    +------+-------+-------+----------+----------+----------+
-                    |      |       |       |          |          |          |
-                  Header  SettingsMenu*  AnalyzeButton  SelectionBar  Visualization**  ResultModal  DontKnowModal
-                  |  |       |                |               |               |
-          MenuButton ModelBar InfoButton[]  combo display  CrisisBanner    MicroIntervention
-                             SessionHistory               OppositeAction
+       +--------+------------+-------------+-------------+---------------+------------+--------------+--------------+
+       |        |            |             |             |               |            |              |              |
+     Header  SettingsMenu*  SelectionBar  AnalyzeButton  Visualization**  ResultModal  DontKnowModal  UndoToast  SessionHistory
+         |  |         |
+ MenuButton ModelBar  InfoButton[]
 ```
 
 `*` SettingsMenu renders via `createPortal(…, document.body)` — a sibling of the main layout div, not a child of Header.
@@ -134,7 +133,7 @@ User completes reflection (ResultModal close)
 All `position: fixed` overlays render via `createPortal(…, document.body)` to escape parent stacking contexts (e.g. WebKit's `backdrop-filter` on `<header>` creates a new stacking context):
 
 - **SettingsMenu** — bottom sheet drawer, portal to body, `z-[var(--z-modal)]`
-- **InfoButton** — info dialog, portal to body, `z-[9999]`
+- **InfoButton** — info dialog, portal to body, `z-[var(--z-onboarding)]`
 - **SensationPicker** — uses `fixed` positioning inside BodyMap (works because BodyMap has no stacking context triggers)
 
 The dialog pattern uses `useFocusTrap` for accessibility, Framer Motion `AnimatePresence` for enter/exit, and backdrop dismiss.
@@ -144,7 +143,7 @@ The dialog pattern uses `useFocusTrap` for accessibility, Framer Motion `Animate
 Pure function `getModelBridge()` suggests contextual next models after analysis:
 - Plutchik/Wheel -> Somatic: "Where do you notice this in your body?"
 - Somatic -> Wheel: "Can you name the emotion more precisely?"
-- Dimensional -> Wheel: "Want to explore what this feeling is called?"
+- Dimensional -> Somatic: "Where do you feel this in your body?"
 - Pleasant emotion bridges: "Where do you feel that warmth?" (savoring)
 
 ### Type-Safe i18n
@@ -203,7 +202,7 @@ src/
     UndoToast.tsx                 # 5-second undo toast for clear actions
     ResultModal.tsx               # Analysis results (reflection, bridges, crisis, interventions)
     ResultCard.tsx                # Reusable result card (InfoButton for collapsed descriptions)
-    InfoButton.tsx                # Reusable info modal (portal to body, z-[9999], focus trap)
+    InfoButton.tsx                # Reusable info modal (portal to body, z-[var(--z-onboarding)], focus trap)
     CrisisBanner.tsx              # Tiered crisis detection banner (safety-critical)
     MicroIntervention.tsx         # Post-analysis breathing/savoring/curiosity exercises
     SessionHistory.tsx            # Session history modal (vocabulary, patterns, export)
@@ -218,13 +217,13 @@ src/
     GuidedScan.tsx                # Head-to-feet guided body scan overlay
     guided-scan-constants.ts      # Body groups, scan order, timing constants
     DimensionalField.tsx          # 2D valence x arousal scatter plot (Dimensional)
-    Onboarding.tsx                # 4-screen non-skippable onboarding overlay
+    Onboarding.tsx                # 4-screen onboarding overlay (supports skip)
     DontKnowModal.tsx             # "I don't know" modal (suggests Somatic or Dimensional)
     VisualizationErrorBoundary.tsx # Bilingual error boundary for visualizations
   i18n/
     ro.json                       # Romanian UI strings
     en.json                       # English UI strings
-  __tests__/                      # Vitest + Testing Library tests (40+ files, ~290 tests)
+  __tests__/                      # Vitest + Testing Library tests
 ```
 
 ## Key Dependencies
@@ -243,7 +242,7 @@ src/
 
 - PWA deployed to GitHub Pages at `/emot-id/`
 - Build: `tsc -b && vite build`
-- No backend, no database server, no API calls (client-side IndexedDB only)
+- No backend, no database server, no automatic external API calls (client-side IndexedDB only)
 
 ## Related Codemaps
 
