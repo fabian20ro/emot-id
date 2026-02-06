@@ -18,6 +18,7 @@ Build and evolve Emot-ID as a modular, safe, clinically respectful, privacy-firs
 
 1. **Recon**
    - Read relevant codemaps/docs before editing.
+   - Read `LESSONS_LEARNED.md` and apply any relevant prevention checklist.
    - Confirm actual behavior in source, not assumptions.
 2. **Plan**
    - Split work into small, verifiable units.
@@ -31,6 +32,13 @@ Build and evolve Emot-ID as a modular, safe, clinically respectful, privacy-firs
 5. **Document**
    - Update docs for any behavior/architecture change in the same PR.
    - Never leave codemaps stale after structural changes.
+
+## Lessons Loop (Required)
+
+- `LESSONS_LEARNED.md` is the project memory for execution mistakes and process fixes.
+- Add a new lesson entry when a failure causes rework (tooling, assumptions, process, verification gaps).
+- Keep entries concrete: context, failure, impact, corrective action, prevention checklist.
+- Before finalizing complex tasks, verify whether new lessons should be added.
 
 ## Skills and Subagents
 
