@@ -31,9 +31,9 @@ export const bodyRegionPaths: BodyRegionPath[] = [
     id: 'jaw',
     d: 'M88 48 C88 44 93 42 100 42 C107 42 112 44 112 48 L112 58 C112 66 107 70 100 70 C93 70 88 66 88 58 Z',
     hitD: 'M83 44 C83 38 89 34 100 34 C111 34 117 38 117 44 L117 62 C117 72 111 76 100 76 C89 76 83 72 83 62 Z',
-    anchor: { x: 112, y: 56 },
-    labelAnchor: { x: 172, y: 56 },
-    labelSide: 'right',
+    anchor: { x: 88, y: 56 },
+    labelAnchor: { x: 0, y: 56 },
+    labelSide: 'left',
   },
   {
     id: 'throat',
@@ -54,16 +54,16 @@ export const bodyRegionPaths: BodyRegionPath[] = [
   {
     id: 'chest',
     d: 'M80 120 C80 116 88 112 100 112 C112 112 120 116 120 120 L120 182 C120 188 112 192 100 192 C88 192 80 188 80 182 Z',
-    anchor: { x: 80, y: 152 },
-    labelAnchor: { x: 0, y: 148 },
-    labelSide: 'left',
+    anchor: { x: 120, y: 152 },
+    labelAnchor: { x: 172, y: 148 },
+    labelSide: 'right',
   },
   {
     id: 'upper-back',
     d: 'M66 124 C66 120 80 114 100 114 C120 114 134 120 134 124 L134 182 C134 188 120 192 100 192 C80 192 66 188 66 182 Z',
-    anchor: { x: 134, y: 152 },
-    labelAnchor: { x: 172, y: 152 },
-    labelSide: 'right',
+    anchor: { x: 66, y: 152 },
+    labelAnchor: { x: 0, y: 152 },
+    labelSide: 'left',
   },
   {
     id: 'stomach',
@@ -83,9 +83,9 @@ export const bodyRegionPaths: BodyRegionPath[] = [
   {
     id: 'arms',
     d: 'M52 124 C46 136 42 156 42 182 L42 252 C42 262 46 268 50 268 C54 268 56 264 56 256 L56 182 C56 158 56 140 54 130 Z M148 124 C154 136 158 156 158 182 L158 252 C158 262 154 268 150 268 C146 268 144 264 144 256 L144 182 C144 158 144 140 146 130 Z',
-    anchor: { x: 50, y: 190 },
-    labelAnchor: { x: 0, y: 180 },
-    labelSide: 'left',
+    anchor: { x: 150, y: 190 },
+    labelAnchor: { x: 172, y: 180 },
+    labelSide: 'right',
   },
   {
     id: 'hands',
@@ -99,9 +99,9 @@ export const bodyRegionPaths: BodyRegionPath[] = [
   {
     id: 'legs',
     d: 'M82 246 C78 256 76 276 76 302 C76 336 78 366 80 386 C82 394 86 398 90 398 C94 398 96 394 96 386 C96 366 96 336 96 302 C96 276 96 258 94 248 Z M118 246 C122 256 124 276 124 302 C124 336 122 366 120 386 C118 394 114 398 110 398 C106 398 104 394 104 386 C104 366 104 336 104 302 C104 276 104 258 106 248 Z',
-    anchor: { x: 78, y: 330 },
-    labelAnchor: { x: 0, y: 330 },
-    labelSide: 'left',
+    anchor: { x: 124, y: 330 },
+    labelAnchor: { x: 172, y: 330 },
+    labelSide: 'right',
   },
   {
     id: 'feet',

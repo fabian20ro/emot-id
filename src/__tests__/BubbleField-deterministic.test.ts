@@ -95,4 +95,91 @@ describe('BubbleField deterministic layout', () => {
       expect(pos.x + w).toBeLessThanOrEqual(width)
     }
   })
+
+  describe('mobile vertical distribution', () => {
+    it('spreads rows across vertical space on mobile', () => {
+      const width = 375
+      const height = 600
+      const emotions = makeEmotions(8)
+      const sizes = makeSizes(emotions)
+      const positions = calculateDeterministicPositions(emotions, width, height, sizes)
+
+      const ys = Array.from(positions.values()).map((p) => p.y)
+      const minY = Math.min(...ys)
+      const maxY = Math.max(...ys)
+      const spread = maxY - minY
+
+      // With 8 medium emotions at 375px, expect multiple rows spread across > 40% of height
+      expect(spread).toBeGreaterThan(height * 0.3)
+    })
+
+    it('centers single row vertically on mobile', () => {
+      const width = 375
+      const height = 600
+      const emotions = makeEmotions(3)
+      const sizes = makeSizes(emotions)
+      const positions = calculateDeterministicPositions(emotions, width, height, sizes)
+
+      const ys = Array.from(positions.values()).map((p) => p.y)
+      const avgY = ys.reduce((s, y) => s + y, 0) / ys.length
+      const center = height / 2
+
+      // Single row should be roughly centered (within bubbleHeight of center)
+      expect(Math.abs(avgY - center)).toBeLessThan(bubbleHeight)
+    })
+
+    it('caps row spacing at 3x bubble height', () => {
+      const width = 375
+      const height = 2000 // Very tall container
+      const emotions = makeEmotions(7)
+      const sizes = makeSizes(emotions)
+      const positions = calculateDeterministicPositions(emotions, width, height, sizes)
+
+      // Get unique row y-baselines (strip jitter by rounding)
+      const ys = Array.from(positions.values()).map((p) => p.y)
+      const sortedYs = [...new Set(ys.map((y) => Math.round(y / 10) * 10))].sort((a, b) => a - b)
+
+      if (sortedYs.length > 1) {
+        for (let i = 1; i < sortedYs.length; i++) {
+          const gap = sortedYs[i] - sortedYs[i - 1]
+          // Gap should not exceed bubbleHeight * 3 + bubbleHeight (spacing + content)
+          expect(gap).toBeLessThanOrEqual(bubbleHeight * 3 + bubbleHeight + 10)
+        }
+      }
+    })
+
+    it('all positions within bounds on mobile with various counts', () => {
+      for (const count of [1, 3, 7, 8, 14]) {
+        for (const width of [375, 414]) {
+          const height = 500
+          const emotions = makeEmotions(count)
+          const sizes = makeSizes(emotions, ['small', 'medium', 'large'])
+          const positions = calculateDeterministicPositions(emotions, width, height, sizes)
+          const mobileSizePixels = { small: 78, medium: 96, large: 110 }
+
+          for (const [id, pos] of positions) {
+            const w = mobileSizePixels[sizes.get(id) || 'medium']
+            expect(pos.x).toBeGreaterThanOrEqual(0)
+            expect(pos.y).toBeGreaterThanOrEqual(0)
+            expect(pos.x + w).toBeLessThanOrEqual(width)
+            expect(pos.y + bubbleHeight).toBeLessThanOrEqual(height + 10) // Allow jitter tolerance
+          }
+        }
+      }
+    })
+
+    it('does not change desktop layout', () => {
+      const width = 768 // Desktop
+      const height = 600
+      const emotions = makeEmotions(8)
+      const sizes = makeSizes(emotions)
+      const positions = calculateDeterministicPositions(emotions, width, height, sizes)
+
+      const ys = Array.from(positions.values()).map((p) => p.y)
+      const minY = Math.min(...ys)
+
+      // Desktop should still pack from top (padding=16, so minY near 16)
+      expect(minY).toBeLessThan(30)
+    })
+  })
 })

@@ -5,6 +5,7 @@ const KEYS = {
   language: `${PREFIX}language`,
   soundMuted: `${PREFIX}sound-muted`,
   onboarded: `${PREFIX}onboarded`,
+  saveSessions: `${PREFIX}save-sessions`,
 } as const
 
 type StorageKey = keyof typeof KEYS

@@ -12,6 +12,8 @@ function renderMenu(overrides: Partial<React.ComponentProps<typeof SettingsMenu>
     onModelChange: vi.fn(),
     soundMuted: false,
     onSoundMutedChange: vi.fn(),
+    saveSessions: true,
+    onSaveSessionsChange: vi.fn(),
     ...overrides,
   }
   return render(

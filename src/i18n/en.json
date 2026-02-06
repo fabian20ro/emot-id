@@ -84,7 +84,11 @@
     "title": "Settings",
     "soundLabel": "Sound effects",
     "soundOn": "On",
-    "soundOff": "Off"
+    "soundOff": "Off",
+    "saveSessionsLabel": "Save sessions",
+    "saveSessionsOn": "On",
+    "saveSessionsOff": "Off",
+    "deleteExistingSessions": "Delete existing sessions?"
   },
   "bridges": {
     "somaticFromCognitive": "Where do you notice this in your body?",

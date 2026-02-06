@@ -44,6 +44,14 @@ Phase F (architecture/quality)
 
 ## Completed
 
+- [x] **Phase L** — Mobile UX Optimization
+  - L.1: Bubble vertical distribution — even spacing across container height instead of top-packing
+  - L.2: Body map label alternation — R/L/R/L pattern with anatomical pair constraints
+  - L.3: SensationPicker 2-column grid — replaces horizontal scroll to eliminate anchoring bias
+  - L.4: Dimensional field padding reduced (50→30) — 21% more area for emotion dots
+  - L.5: Settings info button alignment — items-start for consistent first-line alignment
+  - L.6: "Save sessions" toggle — localStorage-based opt-out with existing data cleanup prompt
+  - L.7: Results window cleanup — selection chips, grouped suggestions, tighter spacing
 - [x] **Phase J** — Mobile Layout & Settings Fix
   - J.1+J.2: SettingsMenu converted to fixed full-screen slide-in panel (escapes Header stacking context)
   - J.3: AnalyzeButton moved to bottom bar, "don't know" hidden on somatic, SelectionBar hidden when empty, hint floats inside visualization

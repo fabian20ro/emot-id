@@ -24,6 +24,7 @@ Interactive emotion identification PWA (React 19, TypeScript 5.9, Vite 7, Tailwi
 | `emot-id-onboarded` | Onboarding completed flag |
 | `emot-id-hint-<modelId>` | First interaction hint dismissed per model |
 | `emot-id-language` | UI language (`ro` or `en`) |
+| `emot-id-save-sessions` | Session saving preference (default: true) |
 
 ## Data Quality Notes
 

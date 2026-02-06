@@ -84,7 +84,11 @@
     "title": "Setari",
     "soundLabel": "Efecte sonore",
     "soundOn": "Pornit",
-    "soundOff": "Oprit"
+    "soundOff": "Oprit",
+    "saveSessionsLabel": "Salveaza sesiunile",
+    "saveSessionsOn": "Pornit",
+    "saveSessionsOff": "Oprit",
+    "deleteExistingSessions": "Stergi sesiunile existente?"
   },
   "bridges": {
     "somaticFromCognitive": "Unde observi aceasta in corpul tau?",

@@ -56,11 +56,13 @@ No external state library. State lives in:
 | `useSessionHistory` hook | `sessions` array, CRUD operations | IndexedDB via `idb-keyval` |
 | `LanguageContext` | `language` ('ro' or 'en'), `section()` accessor | localStorage via `storage.ts` |
 | `useSound` | `muted` | localStorage via `storage.ts` |
+| `App` (local state) | `saveSessions` flag | localStorage via `storage.ts` |
 
 ### Storage Architecture
 
 **Preferences** — `src/data/storage.ts` (localStorage facade):
-- Consolidated wrapper for all preference keys (`emot-id-model`, `emot-id-language`, etc.)
+- Consolidated wrapper for all preference keys (`emot-id-model`, `emot-id-language`, `emot-id-save-sessions`, etc.)
+- `emot-id-save-sessions` (default: true) -- controls whether sessions are persisted to IndexedDB
 - Graceful fallback when localStorage unavailable (private browsing)
 - Per-model hint dismissal flags
 
@@ -91,6 +93,7 @@ User taps "Analyze"
 
 User completes reflection (ResultModal close)
   -> App.handleSessionComplete(reflectionAnswer)
+    -> if saveSessions is false, returns early (no persistence)
     -> serializes selections + results into Session
     -> useSessionHistory.save (writes to IndexedDB)
 ```
@@ -124,7 +127,7 @@ User completes reflection (ResultModal close)
 **Opposite action** — `src/data/opposite-action.ts`:
 - DBT-based suggestions: shame→approach, fear→gradual exposure, anger→gentle avoidance
 - Bilingual (ro/en), matched by emotion ID patterns
-- Displayed in amber box between results and bridge in ResultModal
+- Displayed in amber box, grouped with bridge suggestion in ResultModal
 
 ### Portal Pattern for Fixed Overlays
 
@@ -193,7 +196,7 @@ src/
   components/
     Header.tsx                    # 48px merged header: MenuButton + ModelBar (inline)
     MenuButton.tsx                # Animated hamburger button
-    SettingsMenu.tsx              # Bottom sheet drawer (portal to body): language, model, sound, history, privacy, disclaimer
+    SettingsMenu.tsx              # Bottom sheet drawer (portal to body): language, model, sound, save-sessions, history, privacy, disclaimer
     ModelBar.tsx                  # Model tab bar (inline in Header, or standalone)
     AnalyzeButton.tsx             # Gradient CTA with selection count
     SelectionBar.tsx              # Horizontal scroll strip: selected emotion chips + combo badges + undo

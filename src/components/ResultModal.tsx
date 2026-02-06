@@ -199,20 +199,31 @@ export function ResultModal({
                   exit={{ opacity: 0 }}
                   className="flex-1 flex flex-col overflow-hidden"
                 >
-                  <p className="text-gray-300 mb-4">
-                    {analyzeT.resultPrefix ?? 'Your selections'}{' '}
-                    <span className="font-medium">
-                      ({selections.map((s) => s.label[language]).join(' + ')})
-                    </span>
-                  </p>
+                  {/* Selection chips */}
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {selections.map((s) => (
+                      <span
+                        key={s.id}
+                        className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                        style={{
+                          backgroundColor: `${s.color}25`,
+                          color: s.color,
+                          border: `1px solid ${s.color}40`,
+                        }}
+                      >
+                        {s.label[language]}
+                      </span>
+                    ))}
+                  </div>
 
-                  <div className="flex-1 overflow-y-auto mb-4">
+                  {/* Scrollable results section */}
+                  <div className="flex-1 overflow-y-auto mb-3">
                     {/* Crisis resources — above results so distressed users see them first */}
                     {hasCrisis && <CrisisBanner tier={crisisTier} crisisT={crisisT} />}
 
                     {/* Synthesis narrative */}
                     {synthesisText && (
-                      <div className="mb-4 p-4 rounded-xl bg-gray-700/50">
+                      <div className="mb-3 p-3 rounded-xl bg-gray-700/50">
                         <p className="text-sm text-gray-200 leading-relaxed">
                           {synthesisText}
                         </p>
@@ -220,7 +231,7 @@ export function ResultModal({
                     )}
 
                     {results.length > 0 ? (
-                      <div className="space-y-3">
+                      <div className="space-y-2">
                         {results.some((r) => r.componentLabels) && (
                           <p className="text-sm text-gray-400 font-medium">
                             {modalT.combinationsFound ?? 'Found combinations'}:
@@ -247,8 +258,9 @@ export function ResultModal({
                     )}
                   </div>
 
-                  {/* AI link — demoted during crisis */}
+                  {/* Actions section */}
                   <div className="space-y-2">
+                    {/* AI link — demoted during crisis */}
                     {hasCrisis ? (
                       <p className="text-xs text-gray-500 text-center">
                         <a
@@ -275,54 +287,58 @@ export function ResultModal({
                         </p>
                       </>
                     )}
+
+                    {/* Suggestions group: bridge + opposite action */}
+                    {(oppositeAction || (bridge && onSwitchModel)) && (
+                      <div className="space-y-2 pt-1">
+                        {bridge && onSwitchModel && (
+                          <div className="p-3 rounded-xl bg-indigo-900/20 border border-indigo-700/30">
+                            <p className="text-sm text-indigo-300 mb-1.5">{bridge.message}</p>
+                            <button
+                              onClick={() => handleSwitchModel(bridge.targetModelId)}
+                              className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
+                            >
+                              {bridge.buttonLabel} &rarr;
+                            </button>
+                          </div>
+                        )}
+                        {oppositeAction && (
+                          <div className="p-3 rounded-xl bg-amber-900/10 border border-amber-700/20">
+                            <p className="text-xs text-amber-300/80 leading-relaxed">
+                              {oppositeAction}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
 
-                  {/* Opposite action nudge (DBT) */}
-                  {oppositeAction && (
-                    <div className="mt-3 p-3 rounded-xl bg-amber-900/10 border border-amber-700/20">
-                      <p className="text-xs text-amber-300/80 leading-relaxed">
-                        {oppositeAction}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Cross-model bridge suggestion */}
-                  {bridge && onSwitchModel && (
-                    <div className="mt-3 p-3 rounded-xl bg-indigo-900/20 border border-indigo-700/30">
-                      <p className="text-sm text-indigo-300 mb-2">{bridge.message}</p>
+                  {/* Footer: reflection + micro-intervention + disclaimer */}
+                  <div className="pt-2 space-y-1.5">
+                    {/* Micro-intervention offer */}
+                    {interventionType && (
                       <button
-                        onClick={() => handleSwitchModel(bridge.targetModelId)}
-                        className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
+                        onClick={() => setReflectionState('intervention')}
+                        className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors text-center w-full"
                       >
-                        {bridge.buttonLabel} &rarr;
+                        {getInterventionOfferText(interventionType, interventionT)}
                       </button>
-                    </div>
-                  )}
+                    )}
 
-                  {/* Micro-intervention offer */}
-                  {interventionType && (
-                    <button
-                      onClick={() => setReflectionState('intervention')}
-                      className="mt-3 text-sm text-indigo-400 hover:text-indigo-300 transition-colors text-center"
-                    >
-                      {getInterventionOfferText(interventionType, interventionT)}
-                    </button>
-                  )}
+                    {/* Reflection trigger */}
+                    {results.length > 0 && (
+                      <button
+                        onClick={() => setReflectionState('reflection')}
+                        className="text-sm text-gray-400 hover:text-gray-300 transition-colors text-center w-full"
+                      >
+                        {reflectionT.prompt ?? 'Does this resonate with your experience?'}
+                      </button>
+                    )}
 
-                  {/* Reflection trigger */}
-                  {results.length > 0 && (
-                    <button
-                      onClick={() => setReflectionState('reflection')}
-                      className="mt-3 text-sm text-gray-400 hover:text-gray-300 transition-colors text-center"
-                    >
-                      {reflectionT.prompt ?? 'Does this resonate with your experience?'}
-                    </button>
-                  )}
-
-                  {/* Persistent micro-disclaimer */}
-                  <p className="mt-3 text-xs text-gray-600 text-center">
-                    {resultsT.microDisclaimer ?? 'For self-exploration, not diagnosis'}
-                  </p>
+                    <p className="text-xs text-gray-600 text-center">
+                      {resultsT.microDisclaimer ?? 'For self-exploration, not diagnosis'}
+                    </p>
+                  </div>
                 </motion.div>
               )}
 

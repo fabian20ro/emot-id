@@ -62,10 +62,31 @@ export function calculateDeterministicPositions(
     ? Math.max(2, gap - Math.ceil((totalHeight - containerHeight) / Math.max(1, rows.length - 1)))
     : gap
 
+  // On mobile, distribute rows evenly across vertical space instead of top-packing
+  const availableVertical = containerHeight - padding * 2
+  let rowSpacing: number
+  let offsetY: number
+
+  if (isMobile && rows.length > 1) {
+    const idealSpacing = (availableVertical - rows.length * bubbleHeight) / (rows.length - 1)
+    rowSpacing = Math.max(effectiveGap, Math.min(idealSpacing, bubbleHeight * 3))
+    const usedHeight = rows.length * bubbleHeight + (rows.length - 1) * rowSpacing
+    offsetY = padding + (availableVertical - usedHeight) / 2
+  } else if (isMobile && rows.length === 1) {
+    rowSpacing = effectiveGap
+    offsetY = (containerHeight - bubbleHeight) / 2
+  } else {
+    rowSpacing = effectiveGap
+    offsetY = padding
+  }
+
   // Position each row centered
   const positions = new Map<string, { x: number; y: number }>()
   // Use a simple seeded pseudo-random for consistent jitter
   let seed = emotions.length * 17
+  const jitterRange = isMobile
+    ? Math.min(6, Math.max(1, Math.floor(rowSpacing * 0.15)))
+    : 6
 
   for (let rowIdx = 0; rowIdx < rows.length; rowIdx++) {
     const row = rows[rowIdx]
@@ -74,13 +95,12 @@ export function calculateDeterministicPositions(
 
     let x = startX
     for (const item of row) {
-      // Deterministic jitter: small y offset 0-6px
       seed = (seed * 1103515245 + 12345) & 0x7fffffff
-      const jitter = (seed % 7)
+      const jitter = (seed % (jitterRange + 1))
 
       positions.set(item.emotion.id, {
         x,
-        y: padding + rowIdx * (bubbleHeight + effectiveGap) + jitter,
+        y: offsetY + rowIdx * (bubbleHeight + rowSpacing) + jitter,
       })
       x += item.w + effectiveGap
     }

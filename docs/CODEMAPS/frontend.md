@@ -21,7 +21,7 @@ App (src/App.tsx)
  +-- FirstInteractionHint         # Per-model hint (flow-based, above visualization)
  +-- VisualizationErrorBoundary   # Class-based error boundary (bilingual)
  |    +-- Visualization**         # Resolved from registry per model ID
- |         +-- BubbleField        # For plutchik, wheel (top-aligned on mobile)
+ |         +-- BubbleField        # For plutchik, wheel (evenly distributed on mobile)
  |         |    +-- Bubble[]      # Animated pill buttons with emotion color
  |         +-- BodyMap            # For somatic (reduced padding, expanded hit areas)
  |         |    +-- BodyRegion[]  # SVG path elements (12 regions)
@@ -50,7 +50,8 @@ Used by: Plutchik, Wheel models.
 - Uses `ResizeObserver` to track container dimensions
 - Placement: deterministic wrapped-row on mobile (<480px), random with collision detection on desktop
 - Mobile padding 8px, desktop 16px; min-height 200px
-- Top-aligned on mobile (`justify-start`), centered on desktop
+- Mobile vertical distribution: rows evenly spaced (`idealSpacing = (availableVertical - totalContentHeight) / (rows - 1)`, capped at `bubbleHeight * 3`); single row centers vertically. Desktop top-aligned.
+- Jitter scales with row spacing on mobile (`min(6, floor(rowSpacing * 0.15))`) for organic feel without overlap
 - Positions are memoized: existing bubbles keep position, only new ones are placed
 - Clamping: `Math.max(16, Math.min(pos, containerSize - bubbleSize - 16))` prevents edge clipping
 - Grid fallback: when random placement fails after 100 attempts, lays out in a grid; x/y clamped to `containerWidth - w - padding` to prevent overflow
@@ -91,12 +92,14 @@ Used by: Somatic model.
 - 12 SVG path definitions in 300x450 viewBox (`-50 -10 300 450`)
 - Groups: head (3: head, jaw, throat), torso (4: shoulders, chest, upper-back, stomach, lower-back), arms (2: arms, hands), legs (2: legs, feet)
 - Each entry: `{ id, d, hitD? (enlarged hit area), anchor, labelAnchor, labelSide }`
+- Labels alternate R,L,R,L by y-position with anatomical pair constraints (chest/upper-back and stomach/lower-back placed on opposite sides). Sides: head(R), jaw(L), throat(R), shoulders(L), chest(R), upper-back(L), stomach(L), lower-back(R), arms(R), hands(L), legs(R), feet(L)
 - Small regions (throat, jaw) have expanded `hitD` paths for 44px mobile touch targets
 
 ### SensationPicker (`src/components/SensationPicker.tsx`)
 
 - Bottom sheet with `drag="y"` swipe-to-dismiss gesture
-- Two steps: sensation type (horizontal scroll row of 9) -> intensity (1-3 scale, compact variant)
+- Two steps: sensation type (2-column grid of 9 buttons) -> intensity (1-3 scale, compact variant)
+- Sensation buttons use horizontal icon+text layout (`flex items-center gap-2`) instead of vertical stacking
 - All interactive elements meet 44px minimum touch target (back button, "Nothing here", sensation buttons)
 - Exports `SENSATION_CONFIG` (icon + bilingual label per sensation type)
 
@@ -121,13 +124,13 @@ Used by: Somatic model.
 
 Used by: Dimensional model.
 
-- SVG scatter plot in 500x500 viewBox with 50px padding, `aspect-square` CSS constraint
+- SVG scatter plot in 500x500 viewBox with 30px padding (`INNER=440`, ~21% more area than previous 50px), `aspect-square` CSS constraint
 - Container maximizes width on mobile (fills ~391px on 393px viewport)
 - Instructions hidden on mobile (`hidden sm:block`), shown on desktop
 - Axes: X = valence (unpleasant to pleasant), Y = arousal (calm to intense)
 - Quadrant dividers + axis labels (bilingual via `section('dimensional')`)
-- Emotion dots: r=6 unselected, r=8 selected (with white stroke)
-- Labels: dynamic Y offset (10px unselected, 16px selected to clear dot radius) with collision avoidance
+- Emotion dots: r=11 unselected, r=14 selected (with white stroke)
+- Labels: dynamic Y offset (16px unselected, 22px selected to clear dot radius) with collision avoidance
 - Label collision avoidance: greedy sort-and-bump algorithm (sort by y then x, bump by `MIN_GAP=14` when labels overlap within 40px horizontal proximity, clamp to viewBox bounds)
 - Text halo via `paintOrder="stroke"` for readability in dense areas
 - Click-to-place crosshair: converts pixel to valence/arousal, finds 3 nearest emotions
@@ -182,8 +185,10 @@ Used by: Dimensional model.
 - Spring animation: `y: '100%' → y: 0`, swipe-to-dismiss (`drag="y"`, offset.y > 100 || velocity.y > 500)
 - Drag handle bar at top, "Emot-ID" as drawer title, max-h `85dvh`, `overscroll-contain`
 - Focus trap via `useFocusTrap`, backdrop dismiss, Escape closes
-- Sections: language toggle (ro/en), model selector, sound on/off, past sessions, crisis support, privacy, disclaimer
+- Sections: language toggle (ro/en), model selector, sound on/off, save sessions on/off, past sessions (hidden when saving off), crisis support, privacy, disclaimer
 - All interactive elements: `min-h-[44px]` touch targets
+- Save sessions toggle: On/Off in privacy section; toggling off prompts confirmation to delete existing sessions; when off, hides "Past sessions" link
+- Info button rows use `items-start` alignment with `pt-2` on text and `pt-0.5` on info button containers for top-aligned layout
 - Privacy and disclaimer sections use `InfoButton` (portal-based info modals)
 - Uses `section('menu')`, `section('settings')`, `section('privacy')`, `section('disclaimer')`, `section('history')` for i18n
 - Reads model list from `getAvailableModels()`
@@ -198,12 +203,13 @@ Used by: Dimensional model.
 ### ResultModal (`src/components/ResultModal.tsx`)
 
 - Backdrop blur overlay, spring-animated card
-- Renders `AnalysisResult[]` via `ResultCard` components
+- Selection display: colored pills with emotion color background/border (replaces verbose text)
+- Renders `AnalysisResult[]` via `ResultCard` components (tighter spacing: `mb-3`, `p-3`)
 - CrisisBanner renders first (above results) when crisis tier detected
 - Narrative synthesis paragraph via `synthesize(results, language)`
 - Crisis tier detection + temporal escalation via `escalateCrisisTier`
-- Cross-model bridge suggestions via `getModelBridge()`
-- DBT opposite action suggestions via `getOppositeAction()`
+- Suggestions section: bridge + opposite action grouped in single `space-y-2` block
+- Footer section: micro-intervention offer, reflection trigger, disclaimer -- all in `pt-2 space-y-1.5`
 - Micro-intervention offer via `getInterventionType()`
 - 3-state reflection flow: results -> reflection prompt -> follow-up actions
 - Collapsible descriptions when >2 results

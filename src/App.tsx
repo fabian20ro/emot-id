@@ -94,6 +94,23 @@ export default function App() {
   const { sessions, loading: sessionsLoading, save: saveSession, clearAll: clearAllSessions, exportJSON: exportSessionsJSON } = useSessionHistory()
   const [showHistory, setShowHistory] = useState(false)
 
+  const settingsT = section('settings')
+
+  const [saveSessions, setSaveSessions] = useState(() => {
+    return storage.get('saveSessions') !== 'false'
+  })
+
+  const handleSaveSessionsChange = useCallback((save: boolean) => {
+    storage.set('saveSessions', String(save))
+    setSaveSessions(save)
+    if (!save && sessions.length > 0) {
+      const msg = settingsT.deleteExistingSessions ?? 'Delete existing sessions?'
+      if (window.confirm(msg)) {
+        clearAllSessions()
+      }
+    }
+  }, [clearAllSessions, sessions.length, settingsT])
+
   const handleSelect = useCallback(
     (emotion: BaseEmotion) => {
       if (showHint) dismissHint()
@@ -158,7 +175,7 @@ export default function App() {
   }
 
   const handleSessionComplete = (reflectionAnswer: 'yes' | 'partly' | 'no' | null) => {
-    if (analysisResults.length === 0) return
+    if (analysisResults.length === 0 || !saveSessions) return
     const serialized: SerializedSelection[] = selections.map((s) => {
       const base: SerializedSelection = { emotionId: s.id, label: s.label }
       // Preserve somatic extras for heat map tracking
@@ -199,6 +216,8 @@ export default function App() {
         onModelChange={switchModel}
         soundMuted={muted}
         onSoundMutedChange={setMuted}
+        saveSessions={saveSessions}
+        onSaveSessionsChange={handleSaveSessionsChange}
         onOpenHistory={() => setShowHistory(true)}
       />
 

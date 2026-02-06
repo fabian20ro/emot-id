@@ -123,7 +123,7 @@ export function SensationPicker({
 
         {/* Step 1: Sensation type — horizontal scroll row */}
         {step === 'sensation' && (
-          <div className="flex gap-1.5 overflow-x-auto pb-1.5 scrollbar-hide -mx-1 px-1">
+          <div className="grid grid-cols-2 gap-2">
             {availableSensations.map((sensation) => {
               const config = SENSATION_CONFIG[sensation]
               return (
@@ -131,10 +131,10 @@ export function SensationPicker({
                   key={sensation}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleSensationPick(sensation)}
-                  className="flex-none flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-500 text-gray-200 transition-colors min-w-[4.5rem]"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-500 text-gray-200 transition-colors min-h-[44px]"
                 >
                   <span className="text-lg">{config.icon}</span>
-                  <span className="text-[10px] leading-tight whitespace-nowrap">{config.label[language]}</span>
+                  <span className="text-xs leading-tight">{config.label[language]}</span>
                 </motion.button>
               )
             })}

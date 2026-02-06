@@ -6,7 +6,7 @@ import type { VisualizationProps } from '../models/types'
 import type { DimensionalEmotion } from '../models/dimensional/types'
 
 const FIELD_SIZE = 500
-const PADDING = 50
+const PADDING = 30
 const INNER = FIELD_SIZE - PADDING * 2
 
 function toPixel(value: number): number {
