@@ -42,4 +42,28 @@ export default defineConfig({
     }),
   ],
   base: '/emot-id/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'vendor-react'
+          }
+          if (id.includes('node_modules/framer-motion')) {
+            return 'vendor-motion'
+          }
+          if (id.includes('/src/models/wheel/data.json')) {
+            return 'model-wheel-data'
+          }
+          if (id.includes('/src/models/plutchik/data.json')) {
+            return 'model-plutchik-data'
+          }
+          if (id.includes('/src/models/dimensional/data.json')) {
+            return 'model-dimensional-data'
+          }
+          return undefined
+        },
+      },
+    },
+  },
 })
