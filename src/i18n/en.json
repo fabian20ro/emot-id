@@ -22,6 +22,7 @@
   "analyze": {
     "button": "Analyze",
     "buttonDisabledSomatic": "Tap a body area where you notice a sensation",
+    "buttonDisabledDimensional": "Tap the square where your state fits on the two axes",
     "buttonDisabledDefault": "Select an emotion that resonates with you",
     "resultPrefix": "Your selections",
     "exploreAI": "Explore with AI",

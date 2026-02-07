@@ -28,6 +28,11 @@ describe('AnalyzeButton model-aware text', () => {
     expect(screen.getByText(/Select an emotion that resonates/)).toBeInTheDocument()
   })
 
+  it('shows dimensional-specific text when disabled with dimensional model', () => {
+    renderButton({ disabled: true, modelId: 'dimensional' })
+    expect(screen.getByText(/Tap the square where your state fits/)).toBeInTheDocument()
+  })
+
   it('shows Analyze regardless of modelId when enabled', () => {
     renderButton({ disabled: false, modelId: 'somatic' })
     expect(screen.getByText('Analyze')).toBeInTheDocument()

@@ -14,7 +14,9 @@ export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0 }
 
   const disabledText = modelId === MODEL_IDS.SOMATIC
     ? t.analyze.buttonDisabledSomatic
-    : t.analyze.buttonDisabledDefault
+    : modelId === MODEL_IDS.DIMENSIONAL
+      ? (t.analyze.buttonDisabledDimensional ?? t.analyze.buttonDisabledDefault)
+      : t.analyze.buttonDisabledDefault
 
   const label = selectionCount > 0
     ? `${t.analyze.button} (${selectionCount})`

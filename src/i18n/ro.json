@@ -22,6 +22,7 @@
   "analyze": {
     "button": "Analizeaza",
     "buttonDisabledSomatic": "Atinge o zona a corpului unde observi o senzatie",
+    "buttonDisabledDimensional": "Apasa pe patrat unde te simti pe cele doua axe",
     "buttonDisabledDefault": "Selecteaza o emotie care rezoneaza cu tine",
     "resultPrefix": "Selectiile tale",
     "exploreAI": "Exploreaza cu AI",
