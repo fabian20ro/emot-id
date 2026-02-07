@@ -7,15 +7,19 @@
 
 ```
 App (src/App.tsx)
- +-- Onboarding                   # 4-screen overlay (shown once, persisted; supports skip)
+ +-- Onboarding                   # 4-screen overlay (shown once, persisted; mobile-safe 44px controls)
  +-- Header                       # 48px merged row
  |    +-- MenuButton              # Animated hamburger (3 bars -> X)
  |    +-- ModelBar (inline)       # Model tab bar (flex-1, responsive shortName at <480px)
+ +-- Offline banner               # Shows when navigator is offline (cached/PWA state)
  +-- SettingsMenu*                # Bottom sheet drawer (portal to body)
  |    +-- InfoButton[]            # Privacy + disclaimer info modals (portal to body)
  +-- AnalyzeButton                # Gradient CTA with selection count, disabled when empty
+ +-- QuickCheckIn                 # 30-second curated emotion grid (tap up to 3)
+ +-- GranularityTraining          # Optional practice mode for finer emotion discrimination
+ +-- ChainAnalysis                # DBT worksheet mode (trigger -> consequence sequence)
  +-- "I don't know" text link     # Opens DontKnowModal (hidden while showHint visible)
- +-- SelectionBar                 # Horizontal scroll strip: emotion chips + combo badges (48px max)
+ +-- SelectionBar                 # Horizontal scroll strip: reserved-height row to prevent viz jump
  +-- FirstInteractionHint         # Per-model hint (flow-based, above visualization)
  +-- VisualizationErrorBoundary   # Class-based error boundary (bilingual)
  |    +-- Visualization**         # Resolved from registry per model ID
@@ -27,18 +31,18 @@ App (src/App.tsx)
  |         |    +-- GuidedScan    # Sequential body scan overlay
  |         +-- DimensionalField   # For dimensional (aspect-square, overlay suggestions)
  +-- ResultModal                  # Full-screen modal with analysis results
- |    +-- CrisisBanner            # Tiered crisis banner — renders ABOVE results (tier1/2/3)
+ |    +-- CrisisBanner            # Tiered crisis banner — renders ABOVE results (tier1/2/3/4)
  |    +-- ResultCard[]            # Color-coded result cards (InfoButton for collapsed descriptions)
  |    +-- MicroIntervention       # Breathing / savoring / curiosity exercise
  |    +-- OppositeAction          # DBT opposite action suggestion (amber box)
  |    +-- ModelBridge             # Cross-model bridge suggestion
- +-- DontKnowModal               # Suggests Somatic or Dimensional model
+ +-- DontKnowModal               # Suggests Somatic or Dimensional model (explicit close button)
  +-- UndoToast                   # 5-second undo toast after clear
  +-- SessionHistory              # History modal (vocabulary, patterns, export)
 ```
 
 `*` SettingsMenu renders via `createPortal(…, document.body)` — portal sibling, not child of Header.
-`**` Visualization component is dynamic: `getVisualization(modelId)` from registry.
+`**` Visualization component is dynamic and lazy-loaded: `getVisualization(modelId)` from registry, rendered inside `Suspense`.
 
 ## Visualization System
 
@@ -49,6 +53,7 @@ Used by: Plutchik, Wheel models.
 - Renders emotion `Bubble` components with absolute positioning
 - Uses `ResizeObserver` to track container dimensions
 - Placement: deterministic wrapped-row on mobile (<480px), random with collision detection on desktop
+- Mobile order is shuffled each render before deterministic row wrapping to reduce positional bias
 - Mobile padding 8px, desktop 16px; min-height 200px
 - Mobile vertical distribution: rows evenly spaced (`idealSpacing = (availableVertical - totalContentHeight) / (rows - 1)`, capped at `bubbleHeight * 3`); single row centers vertically. Desktop top-aligned.
 - Jitter scales with row spacing on mobile (`min(6, floor(rowSpacing * 0.15))`) for organic feel without overlap
@@ -101,7 +106,9 @@ Used by: Somatic model.
 ### SensationPicker (`src/components/SensationPicker.tsx`)
 
 - Bottom sheet with `drag="y"` swipe-to-dismiss gesture
+- Uses shared `ModalShell` backdrop/dialog semantics
 - Two steps: sensation type (2-column grid of 9 buttons) -> intensity (1-3 scale, compact variant)
+- Randomizes sensation order each render to reduce primacy bias
 - Sensation buttons use horizontal icon+text layout (`flex items-center gap-2`) instead of vertical stacking
 - All interactive elements meet 44px minimum touch target (back button, "Nothing here", sensation buttons)
 - Exports `SENSATION_CONFIG` (icon + bilingual label per sensation type)
@@ -116,12 +123,14 @@ Used by: Somatic model.
 
 - Constants and pure utils extracted to `guided-scan-constants.ts`: `BODY_GROUPS`, `SCAN_ORDER`, timing constants, `getGroupForIndex()`, `getNextGroupStartIndex()`
 - Three phases: `centering` (10s breathing animation with progress bar) -> `scanning` (12 regions) -> `complete`
-- Centering includes skip button; breathing emoji pulses with scale+opacity
+- Centering includes optional "take more time" and skip-arrow controls; breathing emoji pulses with scale+opacity
 - Scan order interleaves front/back by vertical level
 - 2-step sensation flow: pick sensation -> pick intensity (1/2/3 with dot indicators)
 - Shows all `commonSensations` per region (no truncation)
+- Randomizes sensation button order per region
 - Progress bar tracks scan position; highlights current region via `onHighlight` callback
 - Somatic pause offered after intensity-3 selections
+- If many regions are skipped (`skipCount >= 6`), completion view shows interoception development tips
 
 ### DimensionalField (`src/components/DimensionalField.tsx`)
 
@@ -134,6 +143,7 @@ Used by: Dimensional model.
 - Quadrant dividers + axis labels (bilingual via `section('dimensional')`)
 - Emotion dots: r=11 unselected, r=14 selected (with white stroke)
 - Labels: dynamic Y offset (16px unselected, 22px selected to clear dot radius) with collision avoidance
+- On mobile, axis labels hide after first interaction and persist via localStorage
 - Label collision avoidance: greedy sort-and-bump algorithm (sort by y then x, bump by `MIN_GAP=14` when labels overlap within 40px horizontal proximity, clamp to viewBox bounds)
 - Text halo via `paintOrder="stroke"` for readability in dense areas
 - Click-to-place crosshair: converts pixel to valence/arousal, finds 3 nearest emotions
@@ -149,22 +159,35 @@ Used by: Dimensional model.
 - **Curiosity**: Reflective prompt for mixed-valence results
 - `getInterventionType()` pure function determines type from arousal/valence profile
 - Triggered from ResultModal after reflection flow
+- Post-practice check-in captures `better` / `same` / `worse`; `worse` shows validation copy
 
 ### SessionHistory (`src/components/SessionHistory.tsx`)
 
 - Full-screen modal with focus trapping and backdrop dismiss
-- **Vocabulary summary**: unique emotion count, models used, milestones (via `computeVocabulary`)
+- Uses shared `ModalShell` and safe-area-aware top/bottom insets
+- **Vocabulary summary**: active vs passive counts, models used, milestones (via `computeVocabulary`)
+- **Top identified list**: up to 15 most frequently identified emotions (chips with per-emotion counts)
+- **Progression nudge**: dismissible directional suggestion after 3+ sessions on one model
 - **Valence ratio bar**: green/gray/red proportional bar for weekly pleasant/neutral/unpleasant
+- **Valence trend**: 4-week stacked mini-bars (oldest to newest)
 - **Somatic patterns**: top 5 body region frequency bars (via `computeSomaticPatterns`)
-- **Session list**: `SessionRow` (memo'd) showing date, model, emotion names, reflection indicator
-- **Footer actions**: clear all data, export text (therapy-formatted), export JSON
+- **Session list**: `SessionRow` (memo'd) showing date, localized model name, emotion names, reflection indicator
+- Somatic pattern rows show localized body-region labels (instead of raw IDs)
+- **Footer actions**: clear all data, export text (therapy-formatted), export JSON (all 44px targets)
 - Accessed via SettingsMenu > "Past sessions"
 
 ## Shared UI Components
 
+### ModalShell (`src/components/ModalShell.tsx`)
+
+- Shared overlay primitive for modalized surfaces
+- Provides consistent backdrop animation, `role="dialog"` semantics, and click-outside close behavior
+- Accepts custom `panelProps` so centered dialogs and draggable bottom sheets reuse one shell
+- Used by: `ResultModal`, `DontKnowModal`, `SessionHistory`, `SensationPicker`
+
 ### SelectionBar (`src/components/SelectionBar.tsx`)
 
-- Single horizontal scroll row (`overflow-x-auto scrollbar-hide`, max-h 48px)
+- Single horizontal scroll row (`overflow-x-auto scrollbar-hide`) with fixed reserved height (`52px`)
 - Layout: `[Clear button] [Emotion chips...] [Combo badges...]` — all inline
 - Right-edge gradient fade when content overflows
 - Displays selected emotions as colored chip buttons (click to deselect)
@@ -174,6 +197,7 @@ Used by: Dimensional model.
 - `AnimatePresence mode="popLayout"` for chip animations
 - All interactive elements: `min-h-[44px]` touch targets
 - Clear button with 5-second undo toast (stores previous selections in ref)
+- Empty state keeps collapsed placeholder height so visualization area does not reflow
 
 ### Header (`src/components/Header.tsx`)
 
@@ -188,9 +212,10 @@ Used by: Dimensional model.
 - Spring animation: `y: '100%' → y: 0`, swipe-to-dismiss (`drag="y"`, offset.y > 100 || velocity.y > 500)
 - Drag handle bar at top, "Emot-ID" as drawer title, max-h `85dvh`, `overscroll-contain`
 - Focus trap via `useFocusTrap`, backdrop dismiss, Escape closes
-- Sections: language toggle (ro/en), model selector, sound on/off, save sessions on/off, past sessions (hidden when saving off), crisis support, privacy, disclaimer
+- Sections: language toggle (ro/en), simple-language mode, model selector, sound on/off, save sessions on/off, daily reminder toggle, past sessions, granularity practice, chain analysis, crisis support, privacy, disclaimer
 - All interactive elements: `min-h-[44px]` touch targets
 - Save sessions toggle: On/Off in privacy section; toggling off prompts confirmation to delete existing sessions; when off, hides "Past sessions" link
+- Reminder toggle: opt-in only, permission-aware, default off
 - Info button rows use `items-start` alignment with `pt-2` on text and `pt-0.5` on info button containers for top-aligned layout
 - Privacy and disclaimer sections use `InfoButton` (portal-based info modals)
 - Uses `section('menu')`, `section('settings')`, `section('privacy')`, `section('disclaimer')`, `section('history')` for i18n
@@ -206,6 +231,7 @@ Used by: Dimensional model.
 ### ResultModal (`src/components/ResultModal.tsx`)
 
 - Backdrop blur overlay, spring-animated card
+- Uses shared `ModalShell` for consistent dialog semantics and layering
 - Selection display: colored pills with emotion color background/border (replaces verbose text)
 - Renders `AnalysisResult[]` via `ResultCard` components (tighter spacing: `mb-3`, `p-3`)
 - CrisisBanner renders first (above results) when crisis tier detected
@@ -213,8 +239,11 @@ Used by: Dimensional model.
 - Crisis tier detection + temporal escalation via `escalateCrisisTier`
 - Suggestions section: bridge + opposite action grouped in single `space-y-2` block
 - Footer section: micro-intervention offer, reflection trigger, disclaimer -- all in `pt-2 space-y-1.5`
+- Header close action is explicit `44x44` and dialog uses `aria-labelledby`
 - Micro-intervention offer via `getInterventionType()`
 - 3-state reflection flow: results -> reflection prompt -> follow-up actions
+- Reflection prompts can switch to simplified copy when simple-language mode is enabled
+- Persists both reflection answer and post-intervention response into saved sessions
 - Collapsible descriptions when >2 results
 - Fires `onSessionComplete(reflectionAnswer)` on close
 
@@ -224,7 +253,8 @@ Used by: Dimensional model.
 - Receives `tier` (CrisisTier) and `crisisT` (i18n strings) as props
 - Tier 1: warm invitation with helpline numbers
 - Tier 2/3: auto-expanded 5-4-3-2-1 grounding technique
-- Helpline link: full-width 48px amber button for easy mobile tapping
+- Tier 4: red emergency variant, explicit acknowledgment gate in ResultModal, AI link suppressed
+- Helpline link: full-width 48px CTA (amber tiers 1-3, red for tier 4)
 
 ### model-bridges.ts (`src/components/model-bridges.ts`)
 
@@ -254,9 +284,30 @@ Used by: Dimensional model.
 
 - 4-screen onboarding overlay
 - Persisted to localStorage via `storage.set('onboarded', 'true')`
-- Skip button shown on first 3 screens (hidden on last screen)
-- Each screen: icon, title, body text from i18n
+- No skip path — users complete all four safety/disclaimer screens before first use
+- Final step requires explicit model selection before "Get started" (removes first-launch default anchoring bias)
+- Navigation actions use explicit 44px targets for compact mobile
+- Dialog panel is scrollable (`max-h`) to prevent overflow on text-heavy small screens
+- Each screen: icon, title, body text from i18n (with simplified variants when simple-language mode is enabled)
 - Includes normalization messaging
+
+### QuickCheckIn (`src/components/QuickCheckIn.tsx`)
+
+- Standalone modal for rapid self-check (`1-3` selections, no model navigation required)
+- Curated emotion set includes distress IDs (`despair`, `helpless`, `numb`) so full crisis routing still applies
+- Outputs regular `AnalysisResult[]` and reuses `ResultModal` pipeline (crisis, synthesis, reflection, session save)
+
+### GranularityTraining (`src/components/GranularityTraining.tsx`)
+
+- Optional practice modal launched from Settings
+- Presents sets of similar emotions (2-3+) and asks users to discriminate best fit
+- Includes "not sure" option and quick progression through multiple sets
+
+### ChainAnalysis (`src/components/ChainAnalysis.tsx`)
+
+- Optional DBT skill-building modal launched from Settings
+- Sequential prompts: triggering event, vulnerability factors, prompting event, emotion, urge, action, consequence
+- Saves entries to IndexedDB and surfaces recent chains for quick review
 
 ### VisualizationErrorBoundary (`src/components/VisualizationErrorBoundary.tsx`)
 

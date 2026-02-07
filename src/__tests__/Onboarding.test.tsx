@@ -58,20 +58,29 @@ describe('Onboarding', () => {
     await user.click(screen.getByRole('button', { name: /next/i }))
     await user.click(screen.getByRole('button', { name: /next/i }))
     await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /body map/i }))
     await user.click(screen.getByRole('button', { name: /get started/i }))
 
     expect(onComplete).toHaveBeenCalledTimes(1)
+    expect(onComplete).toHaveBeenCalledWith('somatic')
     expect(setItemSpy).toHaveBeenCalledWith('emot-id-onboarded', 'true')
   })
 
-  it('calls onComplete when skip is clicked on any screen', async () => {
+  it('keeps get started disabled until a model is selected on last screen', async () => {
     const user = userEvent.setup()
-    const { onComplete } = renderOnboarding()
+    renderOnboarding()
 
-    await user.click(screen.getByRole('button', { name: /skip/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
 
-    expect(onComplete).toHaveBeenCalledTimes(1)
-    expect(setItemSpy).toHaveBeenCalledWith('emot-id-onboarded', 'true')
+    const getStarted = screen.getByRole('button', { name: /get started/i })
+    expect(getStarted).toBeDisabled()
+  })
+
+  it('does not render a skip button', () => {
+    renderOnboarding()
+    expect(screen.queryByRole('button', { name: /skip/i })).not.toBeInTheDocument()
   })
 
   it('shows step indicators for 4 screens', () => {

@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { calculateDeterministicPositions } from '../components/bubble-layout'
 import type { BaseEmotion } from '../models/types'
 
@@ -66,11 +66,11 @@ describe('BubbleField deterministic layout', () => {
     }
   }
 
-  it('produces consistent positions for same input', () => {
+  it('produces consistent positions for same input on desktop', () => {
     const emotions = makeEmotions(8)
     const sizes = makeSizes(emotions)
-    const pos1 = calculateDeterministicPositions(emotions, 390, 600, sizes)
-    const pos2 = calculateDeterministicPositions(emotions, 390, 600, sizes)
+    const pos1 = calculateDeterministicPositions(emotions, 768, 600, sizes)
+    const pos2 = calculateDeterministicPositions(emotions, 768, 600, sizes)
 
     for (const [id, p1] of pos1) {
       const p2 = pos2.get(id)
@@ -78,6 +78,27 @@ describe('BubbleField deterministic layout', () => {
       expect(p1.x).toBe(p2!.x)
       expect(p1.y).toBe(p2!.y)
     }
+  })
+
+  it('varies mobile row wrapping when shuffle order changes', () => {
+    const emotions = makeEmotions(8)
+    const sizes = makeSizes(emotions)
+    const randomSpy = vi.spyOn(Math, 'random')
+
+    randomSpy.mockReturnValue(0.01)
+    const pos1 = calculateDeterministicPositions(emotions, 390, 600, sizes)
+
+    randomSpy.mockReturnValue(0.99)
+    const pos2 = calculateDeterministicPositions(emotions, 390, 600, sizes)
+
+    randomSpy.mockRestore()
+
+    const differs = Array.from(pos1.entries()).some(([id, p1]) => {
+      const p2 = pos2.get(id)
+      return !p2 || p1.x !== p2.x || p1.y !== p2.y
+    })
+
+    expect(differs).toBe(true)
   })
 
   it('all positions within container bounds', () => {

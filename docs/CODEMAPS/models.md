@@ -1,6 +1,6 @@
 # Emotion Models Codemap
 
-**Last Updated:** 2026-02-04
+**Last Updated:** 2026-02-07
 **Location:** `src/models/`
 
 ## Type Hierarchy
@@ -54,15 +54,17 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 
 - **`HIGH_DISTRESS_IDS`**: Set of 17 emotion IDs (despair, rage, terror, grief, shame, loathing, worthless, helpless, apathetic, empty, powerless, abandoned, victimized, numb, violated, depressed, distressed)
 - **`TIER3_COMBOS`**: 10 specific pairs triggering most severe crisis response
-- **`getCrisisTier(resultIds)`**: Returns `'none' | 'tier1' | 'tier2' | 'tier3'`
+- **`TIER4_COMBOS`**: High-risk triples triggering emergency crisis response
+- **`getCrisisTier(resultIds)`**: Returns `'none' | 'tier1' | 'tier2' | 'tier3' | 'tier4'`
   - tier1: 1 distress match (warm invitation)
   - tier2: 2+ matches (amber alert with grounding technique)
   - tier3: specific combos (direct acknowledgment)
+  - tier4: high-risk triples (red emergency response + explicit acknowledgment gate)
 
 ### Temporal Crisis (`src/data/temporal-crisis.ts`)
 
-- **`hasTemporalCrisisPattern(sessions)`**: 3+ tier2/3 sessions in last 7 days
-- **`escalateCrisisTier(currentTier, sessions)`**: Bumps tier by 1 when pattern detected (caps at tier3)
+- **`hasTemporalCrisisPattern(sessions)`**: 3+ tier2/3/4 sessions in last 7 days
+- **`escalateCrisisTier(currentTier, sessions)`**: Bumps tier by 1 when pattern detected (caps at tier3 unless already tier4)
 - Integrated into ResultModal: crisis tier is escalated before display when temporal pattern exists
 
 ### Narrative Synthesis (`src/models/synthesis.ts`)
@@ -141,7 +143,7 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 | Aspect | Detail |
 |--------|--------|
 | Initial state | All regions always visible |
-| Data | `data.json` -- regions with `emotionSignals[]` mapping sensation+intensity to emotions |
+| Data | `data.json` -- regions with `emotionSignals[]` mapping sensation+intensity to emotions + `source` provenance |
 | Visualization | `BodyMap` (not BubbleField) |
 | Scoring | `scoring.ts` -- weighted signal matching |
 | Emotions | 30+ candidate emotions (expanded from original 21) |
@@ -151,6 +153,7 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 - `index.ts` -- model implementation (simple pass-through, delegates scoring)
 - `scoring.ts` -- `scoreSomaticSelections()` algorithm
 - `data.json` -- body regions with sensation-to-emotion signal mappings
+- `data.json` emotion signals include `source`: `Nummenmaa2014`, `clinical`, or `interpolated`
 
 **onSelect / onDeselect:** No-op on state (all regions always visible). BodyMap component enriches selections with `selectedSensation` and `selectedIntensity` before passing upstream.
 
@@ -216,15 +219,17 @@ Tag with matchStrength: strong resonance (>=70%), possible connection (>=40%), w
 
 | Module | Purpose |
 |--------|---------|
-| `types.ts` | `Session`, `SerializedSelection` interfaces |
+| `types.ts` | `Session`, `SerializedSelection`, `ChainAnalysisEntry` interfaces |
 | `session-repo.ts` | IndexedDB CRUD via `idb-keyval` |
+| `chain-analysis-repo.ts` | IndexedDB CRUD for DBT chain-analysis entries |
 | `storage.ts` | localStorage facade for preferences |
+| `reminders.ts` | Notification permission + once-per-day reminder cadence |
 
 ### Derived Analytics
 
 | Module | Input | Output |
 |--------|-------|--------|
-| `vocabulary.ts` | `Session[]` | Unique emotion count, per-model counts, milestones |
+| `vocabulary.ts` | `Session[]` | Active vs passive vocabulary counts, top identified emotions, milestones |
 | `temporal-crisis.ts` | `Session[]` | 7-day crisis pattern detection + tier escalation |
 | `somatic-patterns.ts` | `Session[]` | Body region frequency, sensation distribution |
 | `valence-ratio.ts` | `Session[]` | Weekly pleasant/unpleasant/neutral counts |
@@ -245,14 +250,13 @@ All data files use inline bilingual labels `{ ro, en }`.
 ## Model Registry (`src/models/registry.ts`)
 
 ```typescript
-interface ModelRegistryEntry {
-  model: EmotionModel<BaseEmotion>
-  Visualization: ComponentType<VisualizationProps>
-}
+visualizations: Record<ModelId, VisualizationComponent> // lazy components via React.lazy
+modelCache: Partial<Record<ModelId, EmotionModel<BaseEmotion>>> // plutchik/wheel/dimensional eager, somatic lazy
 
 // Exports
 getModel(id: string): EmotionModel | undefined
-getVisualization(id: string): ComponentType | undefined
+loadModel(id: string): Promise<EmotionModel | undefined>
+getVisualization(id: string): VisualizationComponent | undefined
 getAvailableModels(): { id, name, shortName?, description }[]
 defaultModelId = 'somatic'
 ```

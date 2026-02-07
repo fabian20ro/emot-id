@@ -1,8 +1,9 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { SettingsMenu } from '../components/SettingsMenu'
 import { LanguageProvider } from '../context/LanguageContext'
+import { storage } from '../data/storage'
 
 function renderMenu(overrides: Partial<React.ComponentProps<typeof SettingsMenu>> = {}) {
   const defaults: React.ComponentProps<typeof SettingsMenu> = {
@@ -14,6 +15,10 @@ function renderMenu(overrides: Partial<React.ComponentProps<typeof SettingsMenu>
     onSoundMutedChange: vi.fn(),
     saveSessions: true,
     onSaveSessionsChange: vi.fn(),
+    dailyReminderEnabled: false,
+    reminderSupported: true,
+    reminderPermission: 'granted',
+    onDailyReminderChange: vi.fn(),
     ...overrides,
   }
   return render(
@@ -24,6 +29,26 @@ function renderMenu(overrides: Partial<React.ComponentProps<typeof SettingsMenu>
 }
 
 describe('SettingsMenu', () => {
+  beforeEach(() => {
+    vi.restoreAllMocks()
+    window.localStorage.clear()
+  })
+
+  it('shows simplified model descriptions when simple language mode is enabled', () => {
+    vi.spyOn(storage, 'get').mockImplementation((key) => {
+      if (key === 'simpleLanguage') return 'true'
+      return null
+    })
+    renderMenu()
+    expect(screen.getByText('Notice body sensations first.')).toBeInTheDocument()
+  })
+
+  it('shows full model descriptions when simple language mode is disabled', () => {
+    window.localStorage.setItem('emot-id-simple-language', 'false')
+    renderMenu()
+    expect(screen.getByText(/physical sensations in 14 body regions/i)).toBeInTheDocument()
+  })
+
   it('renders language header from i18n (English)', () => {
     renderMenu()
     expect(screen.getByText('Language')).toBeInTheDocument()
@@ -32,6 +57,11 @@ describe('SettingsMenu', () => {
   it('renders model header from i18n', () => {
     renderMenu()
     expect(screen.getByText('Model')).toBeInTheDocument()
+  })
+
+  it('renders daily reminder section', () => {
+    renderMenu()
+    expect(screen.getByText('Daily reminder')).toBeInTheDocument()
   })
 
   it('renders into document.body portal (bottom sheet)', () => {

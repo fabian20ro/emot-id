@@ -29,12 +29,23 @@ export function calculateDeterministicPositions(
   const gap = isMobile ? 8 : 10
   const availableWidth = containerWidth - padding * 2
 
-  // Sort by size descending for better packing
-  const sorted = [...emotions].sort((a, b) => {
-    const sA = sizeMap[sizes.get(a.id) || 'medium']
-    const sB = sizeMap[sizes.get(b.id) || 'medium']
-    return sB - sA
-  })
+  const baseOrder = [...emotions]
+  // Shuffle only on mobile to reduce positional primacy bias.
+  if (isMobile) {
+    for (let i = baseOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[baseOrder[i], baseOrder[j]] = [baseOrder[j], baseOrder[i]]
+    }
+  }
+
+  // Desktop keeps size-priority packing. Mobile uses shuffled order for row wrapping.
+  const sorted = isMobile
+    ? baseOrder
+    : [...baseOrder].sort((a, b) => {
+      const sA = sizeMap[sizes.get(a.id) || 'medium']
+      const sB = sizeMap[sizes.get(b.id) || 'medium']
+      return sB - sA
+    })
 
   // Build rows greedily
   const rows: { emotion: BaseEmotion; w: number }[][] = []

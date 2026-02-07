@@ -21,8 +21,8 @@ export const plutchikModel: EmotionModel<PlutchikEmotion> = {
   name: { ro: 'Roata emotiilor Plutchik', en: "Plutchik's Wheel of Emotions" },
   shortName: { ro: 'Plutchik', en: 'Plutchik' },
   description: {
-    ro: '8 emotii primare care se combina in diade — selecteaza doua emotii primare pentru a descoperi combinatia lor',
-    en: '8 primary emotions that combine into dyads — select two primary emotions to discover their combination',
+    ro: '8 emotii primare care se combina in diade (bazat pe Plutchik, 1980) — selecteaza doua emotii primare pentru a descoperi combinatia lor',
+    en: '8 primary emotions that combine into dyads (based on Plutchik, 1980) — select two primary emotions to discover their combination',
   },
   allEmotions,
 

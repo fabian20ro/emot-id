@@ -17,15 +17,11 @@ interface SelectionBarProps {
 
 export function SelectionBar({ selections, combos, onDeselect, onClear }: SelectionBarProps) {
   const { language, t } = useLanguage()
-
-  // Compact mode: hide entirely when empty to save vertical space on mobile
-  if (selections.length === 0 && combos.length === 0) {
-    return null
-  }
+  const hasContent = selections.length > 0 || combos.length > 0
 
   return (
-    <div className="relative bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-1.5 py-1 sm:px-3 sm:py-1.5">
-      <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide max-h-[48px]">
+    <div className="relative h-[52px] bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-1.5 py-1 sm:px-3 sm:py-1.5">
+      <div className="flex h-full items-center gap-1.5 overflow-x-auto scrollbar-hide">
         {/* Clear button — first element, always visible when there are selections */}
         {selections.length > 0 && (
           <button
@@ -90,7 +86,9 @@ export function SelectionBar({ selections, combos, onDeselect, onClear }: Select
       </div>
 
       {/* Right-edge gradient fade when content overflows */}
-      <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-gray-800/80 pointer-events-none" />
+      {hasContent && (
+        <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-gray-800/80 pointer-events-none" />
+      )}
     </div>
   )
 }

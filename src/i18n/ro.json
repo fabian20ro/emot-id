@@ -3,6 +3,9 @@
     "title": "Emot-ID",
     "subtitle": "Identifica-ti emotiile"
   },
+  "offline": {
+    "message": "Esti offline. Emot-ID foloseste continutul salvat local pe acest dispozitiv."
+  },
   "menu": {
     "model": "Model",
     "language": "Limba",
@@ -52,6 +55,9 @@
     "tier1": "Daca ceea ce simti pare coplesitor, exista sprijin disponibil. Nu trebuie sa navighezi singur/a.",
     "tier2": "Se pare ca treci printr-o perioada dificila. Nu trebuie sa treci prin asta singur/a.",
     "tier3": "Ceea ce descrii pare foarte dureros. Meriti sprijin acum — te rugam sa iei in considerare sa ceri ajutor.",
+    "tier4": "Daca te gandesti sa iti pui capat vietii, te rugam sa ceri ajutor acum. Meriti sprijin.",
+    "tier4Acknowledge": "Am inteles — arata rezultatele",
+    "temporalNote": "Am observat ca acest tipar apare mai des recent. E in regula — e informatie, nu o judecata.",
     "roLine": "Romania: 116 123 (gratuit, 24/7)",
     "intLine": "International: findahelpline.com",
     "disclaimer": "Daca esti in pericol imediat, te rugam sa suni la serviciile de urgenta.",
@@ -66,15 +72,19 @@
   "onboarding": {
     "screen1Title": "Aceasta este o explorare, nu un test",
     "screen1Body": "Nu exista raspunsuri corecte sau gresite. Emotiile sunt complexe si stratificate. Ia-ti timpul necesar — acesta este un spatiu pentru curiozitate, nu pentru judecata.",
+    "screen1BodySimple": "Nu exista raspuns corect sau gresit. Fii curios/oasa, nu critic/a cu tine.",
     "screen2Title": "Fiecare emotie are un scop",
     "screen2Body": "Nicio emotie nu este buna sau rea. Furia protejeaza limitele. Tristetea ajuta la procesarea pierderii. Frica te tine in siguranta. In loc sa intrebi \"ce e in neregula,\" intreaba \"ce imi transmite corpul meu?\"",
+    "screen2BodySimple": "Fiecare emotie are un rol. Nicio emotie nu e rea. Intreaba-te: ce incearca sa imi spuna aceasta stare?",
     "screen3Title": "Alege calea ta",
     "screen3Body": "Harta Corporala — simte unde traiesc emotiile in corpul tau. Roata Emotiilor — navigheaza de la sentimente generale la specifice. Plutchik — descopera cum se combina si interactioneaza emotiile. Fiecare reveleaza aspecte diferite. Incepe de unde simti ca e natural.",
+    "screen3BodySimple": "Harta Corporala: incepi cu senzatii. Roata Emotiilor: alegi cuvinte de emotii. Plutchik: vezi combinatii. Alege ce iti este mai usor.",
     "screen4Title": "Despre aceasta aplicatie",
     "screen4Body": "Aceasta aplicatie sprijina constientizarea emotionala. Nu este un instrument de diagnostic si nu inlocuieste sprijinul profesional. Daca vrei vreodata sa vorbesti cu cineva, poti suna la 116 123 (gratuit, 24/7) sau vizita findahelpline.com.",
+    "screen4BodySimple": "Aplicatia te ajuta sa iti observi emotiile. Nu este diagnostic medical. Daca ai nevoie de sprijin, suna la 116 123 sau intra pe findahelpline.com.",
     "next": "Inainte",
     "back": "Inapoi",
-    "skip": "Sari peste",
+    "selectModel": "Alege modelul de pornire",
     "getStarted": "Incepe"
   },
   "results": {
@@ -89,6 +99,30 @@
     "saveSessionsOn": "Pornit",
     "saveSessionsOff": "Oprit",
     "deleteExistingSessions": "Stergi sesiunile existente?"
+  },
+  "reminders": {
+    "label": "Memento zilnic",
+    "on": "Pornit",
+    "off": "Oprit",
+    "unsupported": "Notificarile nu sunt disponibile pe acest dispozitiv.",
+    "permissionDenied": "Notificarile sunt blocate. Le poti activa din setarile browserului.",
+    "notificationTitle": "E timpul pentru un check-in emotional rapid",
+    "notificationBody": "Ia 30 de secunde sa observi ce simti."
+  },
+  "simpleLanguage": {
+    "label": "Limbaj simplu",
+    "on": "Pornit",
+    "off": "Oprit",
+    "hint": "Foloseste formulare mai scurta si mai usor de inteles.",
+    "reflectionPrompt": "Se potriveste cu ce simti?",
+    "reflectionFollowUp": "Vrei sa explorezi mai departe?",
+    "reflectionWarmClose": "Ia o pauza scurta aici. Ce simti conteaza.",
+    "modelDescriptions": {
+      "somatic": "Incepi cu senzatiile din corp.",
+      "wheel": "Alegi cuvinte emotionale de la general la specific.",
+      "plutchik": "Explorezi cum se combina emotiile.",
+      "dimensional": "Plasezi starea dupa placut/neplacut si intensitate."
+    }
   },
   "bridges": {
     "somaticFromCognitive": "Unde observi aceasta in corpul tau?",
@@ -116,7 +150,8 @@
     "bodyOption": "Incepe cu corpul",
     "bodyDesc": "Observa mai intai senzatiile fizice",
     "dimensionalOption": "Incepe cu placut/neplacut",
-    "dimensionalDesc": "Localizeaza-ti starea pe o scala simpla"
+    "dimensionalDesc": "Localizeaza-ti starea pe o scala simpla",
+    "close": "Inchide"
   },
   "somatic": {
     "pickSensation": "Ce simti aici?",
@@ -132,6 +167,9 @@
     "guidedDone": "Scanarea corporala s-a incheiat",
     "guidedTraumaNote": "Daca vreo zona te face sa te simti inconfortabil, o poti sari oricand.",
     "guidedNothingNormal": "Este normal sa nu observi senzatii. Constiinta corporala se dezvolta cu practica.",
+    "interoceptionTip": "Constientizarea corporala este ca un muschi — se dezvolta cu practica. Incearca sa iti pui mana pe stomac si sa observi temperatura.",
+    "interoceptionTip2": "Poti practica observarea senzatiilor in activitati zilnice: caldura unei cesti, greutatea picioarelor pe podea.",
+    "interoceptionTip3": "Daca nu simti nimic, e in regula. Uneori semnalul este 'neutru' — si a observa neutrul este tot constientizare corporala.",
     "guidedMode": "Scanare ghidata",
     "freeMode": "Selectie libera",
     "guidedPause": "Ai observat {sensation} intensa in zona {region}. Respira inainte de a continua.",
@@ -155,10 +193,55 @@
     "offerBreathing": "Doresti sa incerci ceva care calmeaza?",
     "offerSavoring": "Ia un moment sa savurezi aceasta stare?",
     "offerCuriosity": "Ce ar putea sa iti transmita aceste sentimente?",
+    "checkPrompt": "Cum te simti acum?",
+    "checkBetter": "Mai bine",
+    "checkSame": "La fel",
+    "checkWorse": "Mai rau",
+    "worseValidation": "Aceasta este o informatie importanta. Unele exercitii nu functioneaza pentru toata lumea. Experienta ta este valida.",
     "yes": "Da",
     "noThanks": "Nu, multumesc"
   },
   "infoButton": {
+    "close": "Inchide"
+  },
+  "quickCheckIn": {
+    "title": "Check-in rapid",
+    "prompt": "Ce descrie cum te simti acum?",
+    "done": "Gata",
+    "close": "Inchide"
+  },
+  "granularity": {
+    "title": "Granularitate emotionala",
+    "prompt": "Care dintre acestea descrie cel mai bine ce simti?",
+    "notSure": "Nu sunt sigur — toate se potrivesc",
+    "practice": "Mod de practica",
+    "next": "Inainte",
+    "close": "Inchide"
+  },
+  "chainAnalysis": {
+    "menuLabel": "Analiza lant (DBT)",
+    "title": "Analiza lant",
+    "prompt": "Parcurge secventa ca sa intelegi ce s-a intamplat si ce poti incerca data viitoare.",
+    "triggeringEvent": "Ce s-a intamplat chiar inainte sa inceapa?",
+    "triggeringEventPlaceholder": "Exemplu: am primit un mesaj de la manager.",
+    "vulnerabilityFactors": "Ce te-a facut mai vulnerabil(a) azi?",
+    "vulnerabilityFactorsPlaceholder": "Exemplu: somn putin, mese sarite, conflict, stres.",
+    "promptingEvent": "Care a fost evenimentul declansator exact?",
+    "promptingEventPlaceholder": "Descrie momentul concret, nu toata ziua.",
+    "emotion": "Ce emotie ai simtit cel mai puternic?",
+    "emotionPlaceholder": "Foloseste cuvintele tale.",
+    "urge": "Ce impuls a aparut?",
+    "urgePlaceholder": "Exemplu: evitare, cearta, izolare, scroll.",
+    "action": "Ce actiune ai facut?",
+    "actionPlaceholder": "Ce ai facut efectiv?",
+    "consequence": "Ce s-a intamplat dupa acea actiune?",
+    "consequencePlaceholder": "Efecte pe termen scurt si lung.",
+    "recent": "Analize recente",
+    "saved": "Analiza a fost salvata. Poti observa tiparele in timp.",
+    "back": "Inapoi",
+    "next": "Inainte",
+    "save": "Salveaza analiza",
+    "done": "Gata",
     "close": "Inchide"
   },
   "privacy": {
@@ -171,6 +254,7 @@
   },
   "history": {
     "title": "Sesiuni anterioare",
+    "close": "Inchide istoricul",
     "empty": "Nicio sesiune inca",
     "clearAll": "Sterge toate datele",
     "export": "Exporta JSON",
@@ -178,6 +262,9 @@
     "vocabTitle": "Vocabularul tau emotional",
     "vocabEmotions": "{count} emotii identificate",
     "vocabModels": "in {count} modele",
+    "vocabActive": "{count} identificate activ",
+    "vocabPassive": "{count} selectate, dar fara potrivire in rezultate",
+    "topIdentified": "Cele 15 emotii pe care le identifici cel mai des",
     "vocabSessions": "{count} sesiuni",
     "milestoneEmotions": "Ai identificat {count} emotii diferite!",
     "milestoneModels": "Ai explorat {count} modele diferite!",
@@ -186,6 +273,7 @@
     "valenceTitle": "Emotiile din aceasta saptamana",
     "valencePleasant": "{count} placute",
     "valenceUnpleasant": "{count} neplacute",
+    "valenceTrend": "Trend pe 4 saptamani (de la vechi la nou)",
     "valenceNote": "Nici una nu e buna sau rea.",
     "exportText": "Partajeaza cu terapeutul",
     "copied": "Copiat!",
@@ -193,6 +281,12 @@
     "suggestSomatic": "Exploreaza semnalele corpului cu Harta Corporala",
     "suggestDimensional": "Plaseaza-ti emotiile pe un spatiu 2D",
     "suggestWheel": "Numeste emotiile mai precis cu Roata Emotiilor",
-    "suggestPlutchik": "Descopera cum se conecteaza emotiile"
+    "suggestPlutchik": "Descopera cum se conecteaza emotiile",
+    "progressionNudge": "Esti gata sa incerci ceva nou?",
+    "dismissNudge": "Ascunde sugestia",
+    "progressionSomatic": "Ai explorat senzatiile corporale. Roata Emotiilor te poate ajuta sa le numesti.",
+    "progressionWheel": "Ai numit emotii. Harta Corporala iti poate arata unde le simti in corp.",
+    "progressionPlutchik": "Ai explorat combinatii. Spatiul Emotional iti poate arata imaginea de ansamblu.",
+    "progressionDimensional": "Ai explorat spatiul emotional. Harta Corporala conecteaza aceste sentimente la senzatii fizice."
   }
 }

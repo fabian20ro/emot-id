@@ -8,6 +8,7 @@ function makeSignal(overrides: Partial<EmotionSignal> & Pick<EmotionSignal, 'emo
     emotionColor: '#ff0000',
     minIntensity: 1,
     weight: 1,
+    source: 'clinical',
     ...overrides,
   }
 }

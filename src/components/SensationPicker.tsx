@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import { useFocusTrap } from '../hooks/useFocusTrap'
 import { IntensityPicker } from './IntensityPicker'
+import { ModalShell } from './ModalShell'
 import type { SensationType } from '../models/somatic/types'
 
 interface SensationPickerProps {
@@ -54,39 +55,38 @@ export function SensationPicker({
   }
 
   const somaticT = section('somatic')
+  const randomizedSensations = useMemo(() => {
+    const shuffled = [...availableSensations]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+    return shuffled
+  }, [availableSensations])
 
   return (
     <AnimatePresence>
-      {/* Backdrop */}
-      <motion.div
-        key="backdrop"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[var(--z-backdrop)] bg-black/40"
-        onClick={onCancel}
-      />
-
-      {/* Compact bottom sheet with swipe-to-dismiss */}
-      <motion.div
-        key="sheet"
-        ref={focusTrapRef}
-        initial={{ y: '100%' }}
-        animate={{ y: 0 }}
-        exit={{ y: '100%' }}
-        transition={{ type: 'spring', stiffness: 400, damping: 35 }}
-        drag="y"
-        dragConstraints={{ top: 0 }}
-        dragElastic={0.2}
-        onDragEnd={(_e, info) => {
-          if (info.offset.y > 100 || info.velocity.y > 500) {
-            onCancel()
-          }
+      <ModalShell
+        onClose={onCancel}
+        focusTrapRef={focusTrapRef}
+        backdropClassName="fixed inset-0 z-[var(--z-backdrop)] bg-black/40"
+        viewportClassName="fixed inset-0 z-[var(--z-modal)]"
+        panelClassName="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-md border-t border-gray-600 rounded-t-2xl shadow-2xl px-3 pt-2 pb-[max(1rem,env(safe-area-inset-bottom))] max-w-md mx-auto max-h-[85vh] overflow-y-auto"
+        panelProps={{
+          initial: { y: '100%' },
+          animate: { y: 0 },
+          exit: { y: '100%' },
+          transition: { type: 'spring', stiffness: 400, damping: 35 },
+          drag: 'y',
+          dragConstraints: { top: 0 },
+          dragElastic: 0.2,
+          onDragEnd: (_e, info) => {
+            if (info.offset.y > 100 || info.velocity.y > 500) {
+              onCancel()
+            }
+          },
+          'aria-label': regionLabel,
         }}
-        role="dialog"
-        aria-modal="true"
-        aria-label={regionLabel}
-        className="fixed bottom-0 left-0 right-0 z-[var(--z-modal)] bg-gray-900/95 backdrop-blur-md border-t border-gray-600 rounded-t-2xl shadow-2xl px-3 pt-2 pb-4 max-w-md mx-auto"
       >
         {/* Drag handle */}
         <div className="flex justify-center mb-1.5">
@@ -124,7 +124,7 @@ export function SensationPicker({
         {/* Step 1: Sensation type — horizontal scroll row */}
         {step === 'sensation' && (
           <div className="grid grid-cols-2 gap-2">
-            {availableSensations.map((sensation) => {
+            {randomizedSensations.map((sensation) => {
               const config = SENSATION_CONFIG[sensation]
               return (
                 <motion.button
@@ -158,7 +158,7 @@ export function SensationPicker({
         >
           {somaticT.nothingHere ?? 'Nothing here'}
         </button>
-      </motion.div>
+      </ModalShell>
     </AnimatePresence>
   )
 }

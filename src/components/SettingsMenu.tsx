@@ -14,7 +14,13 @@ interface SettingsMenuProps {
   onSoundMutedChange: (muted: boolean) => void
   saveSessions: boolean
   onSaveSessionsChange: (save: boolean) => void
+  dailyReminderEnabled: boolean
+  reminderSupported: boolean
+  reminderPermission: NotificationPermission | 'unsupported'
+  onDailyReminderChange: (enabled: boolean) => void | Promise<void>
   onOpenHistory?: () => void
+  onOpenGranularity?: () => void
+  onOpenChainAnalysis?: () => void
 }
 
 function toggleClass(active: boolean): string {
@@ -23,14 +29,34 @@ function toggleClass(active: boolean): string {
     : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
 }
 
-export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMuted, onSoundMutedChange, saveSessions, onSaveSessionsChange, onOpenHistory }: SettingsMenuProps) {
-  const { language, setLanguage, section } = useLanguage()
+export function SettingsMenu({
+  isOpen,
+  onClose,
+  modelId,
+  onModelChange,
+  soundMuted,
+  onSoundMutedChange,
+  saveSessions,
+  onSaveSessionsChange,
+  dailyReminderEnabled,
+  reminderSupported,
+  reminderPermission,
+  onDailyReminderChange,
+  onOpenHistory,
+  onOpenGranularity,
+  onOpenChainAnalysis,
+}: SettingsMenuProps) {
+  const { language, setLanguage, simpleLanguage, setSimpleLanguage, section } = useLanguage()
   const availableModels = getAvailableModels()
   const menuT = section('menu')
   const disclaimerT = section('disclaimer')
   const settingsT = section('settings')
+  const remindersT = section('reminders')
   const historyT = section('history')
+  const granularityT = section('granularity')
+  const chainT = section('chainAnalysis')
   const privacyT = section('privacy')
+  const simpleT = section('simpleLanguage')
   const focusTrapRef = useFocusTrap(isOpen, onClose)
 
   return createPortal(
@@ -107,6 +133,32 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
                 </button>
               </div>
 
+              {/* Simple language mode */}
+              <div className="px-3 py-2">
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                  {simpleT.label ?? 'Simple language'}
+                </span>
+              </div>
+              <div className="flex gap-1 px-2 pb-1">
+                <button
+                  onClick={() => { setSimpleLanguage(true); onClose() }}
+                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(simpleLanguage)}`}
+                >
+                  {simpleT.on ?? 'On'}
+                </button>
+                <button
+                  onClick={() => { setSimpleLanguage(false); onClose() }}
+                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(!simpleLanguage)}`}
+                >
+                  {simpleT.off ?? 'Off'}
+                </button>
+              </div>
+              <div className="px-3 pb-2">
+                <p className="text-xs text-gray-500">
+                  {simpleT.hint ?? 'Use shorter wording and simpler descriptions.'}
+                </p>
+              </div>
+
               {/* Model Section */}
               <div className="px-3 py-2">
                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
@@ -124,7 +176,9 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
                     <span className={`block text-xs mt-0.5 ${
                       modelId === m.id ? 'text-purple-200' : 'text-gray-400'
                     }`}>
-                      {m.description[language]}
+                      {(simpleLanguage
+                        ? (simpleT.modelDescriptions as Record<string, string> | undefined)?.[m.id]
+                        : undefined) ?? m.description[language]}
                     </span>
                   </button>
                 ))}
@@ -172,6 +226,40 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
                 </button>
               </div>
 
+              {/* Daily reminders */}
+              <div className="px-3 py-2">
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                  {remindersT.label ?? 'Daily reminder'}
+                </span>
+              </div>
+              <div className="flex gap-1 px-2 pb-1">
+                <button
+                  onClick={() => { void onDailyReminderChange(true); onClose() }}
+                  disabled={!reminderSupported}
+                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors disabled:bg-gray-800 disabled:text-gray-500 ${toggleClass(dailyReminderEnabled)}`}
+                >
+                  {remindersT.on ?? 'On'}
+                </button>
+                <button
+                  onClick={() => { void onDailyReminderChange(false); onClose() }}
+                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(!dailyReminderEnabled)}`}
+                >
+                  {remindersT.off ?? 'Off'}
+                </button>
+              </div>
+              <div className="px-3 pb-2">
+                {!reminderSupported && (
+                  <p className="text-xs text-amber-300/90">
+                    {remindersT.unsupported ?? 'Notifications are not supported on this device.'}
+                  </p>
+                )}
+                {reminderSupported && reminderPermission === 'denied' && (
+                  <p className="text-xs text-amber-300/90">
+                    {remindersT.permissionDenied ?? 'Notifications are blocked. Enable them in browser settings.'}
+                  </p>
+                )}
+              </div>
+
               {/* Past Sessions — hidden when saving is off */}
               {saveSessions && onOpenHistory && (
                 <div className="px-2 pb-1 pt-1 border-t border-gray-700 mt-1">
@@ -180,6 +268,28 @@ export function SettingsMenu({ isOpen, onClose, modelId, onModelChange, soundMut
                     className="w-full px-3 py-2 min-h-[44px] rounded-lg text-sm text-gray-300 hover:bg-gray-700 transition-colors text-left"
                   >
                     {historyT.menuLabel ?? 'Past sessions'}
+                  </button>
+                </div>
+              )}
+
+              {onOpenGranularity && (
+                <div className="px-2 pb-1 pt-1 border-t border-gray-700 mt-1">
+                  <button
+                    onClick={() => { onOpenGranularity(); onClose() }}
+                    className="w-full px-3 py-2 min-h-[44px] rounded-lg text-sm text-gray-300 hover:bg-gray-700 transition-colors text-left"
+                  >
+                    {granularityT.practice ?? 'Practice mode'}
+                  </button>
+                </div>
+              )}
+
+              {onOpenChainAnalysis && (
+                <div className="px-2 pb-1 pt-1 border-t border-gray-700 mt-1">
+                  <button
+                    onClick={() => { onOpenChainAnalysis(); onClose() }}
+                    className="w-full px-3 py-2 min-h-[44px] rounded-lg text-sm text-gray-300 hover:bg-gray-700 transition-colors text-left"
+                  >
+                    {chainT.menuLabel ?? 'Chain analysis'}
                   </button>
                 </div>
               )}

@@ -20,8 +20,8 @@ export const wheelModel: EmotionModel<WheelEmotion> = {
   name: { ro: 'Roata emotiilor', en: 'Emotion Wheel' },
   shortName: { ro: 'Roata', en: 'Wheel' },
   description: {
-    ro: 'Navigare ierarhica pe 3 nivele — de la emotii generale la specifice prin explorare in profunzime',
-    en: '3-level hierarchical navigation — from general to specific emotions through drill-down exploration',
+    ro: 'Navigare ierarhica pe 3 nivele (bazat pe Parrott, 2001) — de la emotii generale la specifice prin explorare in profunzime',
+    en: '3-level hierarchical navigation (based on Parrott, 2001) — from general to specific emotions through drill-down exploration',
   },
   allEmotions,
 

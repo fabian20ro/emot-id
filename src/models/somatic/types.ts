@@ -22,6 +22,7 @@ export interface EmotionSignal {
   sensationType: SensationType
   minIntensity: 1 | 2 | 3
   weight: number
+  source: 'Nummenmaa2014' | 'clinical' | 'interpolated'
 }
 
 export interface SomaticRegion extends BaseEmotion {

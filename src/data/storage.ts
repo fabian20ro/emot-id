@@ -6,13 +6,27 @@ const KEYS = {
   soundMuted: `${PREFIX}sound-muted`,
   onboarded: `${PREFIX}onboarded`,
   saveSessions: `${PREFIX}save-sessions`,
+  dimensionalAxisHintSeen: `${PREFIX}dimensional-axis-hint-seen`,
+  dailyReminderEnabled: `${PREFIX}daily-reminder-enabled`,
+  dailyReminderLastSentAt: `${PREFIX}daily-reminder-last-sent-at`,
+  simpleLanguage: `${PREFIX}simple-language`,
 } as const
 
 type StorageKey = keyof typeof KEYS
 
+function getStorage(): Storage | null {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    return window.localStorage
+  }
+  if (typeof localStorage !== 'undefined') {
+    return localStorage
+  }
+  return null
+}
+
 function get(key: StorageKey): string | null {
   try {
-    return localStorage.getItem(KEYS[key])
+    return getStorage()?.getItem(KEYS[key]) ?? null
   } catch {
     return null
   }
@@ -20,7 +34,7 @@ function get(key: StorageKey): string | null {
 
 function set(key: StorageKey, value: string): void {
   try {
-    localStorage.setItem(KEYS[key], value)
+    getStorage()?.setItem(KEYS[key], value)
   } catch {
     // localStorage unavailable in private browsing
   }
@@ -28,7 +42,7 @@ function set(key: StorageKey, value: string): void {
 
 function isHintDismissed(modelId: string): boolean {
   try {
-    return localStorage.getItem(`${PREFIX}hint-${modelId}`) === 'true'
+    return getStorage()?.getItem(`${PREFIX}hint-${modelId}`) === 'true'
   } catch {
     return false
   }
@@ -36,7 +50,7 @@ function isHintDismissed(modelId: string): boolean {
 
 function dismissHint(modelId: string): void {
   try {
-    localStorage.setItem(`${PREFIX}hint-${modelId}`, 'true')
+    getStorage()?.setItem(`${PREFIX}hint-${modelId}`, 'true')
   } catch {
     // localStorage unavailable
   }

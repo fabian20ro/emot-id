@@ -27,11 +27,11 @@ describe('hasTemporalCrisisPattern', () => {
     expect(hasTemporalCrisisPattern(sessions)).toBe(false)
   })
 
-  it('returns true for 3+ tier2/tier3 sessions in last 7 days', () => {
+  it('returns true for 3+ tier2/tier3/tier4 sessions in last 7 days', () => {
     const sessions = [
       makeSession({ crisisTier: 'tier2' }),
       makeSession({ crisisTier: 'tier3' }),
-      makeSession({ crisisTier: 'tier2' }),
+      makeSession({ crisisTier: 'tier4' }),
     ]
     expect(hasTemporalCrisisPattern(sessions)).toBe(true)
   })
@@ -77,5 +77,14 @@ describe('escalateCrisisTier', () => {
       makeSession({ crisisTier: 'tier3' }),
     ]
     expect(escalateCrisisTier('tier3', sessions)).toBe('tier3')
+  })
+
+  it('preserves tier4 when already at highest tier', () => {
+    const sessions = [
+      makeSession({ crisisTier: 'tier4' }),
+      makeSession({ crisisTier: 'tier3' }),
+      makeSession({ crisisTier: 'tier2' }),
+    ]
+    expect(escalateCrisisTier('tier4', sessions)).toBe('tier4')
   })
 })

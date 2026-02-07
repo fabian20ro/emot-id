@@ -22,18 +22,35 @@ export const TIER3_COMBOS: ReadonlyArray<readonly [string, string]> = [
   ['depressed', 'worthless'],
 ]
 
-export type CrisisTier = 'none' | 'tier1' | 'tier2' | 'tier3'
+/** Specific high-risk triples that indicate tier 4 crisis */
+export const TIER4_COMBOS: ReadonlyArray<readonly [string, string, string]> = [
+  ['despair', 'worthless', 'empty'],
+  ['helpless', 'numb', 'abandoned'],
+  ['despair', 'helpless', 'numb'],
+  ['shame', 'worthless', 'empty'],
+  ['depressed', 'worthless', 'helpless'],
+]
+
+export type CrisisTier = 'none' | 'tier1' | 'tier2' | 'tier3' | 'tier4'
 
 /**
  * Determine crisis tier from analysis results.
  * - tier1: 1 match — warm invitation
  * - tier2: 2+ matches — amber alert
- * - tier3: specific severe combos — most direct
+ * - tier3: specific severe pairs — most direct
+ * - tier4: high-risk triples — emergency language + explicit acknowledgment
  */
 export function getCrisisTier(resultIds: string[]): CrisisTier {
   const distressIds = resultIds.filter((id) => HIGH_DISTRESS_IDS.has(id))
 
   if (distressIds.length === 0) return 'none'
+
+  // Check tier 4 triples first (highest severity)
+  for (const [a, b, c] of TIER4_COMBOS) {
+    if (distressIds.includes(a) && distressIds.includes(b) && distressIds.includes(c)) {
+      return 'tier4'
+    }
+  }
 
   // Check tier 3 combos
   for (const [a, b] of TIER3_COMBOS) {

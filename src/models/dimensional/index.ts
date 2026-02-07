@@ -27,8 +27,8 @@ export const dimensionalModel: EmotionModel<DimensionalEmotion> = {
   name: { ro: 'Spatiul emotional', en: 'Emotional Space' },
   shortName: { ro: 'Spatiu', en: 'Space' },
   description: {
-    ro: 'Camp bidimensional — plaseaza-ti experienta pe axele placut/neplacut si calm/intens',
-    en: '2D emotional field — place your experience on the pleasant/unpleasant and calm/intense axes',
+    ro: 'Camp bidimensional (bazat pe Russell, 1980) — plaseaza-ti experienta pe axele placut/neplacut si calm/intens',
+    en: '2D emotional field (based on Russell, 1980) — place your experience on the pleasant/unpleasant and calm/intense axes',
   },
   allEmotions,
 

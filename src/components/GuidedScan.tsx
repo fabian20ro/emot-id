@@ -41,6 +41,15 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   const currentRegionId = SCAN_ORDER[currentIndex]
   const currentRegion = currentRegionId ? regions.get(currentRegionId) : undefined
   const currentGroupId = getGroupForIndex(currentIndex)
+  const randomizedCurrentSensations = useMemo(() => {
+    if (!currentRegion) return []
+    const shuffled = [...currentRegion.commonSensations]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+    return shuffled
+  }, [currentRegionId, currentRegion])
 
   // Breathing cycle: alternate in/out every half-cycle
   useEffect(() => {
@@ -188,7 +197,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-6 mb-4 mx-4 max-w-sm text-center pointer-events-auto"
+            className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-6 mb-4 mx-4 max-w-sm max-h-[80vh] overflow-y-auto text-center pointer-events-auto"
           >
             <motion.div
               animate={{
@@ -233,14 +242,14 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
               {centeringDuration === CENTERING_DURATION_MS && (
                 <button
                   onClick={handleExtendCentering}
-                  className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors"
+                  className="min-h-[44px] px-3 text-sm text-indigo-400 hover:text-indigo-300 transition-colors"
                 >
                   {somaticT.guidedTakeMoreTime ?? 'Take more time'}
                 </button>
               )}
               <button
                 onClick={handleSkipCentering}
-                className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+                className="min-h-[44px] min-w-[44px] text-sm text-gray-400 hover:text-gray-200 transition-colors"
               >
                 →
               </button>
@@ -255,7 +264,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-5 mb-4 mx-4 max-w-sm w-full pointer-events-auto"
+            className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-5 mb-4 mx-4 max-w-sm w-full max-h-[80vh] overflow-y-auto pointer-events-auto"
           >
             {/* Progress bar */}
             <div className="w-full h-1 bg-gray-700 rounded-full mb-4 overflow-hidden">
@@ -278,13 +287,13 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             {/* Sensation buttons with translated labels */}
             {!selectedSensation && (
               <div className="grid grid-cols-2 gap-2 mb-3">
-                {currentRegion.commonSensations.map((sensation) => {
+                {randomizedCurrentSensations.map((sensation) => {
                   const config = SENSATION_CONFIG[sensation]
                   return (
                     <button
                       key={sensation}
                       onClick={() => handleSensationPick(sensation)}
-                      className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 text-sm text-gray-200 transition-colors"
+                      className="min-h-[44px] flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 text-sm text-gray-200 transition-colors"
                     >
                       <span className="text-base">{config.icon}</span>
                       <span>{config.label[language]}</span>
@@ -307,7 +316,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             <div className="flex items-center justify-between">
               <button
                 onClick={handleSkip}
-                className="text-sm text-gray-500 hover:text-gray-400 transition-colors py-2"
+                className="min-h-[44px] px-2 text-sm text-gray-400 hover:text-gray-200 transition-colors"
               >
                 {somaticT.guidedSkip ?? 'Nothing here'} →
               </button>
@@ -316,7 +325,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
               {isFirstInGroup && (
                 <button
                   onClick={handleSkipGroup}
-                  className="text-xs text-gray-600 hover:text-gray-400 transition-colors py-2"
+                  className="min-h-[44px] px-2 text-xs text-gray-500 hover:text-gray-300 transition-colors"
                   title={groupLabel}
                 >
                   {somaticT.guidedSkipGroup ?? 'Skip this area'} →
@@ -333,7 +342,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-6 mb-4 mx-4 max-w-sm text-center pointer-events-auto"
+            className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-6 mb-4 mx-4 max-w-sm max-h-[80vh] overflow-y-auto text-center pointer-events-auto"
           >
             {showNumbnessWarning && !pauseContext && (
               <>
@@ -343,7 +352,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
                 <div className="flex gap-3 justify-center">
                   <button
                     onClick={() => { setShowNumbnessWarning(false); setPauseContext(null); setPhase('scanning'); advanceOrComplete() }}
-                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-xl text-sm transition-colors"
+                    className="min-h-[44px] px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-xl text-sm transition-colors"
                   >
                     {somaticT.numbnessContinue ?? 'Continue scanning'}
                   </button>
@@ -362,7 +371,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
                 </p>
                 <button
                   onClick={handleResumeScan}
-                  className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm transition-colors"
+                  className="min-h-[44px] px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm transition-colors"
                 >
                   {somaticT.guidedPauseContinue ?? 'Ready to continue'}
                 </button>
@@ -378,19 +387,27 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-6 mb-4 mx-4 max-w-sm text-center pointer-events-auto"
+            className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-6 mb-4 mx-4 max-w-sm max-h-[80vh] overflow-y-auto text-center pointer-events-auto"
           >
             <p className="text-gray-200 text-lg mb-2">
               {somaticT.guidedDone ?? 'Body scan complete'}
             </p>
-            {skipCount >= 3 && (
-              <p className="text-xs text-gray-400 mb-3 max-w-xs">
-                {somaticT.guidedNothingNormal ?? 'Not noticing sensations is common. Body awareness develops with practice.'}
-              </p>
+            {skipCount >= 6 ? (
+              <div className="text-xs text-gray-400 mb-3 max-w-xs space-y-1.5 text-left">
+                <p>{somaticT.interoceptionTip ?? 'Body awareness is like a muscle — it develops with practice. Try placing your hand on your stomach and just noticing the temperature.'}</p>
+                <p>{somaticT.interoceptionTip2 ?? 'You can practice noticing sensations during everyday activities: the warmth of a cup, the weight of your feet on the floor.'}</p>
+                <p>{somaticT.interoceptionTip3 ?? "If nothing comes up, that's okay. Sometimes the signal is 'neutral' — and noticing neutral is also body awareness."}</p>
+              </div>
+            ) : (
+              skipCount >= 3 && (
+                <p className="text-xs text-gray-400 mb-3 max-w-xs">
+                  {somaticT.guidedNothingNormal ?? 'Not noticing sensations is common. Body awareness develops with practice.'}
+                </p>
+              )
             )}
             <button
               onClick={onComplete}
-              className="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm transition-colors"
+              className="min-h-[44px] min-w-[44px] px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm transition-colors"
             >
               ✓
             </button>

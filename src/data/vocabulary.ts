@@ -2,10 +2,13 @@ import type { Session } from './types'
 
 export interface VocabularyStats {
   uniqueEmotionCount: number
+  activeUniqueEmotionCount: number
+  passiveUniqueEmotionCount: number
   perModel: Record<string, number>
   modelsUsed: number
   totalSessions: number
   milestone: VocabularyMilestone | null
+  topActiveEmotions: { id: string; count: number; label: { ro: string; en: string } }[]
 }
 
 export type VocabularyMilestone =
@@ -16,7 +19,9 @@ const EMOTION_MILESTONES = [5, 10, 15, 25, 40, 60]
 const MODEL_MILESTONES = [2, 3, 4]
 
 export function computeVocabulary(sessions: Session[]): VocabularyStats {
-  const allEmotionIds = new Set<string>()
+  const activeEmotionIds = new Set<string>()
+  const selectedEmotionIds = new Set<string>()
+  const activeEmotionCounts = new Map<string, { count: number; label: { ro: string; en: string } }>()
   const perModelIds: Record<string, Set<string>> = {}
   const modelIds = new Set<string>()
 
@@ -25,9 +30,21 @@ export function computeVocabulary(sessions: Session[]): VocabularyStats {
     if (!perModelIds[session.modelId]) {
       perModelIds[session.modelId] = new Set()
     }
+    for (const selection of session.selections) {
+      selectedEmotionIds.add(selection.emotionId)
+    }
     for (const result of session.results) {
-      allEmotionIds.add(result.id)
+      activeEmotionIds.add(result.id)
       perModelIds[session.modelId].add(result.id)
+      const existing = activeEmotionCounts.get(result.id)
+      if (existing) {
+        existing.count += 1
+      } else {
+        activeEmotionCounts.set(result.id, {
+          count: 1,
+          label: result.label,
+        })
+      }
     }
   }
 
@@ -36,7 +53,9 @@ export function computeVocabulary(sessions: Session[]): VocabularyStats {
     perModel[model] = ids.size
   }
 
-  const uniqueEmotionCount = allEmotionIds.size
+  const activeUniqueEmotionCount = activeEmotionIds.size
+  const passiveUniqueEmotionCount = Array.from(selectedEmotionIds).filter((id) => !activeEmotionIds.has(id)).length
+  const uniqueEmotionCount = activeUniqueEmotionCount
   let milestone: VocabularyMilestone | null = null
 
   for (const m of EMOTION_MILESTONES) {
@@ -54,11 +73,19 @@ export function computeVocabulary(sessions: Session[]): VocabularyStats {
     }
   }
 
+  const topActiveEmotions = Array.from(activeEmotionCounts.entries())
+    .map(([id, value]) => ({ id, count: value.count, label: value.label }))
+    .sort((a, b) => b.count - a.count || a.label.en.localeCompare(b.label.en))
+    .slice(0, 15)
+
   return {
     uniqueEmotionCount,
+    activeUniqueEmotionCount,
+    passiveUniqueEmotionCount,
     perModel,
     modelsUsed: modelIds.size,
     totalSessions: sessions.length,
     milestone,
+    topActiveEmotions,
   }
 }

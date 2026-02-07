@@ -27,12 +27,12 @@ export function UndoToast({ visible, onUndo, onDismiss }: UndoToastProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[var(--z-toast)] bg-gray-700 text-white px-4 py-2 rounded-xl shadow-lg flex items-center gap-3 text-sm"
+      className="fixed bottom-[max(1.5rem,calc(env(safe-area-inset-bottom)+0.5rem))] left-1/2 -translate-x-1/2 z-[var(--z-toast)] bg-gray-700 text-white px-4 py-2 rounded-xl shadow-lg flex items-center gap-3 text-sm"
     >
       <span>{selectionBarT.cleared ?? 'Cleared'}</span>
       <button
         onClick={onUndo}
-        className="font-semibold text-indigo-300 hover:text-indigo-200 transition-colors"
+        className="min-h-[44px] min-w-[44px] px-2 font-semibold text-indigo-300 hover:text-indigo-200 transition-colors"
       >
         {selectionBarT.undo ?? 'Undo'}
       </button>

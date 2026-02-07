@@ -41,7 +41,7 @@ function ModelBarBase({ modelId, onModelChange, inline }: ModelBarProps) {
                 transition={{ type: 'spring', stiffness: 400, damping: 30 }}
               />
             )}
-            <span className="relative z-10">
+            <span className="relative">
               {shortName
                 ? (<><span className="hidden min-[480px]:inline">{fullName}</span><span className="inline min-[480px]:hidden">{shortName}</span></>)
                 : fullName}

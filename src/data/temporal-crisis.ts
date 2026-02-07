@@ -9,7 +9,7 @@ export function hasTemporalCrisisPattern(sessions: Session[]): boolean {
   const recentHighDistress = sessions.filter(
     (s) =>
       s.timestamp >= cutoff &&
-      (s.crisisTier === 'tier2' || s.crisisTier === 'tier3'),
+      (s.crisisTier === 'tier2' || s.crisisTier === 'tier3' || s.crisisTier === 'tier4'),
   )
   return recentHighDistress.length >= MIN_HIGH_DISTRESS_SESSIONS
 }
@@ -24,5 +24,6 @@ export function escalateCrisisTier(
 
   if (currentTier === 'none') return 'tier1'
   if (currentTier === 'tier1') return 'tier2'
+  if (currentTier === 'tier4') return 'tier4'
   return 'tier3'
 }

@@ -45,7 +45,7 @@ export class VisualizationErrorBoundary extends Component<Props, State> {
                 this.setState({ hasError: false })
                 this.props.onReset?.()
               }}
-              className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm hover:bg-indigo-500 transition-colors"
+              className="min-h-[44px] px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm hover:bg-indigo-500 transition-colors"
             >
               {t.retry}
             </button>

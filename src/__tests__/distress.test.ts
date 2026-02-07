@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getCrisisTier, HIGH_DISTRESS_IDS, TIER3_COMBOS } from '../models/distress'
+import { getCrisisTier, HIGH_DISTRESS_IDS, TIER3_COMBOS, TIER4_COMBOS } from '../models/distress'
 
 describe('getCrisisTier', () => {
   it('returns none when no distress IDs present', () => {
@@ -26,6 +26,16 @@ describe('getCrisisTier', () => {
     expect(getCrisisTier(['shame', 'loathing'])).toBe('tier3')
   })
 
+  it('returns tier4 for high-risk triple combos', () => {
+    expect(getCrisisTier(['despair', 'worthless', 'empty'])).toBe('tier4')
+    expect(getCrisisTier(['helpless', 'numb', 'abandoned'])).toBe('tier4')
+    expect(getCrisisTier(['depressed', 'worthless', 'helpless'])).toBe('tier4')
+  })
+
+  it('prioritizes tier4 over tier3 when both patterns are present', () => {
+    expect(getCrisisTier(['despair', 'worthless', 'empty'])).toBe('tier4')
+  })
+
   it('returns tier3 even when other non-distress IDs present', () => {
     expect(getCrisisTier(['joy', 'despair', 'helpless', 'trust'])).toBe('tier3')
   })
@@ -40,6 +50,14 @@ describe('getCrisisTier', () => {
     for (const [a, b] of TIER3_COMBOS) {
       expect(HIGH_DISTRESS_IDS.has(a)).toBe(true)
       expect(HIGH_DISTRESS_IDS.has(b)).toBe(true)
+    }
+  })
+
+  it('has valid TIER4_COMBOS referencing distress IDs', () => {
+    for (const [a, b, c] of TIER4_COMBOS) {
+      expect(HIGH_DISTRESS_IDS.has(a)).toBe(true)
+      expect(HIGH_DISTRESS_IDS.has(b)).toBe(true)
+      expect(HIGH_DISTRESS_IDS.has(c)).toBe(true)
     }
   })
 })

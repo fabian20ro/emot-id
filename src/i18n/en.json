@@ -3,6 +3,9 @@
     "title": "Emot-ID",
     "subtitle": "Identify your emotions"
   },
+  "offline": {
+    "message": "You are offline. Emot-ID is using cached content on this device."
+  },
   "menu": {
     "model": "Model",
     "language": "Language",
@@ -52,6 +55,9 @@
     "tier1": "If what you're feeling feels overwhelming, support is available. You don't have to navigate this alone.",
     "tier2": "It sounds like you may be going through a difficult time. You don't have to go through it alone.",
     "tier3": "What you're describing sounds very painful. You deserve support right now — please consider reaching out.",
+    "tier4": "If you are thinking about ending your life, please reach out now. You deserve help.",
+    "tier4Acknowledge": "I understand — show my results",
+    "temporalNote": "We noticed this pattern showing up more often recently. That's okay — it's information, not a judgment.",
     "roLine": "Romania: 116 123 (free, 24/7)",
     "intLine": "International: findahelpline.com",
     "disclaimer": "If you are in immediate danger, please call emergency services.",
@@ -66,15 +72,19 @@
   "onboarding": {
     "screen1Title": "This is an exploration, not a test",
     "screen1Body": "There are no right or wrong answers. Emotions are complex and layered. Take your time — this is a space for curiosity, not judgment.",
+    "screen1BodySimple": "There is no right or wrong answer. Be curious, not harsh with yourself.",
     "screen2Title": "Every emotion has a purpose",
     "screen2Body": "No emotion is good or bad. Anger protects boundaries. Sadness helps process loss. Fear keeps you safe. Instead of asking \"what's wrong,\" ask \"what is my body telling me?\"",
+    "screen2BodySimple": "Each emotion has a job. None are bad. Ask: what is this feeling trying to tell me?",
     "screen3Title": "Choose your way in",
     "screen3Body": "Body Map — feel where emotions live in your body. Emotion Wheel — navigate from general to specific feelings. Plutchik — discover how emotions combine and interact. Each reveals different aspects. Start wherever feels natural.",
+    "screen3BodySimple": "Body Map: start with sensations. Emotion Wheel: choose feeling words. Plutchik: see emotion combinations. Pick what feels easiest.",
     "screen4Title": "About this app",
     "screen4Body": "This app supports emotional self-awareness. It is not a diagnostic tool and does not replace professional mental health support. If you ever want to talk to someone, you can call 116 123 (Romania, free, 24/7) or visit findahelpline.com.",
+    "screen4BodySimple": "This app helps you notice emotions. It is not medical diagnosis. If you need support, call 116 123 or visit findahelpline.com.",
     "next": "Next",
     "back": "Back",
-    "skip": "Skip",
+    "selectModel": "Choose your starting model",
     "getStarted": "Get started"
   },
   "results": {
@@ -89,6 +99,30 @@
     "saveSessionsOn": "On",
     "saveSessionsOff": "Off",
     "deleteExistingSessions": "Delete existing sessions?"
+  },
+  "reminders": {
+    "label": "Daily reminder",
+    "on": "On",
+    "off": "Off",
+    "unsupported": "Notifications are not supported on this device.",
+    "permissionDenied": "Notifications are blocked. Enable them in browser settings.",
+    "notificationTitle": "Time for a quick emotional check-in",
+    "notificationBody": "Take 30 seconds to notice what you feel."
+  },
+  "simpleLanguage": {
+    "label": "Simple language",
+    "on": "On",
+    "off": "Off",
+    "hint": "Use shorter wording and simpler descriptions.",
+    "reflectionPrompt": "Does this fit how you feel?",
+    "reflectionFollowUp": "Do you want to explore more?",
+    "reflectionWarmClose": "Pause here for a moment. What you feel matters.",
+    "modelDescriptions": {
+      "somatic": "Notice body sensations first.",
+      "wheel": "Pick feeling words from broad to specific.",
+      "plutchik": "Explore how emotions mix together.",
+      "dimensional": "Place your state by pleasantness and intensity."
+    }
   },
   "bridges": {
     "somaticFromCognitive": "Where do you notice this in your body?",
@@ -116,7 +150,8 @@
     "bodyOption": "Start with your body",
     "bodyDesc": "Notice physical sensations first",
     "dimensionalOption": "Start with pleasant/unpleasant",
-    "dimensionalDesc": "Locate your state on a simple scale"
+    "dimensionalDesc": "Locate your state on a simple scale",
+    "close": "Close"
   },
   "somatic": {
     "pickSensation": "What do you feel here?",
@@ -132,6 +167,9 @@
     "guidedDone": "Body scan complete",
     "guidedTraumaNote": "If any area feels uncomfortable, you can skip it at any time.",
     "guidedNothingNormal": "Not noticing sensations is common. Body awareness develops with practice.",
+    "interoceptionTip": "Body awareness is like a muscle — it develops with practice. Try placing your hand on your stomach and just noticing the temperature.",
+    "interoceptionTip2": "You can practice noticing sensations during everyday activities: the warmth of a cup, the weight of your feet on the floor.",
+    "interoceptionTip3": "If nothing comes up, that's okay. Sometimes the signal is 'neutral' — and noticing neutral is also body awareness.",
     "guidedMode": "Guided scan",
     "freeMode": "Free selection",
     "guidedPause": "You noticed strong {sensation} in your {region}. Take a breath before continuing.",
@@ -155,10 +193,55 @@
     "offerBreathing": "Would you like to try something calming?",
     "offerSavoring": "Take a moment to savor this?",
     "offerCuriosity": "What might these feelings be telling you?",
+    "checkPrompt": "How do you feel now?",
+    "checkBetter": "Better",
+    "checkSame": "About the same",
+    "checkWorse": "Worse",
+    "worseValidation": "That's important information. Some exercises don't work for everyone. Your experience is valid.",
     "yes": "Yes",
     "noThanks": "No thanks"
   },
   "infoButton": {
+    "close": "Close"
+  },
+  "quickCheckIn": {
+    "title": "Quick check-in",
+    "prompt": "What describes how you feel right now?",
+    "done": "Done",
+    "close": "Close"
+  },
+  "granularity": {
+    "title": "Emotional granularity",
+    "prompt": "Which of these best describes what you feel?",
+    "notSure": "I'm not sure — they all fit",
+    "practice": "Practice mode",
+    "next": "Next",
+    "close": "Close"
+  },
+  "chainAnalysis": {
+    "menuLabel": "Chain analysis (DBT)",
+    "title": "Chain analysis",
+    "prompt": "Walk through the sequence to understand what happened and what to try next.",
+    "triggeringEvent": "What happened right before this started?",
+    "triggeringEventPlaceholder": "Example: I got a message from my manager.",
+    "vulnerabilityFactors": "What made you more vulnerable today?",
+    "vulnerabilityFactorsPlaceholder": "Example: low sleep, skipped meals, conflict, stress.",
+    "promptingEvent": "What was the exact prompting event?",
+    "promptingEventPlaceholder": "Describe the specific moment, not the whole day.",
+    "emotion": "What emotion did you feel most strongly?",
+    "emotionPlaceholder": "Use your own words.",
+    "urge": "What urge showed up?",
+    "urgePlaceholder": "Example: avoid, argue, isolate, scroll.",
+    "action": "What action did you take?",
+    "actionPlaceholder": "What did you actually do?",
+    "consequence": "What happened after that action?",
+    "consequencePlaceholder": "Short-term and longer-term effects.",
+    "recent": "Recent chains",
+    "saved": "Chain saved. You can review patterns over time.",
+    "back": "Back",
+    "next": "Next",
+    "save": "Save chain",
+    "done": "Done",
     "close": "Close"
   },
   "privacy": {
@@ -171,6 +254,7 @@
   },
   "history": {
     "title": "Past Sessions",
+    "close": "Close history",
     "empty": "No sessions yet",
     "clearAll": "Clear all data",
     "export": "Export JSON",
@@ -178,6 +262,9 @@
     "vocabTitle": "Your emotional vocabulary",
     "vocabEmotions": "{count} emotions identified",
     "vocabModels": "across {count} models",
+    "vocabActive": "{count} actively identified",
+    "vocabPassive": "{count} selected but not surfaced",
+    "topIdentified": "Your 15 most-identified emotions",
     "vocabSessions": "{count} sessions",
     "milestoneEmotions": "You've identified {count} different emotions!",
     "milestoneModels": "You've explored {count} different models!",
@@ -186,6 +273,7 @@
     "valenceTitle": "This week's emotions",
     "valencePleasant": "{count} pleasant",
     "valenceUnpleasant": "{count} unpleasant",
+    "valenceTrend": "4-week trend (oldest → newest)",
     "valenceNote": "Neither is right or wrong.",
     "exportText": "Share with therapist",
     "copied": "Copied!",
@@ -193,6 +281,12 @@
     "suggestSomatic": "Explore your body's signals with the Body Map",
     "suggestDimensional": "Map your feelings on a 2D space",
     "suggestWheel": "Name emotions more precisely with the Wheel",
-    "suggestPlutchik": "Discover how emotions connect and combine"
+    "suggestPlutchik": "Discover how emotions connect and combine",
+    "progressionNudge": "Ready to try something new?",
+    "dismissNudge": "Dismiss suggestion",
+    "progressionSomatic": "You've been exploring body sensations. The Emotion Wheel can help you put names to what you've noticed.",
+    "progressionWheel": "You've been naming emotions. The Body Map can show you where they live in your body.",
+    "progressionPlutchik": "You've been exploring combinations. The Emotional Space can show you the bigger picture.",
+    "progressionDimensional": "You've been mapping your emotional space. The Body Map connects these feelings to physical sensations."
   }
 }

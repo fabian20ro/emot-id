@@ -1,11 +1,17 @@
 import { describe, it, expect } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
+import { renderHook, act, waitFor } from '@testing-library/react'
 import { useEmotionModel } from '../hooks/useEmotionModel'
 
 describe('useEmotionModel', () => {
   it('starts with empty selections', () => {
     const { result } = renderHook(() => useEmotionModel('plutchik'))
     expect(result.current.selections).toEqual([])
+  })
+
+  it('marks model as ready after lazy-loading somatic model', async () => {
+    const { result } = renderHook(() => useEmotionModel('somatic'))
+    await waitFor(() => expect(result.current.modelReady).toBe(true))
+    expect(result.current.visibleEmotions.length).toBeGreaterThan(0)
   })
 
   it('returns visible emotions matching initial state', () => {

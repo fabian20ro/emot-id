@@ -23,6 +23,12 @@ describe('getOppositeAction', () => {
     expect(result).toBeNull()
   })
 
+  it('uses the clarified guilt guidance (no repeat-harm wording)', () => {
+    const result = getOppositeAction(['guilt'], 'en')
+    expect(result).toContain('fits the facts')
+    expect(result).not.toContain('do what triggered the guilt again')
+  })
+
   it('matches first applicable pattern', () => {
     const result = getOppositeAction(['shame', 'anger'], 'en')
     expect(result).toContain('approach')

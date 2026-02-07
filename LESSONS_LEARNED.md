@@ -106,3 +106,36 @@ Purpose: capture execution mistakes, friction points, and durable fixes so futur
   - Always run before/after checks at `393x742` for mobile layout fixes.
   - Capture both visual artifacts (screenshots) and numeric evidence (e.g., element bounds).
   - Keep temp audit scripts repo-local and delete them once evidence is recorded.
+
+### [2026-02-07] Tests tied to raw localStorage became brittle after storage facade changes
+
+- Context: Adding regression tests for simple-language mode.
+- What went wrong: Tests wrote directly to `window.localStorage` and expected provider state to reflect it, but app logic reads through `storage.get()` and tests became flaky/non-deterministic.
+- Impact: False-negative test failures for simple-language prompts and descriptions.
+- Corrective action: Mock/spy `storage.get()` in behavior-specific tests instead of assuming raw storage wiring.
+- Prevention checklist:
+  - For preference-driven behavior, assert through the storage facade API used by the app.
+  - Reserve direct `localStorage` assertions for storage-layer tests only.
+  - Restore storage mocks in `beforeEach`/`afterEach` to avoid cross-test leakage.
+
+### [2026-02-07] Duplicate text assertions in UI tests caused avoidable failures
+
+- Context: SessionHistory regression test for top-identified emotions.
+- What went wrong: Used single-element query (`getByText`) for emotion labels that also appear in session rows.
+- Impact: Test failed due to multiple matches, not product behavior.
+- Corrective action: Use scoped queries or `getAllByText` when duplicate labels are expected by design.
+- Prevention checklist:
+  - Audit whether target text is unique before using single-match queries.
+  - Prefer section-scoped assertions for repeated content.
+  - Use count-based assertions for duplicate-friendly UIs.
+
+### [2026-02-07] Build validation should separate TypeScript correctness from PWA plugin instability
+
+- Context: Final validation after large feature/test additions.
+- What went wrong: `npm run build` failed at service-worker generation (`workbox`/`terser` early exit) despite successful `tsc` and passing tests.
+- Impact: Build status appeared ambiguous without distinguishing code regressions from known tooling instability.
+- Corrective action: Run `npx tsc -b` and `npm test` as primary correctness gates, then report `npm run build` PWA failure as a known external blocker.
+- Prevention checklist:
+  - Always run `tsc` separately before diagnosing build plugin failures.
+  - Document persistent build-tool errors with exact stage and stack marker.
+  - Avoid conflating plugin/runtime tooling failures with application logic regressions.

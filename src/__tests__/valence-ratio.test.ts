@@ -20,6 +20,7 @@ describe('computeValenceRatio', () => {
     expect(result.total).toBe(0)
     expect(result.pleasant).toBe(0)
     expect(result.unpleasant).toBe(0)
+    expect(result.weeks).toHaveLength(4)
   })
 
   it('categorizes by valence', () => {
@@ -37,6 +38,7 @@ describe('computeValenceRatio', () => {
     expect(result.unpleasant).toBe(1)
     expect(result.neutral).toBe(1)
     expect(result.total).toBe(3)
+    expect(result.weeks[result.weeks.length - 1].total).toBe(3)
   })
 
   it('excludes sessions older than 7 days', () => {
@@ -51,5 +53,7 @@ describe('computeValenceRatio', () => {
     ]
     const result = computeValenceRatio(sessions)
     expect(result.total).toBe(0)
+    const historicalTotal = result.weeks.reduce((sum, week) => sum + week.total, 0)
+    expect(historicalTotal).toBe(1)
   })
 })

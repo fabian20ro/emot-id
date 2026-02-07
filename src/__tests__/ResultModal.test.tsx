@@ -1,8 +1,9 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ResultModal } from '../components/ResultModal'
 import { LanguageProvider } from '../context/LanguageContext'
+import { storage } from '../data/storage'
 import type { BaseEmotion, AnalysisResult } from '../models/types'
 
 function renderModal(props: Partial<React.ComponentProps<typeof ResultModal>> = {}) {
@@ -35,6 +36,11 @@ const makeResult = (id: string, opts: Partial<AnalysisResult> = {}): AnalysisRes
 })
 
 describe('ResultModal', () => {
+  beforeEach(() => {
+    vi.restoreAllMocks()
+    window.localStorage.clear()
+  })
+
   it('does not render when closed', () => {
     renderModal({ isOpen: false })
     expect(screen.queryByText('Analysis result')).not.toBeInTheDocument()
@@ -124,11 +130,46 @@ describe('ResultModal', () => {
     expect(screen.getByText('Does this resonate with your experience?')).toBeInTheDocument()
   })
 
+  it('uses simplified reflection prompt when simple language mode is enabled', () => {
+    vi.spyOn(storage, 'get').mockImplementation((key) => {
+      if (key === 'simpleLanguage') return 'true'
+      return null
+    })
+    const results = [makeResult('joy')]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+    expect(screen.getByText('Does this fit how you feel?')).toBeInTheDocument()
+  })
+
   it('shows crisis resources for high-distress results', () => {
     const results = [makeResult('despair'), makeResult('rage')]
     renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('rage')] })
     expect(screen.getByText(/difficult time/)).toBeInTheDocument()
     expect(screen.getByText(/116 123/)).toBeInTheDocument()
+  })
+
+  it('suppresses AI link entirely during crisis', () => {
+    const results = [makeResult('despair'), makeResult('rage')]
+    renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('rage')] })
+    expect(screen.queryByText(/Learn more about these emotions/)).not.toBeInTheDocument()
+  })
+
+  it('requires acknowledgement before tier4 results are shown', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('despair'), makeResult('worthless'), makeResult('empty')]
+    renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('worthless'), makeEmotion('empty')] })
+
+    expect(screen.getByText(/thinking about ending your life/i)).toBeInTheDocument()
+    expect(screen.queryByText(/Does this resonate with your experience/)).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /show my results/i }))
+    expect(screen.queryByRole('button', { name: /show my results/i })).not.toBeInTheDocument()
+    expect(screen.getByText(/Does this resonate with your experience/)).toBeInTheDocument()
+  })
+
+  it('shows temporal escalation note when escalation flag is true', () => {
+    const results = [makeResult('despair')]
+    renderModal({ results, selections: [makeEmotion('despair')], escalateCrisis: true })
+    expect(screen.getByText(/pattern showing up more often recently/i)).toBeInTheDocument()
   })
 
   it('does not show crisis resources for non-distress results', () => {
@@ -160,6 +201,7 @@ describe('ResultModal', () => {
     const dialog = document.querySelector('[role="dialog"]')
     expect(dialog).toBeInTheDocument()
     expect(dialog).toHaveAttribute('aria-modal', 'true')
-    expect(dialog).toHaveAttribute('aria-label', 'Analysis result')
+    expect(dialog).toHaveAttribute('aria-labelledby', 'result-modal-title')
+    expect(document.getElementById('result-modal-title')).toHaveTextContent('Analysis result')
   })
 })

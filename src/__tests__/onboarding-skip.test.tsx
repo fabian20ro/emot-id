@@ -14,13 +14,13 @@ function renderOnboarding() {
   return { ...result, onComplete }
 }
 
-describe('Onboarding skip button', () => {
-  it('shows skip button on first screen', () => {
+describe('Onboarding skip button removal', () => {
+  it('does not show skip button on first screen', () => {
     renderOnboarding()
-    expect(screen.getByText('Skip')).toBeInTheDocument()
+    expect(screen.queryByText('Skip')).not.toBeInTheDocument()
   })
 
-  it('hides skip button on last screen (disclaimer)', async () => {
+  it('does not show skip button on last screen (disclaimer)', async () => {
     renderOnboarding()
     const user = userEvent.setup()
 
@@ -30,7 +30,7 @@ describe('Onboarding skip button', () => {
     await user.click(screen.getByText('Next'))
     await user.click(screen.getByText('Next'))
 
-    // On last screen, skip should not be present
+    // On last screen, skip remains absent
     expect(screen.queryByText('Skip')).not.toBeInTheDocument()
     // But "Get started" should be there
     expect(screen.getByText('Get started')).toBeInTheDocument()
