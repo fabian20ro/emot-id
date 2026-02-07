@@ -219,8 +219,24 @@
     "title": "Emotional granularity",
     "prompt": "Which of these best describes what you feel?",
     "notSure": "I'm not sure — they all fit",
-    "practice": "Practice mode",
-    "next": "Next",
+    "practice": "Practice granularity",
+    "progress": "Step {current}/{total}",
+    "continue": "Continue",
+    "feedbackSelected": "You chose {emotion}. If that feels closest to your experience, your choice is valid.",
+    "feedbackNotSure": "It's okay not to be sure. Emotional nuance develops with practice.",
+    "distinctions": {
+      "intensity": "These options can differ mostly by intensity, from mild to strong.",
+      "duration": "These options can differ by duration and by how deeply the feeling settles in.",
+      "focus": "These options can differ by focus: inner values, social image, or a wish to repair.",
+      "time": "These options can differ by time orientation: present interest, active exploration, or future readiness."
+    },
+    "completedTitle": "Practice session completed",
+    "completedBody": "You just practiced noticing subtle differences between similar emotions.",
+    "completedEncouragement": "This skill grows through repetition, not perfection.",
+    "summaryChosen": "{count} clear choices",
+    "summaryNotSure": "{count} unsure choices",
+    "restart": "Restart",
+    "errorBody": "Practice sets are unavailable right now. Please try again later.",
     "close": "Close"
   },
   "chainAnalysis": {

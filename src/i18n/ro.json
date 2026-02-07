@@ -219,8 +219,24 @@
     "title": "Granularitate emotionala",
     "prompt": "Care dintre acestea descrie cel mai bine ce simti?",
     "notSure": "Nu sunt sigur — toate se potrivesc",
-    "practice": "Mod de practica",
-    "next": "Inainte",
+    "practice": "Exerseaza granularitatea",
+    "progress": "Pasul {current}/{total}",
+    "continue": "Continua",
+    "feedbackSelected": "Ai ales {emotion}. Daca asta este cel mai aproape de trairea ta, alegerea este valida.",
+    "feedbackNotSure": "Este in regula sa nu fii sigur. Nuanta emotionala se construieste prin practica.",
+    "distinctions": {
+      "intensity": "Aceste optiuni pot diferi mai ales prin intensitate, de la usor la puternic.",
+      "duration": "Aceste optiuni pot diferi prin durata si prin cat de adanc se aseaza starea.",
+      "focus": "Aceste optiuni pot diferi prin focus: valori personale, imagine sociala sau dorinta de reparare.",
+      "time": "Aceste optiuni pot diferi prin orientarea in timp: interes prezent, explorare activa sau pregatire pentru ce urmeaza."
+    },
+    "completedTitle": "Sesiune de practica finalizata",
+    "completedBody": "Tocmai ai exersat observarea diferentelor fine dintre emotii similare.",
+    "completedEncouragement": "Aceasta abilitate creste prin repetitie, nu prin perfectiune.",
+    "summaryChosen": "{count} alegeri clare",
+    "summaryNotSure": "{count} alegeri nesigure",
+    "restart": "Reia",
+    "errorBody": "Seturile de practica nu sunt disponibile acum. Incearca din nou mai tarziu.",
     "close": "Inchide"
   },
   "chainAnalysis": {
