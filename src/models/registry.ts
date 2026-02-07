@@ -117,5 +117,11 @@ export function getAvailableModels(): Array<{
   shortName?: { ro: string; en: string }
   description: { ro: string; en: string }
 }> {
-  return Object.values(MODEL_META)
+  const MODEL_DISPLAY_ORDER: ModelId[] = [
+    MODEL_IDS.DIMENSIONAL,
+    MODEL_IDS.SOMATIC,
+    MODEL_IDS.WHEEL,
+    MODEL_IDS.PLUTCHIK,
+  ]
+  return MODEL_DISPLAY_ORDER.map((id) => MODEL_META[id])
 }

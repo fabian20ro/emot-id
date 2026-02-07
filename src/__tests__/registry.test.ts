@@ -13,6 +13,16 @@ describe('model registry', () => {
     ])
   })
 
+  it('returns model metadata in UI display order', () => {
+    const models = getAvailableModels()
+    expect(models.map((model) => model.id)).toEqual([
+      MODEL_IDS.DIMENSIONAL,
+      MODEL_IDS.SOMATIC,
+      MODEL_IDS.WHEEL,
+      MODEL_IDS.PLUTCHIK,
+    ])
+  })
+
   it('loads somatic model on demand', async () => {
     const loaded = await loadModel(MODEL_IDS.SOMATIC)
     expect(loaded).toBeDefined()

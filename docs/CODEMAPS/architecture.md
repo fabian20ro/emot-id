@@ -64,7 +64,7 @@ No external state library. State lives in:
 **Preferences** — `src/data/storage.ts` (localStorage facade):
 - Consolidated wrapper for all preference keys (`emot-id-model`, `emot-id-language`, `emot-id-save-sessions`, etc.)
 - `emot-id-save-sessions` (default: true) -- controls whether sessions are persisted to IndexedDB
-- `emot-id-dimensional-axis-hint-seen` hides DimensionalField axis labels on mobile after first interaction
+- `emot-id-dimensional-axis-hint-seen` is retained for backward compatibility but no longer controls axis visibility
 - `emot-id-daily-reminder-enabled` + `emot-id-daily-reminder-last-sent-at` control reminder opt-in and 24h cadence
 - `emot-id-simple-language` controls simplified copy mode
 - Graceful fallback when localStorage unavailable (private browsing)

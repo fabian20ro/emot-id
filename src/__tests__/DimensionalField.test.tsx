@@ -71,6 +71,29 @@ describe('DimensionalField', () => {
     expect(screen.getByText('Calm')).toBeInTheDocument()
   })
 
+  it('keeps axis labels visible after interacting with the field', () => {
+    renderField()
+    const svg = document.querySelector('svg') as SVGSVGElement
+
+    vi.spyOn(svg, 'getBoundingClientRect').mockReturnValue({
+      x: 0,
+      y: 0,
+      width: 300,
+      height: 300,
+      top: 0,
+      left: 0,
+      right: 300,
+      bottom: 300,
+      toJSON: () => ({}),
+    } as DOMRect)
+
+    fireEvent.click(svg, { clientX: 120, clientY: 200 })
+    expect(screen.getByText('Pleasant')).toBeInTheDocument()
+    expect(screen.getByText('Unpleasant')).toBeInTheDocument()
+    expect(screen.getByText('Intense')).toBeInTheDocument()
+    expect(screen.getByText('Calm')).toBeInTheDocument()
+  })
+
   it('renders emotion labels as text', () => {
     renderField()
     expect(screen.getByText('happy')).toBeInTheDocument()

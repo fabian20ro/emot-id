@@ -1,8 +1,6 @@
 import { memo, useState, useCallback, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
-import { storage } from '../data/storage'
-import { MOBILE_BREAKPOINT } from './bubble-layout'
 import { findNearest } from '../models/dimensional'
 import type { VisualizationProps } from '../models/types'
 import type { DimensionalEmotion } from '../models/dimensional/types'
@@ -65,19 +63,6 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
   const svgRef = useRef<SVGSVGElement>(null)
   const [crosshair, setCrosshair] = useState<{ x: number; y: number } | null>(null)
   const [suggestions, setSuggestions] = useState<DimensionalEmotion[]>([])
-  const [showAxisLabels, setShowAxisLabels] = useState(() => {
-    if (typeof window === 'undefined') return true
-    const isMobile = window.innerWidth < MOBILE_BREAKPOINT
-    const seen = storage.get('dimensionalAxisHintSeen') === 'true'
-    return !(isMobile && seen)
-  })
-
-  const markAxisHintAsSeen = useCallback(() => {
-    if (typeof window === 'undefined') return
-    if (window.innerWidth >= MOBILE_BREAKPOINT) return
-    storage.set('dimensionalAxisHintSeen', 'true')
-    setShowAxisLabels(false)
-  }, [])
 
   const handleFieldClick = useCallback(
     (e: React.MouseEvent<SVGSVGElement>) => {
@@ -93,11 +78,10 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
       const valence = Math.max(-1, Math.min(1, ((px - PADDING) / INNER) * 2 - 1))
       const arousal = Math.max(-1, Math.min(1, -(((py - PADDING) / INNER) * 2 - 1)))
 
-      markAxisHintAsSeen()
       setCrosshair({ x: px, y: py })
       setSuggestions(findNearest(valence, arousal, emotionMap, 3))
     },
-    [emotionMap, markAxisHintAsSeen]
+    [emotionMap]
   )
 
   const handleSuggestionClick = useCallback(
@@ -107,11 +91,10 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
       } else {
         onSelect(emotion)
       }
-      markAxisHintAsSeen()
       setCrosshair(null)
       setSuggestions([])
     },
-    [onSelect, onDeselect, selectedIds, markAxisHintAsSeen]
+    [onSelect, onDeselect, selectedIds]
   )
 
   const handleEmotionDotClick = useCallback(
@@ -122,9 +105,8 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
       } else {
         onSelect(emotion)
       }
-      markAxisHintAsSeen()
     },
-    [onSelect, onDeselect, selectedIds, markAxisHintAsSeen]
+    [onSelect, onDeselect, selectedIds]
   )
 
   return (
@@ -164,22 +146,18 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
           />
 
           {/* Axis labels */}
-          {showAxisLabels && (
-            <>
-              <text x={PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="start">
-                {language === 'ro' ? 'Neplacut' : 'Unpleasant'}
-              </text>
-              <text x={FIELD_SIZE - PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="end">
-                {language === 'ro' ? 'Placut' : 'Pleasant'}
-              </text>
-              <text x={FIELD_SIZE / 2} y={PADDING - 8} fill="#9CA3AF" fontSize={13} textAnchor="middle">
-                {language === 'ro' ? 'Intens' : 'Intense'}
-              </text>
-              <text x={FIELD_SIZE / 2} y={FIELD_SIZE - PADDING + 18} fill="#9CA3AF" fontSize={13} textAnchor="middle">
-                {language === 'ro' ? 'Calm' : 'Calm'}
-              </text>
-            </>
-          )}
+          <text x={PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="start">
+            {language === 'ro' ? 'Neplacut' : 'Unpleasant'}
+          </text>
+          <text x={FIELD_SIZE - PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="end">
+            {language === 'ro' ? 'Placut' : 'Pleasant'}
+          </text>
+          <text x={FIELD_SIZE / 2} y={PADDING - 8} fill="#9CA3AF" fontSize={13} textAnchor="middle">
+            {language === 'ro' ? 'Intens' : 'Intense'}
+          </text>
+          <text x={FIELD_SIZE / 2} y={FIELD_SIZE - PADDING + 18} fill="#9CA3AF" fontSize={13} textAnchor="middle">
+            {language === 'ro' ? 'Calm' : 'Calm'}
+          </text>
 
           {/* Reference emotion dots and labels */}
           {dimEmotions.map((emotion) => {

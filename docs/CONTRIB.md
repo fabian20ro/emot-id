@@ -56,7 +56,7 @@ Key directories:
 |-----------|---------|
 | `BubbleField` | Bubble visualization for Plutchik/Wheel (clamped to viewport bounds) |
 | `BodyMap` | Somatic body outline with selectable regions |
-| `DimensionalField` | 2D valence/arousal field with label collision avoidance and mobile-first axis hint hiding |
+| `DimensionalField` | 2D valence/arousal field with label collision avoidance and persistent axis labels |
 | `GuidedScan` | Guided body scan flow (centering breath, 5 body groups, numbness/flooding detection) |
 | `ModelBar` | Tab bar for switching models; renders inline in Header, shows `shortName` on <480px |
 | `ResultModal` | Analysis results with reflection prompts |

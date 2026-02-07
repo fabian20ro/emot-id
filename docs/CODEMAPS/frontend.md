@@ -143,7 +143,7 @@ Used by: Dimensional model.
 - Quadrant dividers + axis labels (bilingual via `section('dimensional')`)
 - Emotion dots: r=11 unselected, r=14 selected (with white stroke)
 - Labels: dynamic Y offset (16px unselected, 22px selected to clear dot radius) with collision avoidance
-- On mobile, axis labels hide after first interaction and persist via localStorage
+- Axis labels remain visible after interaction for persistent orientation cues
 - Label collision avoidance: greedy sort-and-bump algorithm (sort by y then x, bump by `MIN_GAP=14` when labels overlap within 40px horizontal proximity, clamp to viewBox bounds)
 - Text halo via `paintOrder="stroke"` for readability in dense areas
 - Click-to-place crosshair: converts pixel to valence/arousal, finds 3 nearest emotions
