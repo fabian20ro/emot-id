@@ -110,6 +110,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
   }, [])
 
   const activeRegion = activeRegionId ? regionMap.get(activeRegionId) : null
+  const BODY_VERTICAL_SHIFT = -10
 
   return (
     <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-1 sm:p-4">
@@ -157,97 +158,105 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
             </marker>
           </defs>
 
-          {/* Back-facing regions first, then front-facing */}
-          {[...bodyRegionPaths].sort((a, b) => {
-            const isBackA = a.id === 'upper-back' || a.id === 'lower-back'
-            const isBackB = b.id === 'upper-back' || b.id === 'lower-back'
-            return isBackA === isBackB ? 0 : isBackA ? -1 : 1
-          }).map((path) => {
-            const sel = selectionMap.get(path.id)
-            return (
-              <BodyRegion
-                key={path.id}
-                id={path.id}
-                d={path.d}
-                hitD={path.hitD}
-                label={regionMap.get(path.id)?.label[language]}
-                isSelected={!!sel}
-                isHighlighted={highlightedRegionId === path.id || activeRegionId === path.id}
-                sensation={sel?.selectedSensation}
-                intensity={sel?.selectedIntensity}
-                onClick={handleRegionClick}
-              />
-            )
-          })}
+          <g transform={`translate(0 ${BODY_VERTICAL_SHIFT})`}>
+            {/* Back-facing regions first, then front-facing */}
+            {[...bodyRegionPaths].sort((a, b) => {
+              const isBackA = a.id === 'upper-back' || a.id === 'lower-back'
+              const isBackB = b.id === 'upper-back' || b.id === 'lower-back'
+              return isBackA === isBackB ? 0 : isBackA ? -1 : 1
+            }).map((path) => {
+              const sel = selectionMap.get(path.id)
+              return (
+                <BodyRegion
+                  key={path.id}
+                  id={path.id}
+                  d={path.d}
+                  hitD={path.hitD}
+                  label={regionMap.get(path.id)?.label[language]}
+                  isSelected={!!sel}
+                  isHighlighted={highlightedRegionId === path.id || activeRegionId === path.id}
+                  sensation={sel?.selectedSensation}
+                  intensity={sel?.selectedIntensity}
+                  onClick={handleRegionClick}
+                />
+              )
+            })}
 
-          {/* Label bubbles with arrows */}
-          {bodyRegionPaths.map((path) => {
-            const region = regionMap.get(path.id)
-            if (!region) return null
-            const label = region.label[language]
-            const sel = selectionMap.get(path.id)
-            const isSelected = !!sel
-            const { labelAnchor, labelSide, anchor } = path
+            {/* Label bubbles with arrows */}
+            {bodyRegionPaths.map((path) => {
+              const region = regionMap.get(path.id)
+              if (!region) return null
+              const label = region.label[language]
+              const sel = selectionMap.get(path.id)
+              const isSelected = !!sel
+              const { labelAnchor, labelSide, anchor } = path
 
-            // Arrow endpoints: from label edge toward body anchor
-            const labelW = 62
-            const labelH = 20
-            const dir = labelSide === 'left' ? 1 : -1
-            const arrowStartX = labelAnchor.x + dir * (labelW / 2 - 10)
-            const arrowEndX = labelSide === 'left'
-              ? Math.min(anchor.x, arrowStartX + 80)
-              : Math.max(anchor.x, arrowStartX - 80)
+              // Arrow endpoints: from label edge toward body anchor.
+              // Width scales with localized text length to avoid overflow on compact phones.
+              const labelChars = label.length
+              const labelW = labelChars > 14 ? 84 : labelChars > 10 ? 74 : 62
+              const labelH = 22
+              const dir = labelSide === 'left' ? 1 : -1
+              const arrowStartX = labelAnchor.x + dir * (labelW / 2 - 10)
+              const arrowEndX = labelSide === 'left'
+                ? Math.min(anchor.x, arrowStartX + 80)
+                : Math.max(anchor.x, arrowStartX - 80)
 
-            return (
-              <g
-                key={`label-${path.id}`}
-                style={{ cursor: 'pointer' }}
-                onClick={() => handleRegionClick(path.id)}
-              >
-                {/* Invisible touch expansion rectangle (44px CSS target) */}
-                <rect
-                  x={labelAnchor.x - labelW / 2 + dir * -10 - 4}
-                  y={labelAnchor.y - 17}
-                  width={labelW + 8}
-                  height={34}
-                  fill="transparent"
+              const shouldCompress = labelChars > 14
+
+              return (
+                <g
+                  key={`label-${path.id}`}
                   style={{ cursor: 'pointer' }}
-                />
-                {/* Connector line */}
-                <line
-                  x1={arrowStartX}
-                  y1={labelAnchor.y}
-                  x2={arrowEndX}
-                  y2={anchor.y}
-                  stroke={isSelected ? 'rgba(129,140,248,0.6)' : 'rgba(156,163,175,0.3)'}
-                  strokeWidth={1.5}
-                  markerEnd="url(#arrow-end)"
-                />
-                {/* Label background */}
-                <rect
-                  x={labelAnchor.x - labelW / 2 + dir * -10}
-                  y={labelAnchor.y - labelH / 2}
-                  width={labelW}
-                  height={labelH}
-                  rx={labelH / 2}
-                  fill={isSelected ? 'rgba(129,140,248,0.25)' : 'rgba(55,65,81,0.6)'}
-                  stroke={isSelected ? 'rgba(129,140,248,0.5)' : 'rgba(107,114,128,0.3)'}
-                  strokeWidth={0.5}
-                />
-                {/* Label text */}
-                <text
-                  x={labelAnchor.x + dir * -10}
-                  y={labelAnchor.y + 3}
-                  fill={isSelected ? '#c7d2fe' : '#9ca3af'}
-                  fontSize={9}
-                  fontWeight={isSelected ? 600 : 400}
-                  textAnchor="middle"
+                  onClick={() => handleRegionClick(path.id)}
                 >
-                  {label}
-                </text>
-              </g>
-            )
-          })}
+                  {/* Invisible touch expansion rectangle (44px CSS target) */}
+                  <rect
+                    x={labelAnchor.x - labelW / 2 + dir * -10 - 4}
+                    y={labelAnchor.y - 22}
+                    width={labelW + 8}
+                    height={44}
+                    fill="transparent"
+                    style={{ cursor: 'pointer' }}
+                  />
+                  {/* Connector line */}
+                  <line
+                    x1={arrowStartX}
+                    y1={labelAnchor.y}
+                    x2={arrowEndX}
+                    y2={anchor.y}
+                    stroke={isSelected ? 'rgba(129,140,248,0.6)' : 'rgba(156,163,175,0.3)'}
+                    strokeWidth={1.5}
+                    markerEnd="url(#arrow-end)"
+                  />
+                  {/* Label background */}
+                  <rect
+                    x={labelAnchor.x - labelW / 2 + dir * -10}
+                    y={labelAnchor.y - labelH / 2}
+                    width={labelW}
+                    height={labelH}
+                    rx={labelH / 2}
+                    fill={isSelected ? 'rgba(129,140,248,0.25)' : 'rgba(55,65,81,0.6)'}
+                    stroke={isSelected ? 'rgba(129,140,248,0.5)' : 'rgba(107,114,128,0.3)'}
+                    strokeWidth={0.5}
+                  />
+                  {/* Label text */}
+                  <text
+                    x={labelAnchor.x + dir * -10}
+                    y={labelAnchor.y + 3}
+                    fill={isSelected ? '#c7d2fe' : '#9ca3af'}
+                    fontSize={9}
+                    fontWeight={isSelected ? 600 : 400}
+                    textAnchor="middle"
+                    textLength={shouldCompress ? labelW - 12 : undefined}
+                    lengthAdjust={shouldCompress ? 'spacingAndGlyphs' : undefined}
+                  >
+                    {label}
+                  </text>
+                </g>
+              )
+            })}
+          </g>
         </svg>
 
         {/* Guided scan overlay */}

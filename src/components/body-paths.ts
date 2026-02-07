@@ -37,9 +37,10 @@ export const bodyRegionPaths: BodyRegionPath[] = [
   },
   {
     id: 'throat',
-    d: 'M94 70 C94 68 96 66 100 66 C104 66 106 68 106 70 L106 96 C106 102 104 106 100 106 C96 106 94 102 94 96 Z',
-    hitD: 'M83 66 C83 62 89 58 100 58 C111 58 117 62 117 66 L117 100 C117 108 111 112 100 112 C89 112 83 108 83 100 Z',
-    anchor: { x: 106, y: 86 },
+    // Slightly shorter neck to recover vertical space on compact mobile viewports.
+    d: 'M94 70 C94 68 96 66 100 66 C104 66 106 68 106 70 L106 90 C106 96 104 100 100 100 C96 100 94 96 94 90 Z',
+    hitD: 'M83 66 C83 62 89 58 100 58 C111 58 117 62 117 66 L117 94 C117 102 111 106 100 106 C89 106 83 102 83 94 Z',
+    anchor: { x: 106, y: 82 },
     labelAnchor: { x: 172, y: 86 },
     labelSide: 'right',
   },

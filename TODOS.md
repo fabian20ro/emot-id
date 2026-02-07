@@ -5,101 +5,97 @@ For rationale, conflict resolutions, and detailed recommendations, see **ANALYSI
 
 ---
 
-## Phase 0 — Live UI/UX Critical Issues (Browser-Verified)
+## Phase 0 — Pixel 9a Layout Blockers (393×742)
 
-Found via live app audit on mobile viewport (393×742). These are immediate UX/accessibility defects that should be fixed first.
+Ordered from your screenshots + live browser verification, focused on the exact mobile viewport budget.
 
-- [ ] **0.1** Fix sub-44px onboarding controls (primary CTA and skip)
-  Evidence: onboarding Next renders at ~78×36 and Skip at ~24×16 on 393×742.
-  `Onboarding.tsx` — enforce minimum touch target + stronger visual affordance for skip action.
+- [x] **0.1** Spread Wheel/Plutchik emotion chips across the full canvas instead of top clustering
+  Fix applied in `BubbleField.tsx` by making the visualization wrapper consume full available height on compact mobile.
+  _Done_
+
+- [x] **0.2** Keep Somatic feet (`Tălpi`) visible after selecting regions
+  Fix applied in `BodyMap.tsx` + `body-paths.ts` by recovering vertical space (upward map shift + shorter throat geometry).
+  _Done_
+
+- [x] **0.3** Prevent body label text from exiting the pill and enlarge tap area
+  Fix applied in `BodyMap.tsx` via adaptive pill width, selective text compression for long labels, and 44px hit rectangles.
+  _Done_
+
+- [ ] **0.4** Fix onboarding mobile tap targets + visibility
+  Next/Skip still need stronger minimum target and skip contrast consistency in onboarding.
+  `Onboarding.tsx`
   _30 min_
 
-- [ ] **0.2** Fix sub-44px SessionHistory close and footer action controls
-  Evidence: close glyph and footer actions (Clear all data, Share with therapist, Export JSON) render with text-height hit areas (~16–18px), below mobile target standards.
-  `SessionHistory.tsx` — convert to padded button containers with explicit `min-h-[44px]` and accessible labels.
+- [ ] **0.5** Fix sub-44px SessionHistory close and footer actions
+  `SessionHistory.tsx` — close icon and footer actions currently text-height sized.
   _45 min_
 
-- [ ] **0.3** Fix sub-44px ResultModal close action
-  Evidence: result modal close (×) hit target is ~15×24.
-  `ResultModal.tsx` — replace with 44×44 icon button and proper focus/hover states.
+- [ ] **0.6** Fix sub-44px ResultModal close action
+  `ResultModal.tsx` — replace small `×` target with explicit 44×44 button.
   _20 min_
 
-- [ ] **0.4** Fix low-prominence critical action in onboarding
-  Evidence: Skip is visually de-emphasized to near-background contrast and too small, creating discoverability imbalance and accidental linear flow pressure.
-  `Onboarding.tsx` — maintain secondary styling but raise contrast and hit area; keep clear secondary CTA semantics.
-  _20 min_
-
-- [ ] **0.5** Improve dismissibility and semantics of `DontKnowModal`
-  Evidence: modal has no explicit close button; dismissal relies on backdrop/Escape only.
-  `DontKnowModal.tsx` — add visible close control (44×44), `aria-labelledby`, and consistent modal header pattern.
+- [ ] **0.7** Improve dismissibility + semantics of `DontKnowModal`
+  Add explicit close button and normalize dialog labeling (`aria-labelledby`).
+  `DontKnowModal.tsx`
   _45 min_
 
-## Phase 1 — UI/Layout Baseline Fixes
+- [ ] **0.8** Remove visualization jump when SelectionBar appears/disappears
+  Reserve space or keep collapsed placeholder so model canvases don’t reflow abruptly.
+  `SelectionBar.tsx`, `App.tsx`
+  _1.5 hours_
 
-Do this before later phases to stabilize interaction quality and layout consistency across the app.
+## Phase 1 — Safety-Critical (from ANALYSIS.md)
 
-- [ ] **1.1** Unify modal architecture with a shared shell
-  New `ModalShell` abstraction (portal + backdrop + focus trap + safe-area-aware max height + internal scroll handling), then migrate:
+Must ship before feature work; derived from `ANALYSIS.md` section 9.3 Phase 0.
+
+- [ ] **1.1** Add tier-4 suicide risk routing
+  `distress.ts`, `CrisisBanner.tsx`, `ResultModal.tsx`, i18n keys `crisis.tier4`, `crisis.tier4Acknowledge`
+  _2 hours_
+
+- [ ] **1.2** Remove onboarding skip button
+  `Onboarding.tsx` + remove `onboarding.skip` key
+  _15 min_
+
+- [ ] **1.3** Add temporal escalation disclosure
+  `CrisisBanner.tsx`, `ResultModal.tsx`, i18n key `crisis.temporalNote`
+  _1 hour_
+
+- [ ] **1.4** Suppress AI link entirely during crisis
+  `ResultModal.tsx`
+  _15 min_
+
+## Phase 2 — UI/Layout Baseline Fixes
+
+System-level cleanup after Pixel 9a blockers so layout behavior is consistent across screens.
+
+- [ ] **2.1** Unify modal architecture with shared shell
   `ResultModal.tsx`, `DontKnowModal.tsx`, `SessionHistory.tsx`, `SensationPicker.tsx`
   _6 hours_
 
-- [ ] **1.2** Remove raw z-index usage and enforce tokenized layering
-  Replace raw z classes with CSS variables from `index.css`:
-  `DontKnowModal.tsx` (`z-50`), `App.tsx` hint overlay (`z-10`), `ModelBar.tsx` indicator (`z-10`)
+- [ ] **2.2** Remove raw z-index usage and enforce tokenized layering
+  `DontKnowModal.tsx` (`z-50`), `App.tsx` hint overlay, `ModelBar.tsx` indicator
   _1 hour_
 
-- [ ] **1.3** Complete 44px touch-target audit for all actionable controls
-  Add `min-h-[44px]`/`min-w-[44px]` where missing:
-  `Onboarding.tsx` (Back/Next/Skip), `ResultModal.tsx` (close + follow-up actions), `SessionHistory.tsx` (close + footer actions), `GuidedScan.tsx` (skip/continue controls), `VisualizationErrorBoundary.tsx`, `UndoToast.tsx`, `DontKnowModal.tsx`, `MicroIntervention.tsx`
+- [ ] **2.3** Complete 44px touch-target audit for remaining actionable controls
+  `Onboarding.tsx`, `ResultModal.tsx`, `SessionHistory.tsx`, `GuidedScan.tsx`, `VisualizationErrorBoundary.tsx`, `UndoToast.tsx`, `DontKnowModal.tsx`, `MicroIntervention.tsx`
   _4 hours_
 
-- [ ] **1.4** Improve modal accessibility semantics and explicit close affordances
-  Add visible close affordance + labels where missing, and normalize dialog labeling (`aria-labelledby`):
+- [ ] **2.4** Improve modal accessibility semantics and explicit close affordances
   `DontKnowModal.tsx`, `SessionHistory.tsx`, `ResultModal.tsx`
   _2 hours_
 
-- [ ] **1.5** Make overlays and toasts safe-area aware on small devices
-  Apply bottom inset/padding patterns to avoid clipped actions on notched phones:
+- [ ] **2.5** Make overlays and toasts safe-area aware on small devices
   `ResultModal.tsx`, `SessionHistory.tsx`, `SensationPicker.tsx`, `UndoToast.tsx`, `Onboarding.tsx`
   _2 hours_
 
-- [ ] **1.6** Prevent small-screen overflow in text-heavy dialogs
-  Add constrained-height + scroll behavior so long i18n strings don't push actions off-screen:
-  `Onboarding.tsx`, `DontKnowModal.tsx`, `GuidedScan.tsx` (pause/complete cards)
+- [ ] **2.6** Prevent small-screen overflow in text-heavy dialogs
+  `Onboarding.tsx`, `DontKnowModal.tsx`, `GuidedScan.tsx`
   _2 hours_
 
-- [ ] **1.7** Remove layout jump caused by SelectionBar mount/unmount
-  `SelectionBar.tsx`, `App.tsx` — keep reserved vertical space (collapsed placeholder/min-height) so visualization doesn't reflow abruptly when first selection appears or is cleared
-  _1.5 hours_
-
-- [ ] **1.8** Improve SessionHistory UX labels (not raw IDs)
-  `SessionHistory.tsx` — show localized model names and localized body-region labels instead of raw `modelId` / `regionId` strings; add mapping helper from registry/somatic data
+- [ ] **2.7** Improve SessionHistory UX labels (not raw IDs)
+  Localized model names and body-region labels instead of raw IDs
+  `SessionHistory.tsx`
   _2 hours_
-
-## Phase 2 — Safety-Critical
-
-Must ship before any other work. Items ordered so each builds on the previous.
-
-- [ ] **2.1** Remove onboarding skip button
-  `Onboarding.tsx` — delete skip button (lines 104-112), remove `onboarding.skip` i18n key
-  _15 min_
-
-- [ ] **2.2** Suppress AI link entirely during crisis
-  `ResultModal.tsx` — remove the demoted AI link when `crisisTier !== 'none'` (lines 262-289)
-  _15 min_
-
-- [ ] **2.3** Add tier-4 suicide risk routing
-  `distress.ts` — add `SUICIDE_RISK_COMBOS` (triple-emotion sets), extend `getCrisisTier` to return `'tier4'`
-  `CrisisBanner.tsx` — new tier-4 variant: red banner, explicit language, acknowledgment gate before results
-  `ResultModal.tsx` — render tier-4 gate, suppress opposite action + micro-intervention + AI link
-  i18n: `crisis.tier4`, `crisis.tier4Acknowledge` (en + ro)
-  _2 hours_
-
-- [ ] **2.4** Add temporal escalation disclosure
-  `CrisisBanner.tsx` — when tier was escalated by temporal pattern, show disclosure note
-  `ResultModal.tsx` — pass `wasEscalated` boolean to CrisisBanner
-  i18n: `crisis.temporalNote` (en + ro)
-  _1 hour_
 
 ## Phase 3 — High-Value Features
 
