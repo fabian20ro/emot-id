@@ -1,8 +1,8 @@
 # Emot-ID: Multi-Perspective Psychological Analysis
 
 **Date:** 2026-02-07
-**Codebase version:** Post Phase K (mobile stabilization complete)
-**Target device:** Pixel 9a (412×915px, 9:17 aspect ratio)
+**Codebase version:** Post Pixel 9a layout hotfixes (Phase 0.1-0.3 completed)
+**Target device:** Pixel 9a (393×742 effective Chrome viewport; 412×915 physical)
 
 ---
 

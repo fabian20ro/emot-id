@@ -84,3 +84,25 @@ Purpose: capture execution mistakes, friction points, and durable fixes so futur
 - Prevention checklist:
   - For each doc claim, cite the concrete source file/function first.
   - Prefer “verify then write” over “write from memory”.
+
+### [2026-02-07] Priority planning failed when ANALYSIS.md was inferred instead of read
+
+- Context: Reordering work from `ANALYSIS.md` + `TODOS.md`.
+- What went wrong: Priority assumptions were made before re-reading the actual analysis document.
+- Impact: Rework and trust loss; priorities had to be corrected after user feedback.
+- Corrective action: Treat planning docs as source-of-truth artifacts and re-read them before reprioritizing.
+- Prevention checklist:
+  - Before task ordering, read `ANALYSIS.md` and `TODOS.md` in full (or targeted sections with line refs).
+  - Quote exact section IDs/phase numbers when mapping priorities.
+  - Do not reuse prior-memory summaries as authoritative input.
+
+### [2026-02-07] Mobile layout fixes need measurement-backed verification at target viewport
+
+- Context: Pixel 9a layout audit and fixes for bubble spread, body map visibility, and label overflow.
+- What went wrong: Visual claims were initially discussed without consistent metric capture.
+- Impact: Extra iterations to confirm whether issues were truly fixed.
+- Corrective action: Pair screenshot review with scripted viewport probes at `393x742`.
+- Prevention checklist:
+  - Always run before/after checks at `393x742` for mobile layout fixes.
+  - Capture both visual artifacts (screenshots) and numeric evidence (e.g., element bounds).
+  - Keep temp audit scripts repo-local and delete them once evidence is recorded.

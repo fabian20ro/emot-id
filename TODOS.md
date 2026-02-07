@@ -7,39 +7,27 @@ For rationale, conflict resolutions, and detailed recommendations, see **ANALYSI
 
 ## Phase 0 — Pixel 9a Layout Blockers (393×742)
 
-Ordered from your screenshots + live browser verification, focused on the exact mobile viewport budget.
+Remaining blockers from screenshots + live browser verification, focused on the exact mobile viewport budget.
 
-- [x] **0.1** Spread Wheel/Plutchik emotion chips across the full canvas instead of top clustering
-  Fix applied in `BubbleField.tsx` by making the visualization wrapper consume full available height on compact mobile.
-  _Done_
-
-- [x] **0.2** Keep Somatic feet (`Tălpi`) visible after selecting regions
-  Fix applied in `BodyMap.tsx` + `body-paths.ts` by recovering vertical space (upward map shift + shorter throat geometry).
-  _Done_
-
-- [x] **0.3** Prevent body label text from exiting the pill and enlarge tap area
-  Fix applied in `BodyMap.tsx` via adaptive pill width, selective text compression for long labels, and 44px hit rectangles.
-  _Done_
-
-- [ ] **0.4** Fix onboarding mobile tap targets + visibility
+- [ ] **0.1** Fix onboarding mobile tap targets + visibility
   Next/Skip still need stronger minimum target and skip contrast consistency in onboarding.
   `Onboarding.tsx`
   _30 min_
 
-- [ ] **0.5** Fix sub-44px SessionHistory close and footer actions
+- [ ] **0.2** Fix sub-44px SessionHistory close and footer actions
   `SessionHistory.tsx` — close icon and footer actions currently text-height sized.
   _45 min_
 
-- [ ] **0.6** Fix sub-44px ResultModal close action
+- [ ] **0.3** Fix sub-44px ResultModal close action
   `ResultModal.tsx` — replace small `×` target with explicit 44×44 button.
   _20 min_
 
-- [ ] **0.7** Improve dismissibility + semantics of `DontKnowModal`
+- [ ] **0.4** Improve dismissibility + semantics of `DontKnowModal`
   Add explicit close button and normalize dialog labeling (`aria-labelledby`).
   `DontKnowModal.tsx`
   _45 min_
 
-- [ ] **0.8** Remove visualization jump when SelectionBar appears/disappears
+- [ ] **0.5** Remove visualization jump when SelectionBar appears/disappears
   Reserve space or keep collapsed placeholder so model canvases don’t reflow abruptly.
   `SelectionBar.tsx`, `App.tsx`
   _1.5 hours_

@@ -1,6 +1,6 @@
 # Frontend Codemap
 
-**Last Updated:** 2026-02-06
+**Last Updated:** 2026-02-07
 **Framework:** React 19 (App Router-less SPA), Framer Motion 12, Tailwind CSS 4
 
 ## Component Tree
@@ -21,7 +21,7 @@ App (src/App.tsx)
  |    +-- Visualization**         # Resolved from registry per model ID
  |         +-- BubbleField        # For plutchik, wheel (evenly distributed on mobile)
  |         |    +-- Bubble[]      # Animated pill buttons with emotion color
- |         +-- BodyMap            # For somatic (reduced padding, expanded hit areas)
+ |         +-- BodyMap            # For somatic (compact-phone vertical shift, expanded hit areas)
  |         |    +-- BodyRegion[]  # SVG path elements (12 regions)
  |         |    +-- SensationPicker  # Bottom sheet: sensation -> intensity
  |         |    +-- GuidedScan    # Sequential body scan overlay
@@ -70,7 +70,7 @@ Used by: Plutchik, Wheel models.
 
 Used by: Somatic model.
 
-- SVG silhouette with 12 clickable `BodyRegion` paths (seated meditation pose)
+- SVG silhouette with 12 clickable `BodyRegion` paths (standing relaxed pose)
 - Two interaction modes:
   - **Free selection** -- tap region, pick sensation + intensity via `SensationPicker`
   - **Guided scan** -- sequential head-to-feet `GuidedScan` overlay
@@ -78,6 +78,9 @@ Used by: Somatic model.
 - Routes deselect through `onDeselect(enrichedSelection)` using selection map lookup
 - Region rendering order: back-facing first (upper-back, lower-back), then front-facing
 - Back regions widened ~15px beyond front regions for visible/clickable slivers
+- Compact-phone fit: body content shifted upward (`BODY_VERTICAL_SHIFT = -10`) so lower regions remain visible when selection bar + bottom action are present
+- Label pills use adaptive width based on localized text length and apply compression for long labels to prevent text overflow
+- Label tap affordance uses invisible 44px-high hit rectangles
 - `min-h-0 overflow-hidden` on inner container prevents SVG from expanding beyond flex parent
 
 ### BodyRegion (`src/components/BodyRegion.tsx`)
