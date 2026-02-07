@@ -66,10 +66,16 @@ describe('BodyMap', () => {
     expect(paths.length).toBe(12)
   })
 
-  it('SVG does not have max-h constraint', () => {
+  it('uses height-driven layout classes on root and SVG', () => {
     renderBodyMap()
+    const root = screen.getByTestId('bodymap-root')
     const svg = document.querySelector('svg')!
-    expect(svg.className.baseVal).not.toContain('max-h')
+    expect(root.className).toContain('h-full')
+    expect(root.className).toContain('min-h-0')
+    expect(root.className).toContain('w-full')
+    expect(svg.className.baseVal).toContain('h-full')
+    expect(svg.className.baseVal).toContain('w-auto')
+    expect(svg.className.baseVal).toContain('max-w-full')
   })
 
   it('renders mode toggle buttons', () => {

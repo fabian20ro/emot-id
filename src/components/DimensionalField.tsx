@@ -128,18 +128,19 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
   )
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-1 sm:p-4">
+    <div className="h-full min-h-0 w-full flex flex-col items-center p-1 sm:p-4">
       <p className="hidden sm:block text-xs text-gray-400 text-center mb-2 px-2">
         {dimensionalT.instructions}
       </p>
-      <div className="w-full max-w-2xl aspect-square max-h-full relative">
-        <svg
-          ref={svgRef}
-          viewBox={`0 0 ${FIELD_SIZE} ${FIELD_SIZE}`}
-          className="w-full h-full"
-          onClick={handleFieldClick}
-          style={{ cursor: 'crosshair' }}
-        >
+      <div className="w-full max-w-2xl flex-1 min-h-0 flex flex-col items-center">
+        <div data-testid="dimensional-plot-container" className="w-full aspect-square max-h-full shrink-0">
+          <svg
+            ref={svgRef}
+            viewBox={`0 0 ${FIELD_SIZE} ${FIELD_SIZE}`}
+            className="w-full h-full"
+            onClick={handleFieldClick}
+            style={{ cursor: 'crosshair' }}
+          >
           {/* Background grid */}
           <rect
             x={PADDING}
@@ -254,20 +255,22 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
               />
             </>
           )}
-        </svg>
+          </svg>
+        </div>
 
-        {/* Suggestion chips — overlaid at bottom of SVG container */}
+        {/* Suggestion chips — rendered below the plot (no overlap). */}
         {suggestions.length > 0 && (
           <motion.div
+            data-testid="dimensional-suggestion-tray"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute bottom-2 left-0 right-0 flex gap-2 flex-wrap justify-center px-2"
+            className="mt-2 w-full flex gap-2 flex-wrap justify-center px-2 pb-1"
           >
             {suggestions.map((s) => (
               <button
                 key={s.id}
                 onClick={() => handleSuggestionClick(s)}
-                className="px-4 py-2.5 min-h-[44px] rounded-full text-sm font-medium transition-colors"
+                className="px-5 py-3 min-h-[48px] rounded-full text-sm font-medium transition-colors"
                 style={{
                   backgroundColor: selectedIds.has(s.id) ? s.color : `${s.color}30`,
                   color: selectedIds.has(s.id) ? '#000' : s.color,
@@ -279,7 +282,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
             ))}
             <button
               onClick={() => { setCrosshair(null); setSuggestions([]) }}
-              className="px-4 py-2.5 min-h-[44px] rounded-full text-sm text-gray-400 hover:text-gray-200 bg-gray-800 transition-colors"
+              className="px-4 py-3 min-h-[48px] min-w-[48px] rounded-full text-sm text-gray-400 hover:text-gray-200 bg-gray-800 transition-colors"
             >
               ✕
             </button>

@@ -25,11 +25,11 @@ App (src/App.tsx)
  |    +-- Visualization**         # Resolved from registry per model ID
  |         +-- BubbleField        # For plutchik, wheel (evenly distributed on mobile)
  |         |    +-- Bubble[]      # Animated pill buttons with emotion color
- |         +-- BodyMap            # For somatic (compact-phone vertical shift, expanded hit areas)
+ |         +-- BodyMap            # For somatic (height-fit layout, expanded hit areas, wider labels)
  |         |    +-- BodyRegion[]  # SVG path elements (12 regions)
  |         |    +-- SensationPicker  # Bottom sheet: sensation -> intensity
  |         |    +-- GuidedScan    # Sequential body scan overlay
- |         +-- DimensionalField   # For dimensional (aspect-square, overlay suggestions)
+ |         +-- DimensionalField   # For dimensional (aspect-square plot + suggestion tray below)
  +-- ResultModal                  # Full-screen modal with analysis results
  |    +-- CrisisBanner            # Tiered crisis banner — renders ABOVE results (tier1/2/3/4)
  |    +-- ResultCard[]            # Color-coded result cards (InfoButton for collapsed descriptions)
@@ -83,10 +83,10 @@ Used by: Somatic model.
 - Routes deselect through `onDeselect(enrichedSelection)` using selection map lookup
 - Region rendering order: back-facing first (upper-back, lower-back), then front-facing
 - Back regions widened ~15px beyond front regions for visible/clickable slivers
-- Compact-phone fit: body content shifted upward (`BODY_VERTICAL_SHIFT = -10`) so lower regions remain visible when selection bar + bottom action are present
-- Label pills use adaptive width based on localized text length and apply compression for long labels to prevent text overflow
-- Label tap affordance uses invisible 44px-high hit rectangles
-- `min-h-0 overflow-hidden` on inner container prevents SVG from expanding beyond flex parent
+- Height-driven fit: root uses `h-full min-h-0 w-full`; SVG uses `h-full w-auto max-w-full` so body remains fully visible in constrained mobile heights
+- Label pills use adaptive wider widths and compression for long localized text; right-side labels are nudged farther right for cleaner separation
+- Label tap affordance uses invisible 48px-high hit rectangles
+- `data-testid` hooks: `bodymap-root`, `bodymap-canvas` for deterministic layout tests
 
 ### BodyRegion (`src/components/BodyRegion.tsx`)
 
@@ -101,7 +101,7 @@ Used by: Somatic model.
 - Groups: head (3: head, jaw, throat), torso (5: shoulders, chest, upper-back, stomach, lower-back), arms (2: arms, hands), legs (2: legs, feet)
 - Each entry: `{ id, d, hitD? (enlarged hit area), anchor, labelAnchor, labelSide }`
 - Labels alternate R,L,R,L by y-position with anatomical pair constraints (chest/upper-back and stomach/lower-back placed on opposite sides). Sides: head(R), jaw(L), throat(R), shoulders(L), chest(R), upper-back(L), stomach(L), lower-back(R), arms(R), hands(L), legs(R), feet(L)
-- Small regions (throat, jaw) have expanded `hitD` paths for 44px mobile touch targets
+- Small regions (throat, jaw) have expanded `hitD` paths for robust mobile touch targets; throat path is vertically extended to maintain visible neck continuity with shoulders
 
 ### SensationPicker (`src/components/SensationPicker.tsx`)
 
@@ -147,7 +147,9 @@ Used by: Dimensional model.
 - Label collision avoidance: greedy sort-and-bump algorithm (sort by y then x, bump by `MIN_GAP=14` when labels overlap within 40px horizontal proximity, clamp to viewBox bounds)
 - Text halo via `paintOrder="stroke"` for readability in dense areas
 - Click-to-place crosshair: converts pixel to valence/arousal, finds 3 nearest emotions
-- Suggestion chips: absolute overlay at bottom of SVG container (44px touch targets)
+- Suggestion chips: rendered in a normal-flow tray below the plot (non-overlay) to avoid obscuring lower-emotion areas
+- Suggestion chips use 48px minimum touch height for easier mobile tapping
+- `data-testid` hooks: `dimensional-plot-container`, `dimensional-suggestion-tray`
 
 ## Post-Analysis Components
 

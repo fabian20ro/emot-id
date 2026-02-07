@@ -139,3 +139,15 @@ Purpose: capture execution mistakes, friction points, and durable fixes so futur
   - Always run `tsc` separately before diagnosing build plugin failures.
   - Document persistent build-tool errors with exact stage and stack marker.
   - Avoid conflating plugin/runtime tooling failures with application logic regressions.
+
+### [2026-02-07] Mobile visualization clipping traced to invalid height assumptions in flex chains
+
+- Context: Fixing `393x742` rendering regressions in BodyMap and DimensionalField.
+- What went wrong: Layout relied on `flex-1` growth semantics in visualization roots where parent chains did not always provide deterministic bounded height; BodyMap was additionally compensated via manual vertical shift, and Dimensional suggestions were overlaid in the same square plot area.
+- Impact: Body silhouette could extend beyond visible host (feet/head clipping risk), neck continuity looked broken under scale pressure, and suggestion chips obscured lower plot content.
+- Corrective action: Move to explicit height-driven layout (`h-full min-h-0` roots + bounded canvas containers), fit BodyMap SVG by height (`h-full w-auto max-w-full`), remove manual body shift dependency, and render dimensional suggestions in normal-flow tray below plot.
+- Prevention checklist:
+  - For constrained mobile visualizations, validate parent-to-child height chain explicitly (`h-full` + `min-h-0`) before introducing positional hacks.
+  - Prefer structural layout fixes over hardcoded translate offsets for “fit” issues.
+  - Enforce viewport regression checks at `393x742` with measurable bounds (host vs content) and overlap assertions.
+  - Keep touch targets at least 44px; increase to 48px for dense mobile chip rows.

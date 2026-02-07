@@ -59,6 +59,26 @@ describe('bodyRegionPaths', () => {
     }
   })
 
+  it('maintains vertical continuity between head, throat, and shoulders', () => {
+    const head = bodyRegionPaths.find((r) => r.id === 'head')
+    const throat = bodyRegionPaths.find((r) => r.id === 'throat')
+    const shoulders = bodyRegionPaths.find((r) => r.id === 'shoulders')
+    expect(head).toBeDefined()
+    expect(throat).toBeDefined()
+    expect(shoulders).toBeDefined()
+
+    const headBox = getBoundingBox(head!.d)
+    const throatBox = getBoundingBox(throat!.d)
+    const shouldersBox = getBoundingBox(shoulders!.d)
+
+    const headToThroatGap = throatBox.minY - headBox.maxY
+    const throatToShouldersGap = shouldersBox.minY - throatBox.maxY
+
+    // No positive gaps: silhouette should appear connected.
+    expect(headToThroatGap).toBeLessThanOrEqual(0)
+    expect(throatToShouldersGap).toBeLessThanOrEqual(0)
+  })
+
   it('hitD bounding box is strictly larger than d bounding box for regions with hitD', () => {
     for (const region of bodyRegionPaths) {
       if (!region.hitD) continue
@@ -70,6 +90,22 @@ describe('bodyRegionPaths', () => {
       expect(hitBox.maxX, `${region.id} hitD maxX should be >= d maxX`).toBeGreaterThanOrEqual(dBox.maxX)
       expect(hitBox.minY, `${region.id} hitD minY should be <= d minY`).toBeLessThanOrEqual(dBox.minY)
       expect(hitBox.maxY, `${region.id} hitD maxY should be >= d maxY`).toBeGreaterThanOrEqual(dBox.maxY)
+    }
+  })
+
+  it('head and throat hit areas keep a clear margin beyond visible paths', () => {
+    const ids = ['head', 'throat']
+    for (const id of ids) {
+      const region = bodyRegionPaths.find((r) => r.id === id)
+      expect(region).toBeDefined()
+      expect(region!.hitD).toBeDefined()
+
+      const dBox = getBoundingBox(region!.d)
+      const hitBox = getBoundingBox(region!.hitD!)
+      expect(dBox.minX - hitBox.minX, `${id} hitD left expansion`).toBeGreaterThanOrEqual(4)
+      expect(hitBox.maxX - dBox.maxX, `${id} hitD right expansion`).toBeGreaterThanOrEqual(4)
+      expect(dBox.minY - hitBox.minY, `${id} hitD top expansion`).toBeGreaterThanOrEqual(4)
+      expect(hitBox.maxY - dBox.maxY, `${id} hitD bottom expansion`).toBeGreaterThanOrEqual(4)
     }
   })
 

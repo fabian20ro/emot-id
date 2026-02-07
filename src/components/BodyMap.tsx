@@ -110,10 +110,10 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
   }, [])
 
   const activeRegion = activeRegionId ? regionMap.get(activeRegionId) : null
-  const BODY_VERTICAL_SHIFT = -10
+  const RIGHT_LABEL_NUDGE = 12
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-1 sm:p-4">
+    <div data-testid="bodymap-root" className="h-full min-h-0 w-full flex flex-col items-center p-1 sm:p-4">
       {/* Mode toggle */}
       <div className="flex items-center gap-2 mb-1">
         <button
@@ -138,10 +138,13 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
         </button>
       </div>
 
-      <div className="relative w-full max-w-sm flex-1 min-h-0 overflow-hidden flex items-center justify-center">
+      <div
+        data-testid="bodymap-canvas"
+        className="relative w-full max-w-sm flex-1 min-h-0 overflow-hidden flex items-center justify-center"
+      >
         <svg
           viewBox={VIEWBOX}
-          className="w-full h-full"
+          className="h-full w-auto max-w-full"
           style={{ filter: 'drop-shadow(0 0 20px rgba(99, 102, 241, 0.1))' }}
         >
           <defs>
@@ -158,7 +161,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
             </marker>
           </defs>
 
-          <g transform={`translate(0 ${BODY_VERTICAL_SHIFT})`}>
+          <g>
             {/* Back-facing regions first, then front-facing */}
             {[...bodyRegionPaths].sort((a, b) => {
               const isBackA = a.id === 'upper-back' || a.id === 'lower-back'
@@ -194,15 +197,15 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
               // Arrow endpoints: from label edge toward body anchor.
               // Width scales with localized text length to avoid overflow on compact phones.
               const labelChars = label.length
-              const labelW = labelChars > 14 ? 84 : labelChars > 10 ? 74 : 62
-              const labelH = 22
-              const dir = labelSide === 'left' ? 1 : -1
-              const arrowStartX = labelAnchor.x + dir * (labelW / 2 - 10)
+              const labelW = labelChars > 16 ? 104 : labelChars > 12 ? 92 : 80
+              const labelH = 26
+              const labelCenterX = labelAnchor.x + (labelSide === 'right' ? 12 + RIGHT_LABEL_NUDGE : -12)
+              const arrowStartX = labelCenterX + (labelSide === 'left' ? labelW / 2 - 10 : -(labelW / 2 - 10))
               const arrowEndX = labelSide === 'left'
-                ? Math.min(anchor.x, arrowStartX + 80)
-                : Math.max(anchor.x, arrowStartX - 80)
+                ? Math.min(anchor.x, arrowStartX + 86)
+                : Math.max(anchor.x, arrowStartX - 86)
 
-              const shouldCompress = labelChars > 14
+              const shouldCompress = labelChars > 15
 
               return (
                 <g
@@ -210,12 +213,12 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
                   style={{ cursor: 'pointer' }}
                   onClick={() => handleRegionClick(path.id)}
                 >
-                  {/* Invisible touch expansion rectangle (44px CSS target) */}
+                  {/* Invisible touch expansion rectangle (48px CSS target). */}
                   <rect
-                    x={labelAnchor.x - labelW / 2 + dir * -10 - 4}
-                    y={labelAnchor.y - 22}
+                    x={labelCenterX - labelW / 2 - 4}
+                    y={labelAnchor.y - 24}
                     width={labelW + 8}
-                    height={44}
+                    height={48}
                     fill="transparent"
                     style={{ cursor: 'pointer' }}
                   />
@@ -231,7 +234,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
                   />
                   {/* Label background */}
                   <rect
-                    x={labelAnchor.x - labelW / 2 + dir * -10}
+                    x={labelCenterX - labelW / 2}
                     y={labelAnchor.y - labelH / 2}
                     width={labelW}
                     height={labelH}
@@ -242,13 +245,13 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
                   />
                   {/* Label text */}
                   <text
-                    x={labelAnchor.x + dir * -10}
+                    x={labelCenterX}
                     y={labelAnchor.y + 3}
                     fill={isSelected ? '#c7d2fe' : '#9ca3af'}
-                    fontSize={9}
+                    fontSize={10}
                     fontWeight={isSelected ? 600 : 400}
                     textAnchor="middle"
-                    textLength={shouldCompress ? labelW - 12 : undefined}
+                    textLength={shouldCompress ? labelW - 14 : undefined}
                     lengthAdjust={shouldCompress ? 'spacingAndGlyphs' : undefined}
                   >
                     {label}

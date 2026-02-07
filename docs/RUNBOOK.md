@@ -146,10 +146,11 @@ If `idb-keyval` fails (e.g., in private browsing), the app gracefully degrades �
 Common mobile viewport problems and their fixes:
 
 - **BubbleField top clustering on mobile** — Bubble canvas must inherit full height from parent. Verify `BubbleField` wrappers keep `h-full min-h-0` and parent flex chain doesn't collapse
-- **BodyMap regions untappable** — Small regions (throat, jaw) have expanded `hitD` paths. Label pills have invisible 44px `<rect>` touch targets. Check `body-paths.ts` hitD values and label hit rect sizing
-- **BodyMap lower regions cut off** — Compact layout depends on an upward body shift plus compact neck geometry. If feet disappear after selections, verify `BODY_VERTICAL_SHIFT` in `BodyMap.tsx` and throat path height in `body-paths.ts`
+- **BodyMap regions untappable** — Small regions (throat, jaw) use expanded `hitD` paths. Label pills use invisible 48px hit rectangles. Check `body-paths.ts` `hitD` values and label hit rect sizing in `BodyMap.tsx`
+- **BodyMap lower regions cut off** — BodyMap now relies on height-fit rendering (`h-full min-h-0` container + `h-full w-auto max-w-full` SVG) instead of manual vertical shifts. If feet disappear, inspect `data-testid="bodymap-root"` and `data-testid="bodymap-canvas"` sizing chain and confirm no parent collapses
 - **ModelBar names overflow** — Models define `shortName` for narrow viewports (<480px); names swap automatically
 - **DimensionalField label overlap** — Axis labels use collision-avoidance offsets at small widths
+- **Dimensional suggestions overlap plot** — Suggestion chips should render in tray below plot (`data-testid="dimensional-suggestion-tray"`), not as `absolute` overlay. If overlap returns, verify tray remains outside `dimensional-plot-container`
 - **Safe-area double padding** — Safe-area insets are per-component (Header top, BottomBar bottom), NOT on `#root`. If bottom content is cut off, check for duplicate `env(safe-area-inset-bottom)` application
 - **Settings menu invisible** — If the menu renders but is hidden behind content, it's likely trapped in a stacking context. The fix is `createPortal(…, document.body)`. This was the root cause of the Phase K stabilization
 

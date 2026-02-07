@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { DimensionalField } from '../components/DimensionalField'
 import { LanguageProvider } from '../context/LanguageContext'
 import type { DimensionalEmotion } from '../models/dimensional/types'
@@ -93,6 +93,54 @@ describe('DimensionalField', () => {
       expect(btn).toHaveAttribute('tabindex', '0')
       expect(btn).toHaveAttribute('aria-label')
       expect(btn).toHaveAttribute('aria-pressed', 'false')
+    }
+  })
+
+  it('renders suggestions below the plot after field click', () => {
+    renderField()
+    const plotContainer = screen.getByTestId('dimensional-plot-container')
+    const svg = document.querySelector('svg') as SVGSVGElement
+    expect(plotContainer).toBeInTheDocument()
+
+    vi.spyOn(svg, 'getBoundingClientRect').mockReturnValue({
+      x: 0,
+      y: 0,
+      width: 300,
+      height: 300,
+      top: 0,
+      left: 0,
+      right: 300,
+      bottom: 300,
+      toJSON: () => ({}),
+    } as DOMRect)
+
+    fireEvent.click(svg, { clientX: 150, clientY: 240 })
+    const tray = screen.getByTestId('dimensional-suggestion-tray')
+    expect(tray).toBeInTheDocument()
+    expect(tray.className).not.toContain('absolute')
+  })
+
+  it('uses 48px touch targets for suggestion chips', () => {
+    renderField()
+    const svg = document.querySelector('svg') as SVGSVGElement
+    vi.spyOn(svg, 'getBoundingClientRect').mockReturnValue({
+      x: 0,
+      y: 0,
+      width: 300,
+      height: 300,
+      top: 0,
+      left: 0,
+      right: 300,
+      bottom: 300,
+      toJSON: () => ({}),
+    } as DOMRect)
+
+    fireEvent.click(svg, { clientX: 120, clientY: 220 })
+    const tray = screen.getByTestId('dimensional-suggestion-tray')
+    const chipButtons = tray.querySelectorAll('button')
+    expect(chipButtons.length).toBeGreaterThan(0)
+    for (const chip of chipButtons) {
+      expect(chip.className).toContain('min-h-[48px]')
     }
   })
 })

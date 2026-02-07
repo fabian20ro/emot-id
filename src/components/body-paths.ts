@@ -21,9 +21,9 @@ export const bodyRegionPaths: BodyRegionPath[] = [
   // HEAD GROUP — oval skull + face, jaw inside lower face, narrow throat
   {
     id: 'head',
-    d: 'M78 28 C78 8 87 -2 100 -2 C113 -2 122 8 122 28 L122 48 C122 64 114 72 100 72 C86 72 78 64 78 48 Z',
-    hitD: 'M72 28 C72 4 83 -8 100 -8 C117 -8 128 4 128 28 L128 50 C128 68 118 78 100 78 C82 78 72 68 72 50 Z',
-    anchor: { x: 122, y: 24 },
+    d: 'M80 30 C80 12 88 2 100 2 C112 2 120 12 120 30 L120 48 C120 62 112 70 100 70 C88 70 80 62 80 48 Z',
+    hitD: 'M73 30 C73 8 84 -4 100 -4 C116 -4 127 8 127 30 L127 50 C127 69 117 79 100 79 C83 79 73 69 73 50 Z',
+    anchor: { x: 120, y: 26 },
     labelAnchor: { x: 172, y: 24 },
     labelSide: 'right',
   },
@@ -37,11 +37,11 @@ export const bodyRegionPaths: BodyRegionPath[] = [
   },
   {
     id: 'throat',
-    // Slightly shorter neck to recover vertical space on compact mobile viewports.
-    d: 'M94 70 C94 68 96 66 100 66 C104 66 106 68 106 70 L106 90 C106 96 104 100 100 100 C96 100 94 96 94 90 Z',
-    hitD: 'M83 66 C83 62 89 58 100 58 C111 58 117 62 117 66 L117 94 C117 102 111 106 100 106 C89 106 83 102 83 94 Z',
-    anchor: { x: 106, y: 82 },
-    labelAnchor: { x: 172, y: 86 },
+    // Extended neck to keep continuity between jaw/head and shoulder block.
+    d: 'M94 68 C94 66 96 64 100 64 C104 64 106 66 106 68 L106 104 C106 112 104 116 100 116 C96 116 94 112 94 104 Z',
+    hitD: 'M82 64 C82 60 88 56 100 56 C112 56 118 60 118 64 L118 108 C118 118 112 122 100 122 C88 122 82 118 82 108 Z',
+    anchor: { x: 106, y: 92 },
+    labelAnchor: { x: 172, y: 92 },
     labelSide: 'right',
   },
   // TORSO GROUP — shoulders yoke, front chest, back, stomach
