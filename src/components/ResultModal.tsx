@@ -10,6 +10,7 @@ import { getModelBridge } from './model-bridges'
 import { CrisisBanner } from './CrisisBanner'
 import { MicroIntervention, getInterventionType } from './MicroIntervention'
 import { ModalShell } from './ModalShell'
+import { InfoButton } from './InfoButton'
 import type { BaseEmotion, AnalysisResult } from '../models/types'
 
 type ReflectionState = 'results' | 'reflection' | 'warmClose' | 'followUp' | 'intervention'
@@ -175,6 +176,15 @@ export function ResultModal({
     onClose()
   }
 
+  const selectedEmotionTitle = selections.map((s) => s.label[language]).join(', ')
+  const modalA11yTitle = selectedEmotionTitle || modalT.a11yTitle || 'Analysis results dialog'
+  const hasSecondaryInfo = Boolean(
+    (!hasCrisis && analyzeT.aiWarning)
+    || synthesisText
+    || oppositeAction
+    || interventionType
+  )
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -186,11 +196,26 @@ export function ResultModal({
           viewportClassName="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))]"
           panelClassName="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6 max-h-[80vh] sm:max-h-[80vh] max-sm:max-h-[90vh] flex flex-col"
         >
-          
-            <div className="flex justify-between items-start mb-4">
-              <h2 id="result-modal-title" className="text-xl font-bold text-white">
-                {modalT.title ?? 'Analysis result'}
-              </h2>
+            <h2 id="result-modal-title" className="sr-only">
+              {modalA11yTitle}
+            </h2>
+
+            <div className="flex justify-between items-start gap-3 mb-4">
+              <div className="flex flex-wrap items-center gap-1.5 max-h-[4.5rem] overflow-y-auto pr-1">
+                {selections.map((s) => (
+                  <span
+                    key={s.id}
+                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                    style={{
+                      backgroundColor: `${s.color}25`,
+                      color: s.color,
+                      border: `1px solid ${s.color}40`,
+                    }}
+                  >
+                    {s.label[language]}
+                  </span>
+                ))}
+              </div>
               <button
                 onClick={handleClose}
                 className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-100 hover:bg-gray-700/60 transition-colors text-2xl leading-none"
@@ -210,23 +235,6 @@ export function ResultModal({
                   exit={{ opacity: 0 }}
                   className="flex-1 flex flex-col overflow-hidden"
                 >
-                  {/* Selection chips */}
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {selections.map((s) => (
-                      <span
-                        key={s.id}
-                        className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                        style={{
-                          backgroundColor: `${s.color}25`,
-                          color: s.color,
-                          border: `1px solid ${s.color}40`,
-                        }}
-                      >
-                        {s.label[language]}
-                      </span>
-                    ))}
-                  </div>
-
                   {/* Scrollable results section */}
                   <div className="flex-1 overflow-y-auto mb-3">
                     {/* Crisis resources — above results so distressed users see them first */}
@@ -249,15 +257,6 @@ export function ResultModal({
                       </div>
                     ) : (
                       <>
-                        {/* Synthesis narrative */}
-                        {synthesisText && (
-                          <div className="mb-3 p-3 rounded-xl bg-gray-700/50">
-                            <p className="text-sm text-gray-200 leading-relaxed">
-                              {synthesisText}
-                            </p>
-                          </div>
-                        )}
-
                         {results.length > 0 ? (
                           <div className="space-y-2">
                             {results.some((r) => r.componentLabels) && (
@@ -289,70 +288,70 @@ export function ResultModal({
                   </div>
 
                   {!requiresTier4Acknowledge && (
-                    <div className="space-y-2">
+                    <div className="pt-1 space-y-1.5">
                       {!hasCrisis && (
-                        <>
-                          <a
-                            href={getAILink()}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block w-full py-3 px-6 rounded-xl font-semibold text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 transition-all"
-                          >
-                            {analyzeT.exploreAI ?? 'Learn more about these emotions'} &rarr;
-                          </a>
-                          <p className="text-xs text-gray-500 text-center">
-                            {analyzeT.aiWarning ?? 'Results are not a substitute for professional support.'}
-                          </p>
-                        </>
-                      )}
-
-                      {/* Suggestions group: bridge + opposite action */}
-                      {(oppositeAction || (bridge && onSwitchModel)) && (
-                        <div className="space-y-2 pt-1">
-                          {bridge && onSwitchModel && (
-                            <div className="p-3 rounded-xl bg-indigo-900/20 border border-indigo-700/30">
-                              <p className="text-sm text-indigo-300 mb-1.5">{bridge.message}</p>
-                              <button
-                                onClick={() => handleSwitchModel(bridge.targetModelId)}
-                                className="min-h-[44px] px-2 text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
-                              >
-                                {bridge.buttonLabel} &rarr;
-                              </button>
-                            </div>
-                          )}
-                          {oppositeAction && (
-                            <div className="p-3 rounded-xl bg-amber-900/10 border border-amber-700/20">
-                              <p className="text-xs text-amber-300/80 leading-relaxed">
-                                {oppositeAction}
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Footer: reflection + micro-intervention + disclaimer */}
-                  {!requiresTier4Acknowledge && (
-                    <div className="pt-2 space-y-1.5">
-                      {/* Micro-intervention offer */}
-                      {interventionType && (
-                        <button
-                          onClick={() => setReflectionState('intervention')}
-                          className="min-h-[44px] text-sm text-indigo-400 hover:text-indigo-300 transition-colors text-center w-full"
+                        <a
+                          href={getAILink()}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block w-full py-3 px-6 rounded-xl font-semibold text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 transition-all"
                         >
-                          {getInterventionOfferText(interventionType, interventionT)}
-                        </button>
+                          {analyzeT.exploreAI ?? 'Explore with AI'} &rarr;
+                        </a>
                       )}
 
-                      {/* Reflection trigger */}
                       {results.length > 0 && (
-                        <button
-                          onClick={() => setReflectionState('reflection')}
-                          className="min-h-[44px] text-sm text-gray-400 hover:text-gray-300 transition-colors text-center w-full"
-                        >
-                          {reflectionPrompt}
-                        </button>
+                        <div className="flex items-center justify-center gap-1">
+                          <button
+                            onClick={() => setReflectionState('reflection')}
+                            className="min-h-[44px] text-sm text-gray-400 hover:text-gray-300 transition-colors text-center px-1"
+                          >
+                            {reflectionPrompt}
+                          </button>
+                          <InfoButton
+                            title={modalT.moreInfoTitle ?? 'More context'}
+                            ariaLabel={modalT.moreInfoAria ?? 'Show more context'}
+                            className="text-gray-500 hover:text-gray-300"
+                          >
+                            {(closeInfo) => (
+                              <div className="space-y-3">
+                                {!hasCrisis && analyzeT.aiWarning && (
+                                  <p className="text-xs text-gray-400">
+                                    {analyzeT.aiWarning}
+                                  </p>
+                                )}
+                                {synthesisText && (
+                                  <p className="text-sm text-gray-200 leading-relaxed">
+                                    {synthesisText}
+                                  </p>
+                                )}
+                                {oppositeAction && (
+                                  <div className="p-3 rounded-xl bg-amber-900/10 border border-amber-700/20">
+                                    <p className="text-xs text-amber-300/80 leading-relaxed">
+                                      {oppositeAction}
+                                    </p>
+                                  </div>
+                                )}
+                                {interventionType && (
+                                  <button
+                                    onClick={() => {
+                                      closeInfo()
+                                      setReflectionState('intervention')
+                                    }}
+                                    className="w-full min-h-[44px] rounded-xl border border-indigo-500/40 px-3 py-2 text-sm text-indigo-300 hover:bg-indigo-600/20 transition-colors"
+                                  >
+                                    {getInterventionOfferText(interventionType, interventionT)}
+                                  </button>
+                                )}
+                                {!hasSecondaryInfo && (
+                                  <p className="text-xs text-gray-500">
+                                    {modalT.noExtraInfo ?? 'No extra context available for this result.'}
+                                  </p>
+                                )}
+                              </div>
+                            )}
+                          </InfoButton>
+                        </div>
                       )}
 
                       <p className="text-xs text-gray-600 text-center">
@@ -467,13 +466,18 @@ export function ResultModal({
                     >
                       {reflectionT.backToModel ?? 'Go back and explore'}
                     </button>
-                    {reflectionAnswer === 'no' && onSwitchModel && bridge && (
-                      <button
-                        onClick={() => handleSwitchModel(bridge.targetModelId)}
-                        className="min-h-[44px] px-5 py-2 rounded-xl bg-purple-600/20 border border-purple-600/50 text-purple-300 hover:bg-purple-600/30 transition-colors text-sm"
-                      >
-                        {reflectionT.tryDifferentModel ?? 'Try a different model'}
-                      </button>
+                    {onSwitchModel && bridge && (
+                      <div className="p-3 rounded-xl bg-indigo-900/20 border border-indigo-700/30 max-w-full">
+                        <p className="text-sm text-indigo-300 mb-2 text-center">
+                          {bridge.message}
+                        </p>
+                        <button
+                          onClick={() => handleSwitchModel(bridge.targetModelId)}
+                          className="w-full min-h-[44px] px-4 py-2 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-200 hover:bg-indigo-600/40 transition-colors text-sm"
+                        >
+                          {bridge.buttonLabel}
+                        </button>
+                      </div>
                     )}
                     <button
                       onClick={handleClose}

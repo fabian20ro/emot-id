@@ -24,7 +24,7 @@
     "buttonDisabledSomatic": "Atinge o zona a corpului unde observi o senzatie",
     "buttonDisabledDefault": "Selecteaza o emotie care rezoneaza cu tine",
     "resultPrefix": "Selectiile tale",
-    "exploreAI": "Afla mai multe despre aceste emotii",
+    "exploreAI": "Exploreaza cu AI",
     "aiPrompt": "Simt {emotions}. Ce inseamna aceasta emotie si cum o pot intelege mai bine?",
     "aiPromptMultiple": "Simt o combinatie de {emotions}. Cum se leaga aceste emotii si ce ar putea insemna?",
     "aiWarning": "Aceasta va cauta informatii generale online. Rezultatele nu inlocuiesc sprijinul profesional."
@@ -37,7 +37,11 @@
     "showDescription": "Arata descrierea",
     "needsLabel": "Aceasta emotie are nevoie adesea de",
     "matchStrengthLabel": "Potrivire",
-    "readMore": "Doresti sa citesti mai mult despre aceasta?"
+    "readMore": "Doresti sa citesti mai mult despre aceasta?",
+    "a11yTitle": "Dialog rezultate analiza",
+    "moreInfoTitle": "Context suplimentar",
+    "moreInfoAria": "Arata context suplimentar",
+    "noExtraInfo": "Nu exista informatii suplimentare pentru acest rezultat."
   },
   "reflection": {
     "prompt": "Rezonezi cu aceasta descriere?",

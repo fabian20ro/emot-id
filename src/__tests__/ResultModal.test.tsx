@@ -43,12 +43,24 @@ describe('ResultModal', () => {
 
   it('does not render when closed', () => {
     renderModal({ isOpen: false })
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('renders selected emotion chips in header instead of title text', () => {
+    renderModal({
+      isOpen: true,
+      selections: [makeEmotion('joy'), makeEmotion('trust')],
+      results: [makeResult('joy')],
+    })
+    expect(screen.getAllByText('joy_en').length).toBeGreaterThan(1)
+    expect(screen.getByText('trust_en')).toBeInTheDocument()
     expect(screen.queryByText('Analysis result')).not.toBeInTheDocument()
   })
 
-  it('renders title when open', () => {
-    renderModal({ isOpen: true })
-    expect(screen.getByText('Analysis result')).toBeInTheDocument()
+  it('shows no left-side fallback text when opened without selections', () => {
+    renderModal({ isOpen: true, selections: [], results: [makeResult('joy')] })
+    expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument()
+    expect(screen.queryByText('No selection')).not.toBeInTheDocument()
   })
 
   it('shows description for single result', () => {
@@ -119,7 +131,7 @@ describe('ResultModal', () => {
   it('renders AI link', () => {
     const results = [makeResult('joy')]
     renderModal({ results, selections: [makeEmotion('joy')] })
-    const link = screen.getByText(/Learn more about these emotions/)
+    const link = screen.getByText(/Explore with AI/)
     expect(link).toHaveAttribute('href')
     expect(link.getAttribute('href')).toContain('google.com/search')
   })
@@ -150,7 +162,7 @@ describe('ResultModal', () => {
   it('suppresses AI link entirely during crisis', () => {
     const results = [makeResult('despair'), makeResult('rage')]
     renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('rage')] })
-    expect(screen.queryByText(/Learn more about these emotions/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Explore with AI/)).not.toBeInTheDocument()
   })
 
   it('requires acknowledgement before tier4 results are shown', async () => {
@@ -190,18 +202,44 @@ describe('ResultModal', () => {
     expect(screen.getByText('strong resonance')).toBeInTheDocument()
   })
 
-  it('shows AI warning text', () => {
+  it('shows reflection link with companion info button', () => {
     const results = [makeResult('joy')]
     renderModal({ results, selections: [makeEmotion('joy')] })
+    expect(screen.getByRole('button', { name: 'Does this resonate with your experience?' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Show more context' })).toBeInTheDocument()
+  })
+
+  it('shows AI warning text inside the info panel', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('joy')]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+    expect(screen.queryByText(/not a substitute for professional support/)).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Show more context' }))
     expect(screen.getByText(/not a substitute for professional support/)).toBeInTheDocument()
   })
 
+  it('keeps bridge suggestion out of results and shows it in follow-up for partly', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('anger')]
+    renderModal({
+      results,
+      selections: [makeEmotion('anger')],
+      currentModelId: 'wheel',
+      onSwitchModel: () => {},
+    })
+    expect(screen.queryByText(/Where do you notice this in your body/)).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Does this resonate with your experience?' }))
+    await user.click(await screen.findByRole('button', { name: 'Somewhat' }))
+    expect(await screen.findByText(/Where do you notice this in your body/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Try the Body Map' })).toBeInTheDocument()
+  })
+
   it('has proper dialog ARIA attributes', () => {
-    renderModal()
+    renderModal({ selections: [makeEmotion('joy')], results: [makeResult('joy')] })
     const dialog = document.querySelector('[role="dialog"]')
     expect(dialog).toBeInTheDocument()
     expect(dialog).toHaveAttribute('aria-modal', 'true')
     expect(dialog).toHaveAttribute('aria-labelledby', 'result-modal-title')
-    expect(document.getElementById('result-modal-title')).toHaveTextContent('Analysis result')
+    expect(document.getElementById('result-modal-title')).toHaveTextContent('joy_en')
   })
 })

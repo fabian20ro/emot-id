@@ -7,7 +7,7 @@ import { useLanguage } from '../context/LanguageContext'
 interface InfoButtonProps {
   title: string
   ariaLabel: string
-  children: ReactNode
+  children: ReactNode | ((close: () => void) => ReactNode)
   className?: string
 }
 
@@ -18,6 +18,8 @@ export function InfoButton({ title, ariaLabel, children, className = '' }: InfoB
   const infoT = section('infoButton')
   const close = useCallback(() => setIsOpen(false), [])
   const focusTrapRef = useFocusTrap(isOpen, close)
+
+  const content = typeof children === 'function' ? children(close) : children
 
   return (
     <>
@@ -70,7 +72,7 @@ export function InfoButton({ title, ariaLabel, children, className = '' }: InfoB
                   </button>
                 </div>
                 <div className="text-sm text-gray-300 leading-relaxed">
-                  {children}
+                  {content}
                 </div>
               </motion.div>
             </motion.div>

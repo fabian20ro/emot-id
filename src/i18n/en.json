@@ -24,7 +24,7 @@
     "buttonDisabledSomatic": "Tap a body area where you notice a sensation",
     "buttonDisabledDefault": "Select an emotion that resonates with you",
     "resultPrefix": "Your selections",
-    "exploreAI": "Learn more about these emotions",
+    "exploreAI": "Explore with AI",
     "aiPrompt": "I am feeling {emotions}. What does this emotion mean and how can I understand it better?",
     "aiPromptMultiple": "I am feeling a combination of {emotions}. How do these emotions relate and what might this mean?",
     "aiWarning": "This will search for general information online. Results are not a substitute for professional support."
@@ -37,7 +37,11 @@
     "showDescription": "Show description",
     "needsLabel": "This emotion often needs",
     "matchStrengthLabel": "Match",
-    "readMore": "Would you like to read more about this?"
+    "readMore": "Would you like to read more about this?",
+    "a11yTitle": "Analysis results dialog",
+    "moreInfoTitle": "More context",
+    "moreInfoAria": "Show more context",
+    "noExtraInfo": "No extra context available for this result."
   },
   "reflection": {
     "prompt": "Does this resonate with your experience?",
