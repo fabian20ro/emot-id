@@ -82,6 +82,7 @@ Build and evolve Emot-ID as a modular, safe, clinically respectful, privacy-firs
 ## Safety-Critical Guardrails
 
 - Do not weaken crisis-tier detection or escalation semantics without explicit tests.
+- Graduated access: tier1-3 crisis contextualizes (shows resources) but does not gatekeep (hide tools). Only tier4 pre-acknowledgment gates features. Do not reintroduce binary suppression.
 - Do not introduce data loss paths when toggling session persistence.
 - Do not add outbound network behavior without explicit product/security intent.
 - Keep disclaimer and crisis support surfaces reachable and comprehensible.

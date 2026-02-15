@@ -64,7 +64,7 @@ Key directories:
 | `GranularityTraining` | Optional settings-launched practice mode for finer emotion discrimination |
 | `ChainAnalysis` | Optional DBT worksheet mode for trigger→consequence sequence mapping |
 | `ResultCard` | Individual result with expandable descriptions via InfoButton |
-| `CrisisBanner` | Tiered crisis support resources (4 tiers + grounding technique for tiers 2/3) |
+| `CrisisBanner` | Tiered crisis support resources (4 tiers + grounding technique for tiers 2/3); graduated access — tier1-3 contextualize without gatekeeping, tier4 requires acknowledgment |
 | `MicroIntervention` | Brief coping interventions plus post-practice effectiveness check |
 | `ModalShell` | Shared modal/backdrop primitive for centered dialogs and sheets |
 | `DontKnowModal` | Entry point for users unsure what they feel |

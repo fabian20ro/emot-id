@@ -121,8 +121,8 @@ The safety system operates at three layers:
 **Layer 3 — Narrative tone adaptation** (`src/models/synthesis.ts`):
 - When 2+ distress results are detected, synthesis shifts from adaptive-function framing to acknowledgment-first tone
 - "You may need" becomes "You deserve" for severe cases
-- Opposite action suggestions are suppressed during crisis (no DBT nudges when someone is in acute distress)
-- Micro-interventions are also suppressed during crisis
+- Opposite action suggestions and micro-interventions are available during tier1-3 crisis (DBT tools are most useful during distress)
+- Only tier4 (pre-acknowledgment) gates these features behind the acknowledgment wall
 
 **Current gap:** There is no Layer 4 for suicide-specific routing. The system detects severe distress combinations but does not differentiate between general crisis and active suicidal ideation. This is the single most important safety gap (see Section 4).
 
@@ -348,7 +348,7 @@ I evaluate Emot-ID through the lens of:
 
 **S4.1 — Tiered crisis detection is thoughtfully designed.** The three-tier system (`src/models/distress.ts`) differentiates warm invitation (tier 1), amber alert with grounding (tier 2), and direct acknowledgment (tier 3). The 10 specific combo pairs for tier 3 (`despair + helpless`, `shame + worthless`, etc.) reflect clinically meaningful danger combinations. The temporal escalation layer (`src/data/temporal-crisis.ts`) that detects 3+ high-distress sessions in 7 days adds longitudinal awareness that most self-help apps lack entirely.
 
-**S4.2 — Opposite action implementation is faithful to DBT.** The patterns in `src/data/opposite-action.ts` correctly map shame→approach, fear→gradual exposure, anger→gentle avoidance, sadness→activation, guilt→repair, jealousy→gratitude, loneliness→reach out. These are standard DBT opposite-action pairings. Critically, opposite action is suppressed during crisis (`ResultModal.tsx:102-105`) — this is the right clinical decision because DBT opposite action requires a window of tolerance, which someone in acute crisis may not have.
+**S4.2 — Opposite action implementation is faithful to DBT.** The patterns in `src/data/opposite-action.ts` correctly map shame→approach, fear→gradual exposure, anger→gentle avoidance, sadness→activation, guilt→repair, jealousy→gratitude, loneliness→reach out. These are standard DBT opposite-action pairings. Opposite action is available during tier1-3 crisis (graduated access) — DBT tools are specifically designed for use during distress. Only tier4 (pre-acknowledgment) temporarily gates opposite action behind the acknowledgment wall.
 
 **S4.3 — Narrative synthesis avoids diagnostic language.** The `synthesize()` function (`src/models/synthesis.ts`) never says "you have" or "you suffer from." It uses experiential language: "You are experiencing," "You are holding." For severe distress, it shifts to "What you're experiencing sounds painful. You deserve support" — acknowledging without pathologizing. This is exactly the right clinical tone.
 
@@ -390,11 +390,11 @@ After a micro-intervention (breathing, savoring, curiosity), the user taps "Cont
 Files: `src/components/MicroIntervention.tsx:103-126`
 Severity: **MEDIUM**
 
-**C4.6 — LOW: AI link during crisis is still visible.**
-During crisis, the "Learn more about these emotions" AI link is demoted to a small text link (`ResultModal.tsx:264-269`) but not removed. A distressed user searching Google for "I am feeling despair and helplessness" may encounter unhelpful or triggering content. The clinical preference would be to suppress the AI link entirely during crisis.
+**C4.6 — RESOLVED: AI link during crisis — graduated access implemented.**
+The AI link is now available during tier1-3 crisis (graduated access principle: the crisis banner *contextualizes* by showing resources, it doesn't *gatekeep* by hiding tools). Information-seeking is a healthy coping mechanism. Only tier4 (pre-acknowledgment) temporarily hides the AI link behind the acknowledgment wall. This graduated approach avoids punishing honest distress disclosure.
 
-Files: `src/components/ResultModal.tsx:264-269`
-Severity: **LOW**
+Files: `src/components/ResultModal.tsx`
+Status: **RESOLVED** (graduated crisis feature access)
 
 ### 4.4 Recommendations
 
@@ -433,11 +433,11 @@ Files to modify: `src/components/MicroIntervention.tsx`, `src/components/ResultM
 i18n: Requires new keys `intervention.checkBetter`, `intervention.checkSame`, `intervention.checkWorse`, `intervention.worseValidation`
 Estimate: ~3 hours
 
-**R4.6 (P2) — Suppress AI link entirely during crisis.**
-Remove the AI link from ResultModal when `crisisTier !== 'none'`. During crisis, the only external link should be the helpline.
+**R4.6 (P2) — SUPERSEDED: Graduated crisis feature access.**
+Rather than suppressing the AI link entirely during crisis, graduated access was implemented: tier1-3 show all features (AI link, opposite action, micro-interventions) alongside the crisis banner. Only tier4 (pre-acknowledgment) temporarily gates features behind the acknowledgment wall. This avoids the paternalistic pattern of punishing honest distress disclosure.
 
-Files to modify: `src/components/ResultModal.tsx:262-289`
-Estimate: 15 minutes
+Files modified: `src/components/ResultModal.tsx`
+Status: **IMPLEMENTED** as graduated access (not binary suppression)
 
 ---
 
@@ -841,7 +841,7 @@ Health psychology (C7.1) and clinical (C4.5) both flag the absence of interventi
 | 0.1 | Add tier-4 suicide risk routing | R4.1 | 2h | `distress.ts`, `CrisisBanner.tsx` |
 | 0.2 | Remove onboarding skip button | R4.2 | 15m | `Onboarding.tsx` |
 | 0.3 | Add temporal escalation disclosure | R4.3 | 1h | `CrisisBanner.tsx`, `ResultModal.tsx` |
-| 0.4 | Suppress AI link during crisis | R4.6 | 15m | `ResultModal.tsx` |
+| 0.4 | Graduated crisis feature access | R4.6 | 15m | `ResultModal.tsx` |
 
 ### Phase 1 — High-Value (next development cycle)
 
@@ -1072,8 +1072,12 @@ getCrisisTier(resultIds) — updated:
 - Explicit language: "If you are thinking about ending your life, please reach out now."
 - Helpline numbers at top, prominent and tappable
 - Acknowledgment required before viewing results
-- AI link suppressed entirely
-- Opposite action and micro-intervention suppressed
+- AI link, opposite action, and micro-intervention gated behind acknowledgment (available after user acknowledges)
+
+**Graduated access principle (tiers 1-3):**
+- Crisis banner contextualizes (shows resources) but does not gatekeep (hide tools)
+- AI link, opposite action, and micro-interventions remain available during tier1-3
+- DBT tools are specifically designed for use during distress — hiding them defeats their purpose
 
 ### Integration Points
 

@@ -159,10 +159,10 @@ describe('ResultModal', () => {
     expect(screen.getByText(/116 123/)).toBeInTheDocument()
   })
 
-  it('suppresses AI link entirely during crisis', () => {
+  it('shows AI link during tier1-3 crisis (graduated access)', () => {
     const results = [makeResult('despair'), makeResult('rage')]
     renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('rage')] })
-    expect(screen.queryByText(/Explore with AI/)).not.toBeInTheDocument()
+    expect(screen.getByText(/Explore with AI/)).toBeInTheDocument()
   })
 
   it('requires acknowledgement before tier4 results are shown', async () => {
@@ -241,5 +241,147 @@ describe('ResultModal', () => {
     expect(dialog).toHaveAttribute('aria-modal', 'true')
     expect(dialog).toHaveAttribute('aria-labelledby', 'result-modal-title')
     expect(document.getElementById('result-modal-title')).toHaveTextContent('joy_en')
+  })
+
+  it('shows AI link during tier1 (single distress emotion)', () => {
+    const results = [makeResult('depressed')]
+    renderModal({ results, selections: [makeEmotion('depressed')] })
+    expect(screen.getByText(/Explore with AI/)).toBeInTheDocument()
+  })
+
+  it('hides AI link for tier4 pre-ack, shows after acknowledgement', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('despair'), makeResult('worthless'), makeResult('empty')]
+    renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('worthless'), makeEmotion('empty')] })
+
+    expect(screen.queryByText(/Explore with AI/)).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /show my results/i }))
+    expect(screen.getByText(/Explore with AI/)).toBeInTheDocument()
+  })
+
+  it('shows opposite action in info panel during tier1 crisis', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('despair')]
+    renderModal({ results, selections: [makeEmotion('despair')] })
+
+    await user.click(screen.getByRole('button', { name: 'Show more context' }))
+    expect(screen.getByText(/get active/i)).toBeInTheDocument()
+  })
+
+  it('hides all secondary features for tier4 pre-ack', () => {
+    const results = [makeResult('despair'), makeResult('worthless'), makeResult('empty')]
+    renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('worthless'), makeEmotion('empty')] })
+
+    expect(screen.queryByText(/Explore with AI/)).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Show more context' })).not.toBeInTheDocument()
+    expect(screen.queryByText(/Does this resonate/)).not.toBeInTheDocument()
+  })
+
+  it('shows crisis banner and AI link simultaneously during tier3', () => {
+    const results = [makeResult('despair'), makeResult('helpless')]
+    renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('helpless')] })
+    expect(screen.getByText(/116 123/)).toBeInTheDocument()
+    expect(screen.getByText(/Explore with AI/)).toBeInTheDocument()
+  })
+
+  it('transitions to warm close view on "Yes" reflection', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('joy')]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+
+    await user.click(screen.getByRole('button', { name: 'Does this resonate with your experience?' }))
+    await user.click(await screen.findByRole('button', { name: 'Yes' }))
+
+    expect(await screen.findByText('Take a moment with this. Your feelings are valid.')).toBeInTheDocument()
+  })
+
+  it('shows validation message in follow-up after "Not really"', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('joy')]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+
+    await user.click(screen.getByRole('button', { name: 'Does this resonate with your experience?' }))
+    await user.click(await screen.findByRole('button', { name: 'Not really' }))
+
+    expect(await screen.findByText(/Your felt experience is the best guide/)).toBeInTheDocument()
+    expect(screen.getByText('Would you like to explore further?')).toBeInTheDocument()
+  })
+
+  it('calls onExploreMore and onClose from follow-up', async () => {
+    const user = userEvent.setup()
+    let explored = false
+    let closed = false
+    const results = [makeResult('joy')]
+    renderModal({
+      results,
+      selections: [makeEmotion('joy')],
+      onExploreMore: () => { explored = true },
+      onClose: () => { closed = true },
+    })
+
+    await user.click(screen.getByRole('button', { name: 'Does this resonate with your experience?' }))
+    await user.click(await screen.findByRole('button', { name: 'Somewhat' }))
+    await user.click(await screen.findByRole('button', { name: 'Go back and explore' }))
+
+    expect(explored).toBe(true)
+    expect(closed).toBe(true)
+  })
+
+  it('calls onClose from follow-up stay here button', async () => {
+    const user = userEvent.setup()
+    let closed = false
+    const results = [makeResult('joy')]
+    renderModal({
+      results,
+      selections: [makeEmotion('joy')],
+      onClose: () => { closed = true },
+    })
+
+    await user.click(screen.getByRole('button', { name: 'Does this resonate with your experience?' }))
+    await user.click(await screen.findByRole('button', { name: 'Not really' }))
+    await user.click(await screen.findByRole('button', { name: "That's okay for now" }))
+
+    expect(closed).toBe(true)
+  })
+
+  it('calls onSessionComplete with reflection answer on close', async () => {
+    const user = userEvent.setup()
+    let sessionData: Record<string, unknown> | null = null
+    const results = [makeResult('joy')]
+    renderModal({
+      results,
+      selections: [makeEmotion('joy')],
+      onSessionComplete: (data) => { sessionData = data },
+    })
+
+    await user.click(screen.getByRole('button', { name: 'Does this resonate with your experience?' }))
+    await user.click(await screen.findByRole('button', { name: 'Yes' }))
+    await user.click(await screen.findByRole('button', { name: 'Close' }))
+
+    expect(sessionData).toEqual({ reflectionAnswer: 'yes', interventionResponse: null })
+  })
+
+  it('shows breathing offer for high-arousal results in info panel', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('anger', { arousal: 0.8, valence: -0.5 })]
+    renderModal({ results, selections: [makeEmotion('anger')] })
+
+    await user.click(screen.getByRole('button', { name: 'Show more context' }))
+    expect(screen.getByText(/something calming/)).toBeInTheDocument()
+  })
+
+  it('shows savoring offer for pleasant-only results in info panel', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('joy', { arousal: 0.3, valence: 0.8 })]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+
+    await user.click(screen.getByRole('button', { name: 'Show more context' }))
+    expect(screen.getByText(/savor/)).toBeInTheDocument()
+  })
+
+  it('uses fallback a11y title when no selections', () => {
+    renderModal({ selections: [], results: [makeResult('joy')] })
+    expect(document.getElementById('result-modal-title')).toHaveTextContent('Analysis results dialog')
   })
 })

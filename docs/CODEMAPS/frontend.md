@@ -237,6 +237,7 @@ Used by: Dimensional model.
 - Selection display: colored pills with emotion color background/border (replaces verbose text)
 - Renders `AnalysisResult[]` via `ResultCard` components (tighter spacing: `mb-3`, `p-3`)
 - CrisisBanner renders first (above results) when crisis tier detected
+- Graduated crisis access: tier1-3 show crisis banner alongside all features (AI link, opposite action, micro-interventions); only tier4 pre-acknowledgment gates features
 - Narrative synthesis paragraph via `synthesize(results, language)`
 - Crisis tier detection + temporal escalation via `escalateCrisisTier`
 - Suggestions section: bridge + opposite action grouped in single `space-y-2` block
@@ -255,7 +256,7 @@ Used by: Dimensional model.
 - Receives `tier` (CrisisTier) and `crisisT` (i18n strings) as props
 - Tier 1: warm invitation with helpline numbers
 - Tier 2/3: auto-expanded 5-4-3-2-1 grounding technique
-- Tier 4: red emergency variant, explicit acknowledgment gate in ResultModal, AI link suppressed
+- Tier 4: red emergency variant, explicit acknowledgment gate in ResultModal (AI link, opposite action, micro-interventions gated behind ack; available after user acknowledges)
 - Helpline link: full-width 48px CTA (amber tiers 1-3, red for tier 4)
 
 ### model-bridges.ts (`src/components/model-bridges.ts`)

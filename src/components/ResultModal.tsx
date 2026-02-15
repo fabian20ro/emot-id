@@ -118,15 +118,15 @@ export function ResultModal({
     [currentModelId, results, bridgesT],
   )
 
-  // Opposite action suggestion (DBT) — skip during crisis
+  // Opposite action suggestion (DBT) — only gate behind tier4 acknowledgement
   const oppositeAction = useMemo(() => {
-    if (crisisTier !== 'none') return null
+    if (requiresTier4Acknowledge) return null
     return getOppositeAction(results.map((r) => r.id), language)
-  }, [results, language, crisisTier])
+  }, [results, language, requiresTier4Acknowledge])
 
-  // Determine if a micro-intervention should be offered (skip during crisis)
+  // Determine if a micro-intervention should be offered — only gate behind tier4 acknowledgement
   const interventionType = useMemo(() => {
-    if (crisisTier !== 'none') return null
+    if (requiresTier4Acknowledge) return null
     const arousals = results.map((r) => r.arousal).filter((a): a is number => a !== undefined)
     const avgArousal = arousals.length > 0 ? arousals.reduce((s, a) => s + a, 0) / arousals.length : undefined
     const valences = results.map((r) => r.valence).filter((v): v is number => v !== undefined)
@@ -134,7 +134,7 @@ export function ResultModal({
     const hasNegative = valences.some((v) => v < -0.1)
     const isMixed = hasPositive && hasNegative
     return getInterventionType(avgArousal, hasPositive, hasNegative, isMixed)
-  }, [results, crisisTier])
+  }, [results, requiresTier4Acknowledge])
 
   const getAILink = () => {
     if (results.length === 0) return '#'
@@ -179,7 +179,7 @@ export function ResultModal({
   const selectedEmotionTitle = selections.map((s) => s.label[language]).join(', ')
   const modalA11yTitle = selectedEmotionTitle || modalT.a11yTitle || 'Analysis results dialog'
   const hasSecondaryInfo = Boolean(
-    (!hasCrisis && analyzeT.aiWarning)
+    (!requiresTier4Acknowledge && analyzeT.aiWarning)
     || synthesisText
     || oppositeAction
     || interventionType
@@ -289,7 +289,7 @@ export function ResultModal({
 
                   {!requiresTier4Acknowledge && (
                     <div className="pt-1 space-y-1.5">
-                      {!hasCrisis && (
+                      {!requiresTier4Acknowledge && (
                         <a
                           href={getAILink()}
                           target="_blank"
@@ -315,7 +315,7 @@ export function ResultModal({
                           >
                             {(closeInfo) => (
                               <div className="space-y-3">
-                                {!hasCrisis && analyzeT.aiWarning && (
+                                {!requiresTier4Acknowledge && analyzeT.aiWarning && (
                                   <p className="text-xs text-gray-400">
                                     {analyzeT.aiWarning}
                                   </p>

@@ -82,7 +82,8 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 - **`getOppositeAction(emotionIds, language)`**: DBT-based opposite action suggestion
 - Pattern matching: shame→approach, fear→gradual exposure, anger→avoidance+kindness, sadness→activation, guilt→repair, jealousy→gratitude, loneliness→reach out
 - Returns bilingual string or null (no match for purely positive emotions)
-- Displayed in ResultModal amber box
+- Displayed in ResultModal amber box within info panel
+- Available during tier1-3 crisis (graduated access — DBT tools are designed for distress); only gated during tier4 pre-acknowledgment
 
 ## Model Implementations
 

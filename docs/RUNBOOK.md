@@ -73,12 +73,15 @@ Current top-level i18n sections: `app`, `menu`, `selectionBar`, `analyze`, `moda
 
 Crisis tiers are determined by `getCrisisTier()` in `src/models/distress.ts`:
 - **tier1** — 1 high-distress match (warm invitation)
-- **tier2** — 2+ high-distress matches (amber alert)
-- **tier3** — specific severe combinations (most direct), e.g. despair+helpless, shame+worthless
+- **tier2** — 2+ high-distress matches (amber alert with grounding)
+- **tier3** — specific severe pairs (most direct), e.g. despair+helpless, shame+worthless
+- **tier4** — high-risk triples (emergency), e.g. despair+worthless+empty — requires explicit acknowledgment before results shown
+
+**Graduated access**: Tier1-3 show crisis banner alongside all features (AI link, opposite action, micro-interventions). Only tier4 pre-acknowledgment gates features behind an acknowledgment wall; they become available after the user acknowledges.
 
 High-distress IDs: `despair`, `rage`, `terror`, `grief`, `shame`, `loathing`, `worthless`, `helpless`, `apathetic`, `empty`, `powerless`, `abandoned`, `victimized`, `numb`, `violated`, `depressed`, `distressed`.
 
-Temporal escalation in `src/data/temporal-crisis.ts` requires 3+ tier2/3 sessions in 7 days.
+Temporal escalation in `src/data/temporal-crisis.ts` requires 3+ tier2/3/4 sessions in 7 days.
 
 ### Debug somatic scoring
 

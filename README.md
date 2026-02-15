@@ -9,7 +9,7 @@ Interactive PWA for identifying and exploring emotions through multiple classifi
 - **Multiple models** — Explore emotions through Plutchik's wheel (dyad combinations), Emotion Wheel (hierarchical drill-down), Body Map (physical sensations), or Emotional Space (2D valence/arousal)
 - **Select emotions** — Tap bubbles, body regions, or scatter plot dots that resonate with your current state
 - **Discover patterns** — The app detects dyads, somatic patterns, and emotional complexity
-- **Safety-aware** — Tiered crisis detection with grounding techniques for high-distress combinations
+- **Safety-aware** — 4-tier crisis detection with graduated access (contextualizes without gatekeeping) and grounding techniques
 - **Explore further** — One-tap Google query generation from your selected emotions
 
 ## Features

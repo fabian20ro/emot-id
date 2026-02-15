@@ -128,8 +128,10 @@ When daily reminders are enabled
 
 **Single-session** — `src/models/distress.ts`:
 - **`HIGH_DISTRESS_IDS`**: Set of emotion IDs indicating high distress
-- **`TIER3_COMBOS`**: Specific pairs triggering tier 3 (most severe) crisis response
-- **`getCrisisTier(resultIds)`**: Returns `'none' | 'tier1' | 'tier2' | 'tier3' | 'tier4'` (tier4 = high-risk triple patterns)
+- **`TIER3_COMBOS`**: Specific pairs triggering tier 3 crisis response
+- **`TIER4_COMBOS`**: High-risk triples triggering tier 4 emergency response
+- **`getCrisisTier(resultIds)`**: Returns `'none' | 'tier1' | 'tier2' | 'tier3' | 'tier4'`
+- **Graduated access**: Tier1-3 show crisis banner alongside all features (AI link, opposite action, micro-interventions). Only tier4 pre-acknowledgment gates features behind an acknowledgment wall.
 
 **Temporal pattern** — `src/data/temporal-crisis.ts`:
 - **`hasTemporalCrisisPattern(sessions)`**: 3+ tier2/3/4 sessions in 7-day window
