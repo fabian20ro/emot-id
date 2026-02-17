@@ -289,16 +289,14 @@ export function ResultModal({
 
                   {!requiresTier4Acknowledge && (
                     <div className="pt-1 space-y-1.5">
-                      {!requiresTier4Acknowledge && (
-                        <a
-                          href={getAILink()}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block w-full py-3 px-6 rounded-xl font-semibold text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 transition-all"
-                        >
-                          {analyzeT.exploreAI ?? 'Explore with AI'} &rarr;
-                        </a>
-                      )}
+                      <a
+                        href={getAILink()}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full py-3 px-6 rounded-xl font-semibold text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 transition-all"
+                      >
+                        {analyzeT.exploreAI ?? 'Explore with AI'} &rarr;
+                      </a>
 
                       {results.length > 0 && (
                         <div className="flex items-center justify-center gap-1">
@@ -315,7 +313,7 @@ export function ResultModal({
                           >
                             {(closeInfo) => (
                               <div className="space-y-3">
-                                {!requiresTier4Acknowledge && analyzeT.aiWarning && (
+                                {analyzeT.aiWarning && (
                                   <p className="text-xs text-gray-400">
                                     {analyzeT.aiWarning}
                                   </p>
