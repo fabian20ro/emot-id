@@ -1,177 +1,73 @@
-# Emot-ID Lessons Memory (Observational Mechanism)
+# Lessons Learned
 
-Purpose: maintain durable project memory with stable, compressible context instead of a growing list of full postmortems.
+> This file is maintained by AI agents working on this project.
+> It captures validated, reusable insights discovered during development.
+> **Read this file at the start of every task. Update it at the end of every iteration.**
 
-## Mechanism
+## How to Use This File
 
-This file now uses an observational-memory workflow:
+### Reading (Start of Every Task)
+Before starting any work, read this file to avoid repeating known mistakes
+and to leverage proven approaches.
 
-1. Raw Incident Buffer: recent, high-fidelity failures or rework events.
-2. Observation Log: compressed, dated, prioritized facts extracted from incidents.
-3. Reflection Log: periodic condensation/reorganization of observations.
+### Writing (End of Every Iteration)
+After completing a task or iteration, evaluate whether any new insight was
+gained that would be valuable for future sessions. If yes, add it to the
+appropriate category below.
 
-The goal is to preserve decisions and prevention rules while keeping memory small, stable, and easy to scan.
+### Promotion from Iteration Log
+Patterns that appear 2+ times in `ITERATION_LOG.md` should be promoted
+here as a validated lesson.
 
-## Runbook
+### Pruning
+If a lesson becomes obsolete (e.g., a dependency was removed, an API changed),
+move it to the Archive section at the bottom with a date and reason.
 
-### Observer cycle (incident -> observations)
+---
 
-Trigger Observer when either condition is true:
+## Architecture & Design Decisions
 
-- Raw Incident Buffer has 8+ incidents, or
-- Raw Incident Buffer exceeds about 3,000 words.
+**[2026-02-07]** Planning drift occurs when priority docs are inferred instead of read — Re-read `ANALYSIS.md` before ordering work. Quote exact section IDs/phase numbers when mapping priorities. Treat planning docs as authoritative artifacts.
 
-Observer actions:
+**[2026-02-07]** Mobile clipping/overlap issues come from weak height constraints — Enforce explicit parent-child height chains (`h-full`, `min-h-0`) and normal-flow layout. Prefer structural sizing fixes over hardcoded transforms. Keep touch targets >=44px (>=48px for dense chip rows).
 
-1. Convert incidents into dated observations.
-2. Keep event/decision details, remove narrative filler.
-3. Extract explicit prevention checklists.
-4. Move processed incidents out of the Raw Incident Buffer.
+## Code Patterns & Pitfalls
 
-Observation format:
+**[2026-02-07]** Temporary script format must match module mode — `.js` + `require(...)` fails in `"type": "module"` repos. Use `.cjs` for CommonJS temporary scripts. Always check `package.json` module type before writing temp scripts.
 
-```
-Date: YYYY-MM-DD
-- [P1|P2|P3] HH:MM concise observation
-  - Evidence:
-  - Decision:
-  - Prevention checklist:
-    - ...
-```
+**[2026-02-07]** Long `node -e` commands are brittle and expensive to debug — Quoting/syntax breakage in large inline commands causes repeated iterations. Move complex logic into script files. Reserve `node -e` for short commands only.
 
-Priority scale:
+## Testing & Quality
 
-- `P1`: likely to cause immediate rework/regression.
-- `P2`: recurring process/tooling friction.
-- `P3`: useful optimization/cleanup guidance.
+**[2026-02-07]** Preference tests become flaky when bypassing storage facade — Direct `localStorage` writes did not align with app read path. Mock/assert through `storage.get()` for behavior tests. Keep direct `localStorage` assertions for storage-layer tests only.
 
-### Reflector cycle (observations -> reflected memory)
+**[2026-02-07]** Duplicate text in UI requires scoped assertions — Single-match queries (`getByText`) fail where duplicate labels are expected. Use scoped or multi-match queries. Validate text uniqueness before using `getByText` single-match.
 
-Trigger Reflector when either condition is true:
+**[2026-02-07]** Build diagnostics should separate language correctness from toolchain instability — `npm run build` can fail in SW/PWA stage despite passing `tsc` and tests. Run `npx tsc -b` and tests as primary correctness gates. Report persistent plugin failures separately from app regressions.
 
-- Observation Log has 40+ entries, or
-- Observation Log exceeds about 8,000 words.
+**[2026-02-07]** Mobile visual fixes require measurement-backed validation — Repeated iterations result from unmeasured visual assumptions. Pair screenshots with scripted geometry checks at `393x742`. Capture before/after visuals and numeric bounds.
 
-Reflector actions:
+## Performance & Infrastructure
 
-1. Merge duplicates and superseded observations.
-2. Group by durable themes.
-3. Promote persistent rules into "Active Guardrails".
-4. Keep original dates and preserve any unresolved risks.
+**[2026-02-07]** Browser automation can fail due to missing expected channel/runtime — Playwright MCP expected Chrome path unavailable. Verify runtime first, switch to local Playwright binaries if missing. Check browser availability before UI audits. Keep a fallback scripted audit path ready.
 
-### Consumption gate (required before non-trivial work)
+**[2026-02-07]** Sandbox restrictions can block local server/browser startup — `EPERM` during dev server and browser launch. Escalate as soon as a required command fails under sandbox rules. Assume UI audit setup may need escalation.
 
-1. Read `Active Guardrails`.
-2. Read the most recent `P1`/`P2` observations.
-3. If task touches mobile UI, storage, tests, build, or docs, read that section's reflected rules first.
+## Dependencies & External Services
 
-## Active Guardrails (Reflected)
+**[2026-02-07]** Documentation accuracy depends on source verification — Stale behavior statements required follow-up fixes. Verify implementation details against actual source before writing docs. Map each doc claim to file/function evidence.
 
-- Verify environment/runtime constraints early (browser/runtime/sandbox) and escalate blocked commands immediately.
-- Prefer script files over fragile one-liners for multi-step automation.
-- In module projects, default ad-hoc CommonJS scripts to `.cjs` when using `require(...)`.
-- Re-read source-of-truth planning docs before reprioritization (`ANALYSIS.md`, `TODOS.md`).
-- Verify doc claims against concrete source locations before writing/updating docs.
-- For mobile UI fixes, validate at `393x742` with both screenshots and measurable bounds.
-- For preference behavior tests, assert through the storage facade used by app code.
-- In UI tests, use scoped or count-based queries when duplicate text is expected.
-- Separate TypeScript correctness checks from bundler/PWA plugin failures during validation.
-- Prefer structural layout fixes over positional hacks in constrained mobile containers.
+**[2026-02-17]** ESLint 10 blocked by typescript-eslint peer dependency — `@eslint/js@10` and `eslint@10` cannot be installed while `typescript-eslint` still requires `eslint ^8.57.0 || ^9.0.0`. Skip these until `typescript-eslint` releases a compatible version. Safe to update all other major bumps (`globals`, `jsdom`, `eslint-plugin-react-refresh`, `@types/node`) independently.
 
-## Observation Log (Seeded from prior lessons)
+**[2026-02-17]** Always run `npm outdated` before and after updates — Distinguishes semver-compatible updates (`npm update`) from major version bumps (explicit `npm install pkg@latest`). Check peer dependency conflicts before batching major bumps.
 
-Date: 2026-02-07
+## Process & Workflow
 
-- [P1] 09:10 Browser automation can fail due to missing expected channel/runtime.
-  - Evidence: Playwright MCP expected Chrome path unavailable.
-  - Decision: verify runtime first, switch to local Playwright binaries if missing.
-  - Prevention checklist:
-    - Check browser availability before UI audits.
-    - Keep a fallback scripted audit path ready.
+<!-- No entries yet -->
 
-- [P1] 09:14 Sandbox restrictions can block local server/browser startup.
-  - Evidence: `EPERM` during dev server and browser launch.
-  - Decision: escalate as soon as a required command fails under sandbox rules.
-  - Prevention checklist:
-    - Assume UI audit setup may need escalation.
-    - Re-run blocked commands with clear justification immediately.
+---
 
-- [P2] 09:18 Temporary script format must match module mode.
-  - Evidence: `.js` + `require(...)` failed in `"type": "module"` repo.
-  - Decision: use `.cjs` for CommonJS temporary scripts.
-  - Prevention checklist:
-    - Check `package.json` module type before writing temp scripts.
+## Archive
 
-- [P2] 09:22 Long `node -e` commands are brittle and expensive to debug.
-  - Evidence: quoting/syntax breakage in large inline commands.
-  - Decision: move complex logic into script files.
-  - Prevention checklist:
-    - Reserve `node -e` for short commands only.
-
-- [P1] 09:26 Planning drift occurs when priority docs are inferred instead of read.
-  - Evidence: reprioritization had to be corrected after feedback.
-  - Decision: treat planning docs as authoritative artifacts.
-  - Prevention checklist:
-    - Re-read `ANALYSIS.md` and `TODOS.md` before ordering work.
-    - Quote exact section IDs/phase numbers when mapping priorities.
-
-- [P2] 09:31 Documentation accuracy depends on source verification.
-  - Evidence: stale behavior statements required follow-up fixes.
-  - Decision: verify implementation details before writing docs.
-  - Prevention checklist:
-    - Map each doc claim to file/function evidence.
-
-- [P1] 09:36 Mobile visual fixes require measurement-backed validation.
-  - Evidence: repeated iterations due to unmeasured visual assumptions.
-  - Decision: pair screenshots with scripted geometry checks at `393x742`.
-  - Prevention checklist:
-    - Capture before/after visuals and numeric bounds.
-
-- [P2] 09:40 Preference tests became flaky when bypassing storage facade.
-  - Evidence: direct `localStorage` writes did not align with app read path.
-  - Decision: mock/assert through `storage.get()` for behavior tests.
-  - Prevention checklist:
-    - Keep direct `localStorage` assertions for storage-layer tests only.
-
-- [P2] 09:44 Duplicate text in UI requires scoped assertions.
-  - Evidence: single-match query failed where duplicate labels are expected.
-  - Decision: use scoped or multi-match queries.
-  - Prevention checklist:
-    - Validate text uniqueness before `getByText` single-match usage.
-
-- [P2] 09:49 Build diagnostics should separate language correctness from toolchain instability.
-  - Evidence: `npm run build` failed in SW/PWA stage despite passing `tsc` and tests.
-  - Decision: run `npx tsc -b` and tests as primary correctness gates.
-  - Prevention checklist:
-    - Report persistent plugin failures separately from app regressions.
-
-- [P1] 09:54 Mobile clipping/overlap issues come from weak height constraints.
-  - Evidence: visualization clipping and overlap in flex chains.
-  - Decision: enforce explicit parent-child height chains (`h-full`, `min-h-0`) and normal-flow layout.
-  - Prevention checklist:
-    - Prefer structural sizing fixes over hardcoded transforms.
-    - Keep touch targets >=44px (>=48px for dense chip rows).
-
-## Raw Incident Buffer
-
-Use this template for new incidents (append newest first):
-
-```
-### [YYYY-MM-DD HH:MM] Title
-- Context:
-- Failure:
-- Impact:
-- Immediate fix:
-- Candidate prevention checklist:
-```
-
-Current incidents: none.
-
-## References
-
-- [VentureBeat: "Observational memory" cuts AI agent costs 10x](https://venturebeat.com/data/observational-memory-cuts-ai-agent-costs-10x-and-outscores-rag-on-long-context-benchmarks/)
-- [Mastra Research: Observational Memory (95% on LongMemEval)](https://mastra.ai/research/observational-memory)
-- [Mastra Docs: Observational Memory](https://mastra.ai/docs/memory/observational-memory)
-- [LongMemEval paper (arXiv 2410.10813)](https://arxiv.org/abs/2410.10813)
-- [OpenAI Prompt Caching guide](https://platform.openai.com/docs/guides/prompt-caching)
-- [Anthropic Prompt Caching docs](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching)
+<!-- Lessons that are no longer applicable. Keep for historical context. -->
+<!-- Format: **[YYYY-MM-DD] Archived [YYYY-MM-DD]** Title — Reason for archival -->

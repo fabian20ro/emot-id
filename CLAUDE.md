@@ -36,11 +36,11 @@ Build and evolve Emot-ID as a modular, safe, clinically respectful, privacy-firs
 
 ## Lessons Loop (Required)
 
-- `LESSONS_LEARNED.md` is the project memory for execution mistakes and process fixes.
-- Treat this as a hard gate on non-trivial tasks: read relevant lessons before edits, and evaluate whether a new lesson is required before finalizing.
-- Add a new lesson entry when a failure causes rework (tooling, assumptions, process, verification gaps).
-- Keep entries concrete: context, failure, impact, corrective action, prevention checklist.
-- Before finalizing complex tasks, verify whether new lessons should be added.
+- Two-file memory system: `LESSONS_LEARNED.md` (curated wisdom) + `ITERATION_LOG.md` (append-only session journal).
+- **Start of task:** Read `LESSONS_LEARNED.md` before writing any code.
+- **End of iteration:** Always append to `ITERATION_LOG.md`. If the insight is reusable, also add to `LESSONS_LEARNED.md`.
+- **Pattern detection:** If the same issue appears 2+ times in the log, promote it to a lesson.
+- Never delete from `ITERATION_LOG.md`. Obsolete lessons go to the Archive section in `LESSONS_LEARNED.md`.
 
 ## Skills and Subagents
 
