@@ -12,11 +12,12 @@ interface AnalyzeButtonProps {
 export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0 }: AnalyzeButtonProps) {
   const { t } = useLanguage()
 
-  const disabledText = modelId === MODEL_IDS.SOMATIC
-    ? t.analyze.buttonDisabledSomatic
-    : modelId === MODEL_IDS.DIMENSIONAL
-      ? (t.analyze.buttonDisabledDimensional ?? t.analyze.buttonDisabledDefault)
-      : t.analyze.buttonDisabledDefault
+  let disabledText = t.analyze.buttonDisabledDefault
+  if (modelId === MODEL_IDS.SOMATIC) {
+    disabledText = t.analyze.buttonDisabledSomatic
+  } else if (modelId === MODEL_IDS.DIMENSIONAL) {
+    disabledText = t.analyze.buttonDisabledDimensional ?? t.analyze.buttonDisabledDefault
+  }
 
   const label = selectionCount > 0
     ? `${t.analyze.button} (${selectionCount})`
