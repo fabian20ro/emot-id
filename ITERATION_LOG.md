@@ -20,6 +20,23 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-02-24] Restructure AI agent config per setup guide
+
+**Context:** Applied research-backed AI agent configuration guide (Evaluating AGENTS.md, SkillsBench) to restructure project config files. Goal: remove discoverable content from agent context, keep only non-discoverable policy/constraints.
+**What happened:**
+- Swapped CLAUDE.md ↔ AGENTS.md roles: CLAUDE.md is now a redirect ("Read AGENTS.md"), AGENTS.md is the canonical bootstrap file.
+- Trimmed AGENTS.md from 151 lines (old CLAUDE.md content) to ~65 lines. Removed: tech stack listing, quality gate commands, persistence contracts table (was already stale — 6 keys documented vs 8 in storage.ts), new model checklist, UI interaction rules, docs map. All discoverable from codebase.
+- Preserved: operating priorities, safety guardrails (all 5), data integrity notes (all 5), constraints (client-only, i18n mandate, portal/focus-trap, crisis determinism), learning system, workflow essentials.
+- Added 2 new sub-agents: `planner.md` (implementation planning for multi-step features) and `agent-creator.md` (meta-agent for creating new specialists).
+- Kept all 4 existing project-specific agents unchanged (psychologist, senior-software-engineer, code-simplifier, ux-expert).
+- Did NOT add architect.md — senior-software-engineer already covers that role.
+- Fixed phantom reference to nonexistent `TODOS.md` (replaced with `ANALYSIS.md`).
+**Outcome:** Success. Config files are leaner, policy-focused. Zero code changes — build/tests unaffected.
+**Insight:** The Persistence Contracts table being stale (6 vs 8 keys) validated the guide's core premise: duplicating discoverable info creates drift. The portal/focus-trap invariant was kept despite being visible in code because the WebKit stacking context bug it prevents is non-obvious.
+**Promoted to Lessons Learned:** No (one-time restructuring, not a reusable technical pattern)
+
+---
+
 ### [2026-02-17] Update dependencies to latest versions
 
 **Context:** Branch `claude/update-dependencies-1g80E` — update all project dependencies to current versions.
