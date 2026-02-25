@@ -6,6 +6,8 @@ export const HIGH_DISTRESS_IDS = new Set([
   // Additional distress signals:
   'empty', 'powerless', 'abandoned', 'victimized', 'numb',
   'violated', 'depressed', 'distressed',
+  // Expanded wheel L2 distress emotions:
+  'hopeless', 'anguished', 'panicked',
 ])
 
 /** Specific combinations that indicate tier 3 (most severe) crisis */
@@ -20,6 +22,8 @@ export const TIER3_COMBOS: ReadonlyArray<readonly [string, string]> = [
   ['rage', 'helpless'],
   ['depressed', 'helpless'],
   ['depressed', 'worthless'],
+  ['despair', 'hopeless'],
+  ['depressed', 'hopeless'],
 ]
 
 /** Specific high-risk triples that indicate tier 4 crisis */
@@ -29,6 +33,8 @@ export const TIER4_COMBOS: ReadonlyArray<readonly [string, string, string]> = [
   ['despair', 'helpless', 'numb'],
   ['shame', 'worthless', 'empty'],
   ['depressed', 'worthless', 'helpless'],
+  ['despair', 'hopeless', 'empty'],
+  ['depressed', 'hopeless', 'worthless'],
 ]
 
 export type CrisisTier = 'none' | 'tier1' | 'tier2' | 'tier3' | 'tier4'

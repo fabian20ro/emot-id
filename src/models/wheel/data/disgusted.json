@@ -1,0 +1,295 @@
+{
+  "disgusted": {
+    "id": "disgusted",
+    "label": {
+      "ro": "Dezgustat",
+      "en": "Disgusted"
+    },
+    "color": "#C888B8",
+    "level": 0,
+    "children": [
+      "disapproving",
+      "disappointed_disg",
+      "awful",
+      "repelled"
+    ],
+    "description": {
+      "ro": "Dezgustul este reactia viscerala de respingere a ceea ce percepi ca toxic, imoral sau contaminant. Corpul reactioneaza cu retragere — intoarci capul, strangi nasul si vrei sa te indepartezi. Dezgustul iti protejeaza integritatea, dar poate deveni o bariera rigida care te separa de empatia si compasiunea necesare intelegerii umane.",
+      "en": "Disgust is the visceral rejection response to what you perceive as toxic, immoral, or contaminating. The body reacts with withdrawal — you turn your head, wrinkle your nose, and want to distance yourself. Disgust protects your integrity, but can become a rigid barrier separating you from the empathy and compassion necessary for human understanding."
+    },
+    "needs": {
+      "ro": "distanta si integritate",
+      "en": "distance and integrity"
+    }
+  },
+  "disapproving": {
+    "id": "disapproving",
+    "label": {
+      "ro": "Dezaprobator",
+      "en": "Disapproving"
+    },
+    "color": "#D49ECA",
+    "level": 1,
+    "parent": "disgusted",
+    "children": [
+      "judgmental",
+      "embarrassed_disg",
+      "contemptuous"
+    ],
+    "description": {
+      "ro": "Dezaprobarea este evaluarea negativa a comportamentului sau alegerilor cuiva — simti ca ceva nu este corect si vrei sa iti exprimi nemultumirea. Este mecanismul social prin care iti comunici standardele. Dezaprobarea poate fi constructiva cand este exprimata cu respect sau distructiva cand devine judecata permanenta.",
+      "en": "Disapproval is the negative evaluation of someone's behavior or choices — you feel something isn't right and want to express your dissatisfaction. It is the social mechanism through which you communicate your standards. Disapproval can be constructive when expressed with respect or destructive when it becomes permanent judgment."
+    },
+    "needs": {
+      "ro": "standarde clare si exprimare respectuoasa",
+      "en": "clear standards and respectful expression"
+    }
+  },
+  "disappointed_disg": {
+    "id": "disappointed_disg",
+    "label": {
+      "ro": "Dezamagit",
+      "en": "Disappointed"
+    },
+    "color": "#D49ECA",
+    "level": 1,
+    "parent": "disgusted",
+    "children": [
+      "appalled",
+      "revolted"
+    ],
+    "description": {
+      "ro": "Dezamagirea in contextul dezgustului este reactia la ceva care nu doar nu corespunde asteptarilor, ci le incalca intr-un mod care iti provoaca repulsie. Este sentimentul de a fi dezamagit la un nivel visceral — nu doar intelectual. Aceasta forma de dezamagire te face sa vrei sa te retragi complet din situatie.",
+      "en": "Disappointment in the context of disgust is the reaction to something that not only doesn't meet expectations, but violates them in a way that provokes revulsion. It is the feeling of being disappointed at a visceral level — not just intellectual. This form of disappointment makes you want to withdraw completely from the situation."
+    },
+    "needs": {
+      "ro": "spatiu de procesare si retragere",
+      "en": "space to process and withdrawal"
+    }
+  },
+  "awful": {
+    "id": "awful",
+    "label": {
+      "ro": "Groaznic",
+      "en": "Awful"
+    },
+    "color": "#D49ECA",
+    "level": 1,
+    "parent": "disgusted",
+    "children": [
+      "nauseated",
+      "detestable"
+    ],
+    "description": {
+      "ro": "A te simti groaznic este o stare de disconfort profund in care totul pare gresit si respingator — inclusiv propria ta stare. Este o combinatie de dezgust, oboseala si demoralizare. Cand te simti groaznic, lumea pare lipsite de culoare si fiecare sarcina pare o povara enorma. Este un semnal ca ai nevoie de grija si de compasiune, nu de critica.",
+      "en": "Feeling awful is a state of deep discomfort where everything seems wrong and repulsive — including your own state. It is a combination of disgust, fatigue, and demoralization. When you feel awful, the world seems colorless and every task seems an enormous burden. It is a signal that you need care and compassion, not criticism."
+    },
+    "needs": {
+      "ro": "grija si compasiune",
+      "en": "care and compassion"
+    }
+  },
+  "repelled": {
+    "id": "repelled",
+    "label": {
+      "ro": "Respins",
+      "en": "Repelled"
+    },
+    "color": "#D49ECA",
+    "level": 1,
+    "parent": "disgusted",
+    "children": [
+      "hesitant",
+      "horrified",
+      "repulsed"
+    ],
+    "description": {
+      "ro": "A te simti respins este reactia instinctiva de a te indeparta de ceva care iti provoaca o aversiune puternica. Este corpul tau care iti spune sa fugi de ceea ce percepe ca potential daunator. Repulsia poate fi fizica, emotionala sau morala si serveste ca un sistem de avertizare impotriva contactului cu surse de contaminare.",
+      "en": "Feeling repelled is the instinctive reaction to distance yourself from something that provokes strong aversion. It is your body telling you to flee from what it perceives as potentially harmful. Repulsion can be physical, emotional, or moral and serves as a warning system against contact with contamination sources."
+    },
+    "needs": {
+      "ro": "distanta si discernamant",
+      "en": "distance and discernment"
+    }
+  },
+  "judgmental": {
+    "id": "judgmental",
+    "label": {
+      "ro": "Critic",
+      "en": "Judgmental"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disapproving",
+    "description": {
+      "ro": "A fi critic in mod judicativ inseamna a evalua constant pe ceilalti prin prisma standardelor tale, adesea fara compasiune sau intelegere a contextului lor. Este o pozitie de superioritate morala care iti ofera iluzia controlului. Judecata cronica adesea reflecta o severitate la fel de mare fata de tine insuti — critica exterioara mascheaza autocritica interioara.",
+      "en": "Being judgmental means constantly evaluating others through the lens of your standards, often without compassion or understanding of their context. It is a position of moral superiority that gives you the illusion of control. Chronic judgment often reflects equally great severity toward yourself — external criticism masks internal self-criticism."
+    },
+    "needs": {
+      "ro": "examinare de sine si compasiune",
+      "en": "self-examination and compassion"
+    }
+  },
+  "embarrassed_disg": {
+    "id": "embarrassed_disg",
+    "label": {
+      "ro": "Jenat",
+      "en": "Embarrassed"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disapproving",
+    "description": {
+      "ro": "Jena in contextul dezgustului este o forma de rusine sociala — te simti expus si neconfortabil nu doar din cauza propriei actiuni, ci din cauza comportamentului altcuiva care iti provoaca repulsie. Este sentimentul de a fi asociat cu ceva care iti incalca valorile si de a te teme ca altii te vor judeca pentru aceasta asociere.",
+      "en": "Embarrassment in the context of disgust is a form of social shame — you feel exposed and uncomfortable not just because of your own action, but because of someone else's behavior that provokes revulsion. It is the feeling of being associated with something that violates your values and fearing others will judge you for this association."
+    },
+    "needs": {
+      "ro": "distanta si reafirmarea valorilor",
+      "en": "distance and value reaffirmation"
+    }
+  },
+  "appalled": {
+    "id": "appalled",
+    "label": {
+      "ro": "Ingrozit",
+      "en": "Appalled"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disappointed_disg",
+    "description": {
+      "ro": "A fi ingrozit este reactia la ceva atat de grav sau de gresit incat iti taie respiratia. Combina socul moral cu dezgustul profund. Este emotia care apare in fata cruzimii, coruptiei sau a incalcarilor grave ale demnitatii umane. Ingrozirea te poate mobiliza catre actiune sau te poate paraliza sub greutatea a ceea ce ai descoperit.",
+      "en": "Being appalled is the reaction to something so grave or wrong it takes your breath away. It combines moral shock with deep disgust. It is the emotion that arises in the face of cruelty, corruption, or grave violations of human dignity. Being appalled can mobilize you toward action or paralyze you under the weight of what you've discovered."
+    },
+    "needs": {
+      "ro": "claritate morala si raspuns cu scop",
+      "en": "moral clarity and purposeful response"
+    }
+  },
+  "revolted": {
+    "id": "revolted",
+    "label": {
+      "ro": "Revoltat",
+      "en": "Revolted"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disappointed_disg",
+    "description": {
+      "ro": "Revolta este furia amestecata cu dezgustul — refuzul vehement de a accepta o situatie pe care o percepi ca profund nedreapta sau gresita. Revolta te impinge sa te opui, sa protestezi si sa lupti pentru schimbare. Este emotia care sta la baza miscarilor sociale si a transformarilor colective. Revolta sanatoasa este indreptata spre sisteme, nu spre persoane.",
+      "en": "Revolt is anger mixed with disgust — the vehement refusal to accept a situation you perceive as profoundly unfair or wrong. Revolt pushes you to oppose, protest, and fight for change. It is the emotion underlying social movements and collective transformations. Healthy revolt is directed toward systems, not toward individuals."
+    },
+    "needs": {
+      "ro": "actiune constructiva si dreptate",
+      "en": "constructive action and justice"
+    }
+  },
+  "nauseated": {
+    "id": "nauseated",
+    "label": {
+      "ro": "Greata",
+      "en": "Nauseated"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "awful",
+    "description": {
+      "ro": "Greata emotionala este raspunsul corporal al dezgustului la intensitate maxima — stomacul se rastoarna, corpul vrea sa expulzeze ceea ce este toxic. Poate fi provocata de imagini, comportamente sau situatii care iti incalca profund valorile. Greata iti reaminteste ca corpul si mintea sunt inseparabile — dezgustul psihologic se manifesta fizic.",
+      "en": "Emotional nausea is the bodily response of disgust at maximum intensity — the stomach turns, the body wants to expel what is toxic. It can be provoked by images, behaviors, or situations that deeply violate your values. Nausea reminds you that body and mind are inseparable — psychological disgust manifests physically."
+    },
+    "needs": {
+      "ro": "distanta fizica si ancorare",
+      "en": "physical distance and grounding"
+    }
+  },
+  "detestable": {
+    "id": "detestable",
+    "label": {
+      "ro": "Detestabil",
+      "en": "Detestable"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "awful",
+    "description": {
+      "ro": "A simti ca ceva este detestabil inseamna a experimenta o repulsie totala si o condamnare fara echivoc. Este forma cea mai intensa a dezgustului moral. Cand ceva ti se pare detestabil, nu mai vezi nuante — doar respingere absoluta. Aceasta intensitate poate fi justificata in fata raului evident, dar necesita examinare constienta pentru a nu deveni dezumanizare.",
+      "en": "Feeling something is detestable means experiencing total revulsion and unequivocal condemnation. It is the most intense form of moral disgust. When something seems detestable to you, you no longer see nuances — only absolute rejection. This intensity can be justified in the face of evident evil, but requires conscious examination to avoid becoming dehumanization."
+    },
+    "needs": {
+      "ro": "discernamant si examinare constienta",
+      "en": "discernment and conscious examination"
+    }
+  },
+  "hesitant": {
+    "id": "hesitant",
+    "label": {
+      "ro": "Ezitant",
+      "en": "Hesitant"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "repelled",
+    "description": {
+      "ro": "Ezitarea este oscilarea intre actiune si retragere — vrei sa te apropii dar ceva te respinge. Este un semnal ca exista un conflict intern intre dorinta si aversiune. Ezitarea te protejeaza de actiuni premature, dar poate deveni paralizanta daca nu este rezolvata. Ascultarea ambelor parti ale conflictului interior aduce de obicei claritate.",
+      "en": "Hesitance is the oscillation between action and withdrawal — you want to approach but something repels you. It is a signal that an internal conflict exists between desire and aversion. Hesitance protects you from premature actions, but can become paralyzing if unresolved. Listening to both sides of the inner conflict usually brings clarity."
+    },
+    "needs": {
+      "ro": "ascultarea ambelor parti si claritate",
+      "en": "listening to both sides and clarity"
+    }
+  },
+  "horrified": {
+    "id": "horrified",
+    "label": {
+      "ro": "Oripilat",
+      "en": "Horrified"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "repelled",
+    "description": {
+      "ro": "Oripilarea este combinatia de groaza si dezgust — reactia la ceva atat de monstruos incat te copleseste pe toate planurile. Mintea refuza sa accepte ceea ce percepe si corpul reactioneaza cu soc. Oripilarea poate lasa amprente emotionale profunde si poate necesita procesare terapeutica pentru a fi integrata fara a te traumatiza.",
+      "en": "Being horrified is the combination of horror and disgust — the reaction to something so monstrous it overwhelms you on all levels. The mind refuses to accept what it perceives and the body reacts with shock. Being horrified can leave deep emotional imprints and may require therapeutic processing to be integrated without traumatizing you."
+    },
+    "needs": {
+      "ro": "sprijin de procesare si siguranta",
+      "en": "processing support and safety"
+    }
+  },
+  "contemptuous": {
+    "id": "contemptuous",
+    "label": {
+      "ro": "Dispretitor",
+      "en": "Contemptuous"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disapproving",
+    "description": {
+      "ro": "Dispretul este o forma rece de dezgust combinata cu superioritate morala — nu doar dezaprobi pe cineva, ci il privesti de sus, ca si cum nu ar merita consideratia ta. Cercetarile lui Gottman arata ca dispretul este unul dintre cele mai corozive moduri de a relationa, pentru ca dezumanizeaza persoana din fata ta. Dispretul iti semnaleaza ca ceva iti incalca profund valorile, dar forma lui distantata te impiedica sa comunici eficient. A recunoaste dispretul in tine este un pas curajos — te invita sa examinezi daca judecata ta protejeaza cu adevarat ceva important sau daca a devenit un zid.",
+      "en": "Contempt is a cold form of disgust combined with moral superiority — you don't just disapprove of someone, you look down on them as though they are beneath your consideration. Gottman's research shows that contempt is one of the most corrosive ways of relating, because it dehumanizes the person in front of you. Contempt signals that something deeply violates your values, but its distancing form prevents you from communicating effectively. Recognizing contempt in yourself is a courageous step — it invites you to examine whether your judgment truly protects something important or has become a wall."
+    },
+    "needs": {
+      "ro": "examinare de sine si reconectare",
+      "en": "self-examination and reconnection"
+    }
+  },
+  "repulsed": {
+    "id": "repulsed",
+    "label": {
+      "ro": "Scarbit",
+      "en": "Repulsed"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "repelled",
+    "description": {
+      "ro": "Scarba este reactia viscerala pura de respingere — un raspuns intens, aproape fizic, in care corpul tau spune \"indeparteaza asta de mine\" inainte ca mintea sa apuce sa analizeze situatia. Stomacul se contracta, pielea se infioara, tot corpul se retrage instinctiv. Scarba este unul dintre cele mai vechi mecanisme de protectie ale organismului, aparandu-te de ceea ce percepi ca toxic sau contaminant. Intensitatea ei iti arata ca o limita importanta a fost atinsa.",
+      "en": "Repulsion is the pure visceral rejection response — an intense, almost physical reaction in which your body says 'get this away from me' before your mind has time to analyze the situation. Your stomach contracts, your skin crawls, your whole body recoils instinctively. Repulsion is one of the oldest protective mechanisms of the organism, defending you from what you perceive as toxic or contaminating. Its intensity shows you that an important boundary has been reached."
+    },
+    "needs": {
+      "ro": "distanta imediata si siguranta",
+      "en": "immediate distance and safety"
+    }
+  }
+}

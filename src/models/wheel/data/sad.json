@@ -1,0 +1,527 @@
+{
+  "sad": {
+    "id": "sad",
+    "label": {
+      "ro": "Trist",
+      "en": "Sad"
+    },
+    "color": "#88A8D0",
+    "level": 0,
+    "children": [
+      "hurt",
+      "depressed",
+      "guilty",
+      "despair",
+      "vulnerable",
+      "lonely"
+    ],
+    "description": {
+      "ro": "Tristetea este raspunsul natural la pierdere si dezamagire — un semnal ca ceva important s-a schimbat sau a disparut din viata ta. Tristetea te incetineste, te intoarce spre interior si te invita sa procesezi ceea ce s-a intamplat. A-ti permite sa fii trist nu este slabiciune, ci curaj — inseamna ca esti dispus sa simti pe deplin ceea ce inseamna sa fii om.",
+      "en": "Sadness is the natural response to loss and disappointment — a signal that something important has changed or disappeared from your life. Sadness slows you down, turns you inward, and invites you to process what happened. Allowing yourself to be sad is not weakness, but courage — it means you're willing to fully feel what it means to be human."
+    },
+    "needs": {
+      "ro": "compasiune si spatiu",
+      "en": "compassion and space"
+    }
+  },
+  "hurt": {
+    "id": "hurt",
+    "label": {
+      "ro": "Ranit",
+      "en": "Hurt"
+    },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": [
+      "embarrassed_sad",
+      "disappointed_sad",
+      "wounded"
+    ],
+    "description": {
+      "ro": "A fi ranit este experienta dureroasa a unei vatamari emotionale — cineva a facut sau a spus ceva care ti-a atins un loc vulnerabil. Durerea emotionala este la fel de reala ca cea fizica si creierul o proceseaza in zone similare. Rana emotionala are nevoie de aceeasi ingrijire ca o rana fizica — recunoastere, protectie si timp pentru vindecare.",
+      "en": "Being hurt is the painful experience of emotional injury — someone did or said something that touched a vulnerable place. Emotional pain is just as real as physical pain and the brain processes it in similar areas. Emotional wounds need the same care as physical wounds — recognition, protection, and time for healing."
+    },
+    "needs": {
+      "ro": "recunoastere si grija blanda",
+      "en": "recognition and gentle care"
+    }
+  },
+  "depressed": {
+    "id": "depressed",
+    "label": {
+      "ro": "Deprimat",
+      "en": "Depressed"
+    },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": [
+      "empty",
+      "inferior_sad",
+      "hopeless"
+    ],
+    "description": {
+      "ro": "Depresia este mai mult decat tristete — este o stare pervasiva de golire emotionala in care energia, motivatia si capacitatea de a simti placere se diminueaza semnificativ. Lumea pare gri, viitorul pare fara speranta si chiar activitatile obisnuite devin coplesitoare. Depresia este o conditie medicala reala care raspunde la tratament si nu ar trebui niciodata minimizata sau ignorata.",
+      "en": "Depression is more than sadness — it is a pervasive state of emotional emptiness where energy, motivation, and the capacity to feel pleasure diminish significantly. The world seems gray, the future seems hopeless, and even ordinary activities become overwhelming. Depression is a real medical condition that responds to treatment and should never be minimized or ignored."
+    },
+    "needs": {
+      "ro": "sprijin profesional si rabdare",
+      "en": "professional support and patience"
+    }
+  },
+  "guilty": {
+    "id": "guilty",
+    "label": {
+      "ro": "Vinovat",
+      "en": "Guilty"
+    },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": [
+      "remorseful",
+      "ashamed",
+      "regretful"
+    ],
+    "description": {
+      "ro": "Vinovatia este constientizarea dureroasa ca ai facut ceva gresit sau ca ai ranit pe cineva. Spre deosebire de rusine, care ataca identitatea, vinovatia priveste comportamentul — 'am facut ceva rau', nu 'sunt rau'. Vinovatia sanatoasa te motiveaza sa repari si sa te schimbi. Vinovatia cronica si nerezolvata devine o povara care erodeaza bucuria de a trai.",
+      "en": "Guilt is the painful awareness that you did something wrong or hurt someone. Unlike shame, which attacks identity, guilt targets behavior — 'I did something bad', not 'I am bad'. Healthy guilt motivates you to repair and change. Chronic and unresolved guilt becomes a burden that erodes the joy of living."
+    },
+    "needs": {
+      "ro": "reparatie si auto-iertare",
+      "en": "repair and self-forgiveness"
+    }
+  },
+  "despair": {
+    "id": "despair",
+    "label": {
+      "ro": "Disperare",
+      "en": "Despair"
+    },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": [
+      "grief",
+      "powerless",
+      "anguished"
+    ],
+    "description": {
+      "ro": "Disperarea este starea in care speranta pare sa fi disparut complet — viitorul pare inchis si nu mai vezi nicio cale de iesire. Este una dintre cele mai intunecate experiente emotionale umane. Disperarea este un semnal de alarma ca ai nevoie urgenta de conexiune si sprijin. Chiar si in cele mai intunecate momente, o mana intinsa poate face diferenta.",
+      "en": "Despair is the state where hope seems to have completely disappeared — the future seems closed and you see no way out. It is one of the darkest human emotional experiences. Despair is an alarm signal that you urgently need connection and support. Even in the darkest moments, an outstretched hand can make the difference."
+    },
+    "needs": {
+      "ro": "conexiune si sustinere imediata",
+      "en": "connection and immediate support"
+    }
+  },
+  "vulnerable": {
+    "id": "vulnerable",
+    "label": {
+      "ro": "Vulnerabil",
+      "en": "Vulnerable"
+    },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": [
+      "fragile",
+      "victimized",
+      "defenseless"
+    ],
+    "description": {
+      "ro": "Vulnerabilitatea este starea de a fi deschis si expus la potentiala durere. Desi instinctiv cautam sa evitam vulnerabilitatea, cercetarile arata ca este poarta catre intimitate, autenticitate si conexiune profunda. A fi vulnerabil nu inseamna a fi slab — inseamna a avea curajul de a te arata asa cum esti, fara garantia ca vei fi acceptat.",
+      "en": "Vulnerability is the state of being open and exposed to potential pain. Though we instinctively seek to avoid vulnerability, research shows it is the gateway to intimacy, authenticity, and deep connection. Being vulnerable doesn't mean being weak — it means having the courage to show yourself as you are, without the guarantee of being accepted."
+    },
+    "needs": {
+      "ro": "siguranta si acceptare",
+      "en": "safety and acceptance"
+    }
+  },
+  "lonely": {
+    "id": "lonely",
+    "label": {
+      "ro": "Singur",
+      "en": "Lonely"
+    },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": [
+      "abandoned",
+      "isolated",
+      "dor",
+      "loneliness",
+      "nostalgia"
+    ],
+    "description": {
+      "ro": "Singuratatea este durerea de a fi deconectat — nu neaparat de a fi singur fizic, ci de a nu te simti vazut, inteles si conectat emotional. Singuratatea cronica este un factor de risc major pentru sanatate, comparable cu fumatul. Vindecarea singuratatii nu vine din a fi inconjurat de oameni, ci din a avea relatii in care te simti cu adevarat cunoscut.",
+      "en": "Loneliness is the pain of being disconnected — not necessarily being physically alone, but not feeling seen, understood, and emotionally connected. Chronic loneliness is a major health risk factor, comparable to smoking. Healing loneliness doesn't come from being surrounded by people, but from having relationships where you feel truly known."
+    },
+    "needs": {
+      "ro": "conexiune si prezenta",
+      "en": "connection and presence"
+    }
+  },
+  "embarrassed_sad": {
+    "id": "embarrassed_sad",
+    "label": {
+      "ro": "Jenat",
+      "en": "Embarrassed"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "hurt",
+    "description": {
+      "ro": "Jena in contextul tristetii este o rusine blanda amestecata cu vulnerabilitate — te simti expus intr-un mod care te face sa vrei sa te ascunzi. Este sentimentul de a fi vazut intr-un moment de slabiciune sau de a fi facut ceva stangaci. Jena este tranzitorie si de obicei disproportionata fata de situatie — altii o observa mult mai putin decat crezi.",
+      "en": "Embarrassment in the context of sadness is a mild shame mixed with vulnerability — you feel exposed in a way that makes you want to hide. It is the feeling of being seen in a moment of weakness or having done something clumsy. Embarrassment is transient and usually disproportionate to the situation — others notice it far less than you think."
+    },
+    "needs": {
+      "ro": "reasigurare si perspectiva",
+      "en": "reassurance and perspective"
+    }
+  },
+  "disappointed_sad": {
+    "id": "disappointed_sad",
+    "label": {
+      "ro": "Dezamagit",
+      "en": "Disappointed"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "hurt",
+    "description": {
+      "ro": "Dezamagirea in contextul tristetii este durerea calma a asteptarilor neimplinite — nu furia, ci doliul pentru ceea ce ar fi putut fi. Este acceptarea trista ca realitatea nu corespunde sperantelor tale. Dezamagirea repetata poate eroda optimismul si increderea. Procesarea constientea a dezamagirii include ajustarea asteptarilor fara a renunta la speranta.",
+      "en": "Disappointment in the context of sadness is the calm pain of unfulfilled expectations — not anger, but grief for what could have been. It is the sad acceptance that reality doesn't match your hopes. Repeated disappointment can erode optimism and trust. Conscious processing of disappointment includes adjusting expectations without giving up hope."
+    },
+    "needs": {
+      "ro": "ajustarea sperantelor si doliu bland",
+      "en": "adjusting hopes and gentle grieving"
+    }
+  },
+  "empty": {
+    "id": "empty",
+    "label": {
+      "ro": "Gol",
+      "en": "Empty"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "depressed",
+    "description": {
+      "ro": "Golul emotional este absenta dureroasa a sentimentului — o stare in care interiorul tau pare vid si deconectat de viata. Nu durere, nu bucurie — doar un spatiu pustiu. Golul poate fi un simptom al depresiei, al dezlegarii de sine sau al pierderii sensului. Recuperarea vine prin reconectarea treptata cu corpul, cu natura si cu relatiile care te ancoreaza.",
+      "en": "Emotional emptiness is the painful absence of feeling — a state where your interior seems void and disconnected from life. No pain, no joy — just a barren space. Emptiness can be a symptom of depression, disconnection from self, or loss of meaning. Recovery comes through gradual reconnection with the body, nature, and relationships that anchor you."
+    },
+    "needs": {
+      "ro": "reconectare senzoriala si prezenta",
+      "en": "sensory reconnection and presence"
+    }
+  },
+  "inferior_sad": {
+    "id": "inferior_sad",
+    "label": {
+      "ro": "Inferior",
+      "en": "Inferior"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "depressed",
+    "description": {
+      "ro": "Sentimentul de inferioritate in contextul tristetii este durerea tacuta a comparatiei — te vezi constant mai putin decat ceilalti si aceasta convingere iti coloreaza toata experienta. Nu este furie, ci resemnare trista. Este ecoul vocilor critice care ti-au spus ca nu esti destul. Vindecarea incepe cu recunoasterea ca valoarea ta nu se masoara prin comparatie.",
+      "en": "The feeling of inferiority in the context of sadness is the quiet pain of comparison — you constantly see yourself as less than others and this conviction colors all your experience. It's not anger, but sad resignation. It is the echo of critical voices that told you you're not enough. Healing begins with recognizing that your value is not measured by comparison."
+    },
+    "needs": {
+      "ro": "afirmarea valorii inerente",
+      "en": "affirmation of inherent worth"
+    }
+  },
+  "remorseful": {
+    "id": "remorseful",
+    "label": {
+      "ro": "Plin de remuscari",
+      "en": "Remorseful"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "guilty",
+    "description": {
+      "ro": "Remuscarea este forma profunda a vinovatiei — nu doar stii ca ai gresit, ci simti in tot corpul greutatea a ceea ce ai facut. Este emotia care te face sa vrei sa intorci timpul si sa repari ce ai stricat. Remuscarea autentica este necesara pentru reparatie si iertare, dar trebuie sa duca la actiune, nu sa ramana o auto-pedepsire perpetua.",
+      "en": "Remorse is the deep form of guilt — you don't just know you were wrong, but feel in your entire body the weight of what you did. It is the emotion that makes you want to turn back time and repair what you broke. Authentic remorse is necessary for repair and forgiveness, but it must lead to action, not remain perpetual self-punishment."
+    },
+    "needs": {
+      "ro": "actiune reparatorie si auto-iertare",
+      "en": "reparative action and self-forgiveness"
+    }
+  },
+  "ashamed": {
+    "id": "ashamed",
+    "label": {
+      "ro": "Rusinat",
+      "en": "Ashamed"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "guilty",
+    "description": {
+      "ro": "Rusinea este convingerea dureroasa ca esti defect in esenta ta — nu ca ai facut ceva gresit, ci ca esti ceva gresit. Este una dintre cele mai dureroase emotii umane, care te face sa vrei sa dispari sau sa te ascunzi. Rusinea toxica isi are originile in experienta de a nu fi fost acceptat neconditionat. Vindecarea vine prin relatii in care esti primit complet.",
+      "en": "Shame is the painful conviction that you are defective at your core — not that you did something wrong, but that you are something wrong. It is one of the most painful human emotions, making you want to disappear or hide. Toxic shame originates in the experience of not having been unconditionally accepted. Healing comes through relationships where you are fully received."
+    },
+    "needs": {
+      "ro": "acceptare neconditionata si apartinere",
+      "en": "unconditional acceptance and belonging"
+    }
+  },
+  "grief": {
+    "id": "grief",
+    "label": {
+      "ro": "Doliu",
+      "en": "Grief"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "despair",
+    "description": {
+      "ro": "Doliul este procesul natural de adaptare la o pierdere profunda — moartea cuiva drag, sfarsitul unei relatii sau disparitia unui vis. Doliul nu are un calendar si nu urmeaza etape liniare. Vine in valuri — uneori coplesitoare, alteori calme. A-ti permite doliul este esential pentru vindecare. Nu exista un mod gresit de a suferi.",
+      "en": "Grief is the natural process of adapting to a profound loss — the death of someone dear, the end of a relationship, or the disappearance of a dream. Grief has no calendar and doesn't follow linear stages. It comes in waves — sometimes overwhelming, sometimes calm. Allowing yourself to grieve is essential for healing. There is no wrong way to mourn."
+    },
+    "needs": {
+      "ro": "timp, marturisire si permisiunea de a jelui",
+      "en": "time, witnessing, and permission to mourn"
+    }
+  },
+  "powerless": {
+    "id": "powerless",
+    "label": {
+      "ro": "Neputincios",
+      "en": "Powerless"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "despair",
+    "description": {
+      "ro": "Neputinta este experienta devastatoare ca nu poti influenta sau schimba o situatie care te face sa suferi. Este opusul agentivitatii — simti ca viata ti se intampla si tu nu ai niciun control. Neputinta invatata este un factor central in depresie. Recuperarea incepe cu identificarea oricat de mic a unui lucru pe care il poti controla si actionarea asupra lui.",
+      "en": "Powerlessness is the devastating experience that you cannot influence or change a situation that causes you suffering. It is the opposite of agency — you feel that life happens to you and you have no control. Learned helplessness is a central factor in depression. Recovery begins with identifying however small a thing you can control and acting on it."
+    },
+    "needs": {
+      "ro": "un pas mic controlabil",
+      "en": "one small controllable step"
+    }
+  },
+  "fragile": {
+    "id": "fragile",
+    "label": {
+      "ro": "Fragil",
+      "en": "Fragile"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "vulnerable",
+    "description": {
+      "ro": "Fragilitatea este starea in care te simti ca te-ai putea rupe la cel mai mic impact — emotional, psihologic sau relational. Esti intact dar pe muchie. Fragilitatea apare dupa perioade de stres intens, pierdere sau trauma. Nu este slabiciune permanenta, ci o stare temporara care cere grija, rabdare si protejarea constienta a resurselor limitate.",
+      "en": "Fragility is the state where you feel you could break at the slightest impact — emotionally, psychologically, or relationally. You are intact but on the edge. Fragility appears after periods of intense stress, loss, or trauma. It is not permanent weakness, but a temporary state that requires care, patience, and conscious protection of limited resources."
+    },
+    "needs": {
+      "ro": "blandete si odihna protejata",
+      "en": "gentleness and protected rest"
+    }
+  },
+  "victimized": {
+    "id": "victimized",
+    "label": {
+      "ro": "Victimizat",
+      "en": "Victimized"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "vulnerable",
+    "description": {
+      "ro": "A te simti victimizat este experienta ca ti s-a facut o nedreptate de catre forte mai puternice decat tine. Poate reflecta o realitate obiectiva de abuz sau poate deveni o pozitie existentiala din care refuzi sa iesi. Victimizarea reala merita validare si sprijin. Identitatea de victima permanenta, insa, te blocheaza in neputinta si te impiedica sa iti recastigi puterea.",
+      "en": "Feeling victimized is the experience that injustice was done to you by forces more powerful than yourself. It can reflect an objective reality of abuse or can become an existential position you refuse to leave. Real victimization deserves validation and support. Permanent victim identity, however, locks you in helplessness and prevents you from reclaiming your power."
+    },
+    "needs": {
+      "ro": "validare si recapatarea agentivitatii",
+      "en": "validation and reclaiming agency"
+    }
+  },
+  "abandoned": {
+    "id": "abandoned",
+    "label": {
+      "ro": "Abandonat",
+      "en": "Abandoned"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "lonely",
+    "description": {
+      "ro": "Abandonul este una dintre cele mai profunde rani emotionale — experienta ca cineva esential a plecat si te-a lasat singur cand aveai cea mai mare nevoie. Abandonul din copilarie lasa amprente care se reactiveaza in relatiile adulte. Frica de abandon poate duce la atasament anxios, dependenta sau, paradoxal, la evitarea completa a intimatatii.",
+      "en": "Abandonment is one of the deepest emotional wounds — the experience that someone essential left and left you alone when you needed them most. Childhood abandonment leaves imprints that reactivate in adult relationships. Fear of abandonment can lead to anxious attachment, dependency, or paradoxically, complete avoidance of intimacy."
+    },
+    "needs": {
+      "ro": "atasament sigur si legaturi reparatorii",
+      "en": "safe attachment and reparative bonds"
+    }
+  },
+  "isolated": {
+    "id": "isolated",
+    "label": {
+      "ro": "Izolat",
+      "en": "Isolated"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "lonely",
+    "description": {
+      "ro": "Izolarea este starea de separare completa de ceilalti — nu doar fizica, ci si emotionala si existentiala. Te simti singur intr-un mod care pare permanent si fara scapare. Izolarea cronica este una dintre cele mai mari amenintari la sanatatea mentala si fizica. Drumul inapoi catre conexiune incepe cu un singur pas — un mesaj, un apel, o mana intinsa.",
+      "en": "Isolation is the state of complete separation from others — not just physical, but emotional and existential. You feel alone in a way that seems permanent and without escape. Chronic isolation is one of the greatest threats to mental and physical health. The road back to connection begins with a single step — a message, a call, an outstretched hand."
+    },
+    "needs": {
+      "ro": "un pas mic catre conexiune",
+      "en": "one small step toward connection"
+    }
+  },
+  "dor": {
+    "id": "dor",
+    "label": {
+      "ro": "Dor",
+      "en": "Longing (dor)"
+    },
+    "color": "#7E57C2",
+    "level": 2,
+    "parent": "lonely",
+    "description": {
+      "ro": "Dorul este un concept emotional profund romanesc — un amestec dulce-amar de iubire, tristete si speranta indreptate catre cineva sau ceva absent. Dorul te conecteaza cu ceea ce conteaza cel mai mult pentru tine, chiar cand acel lucru este departe. Functia lui adaptiva este sa pastreze vie legatura interioara cu persoanele, locurile si momentele care ti-au modelat identitatea.",
+      "en": "Dor is a deeply Romanian emotional concept — a bittersweet blend of love, sadness, and hope directed toward someone or something absent. It connects you to what matters most, even when that thing is far away. Its adaptive function is to keep alive the inner bond with the people, places, and moments that have shaped your identity."
+    },
+    "needs": {
+      "ro": "recunoastere si conexiune",
+      "en": "acknowledgment and connection"
+    }
+  },
+  "loneliness": {
+    "id": "loneliness",
+    "label": {
+      "ro": "Singuratate",
+      "en": "Loneliness"
+    },
+    "color": "#5C6BC0",
+    "level": 2,
+    "parent": "lonely",
+    "description": {
+      "ro": "Singuratatea este semnalul emotional ca nevoia ta fundamentala de apartenenta si conexiune autentica nu este implinita. Spre deosebire de izolare, singuratatea poate aparea chiar si in mijlocul multimii — este despre calitatea legaturilor, nu despre cantitate. Functia ei adaptiva este sa te motiveze sa cauti relatii autentice si sa investesti in legaturi care iti hranesc sufletul.",
+      "en": "Loneliness is the emotional signal that your fundamental need for belonging and authentic connection is unmet. Unlike isolation, loneliness can arise even in a crowd — it is about the quality of bonds, not quantity. Its adaptive function is to motivate you to seek genuine relationships and invest in connections that nourish your soul."
+    },
+    "needs": {
+      "ro": "conexiune autentica si apartenenta",
+      "en": "authentic connection and belonging"
+    }
+  },
+  "nostalgia": {
+    "id": "nostalgia",
+    "label": {
+      "ro": "Nostalgie",
+      "en": "Nostalgia"
+    },
+    "color": "#AB47BC",
+    "level": 2,
+    "parent": "lonely",
+    "description": {
+      "ro": "Nostalgia este o emotie dulce-amara care te transporta in momente semnificative din trecut — nu pentru a fugi de prezent, ci pentru a regasi un sentiment de continuitate si sens. Cercetarile arata ca nostalgia contracareaza singuratatea si intareste sentimentul de identitate. Functia ei adaptiva este sa iti reaminteasca cine esti si de unde vii, oferindu-ti resurse emotionale pentru prezent.",
+      "en": "Nostalgia is a bittersweet emotion that transports you to meaningful moments from the past — not to escape the present, but to rediscover a sense of continuity and meaning. Research shows nostalgia counteracts loneliness and strengthens the sense of identity. Its adaptive function is to remind you who you are and where you come from, providing emotional resources for the present."
+    },
+    "needs": {
+      "ro": "sens si continuitate",
+      "en": "meaning and continuity"
+    }
+  },
+  "wounded": {
+    "id": "wounded",
+    "label": {
+      "ro": "Ranit profund",
+      "en": "Wounded"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "hurt",
+    "description": {
+      "ro": "A te simti ranit profund este experienta unei dureri emotionale ascutite provocate de cuvintele sau actiunile cuiva — nu o dezamagire difuza, ci o rana precisa care te atinge intr-un loc vulnerabil. Simti ca cineva a trecut prin apararea ta si a lovit intr-un punct sensibil pe care poate nici nu stiai ca il ai. Aceasta durere este un semnal ca relatia cu acea persoana conteaza — nu ne pot rani profund decat cei carora le-am acordat importanta. Vindecarea incepe cu recunoasterea ranei, nu cu minimizarea ei.",
+      "en": "Feeling deeply wounded is the experience of a sharp emotional pain caused by someone's words or actions — not a diffuse disappointment, but a precise wound that reaches a vulnerable place. You feel that someone got past your defenses and struck a sensitive point you may not even have known you had. This pain is a signal that your relationship with that person matters — only those we've given importance to can wound us deeply. Healing begins with acknowledging the wound, not minimizing it."
+    },
+    "needs": {
+      "ro": "recunoastere si ingrijire blanda",
+      "en": "acknowledgment and gentle care"
+    }
+  },
+  "hopeless": {
+    "id": "hopeless",
+    "label": {
+      "ro": "Deznadajduit",
+      "en": "Hopeless"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "depressed",
+    "description": {
+      "ro": "Deznadejdea este convingerea ca lucrurile nu se vor imbunatati niciodata — viitorul pare inchis, iar orice efort pare zadarnic. Este important sa stii ca deznadejdea este un semnal emotional, nu un adevar despre viitorul tau. Creierul, cand este epuizat sau coplesit, produce aceasta senzatie de impas total ca mecanism de conservare a energiei. Deznadejdea iti spune ca ai nevoie de sprijin si de o perspectiva pe care nu o poti gasi singur in acest moment — nu ca situatia ta este cu adevarat fara iesire.",
+      "en": "Hopelessness is the conviction that things will never get better — the future seems closed and any effort seems futile. It is important to know that hopelessness is an emotional signal, not a truth about your future. The brain, when exhausted or overwhelmed, produces this sensation of total impasse as an energy conservation mechanism. Hopelessness tells you that you need support and a perspective you cannot find alone right now — not that your situation is truly without exit."
+    },
+    "needs": {
+      "ro": "sprijin si o perspectiva noua",
+      "en": "support and a new perspective"
+    }
+  },
+  "regretful": {
+    "id": "regretful",
+    "label": {
+      "ro": "Plin de regret",
+      "en": "Regretful"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "guilty",
+    "description": {
+      "ro": "Regretul este reflectia calma si dureroasa ca ai fi putut actiona altfel — o constientizare lipsita de dramatismul remuscarii sau de prabusirea rusinii, dar nu mai putin reala. Privesti inapoi si vezi clar ce ai fi putut face diferit, si aceasta claritate vine cu o tristete lina. Regretul este de fapt un semn de maturitate emotionala — inseamna ca ai crescut suficient incat sa vezi lucrurile dintr-o perspectiva pe care nu o aveai atunci. El te poate ghida spre alegeri mai aliniate cu valorile tale.",
+      "en": "Regret is the calm, painful reflection that you could have acted differently — an awareness that lacks the drama of remorse or the collapse of shame, but is no less real. You look back and clearly see what you could have done differently, and this clarity comes with a gentle sadness. Regret is actually a sign of emotional maturity — it means you have grown enough to see things from a perspective you didn't have then. It can guide you toward choices more aligned with your values."
+    },
+    "needs": {
+      "ro": "acceptare si invatare din experienta",
+      "en": "acceptance and learning from experience"
+    }
+  },
+  "anguished": {
+    "id": "anguished",
+    "label": {
+      "ro": "Chinuit",
+      "en": "Anguished"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "despair",
+    "description": {
+      "ro": "Chinul emotional este durerea psihica atat de intensa incat devine fizica — o suferinta bruta, nediferentiata, care pare ca iti rascoleste tot interiorul. Nu poti gandi clar, nu poti functiona, nu poti pune cuvinte pe ceea ce simti. Corpul se incordeaza, respiratia devine grea, si totul pare sa doara in acelasi timp. Chinul este un semnal ca ai fost impins dincolo de capacitatea ta curenta de a face fata — nu este o slabiciune, ci o suprasolicitare a sistemului tau emotional care cere ajutor imediat.",
+      "en": "Emotional anguish is psychological pain so intense it becomes physical — a raw, undifferentiated suffering that seems to tear through your entire being. You cannot think clearly, you cannot function, you cannot put words to what you feel. The body tenses, breathing becomes heavy, and everything seems to hurt at once. Anguish is a signal that you have been pushed beyond your current capacity to cope — it is not a weakness, but an overload of your emotional system that calls for immediate help."
+    },
+    "needs": {
+      "ro": "prezenta umana si siguranta imediata",
+      "en": "human presence and immediate safety"
+    }
+  },
+  "defenseless": {
+    "id": "defenseless",
+    "label": {
+      "ro": "Fara aparare",
+      "en": "Defenseless"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "vulnerable",
+    "description": {
+      "ro": "A te simti fara aparare este experienta de a fi expus fara niciun strat de protectie — mecanismele tale obisnuite de aparare, fie ca sunt rationale, emotionale sau relationale, sunt indisponibile sau epuizate. Nu este fragilitatea de a fi aproape de punctul de rupere, ci senzatia de a fi complet descoperit in fata a ceea ce vine. Aceasta stare apare adesea dupa perioade in care ai fost nevoit sa fii puternic prea mult timp. A recunoaste ca esti fara aparare este un act de onestitate care deschide drumul catre a primi ajutorul de care ai nevoie.",
+      "en": "Feeling defenseless is the experience of being exposed without any layer of protection — your usual defense mechanisms, whether rational, emotional, or relational, are unavailable or exhausted. It is not the fragility of being close to a breaking point, but the sensation of being completely uncovered in the face of whatever comes. This state often appears after periods where you had to be strong for too long. Recognizing that you are defenseless is an act of honesty that opens the path to receiving the help you need."
+    },
+    "needs": {
+      "ro": "protectie si sprijin extern",
+      "en": "protection and external support"
+    }
+  }
+}
