@@ -1,9 +1,23 @@
 import type { EmotionModel, ModelState, SelectionEffect, AnalysisResult } from '../types'
 import { MODEL_IDS } from '../constants'
 import type { PlutchikEmotion } from './types'
-import emotionsData from './data.json'
+import primaryData from './data/primary.json'
+import intensityData from './data/intensity.json'
+import dyadData from './data/dyad.json'
+import secondaryDyadData from './data/secondary-dyad.json'
+import tertiaryDyadData from './data/tertiary-dyad.json'
+import oppositeDyadData from './data/opposite-dyad.json'
 
-const allEmotions = emotionsData as Record<string, PlutchikEmotion>
+const allEmotions = {
+  ...primaryData,
+  ...intensityData,
+  ...dyadData,
+  ...secondaryDyadData,
+  ...tertiaryDyadData,
+  ...oppositeDyadData,
+} as Record<string, PlutchikEmotion>
+
+export { allEmotions as plutchikEmotions }
 
 const INITIAL_EMOTION_IDS = [
   'joy',

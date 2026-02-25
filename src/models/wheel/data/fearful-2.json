@@ -1,0 +1,214 @@
+{
+  "weak": {
+    "id": "weak",
+    "label": {
+      "ro": "Slab",
+      "en": "Weak"
+    },
+    "color": "#9CD4B0",
+    "level": 1,
+    "parent": "fearful",
+    "children": [
+      "worthless",
+      "insignificant"
+    ],
+    "description": {
+      "ro": "A te simti slab este experienta dureroasa a lipsei de putere si de resurse. Simti ca nu ai forta necesara pentru a face fata cerintelor vietii. Slabiciunea poate fi temporara — dupa boala, soc sau pierdere — sau cronica, reflectand o imagine de sine deteriorata. Recunoasterea slabiciunii este paradoxal un act de forta care deschide calea catre recuperare.",
+      "en": "Feeling weak is the painful experience of lacking power and resources. You feel you don't have the strength to meet life's demands. Weakness can be temporary — after illness, shock, or loss — or chronic, reflecting a deteriorated self-image. Recognizing weakness is paradoxically an act of strength that opens the path to recovery."
+    },
+    "needs": {
+      "ro": "compasiune si victorii mici",
+      "en": "compassion and small victories"
+    }
+  },
+  "worthless": {
+    "id": "worthless",
+    "label": {
+      "ro": "Lipsit de valoare",
+      "en": "Worthless"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "weak",
+    "description": {
+      "ro": "A te simti lipsit de valoare este una dintre cele mai dureroase stari emotionale — convingerea ca existenta ta nu conteaza si ca nimeni nu ar observa daca ai disparea. Este un simptom central al depresiei severe si un semnal de alarma care necesita sprijin imediat. Valoarea ta nu depinde de productivitate sau de aprecierea altora.",
+      "en": "Feeling worthless is one of the most painful emotional states — the conviction that your existence doesn't matter and that nobody would notice if you disappeared. It is a central symptom of severe depression and an alarm signal requiring immediate support. Your value does not depend on productivity or others' appreciation."
+    },
+    "needs": {
+      "ro": "sustinere imediata si conexiune",
+      "en": "immediate support and connection"
+    }
+  },
+  "insignificant": {
+    "id": "insignificant",
+    "label": {
+      "ro": "Nesemnificativ",
+      "en": "Insignificant"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "weak",
+    "description": {
+      "ro": "A te simti nesemnificativ este experienta de a fi invizibil — prezenta ta nu pare sa faca vreo diferenta si vocea ta nu este auzita. Este o forma de minimizare a sinelui care poate fi invatata in medii unde ai fost ignorat sau marginalizat. Recuperarea inseamna sa inveti ca fiecare persoana are un impact, chiar daca nu il vede imediat.",
+      "en": "Feeling insignificant is the experience of being invisible — your presence doesn't seem to make any difference and your voice isn't heard. It is a form of self-minimization that can be learned in environments where you were ignored or marginalized. Recovery means learning that every person has an impact, even if they don't see it immediately."
+    },
+    "needs": {
+      "ro": "a fi vazut si recunoscut",
+      "en": "being seen and acknowledged"
+    }
+  },
+  "rejected": {
+    "id": "rejected",
+    "label": {
+      "ro": "Respins",
+      "en": "Rejected"
+    },
+    "color": "#9CD4B0",
+    "level": 1,
+    "parent": "fearful",
+    "children": [
+      "excluded",
+      "persecuted",
+      "unwanted"
+    ],
+    "description": {
+      "ro": "Respingerea este una dintre cele mai dureroase experiente emotionale — semnalul ca nu esti dorit sau acceptat de cei care conteaza pentru tine. Creierul proceseaza respingerea in aceleasi zone ca durerea fizica. Respingerea activeaza rani vechi de atasament si poate declansa retragere sau agresivitate defensiva. Vindecarea necesita relatii reparatorii sigure.",
+      "en": "Rejection is one of the most painful emotional experiences — the signal that you are not wanted or accepted by those who matter to you. The brain processes rejection in the same areas as physical pain. Rejection activates old attachment wounds and can trigger withdrawal or defensive aggression. Healing requires safe reparative relationships."
+    },
+    "needs": {
+      "ro": "apartinere si conexiune sigura",
+      "en": "belonging and safe connection"
+    }
+  },
+  "excluded": {
+    "id": "excluded",
+    "label": {
+      "ro": "Exclus",
+      "en": "Excluded"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "rejected",
+    "description": {
+      "ro": "Excluderea este experienta dureroasa de a fi lasat pe dinafara — nu esti invitat, nu esti inclus si nu apartii grupului. Creierul uman este programat sa perceapa excluderea ca o amenintare existentiala, deoarece apartinerea la grup a fost esentiala pentru supravietuire. Durerea excluderii este reala si merita validare si compasiune.",
+      "en": "Exclusion is the painful experience of being left out — you're not invited, not included, and you don't belong to the group. The human brain is programmed to perceive exclusion as an existential threat, because group belonging was essential for survival. The pain of exclusion is real and deserves validation and compassion."
+    },
+    "needs": {
+      "ro": "incluziune si compasiune",
+      "en": "inclusion and compassion"
+    }
+  },
+  "persecuted": {
+    "id": "persecuted",
+    "label": {
+      "ro": "Persecutat",
+      "en": "Persecuted"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "rejected",
+    "description": {
+      "ro": "A te simti persecutat este convingerea ca esti tinta intentionata a ostilitatii celorlalti. Poate reflecta o experienta reala de discriminare sau abuz, sau poate fi o proiectie a fricii interioare asupra lumii externe. Diferentierea intre persecutia reala si cea perceputa este esentiala si necesita adesea sprijin terapeutic calificat.",
+      "en": "Feeling persecuted is the conviction that you are the intentional target of others' hostility. It can reflect a real experience of discrimination or abuse, or can be a projection of inner fear onto the external world. Differentiating between real and perceived persecution is essential and often requires qualified therapeutic support."
+    },
+    "needs": {
+      "ro": "siguranta si sprijin de incredere",
+      "en": "safety and trusted support"
+    }
+  },
+  "unwanted": {
+    "id": "unwanted",
+    "label": {
+      "ro": "Nedorit",
+      "en": "Unwanted"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "rejected",
+    "description": {
+      "ro": "Sentimentul de a fi nedorit este durerea intima a respingerii personale — nu doar exclus dintr-un grup, ci nevrut de oamenii care conteaza cel mai mult pentru tine. Este senzatia ca prezenta ta nu este binevenita sau ca cineva apropiat ti-ar prefera absenta. Aceasta durere atinge rani profunde legate de atasament si valoare personala. A recunoaste ca te simti nedorit este un prim pas curajos catre a cauta relatiile care te primesc cu adevarat.",
+      "en": "Feeling unwanted is the intimate pain of personal rejection — not just excluded from a group, but not desired by the people who matter most to you. It is the sensation that your presence is not welcome or that someone close would prefer your absence. This pain touches deep wounds related to attachment and personal worth. Recognizing that you feel unwanted is a courageous first step toward seeking relationships that truly welcome you."
+    },
+    "needs": {
+      "ro": "conexiune autentica si acceptare",
+      "en": "authentic connection and acceptance"
+    }
+  },
+  "threatened": {
+    "id": "threatened",
+    "label": {
+      "ro": "Amenintat",
+      "en": "Threatened"
+    },
+    "color": "#9CD4B0",
+    "level": 1,
+    "parent": "fearful",
+    "children": [
+      "nervous",
+      "exposed",
+      "on_guard"
+    ],
+    "description": {
+      "ro": "A te simti amenintat este perceptia ca ceva sau cineva iti pune in pericol siguranta, pozitia sau integritatea. Corpul intra in mod de protectie — musculatura se tensoneaza, atentia se ingusteaza si esti gata sa reactionezi. Amenintarea poate fi fizica, emotionala sau sociala. Raspunsul la amenintare depinde de evaluarea ta si de resursele disponibile.",
+      "en": "Feeling threatened is the perception that something or someone endangers your safety, position, or integrity. The body enters protective mode — muscles tense, attention narrows, and you're ready to react. The threat can be physical, emotional, or social. Your response to threat depends on your assessment and available resources."
+    },
+    "needs": {
+      "ro": "siguranta si limite",
+      "en": "safety and boundaries"
+    }
+  },
+  "nervous": {
+    "id": "nervous",
+    "label": {
+      "ro": "Nervos",
+      "en": "Nervous"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "threatened",
+    "description": {
+      "ro": "Nervozitatea este o stare de agitatie interioara — corpul este tensionat, gandurile alearga si te simti pe marginea unei explozii sau a unui colaps. Este semnalul ca sistemul nervos este suprasolicitat si are nevoie de reglare. Tehnicile de calmare somatica — respiratia profunda, miscarea fizica, contactul cu natura — pot ajuta la resetarea sistemului.",
+      "en": "Nervousness is a state of inner agitation — the body is tense, thoughts race, and you feel on the edge of an explosion or collapse. It is the signal that the nervous system is overloaded and needs regulation. Somatic calming techniques — deep breathing, physical movement, contact with nature — can help reset the system."
+    },
+    "needs": {
+      "ro": "calmare somatica si miscare",
+      "en": "somatic calming and movement"
+    }
+  },
+  "exposed": {
+    "id": "exposed",
+    "label": {
+      "ro": "Expus",
+      "en": "Exposed"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "threatened",
+    "description": {
+      "ro": "A te simti expus este senzatia ca esti vulnerabil si vizibil fara protectie — ca si cum armura ta emotionala a fost inlaturata si toata lumea poate vedea ce incerci sa ascunzi. Poate aparea dupa un esec public, o dezvaluire nedorita sau o situatie in care granitele tale au fost incalcate. Vindecarea vine prin restabilirea sentimentului de siguranta si control.",
+      "en": "Feeling exposed is the sensation of being vulnerable and visible without protection — as if your emotional armor has been removed and everyone can see what you're trying to hide. It can arise after a public failure, an unwanted disclosure, or a situation where your boundaries were violated. Healing comes through restoring the sense of safety and control."
+    },
+    "needs": {
+      "ro": "siguranta si limite restabilite",
+      "en": "safety and restored boundaries"
+    }
+  },
+  "on_guard": {
+    "id": "on_guard",
+    "label": {
+      "ro": "In garda",
+      "en": "On Guard"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "threatened",
+    "description": {
+      "ro": "A fi in garda este starea de vigilenta activa in care scanezi constant mediul pentru amenintari — corpul este tensionat, simturile sunt ascutite si esti gata sa reactionezi la orice semnal de pericol. Spre deosebire de nervozitate, care este interna si agitata, starea de garda este orientata spre exterior si mobilizata. Aceasta hipervigilenta este un raspuns adaptativ in situatii reale de pericol, dar devine epuizanta cand persista in absenta amenintarii concrete.",
+      "en": "Being on guard is the state of active vigilance where you constantly scan the environment for threats — the body is tense, senses are sharpened, and you are ready to react to any danger signal. Unlike nervousness, which is internal and agitated, being on guard is outward-oriented and mobilized. This hypervigilance is an adaptive response in real danger situations, but becomes exhausting when it persists in the absence of concrete threat."
+    },
+    "needs": {
+      "ro": "siguranta confirmata si relaxare",
+      "en": "confirmed safety and relaxation"
+    }
+  }
+}

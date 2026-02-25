@@ -9,7 +9,10 @@ export function useSessionHistory() {
   useEffect(() => {
     getAllSessions()
       .then(setSessions)
-      .catch(() => setSessions([]))
+      .catch((err) => {
+        console.warn('Failed to load sessions:', err)
+        setSessions([])
+      })
       .finally(() => setLoading(false))
   }, [])
 

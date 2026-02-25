@@ -1,0 +1,86 @@
+{
+  "ambivalence": {
+    "id": "ambivalence",
+    "label": {
+      "ro": "ambivalență",
+      "en": "ambivalence"
+    },
+    "description": {
+      "ro": "Ambivalenta este diada opuselor — incredere si dezgust existand simultan. Te simti atras si respins de aceeasi persoana sau situatie. Este una dintre cele mai inconfortabile stari emotionale, pentru ca mintea cauta coerenta si ambivalenta o refuza. Totusi, capacitatea de a tolera ambivalenta este un semn de maturitate emotionala — viata rareori este alb sau negru.",
+      "en": "Ambivalence is the dyad of opposites — trust and disgust existing simultaneously. You feel drawn to and repelled by the same person or situation. It is one of the most uncomfortable emotional states, because the mind seeks coherence and ambivalence refuses it. Yet the capacity to tolerate ambivalence is a sign of emotional maturity — life is rarely black or white."
+    },
+    "needs": {
+      "ro": "toleranta si explorare rabdatoare",
+      "en": "tolerance and patient exploration"
+    },
+    "category": "opposite_dyad",
+    "color": "#B8C8A8",
+    "intensity": 0.4,
+    "components": [
+      "trust",
+      "disgust"
+    ],
+    "spawns": [
+      "trust",
+      "disgust",
+      "acceptance",
+      "boredom"
+    ]
+  },
+  "frozenness": {
+    "id": "frozenness",
+    "label": {
+      "ro": "înghețare",
+      "en": "frozenness"
+    },
+    "description": {
+      "ro": "Inghetarea este diada opuselor — frica si furie blocate reciproc. Vrei sa fugi si sa lupti simultan, asa ca nu faci nimic. Corpul se rigidizeaza, mintea se goleaza si te simti paralizat. In trauma, inghetarea este un raspuns de supravietuire cand nici fuga, nici lupta nu sunt posibile. Dezghetarea necesita siguranta si reactivarea treptata a corpului.",
+      "en": "Frozenness is the dyad of opposites — fear and anger blocking each other. You want to flee and fight simultaneously, so you do nothing. The body stiffens, the mind empties, and you feel paralyzed. In trauma, freezing is a survival response when neither flight nor fight is possible. Thawing requires safety and the gradual reactivation of the body."
+    },
+    "needs": {
+      "ro": "siguranta, caldura si miscare blanda",
+      "en": "safety, warmth, and gentle movement"
+    },
+    "category": "opposite_dyad",
+    "color": "#78B898",
+    "intensity": 0.4,
+    "components": [
+      "fear",
+      "anger"
+    ],
+    "spawns": [
+      "fear",
+      "anger",
+      "apprehension",
+      "annoyance"
+    ]
+  },
+  "confusion": {
+    "id": "confusion",
+    "label": {
+      "ro": "confuzie",
+      "en": "confusion"
+    },
+    "description": {
+      "ro": "Confuzia este diada opuselor — surprindere si anticipare care se neutralizeaza reciproc. Nu stii daca sa te uiti inapoi la ce s-a intamplat sau inainte la ce urmeaza. Mintea oscileaza intre cadre de referinta contradictorii. Confuzia este adesea un semn ca esti la un punct de cotitura si ca modelele tale vechi de intelegere nu mai functioneaza.",
+      "en": "Confusion is the dyad of opposites — surprise and anticipation neutralizing each other. You don't know whether to look back at what happened or forward at what's coming. The mind oscillates between contradictory frames of reference. Confusion is often a sign that you're at a turning point and that your old models of understanding no longer work."
+    },
+    "needs": {
+      "ro": "structura si investigare rabdatoare",
+      "en": "structure and patient inquiry"
+    },
+    "category": "opposite_dyad",
+    "color": "#98C8D8",
+    "intensity": 0.4,
+    "components": [
+      "surprise",
+      "anticipation"
+    ],
+    "spawns": [
+      "surprise",
+      "anticipation",
+      "distraction",
+      "interest"
+    ]
+  }
+}

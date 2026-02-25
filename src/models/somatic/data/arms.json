@@ -1,0 +1,276 @@
+{
+  "hands": {
+    "id": "hands",
+    "label": {
+      "ro": "Mâini",
+      "en": "Hands"
+    },
+    "description": {
+      "ro": "Zona mâinilor — exprima actiune, furie (inclestrare), anxietate (tremur), entuziasm",
+      "en": "Hand area — express action, anger (clenching), anxiety (trembling), excitement"
+    },
+    "needs": {
+      "ro": "scuturare si strangere blanda",
+      "en": "shaking out and soft squeezing"
+    },
+    "color": "#fb923c",
+    "svgRegionId": "hands",
+    "group": "arms",
+    "commonSensations": [
+      "tension",
+      "tingling",
+      "warmth",
+      "numbness",
+      "pressure"
+    ],
+    "emotionSignals": [
+      {
+        "emotionId": "anger",
+        "emotionLabel": {
+          "ro": "Furie",
+          "en": "Anger"
+        },
+        "emotionColor": "#ef4444",
+        "emotionDescription": {
+          "ro": "Pumni încleștați, palme fierbinți, impuls de a lovi. Furia în mâini pregătește acțiunea — observă ce limită a fost depășită.",
+          "en": "Clenched fists, hot palms, urge to strike. Hand anger prepares for action — notice what boundary was crossed."
+        },
+        "emotionNeeds": {
+          "ro": "actiune constructiva si limite",
+          "en": "constructive action and boundaries"
+        },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.8,
+        "source": "Nummenmaa2014"
+      },
+      {
+        "emotionId": "anxiety",
+        "emotionLabel": {
+          "ro": "Anxietate",
+          "en": "Anxiety"
+        },
+        "emotionColor": "#f59e0b",
+        "emotionDescription": {
+          "ro": "Tremur, furnicături, palme transpirate, neliniște. Anxietatea în mâini reflectă energia nervoasă care caută o acțiune.",
+          "en": "Trembling, tingling, sweaty palms, restlessness. Hand anxiety reflects nervous energy seeking an outlet."
+        },
+        "emotionNeeds": {
+          "ro": "activitate manuala calmanta",
+          "en": "calming hands-on activity"
+        },
+        "sensationType": "tingling",
+        "minIntensity": 1,
+        "weight": 0.7,
+        "source": "clinical"
+      },
+      {
+        "emotionId": "excitement",
+        "emotionLabel": {
+          "ro": "Entuziasm",
+          "en": "Excitement"
+        },
+        "emotionColor": "#f97316",
+        "emotionDescription": {
+          "ro": "Furnicături în degete, energie în mâini, dorința de acțiune. Entuziasmul în mâini te pregătește să creezi și să acționezi.",
+          "en": "Finger tingling, hand energy, urge for action. Hand excitement prepares you to create and act."
+        },
+        "emotionNeeds": {
+          "ro": "creatie si actiune",
+          "en": "creation and action"
+        },
+        "sensationType": "tingling",
+        "minIntensity": 1,
+        "weight": 0.5,
+        "source": "interpolated"
+      },
+      {
+        "emotionId": "emotional-withdrawal",
+        "emotionLabel": {
+          "ro": "Retragere emoțională",
+          "en": "Emotional withdrawal"
+        },
+        "emotionColor": "#9ca3af",
+        "emotionDescription": {
+          "ro": "Mâini amorțite, lipsă de senzație. Retragerea emoțională este un mecanism de protecție — corpul se protejează temporar de intensitate.",
+          "en": "Numb hands, lack of sensation. Emotional withdrawal is a protective mechanism — your body is temporarily shielding itself from intensity."
+        },
+        "emotionNeeds": {
+          "ro": "reconectare treptata si blandete",
+          "en": "gradual reconnection and gentleness"
+        },
+        "sensationType": "numbness",
+        "minIntensity": 1,
+        "weight": 0.6,
+        "source": "clinical"
+      },
+      {
+        "emotionId": "tenderness",
+        "emotionLabel": {
+          "ro": "Tandrețe",
+          "en": "Tenderness"
+        },
+        "emotionColor": "#f48fb1",
+        "emotionDescription": {
+          "ro": "Căldură în palme, dorința de a atinge cu grijă. Tandrețea în mâini reflectă impulsul de a oferi confort și protecție.",
+          "en": "Warm palms, desire to touch with care. Hand tenderness reflects the impulse to offer comfort and protection."
+        },
+        "emotionNeeds": {
+          "ro": "exprimare blanda si apropiere",
+          "en": "gentle expression and closeness"
+        },
+        "sensationType": "warmth",
+        "minIntensity": 1,
+        "weight": 0.6,
+        "source": "clinical"
+      },
+      {
+        "emotionId": "frustration",
+        "emotionLabel": {
+          "ro": "Frustrare",
+          "en": "Frustration"
+        },
+        "emotionColor": "#e57373",
+        "emotionDescription": {
+          "ro": "Tensiune în mâini fără căldură, strângere a pumnilor. Frustrarea în mâini semnalează energia blocată — ai nevoie de acțiune, dar ceva te oprește.",
+          "en": "Hand tension without warmth, fist clenching. Hand frustration signals blocked energy — you need action, but something is stopping you."
+        },
+        "emotionNeeds": {
+          "ro": "claritate si pasi mici",
+          "en": "clarity and small steps"
+        },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.6,
+        "source": "clinical"
+      }
+    ]
+  },
+  "arms": {
+    "id": "arms",
+    "label": {
+      "ro": "Brate",
+      "en": "Arms"
+    },
+    "description": {
+      "ro": "Zona bratelor — exprima energie, dorinta de actiune sau retragere",
+      "en": "Arm area — express energy, desire for action or withdrawal"
+    },
+    "needs": {
+      "ro": "balansare blanda si intindere",
+      "en": "gentle swinging and stretching"
+    },
+    "color": "#22c55e",
+    "svgRegionId": "arms",
+    "group": "arms",
+    "commonSensations": [
+      "heaviness",
+      "lightness",
+      "tension",
+      "tingling",
+      "numbness"
+    ],
+    "emotionSignals": [
+      {
+        "emotionId": "joy",
+        "emotionLabel": {
+          "ro": "Bucurie",
+          "en": "Joy"
+        },
+        "emotionColor": "#fbbf24",
+        "emotionDescription": {
+          "ro": "Brațe ușoare, dorința de a îmbrățișa, energie liberă. Bucuria în brațe exprimă deschidere spre lume și conexiune.",
+          "en": "Light arms, desire to embrace, free energy. Arm joy expresses openness to the world and connection."
+        },
+        "emotionNeeds": {
+          "ro": "imbratisare si conectare",
+          "en": "embrace and connection"
+        },
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.6,
+        "source": "clinical"
+      },
+      {
+        "emotionId": "sadness",
+        "emotionLabel": {
+          "ro": "Tristete",
+          "en": "Sadness"
+        },
+        "emotionColor": "#3b82f6",
+        "emotionDescription": {
+          "ro": "Brațe grele, lipsă de energie, dorința de retragere. Tristețea în brațe semnalează nevoia de confort și repaus.",
+          "en": "Heavy arms, lack of energy, desire to withdraw. Arm sadness signals a need for comfort and rest."
+        },
+        "emotionNeeds": {
+          "ro": "confort si odihna",
+          "en": "comfort and rest"
+        },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.7,
+        "source": "Nummenmaa2014"
+      },
+      {
+        "emotionId": "anger",
+        "emotionLabel": {
+          "ro": "Furie",
+          "en": "Anger"
+        },
+        "emotionColor": "#ef4444",
+        "emotionDescription": {
+          "ro": "Tensiune în brațe, dorința de a acționa, energie agresivă. Furia în brațe canalizează energia pentru a apăra limitele.",
+          "en": "Arm tension, urge to act, aggressive energy. Arm anger channels energy to defend boundaries."
+        },
+        "emotionNeeds": {
+          "ro": "miscare fizica si eliberare",
+          "en": "physical movement and release"
+        },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.6,
+        "source": "Nummenmaa2014"
+      },
+      {
+        "emotionId": "loneliness",
+        "emotionLabel": {
+          "ro": "Singurătate",
+          "en": "Loneliness"
+        },
+        "emotionColor": "#5c6bc0",
+        "emotionDescription": {
+          "ro": "Brațe grele, senzație de gol, dorința de a fi ținut. Singurătatea în brațe reflectă lipsa contactului fizic și a conexiunii.",
+          "en": "Heavy arms, empty feeling, longing to be held. Arm loneliness reflects the absence of physical contact and connection."
+        },
+        "emotionNeeds": {
+          "ro": "conexiune si prezenta umana",
+          "en": "connection and human presence"
+        },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.6,
+        "source": "clinical"
+      },
+      {
+        "emotionId": "gratitude",
+        "emotionLabel": {
+          "ro": "Recunoștință",
+          "en": "Gratitude"
+        },
+        "emotionColor": "#66bb6a",
+        "emotionDescription": {
+          "ro": "Brațe ușoare, dorința de a oferi, energie caldă. Recunoștința în brațe exprimă impulsul de a dărui și de a te conecta.",
+          "en": "Light arms, desire to give, warm energy. Arm gratitude expresses the impulse to give and connect."
+        },
+        "emotionNeeds": {
+          "ro": "savurare si exprimare",
+          "en": "savoring and expression"
+        },
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.5,
+        "source": "interpolated"
+      }
+    ]
+  }
+}

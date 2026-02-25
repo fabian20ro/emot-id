@@ -1,0 +1,396 @@
+{
+  "happy": {
+    "id": "happy",
+    "label": {
+      "ro": "Fericit",
+      "en": "Happy"
+    },
+    "color": "#FFE066",
+    "level": 0,
+    "children": [
+      "playful",
+      "content",
+      "interested",
+      "proud",
+      "accepted",
+      "powerful",
+      "peaceful",
+      "trusting",
+      "optimistic"
+    ],
+    "description": {
+      "ro": "Fericirea este o stare emotionala fundamentala care semnaleaza armonia interioara si satisfacerea nevoilor esentiale. Cuprinde un spectru larg, de la multumire lina la entuziasm intens. Fericirea autentica nu este absenta suferintei, ci capacitatea de a experimenta plenitudine chiar si in mijlocul complexitatii vietii. Este busola care iti arata ca esti aliniat cu valorile tale.",
+      "en": "Happiness is a fundamental emotional state signaling inner harmony and the fulfillment of essential needs. It encompasses a wide spectrum, from gentle contentment to intense enthusiasm. Authentic happiness is not the absence of suffering, but the capacity to experience fullness even amid life's complexity. It is the compass showing you are aligned with your values."
+    },
+    "needs": {
+      "ro": "partajare si savurare",
+      "en": "sharing and savoring"
+    }
+  },
+  "playful": {
+    "id": "playful",
+    "label": {
+      "ro": "Jucaus",
+      "en": "Playful"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "aroused",
+      "cheeky",
+      "silly"
+    ],
+    "description": {
+      "ro": "Starea de joc este expresia libertatii emotionale — momentul in care te eliberezi de presiunea productivitatii si te permiti sa experimentezi fara scop. Joaca activeaza creativitatea, reduce stresul si consolideaza legaturile sociale. Adultii care isi pastreaza capacitatea de joc au o rezilienta emotionala mai mare si relatii mai vii.",
+      "en": "Playfulness is the expression of emotional freedom — the moment when you free yourself from the pressure of productivity and allow yourself to experiment without purpose. Play activates creativity, reduces stress, and strengthens social bonds. Adults who maintain their capacity for play have greater emotional resilience and more vibrant relationships."
+    },
+    "needs": {
+      "ro": "libertate si spontaneitate",
+      "en": "freedom and spontaneity"
+    }
+  },
+  "aroused": {
+    "id": "aroused",
+    "label": {
+      "ro": "Entuziasmat",
+      "en": "Energized"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "playful",
+    "description": {
+      "ro": "Entuziasmul este o stare de activare emotionala intensa si placuta — corpul este plin de energie, mintea este viva si simti un impuls puternic catre actiune sau experienta. Este forma cea mai vitala a starii de joc, unde creativitatea si spontaneitatea se manifesta la intensitate maxima.",
+      "en": "Energized is a state of intense and pleasurable emotional activation — the body is full of energy, the mind is alive, and you feel a strong impulse toward action or experience. It is the most vital form of playfulness, where creativity and spontaneity manifest at maximum intensity."
+    },
+    "needs": {
+      "ro": "exprimare si miscare",
+      "en": "expression and movement"
+    }
+  },
+  "cheeky": {
+    "id": "cheeky",
+    "label": {
+      "ro": "Obraznic",
+      "en": "Cheeky"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "playful",
+    "description": {
+      "ro": "Obraznicia este o forma jucausa de sfidare — un umor subtil de transgresiune care testeaza limitele conventiilor fara a rani. Este expresia unui sine care se simte suficient de sigur pentru a fi nonconformist. Obraznicia sanatoasa aduce lejeritate in relatii si sparge tiparele rigide ale interactiunilor formale.",
+      "en": "Cheekiness is a playful form of defiance — a subtle humor of transgression that tests the boundaries of convention without causing harm. It is the expression of a self that feels safe enough to be nonconformist. Healthy cheekiness brings lightness to relationships and breaks the rigid patterns of formal interactions."
+    },
+    "needs": {
+      "ro": "spatiu de joc si permisiune",
+      "en": "playful space and permission"
+    }
+  },
+  "silly": {
+    "id": "silly",
+    "label": {
+      "ro": "Zburdalnic",
+      "en": "Silly"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "playful",
+    "description": {
+      "ro": "Starea de zburdalnie este momentul in care te eliberezi complet de nevoia de a fi luat in serios — te lasi purtat de absurd, de spontaneitate si de bucuria pura a prostiilor. Este o forma de joaca in care renunti la autocontrol si iti permiti sa fii ridicol fara jena. Zburdalnia sanatoasa este un semn de siguranta emotionala: doar cand te simti suficient de liber poti renunta la imagine si te poti bucura fara filtru.",
+      "en": "Silliness is the moment when you completely free yourself from the need to be taken seriously — you let yourself be carried by absurdity, spontaneity, and the pure joy of goofiness. It is a form of play where you release self-consciousness and allow yourself to be ridiculous without embarrassment. Healthy silliness is a sign of emotional safety: only when you feel free enough can you let go of your image and enjoy without filter."
+    },
+    "needs": {
+      "ro": "permisiune si lipsa judecatii",
+      "en": "permission and freedom from judgment"
+    }
+  },
+  "content": {
+    "id": "content",
+    "label": {
+      "ro": "Multumit",
+      "en": "Content"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "free",
+      "joyful",
+      "serene"
+    ],
+    "description": {
+      "ro": "Multumirea este o stare calma de satisfactie in care nevoile tale prezente sunt implinite si nu simti urgenta de a schimba nimic. Este o forma de fericire care nu depinde de intensitate sau excitatie, ci de acceptarea pasnica a momentului. Multumirea autentica vine din interior si nu poate fi cumparata sau fortata.",
+      "en": "Contentment is a calm state of satisfaction where your present needs are fulfilled and you feel no urgency to change anything. It is a form of happiness that doesn't depend on intensity or excitement, but on the peaceful acceptance of the moment. Authentic contentment comes from within and cannot be bought or forced."
+    },
+    "needs": {
+      "ro": "prezenta si liniste",
+      "en": "presence and stillness"
+    }
+  },
+  "free": {
+    "id": "free",
+    "label": {
+      "ro": "Liber",
+      "en": "Free"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "content",
+    "description": {
+      "ro": "Libertatea emotionala este experienta de a nu fi constrins — nici de circumstante externe, nici de blocaje interioare. Te simti capabil sa alegi, sa te exprimi si sa te misti in directia care ti se potriveste. Libertatea autentica include si responsabilitatea pentru alegerile tale, nu doar absenta restrictiilor.",
+      "en": "Emotional freedom is the experience of being unconstrained — neither by external circumstances nor by internal blockages. You feel capable of choosing, expressing yourself, and moving in the direction that suits you. Authentic freedom also includes responsibility for your choices, not just the absence of restrictions."
+    },
+    "needs": {
+      "ro": "spatiu deschis si autonomie",
+      "en": "open space and autonomy"
+    }
+  },
+  "joyful": {
+    "id": "joyful",
+    "label": {
+      "ro": "Bucuros",
+      "en": "Joyful"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "content",
+    "description": {
+      "ro": "Bucuria este o explozie calda de fericire care te umple complet — o stare de plenitudine emotionala in care viata pare frumoasa si plina de sens. Este mai intensa decat multumirea si mai sustinuta decat incantarea. Bucuria autentiva iradeaza si catre ceilalti, fiind una dintre cele mai contagioase emotii pozitive.",
+      "en": "Joyfulness is a warm explosion of happiness that fills you completely — a state of emotional fullness where life seems beautiful and meaningful. It is more intense than contentment and more sustained than delight. Authentic joy radiates toward others as well, being one of the most contagious positive emotions."
+    },
+    "needs": {
+      "ro": "partajare si celebrare",
+      "en": "sharing and celebration"
+    }
+  },
+  "serene": {
+    "id": "serene",
+    "label": {
+      "ro": "Senin",
+      "en": "Serene"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "content",
+    "description": {
+      "ro": "Serenitatea este linistea profunda care apare cand nu mai lupti cu nimic — nici cu lumea din exterior, nici cu gandurile din interior. Este o multumire imobila si meditativa, ca o suprafata de apa perfect nemiscata. Spre deosebire de fericirea activa, serenitatea nu cere nimic si nu urmareste nimic; ea apare cand te opresti suficient de mult incat sa auzi tacerea din tine.",
+      "en": "Serenity is the deep stillness that arises when you are no longer struggling with anything — neither the world outside nor the thoughts within. It is a motionless, meditative contentment, like a perfectly undisturbed surface of water. Unlike active happiness, serenity demands nothing and pursues nothing; it appears when you pause long enough to hear the silence within you."
+    },
+    "needs": {
+      "ro": "liniste si neasteptari",
+      "en": "quiet and absence of demands"
+    }
+  },
+  "interested": {
+    "id": "interested",
+    "label": {
+      "ro": "Interesat",
+      "en": "Interested"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "curious",
+      "inquisitive"
+    ],
+    "description": {
+      "ro": "Interesul este deschiderea activa catre ceva nou — o energie cognitiva si emotionala care te atrage sa explorezi, sa inveti si sa intelegi. Este fundamentul motivatiei intrinsece si al dezvoltarii personale. Cand esti cu adevarat interesat, timpul pare sa dispara si efortul devine placut. Interesul este semnul unei minti vii.",
+      "en": "Interest is the active openness toward something new — a cognitive and emotional energy that draws you to explore, learn, and understand. It is the foundation of intrinsic motivation and personal development. When you are truly interested, time seems to disappear and effort becomes pleasurable. Interest is the sign of a vibrant mind."
+    },
+    "needs": {
+      "ro": "explorare si stimulare",
+      "en": "exploration and stimulation"
+    }
+  },
+  "curious": {
+    "id": "curious",
+    "label": {
+      "ro": "Curios",
+      "en": "Curious"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "interested",
+    "description": {
+      "ro": "Curiozitatea este impulsul de a sti, de a intelege si de a descoperi. Este mintea ta in starea ei cea mai deschisa si mai receptiva. Curiozitatea te scoate din zona de confort si te duce catre crestere. In relatii, curiozitatea fata de experienta celuilalt este una dintre cele mai puternice forme de respect si iubire.",
+      "en": "Curiosity is the impulse to know, understand, and discover. It is your mind in its most open and receptive state. Curiosity takes you out of your comfort zone and leads you toward growth. In relationships, curiosity about the other's experience is one of the most powerful forms of respect and love."
+    },
+    "needs": {
+      "ro": "noutate si explorare",
+      "en": "novelty and exploration"
+    }
+  },
+  "inquisitive": {
+    "id": "inquisitive",
+    "label": {
+      "ro": "Iscoditor",
+      "en": "Inquisitive"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "interested",
+    "description": {
+      "ro": "Iscodirea este forma persistenta si activa a curiozitatii — nu doar vrei sa stii, ci urmaresti raspunsuri cu determinare. Este energia cercetatorului interior care nu se multumeste cu suprafata lucrurilor. Iscodirea sanatoasa respecta granitele celorlalti; cea nesanatoasa le incalca sub pretextul cunoasterii.",
+      "en": "Inquisitiveness is the persistent and active form of curiosity — you don't just want to know, but pursue answers with determination. It is the energy of the inner researcher who isn't satisfied with the surface of things. Healthy inquisitiveness respects others' boundaries; unhealthy inquisitiveness violates them under the pretext of knowledge."
+    },
+    "needs": {
+      "ro": "raspunsuri si profunzime",
+      "en": "answers and depth"
+    }
+  },
+  "proud": {
+    "id": "proud",
+    "label": {
+      "ro": "Mandru",
+      "en": "Proud"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "successful",
+      "confident",
+      "accomplished"
+    ],
+    "description": {
+      "ro": "Mandria este recunoasterea propriei valori si a realizarilor tale. Este emotia care iti confirma ca efortul tau a contat si ca ai crescut. Mandria sanatoasa te ancoreaza in respect de sine fara a te izola de ceilalti. Ea te motiveaza sa continui sa investesti in dezvoltarea ta si sa iti asumi provocari noi.",
+      "en": "Pride is the recognition of your own worth and achievements. It is the emotion that confirms your effort mattered and that you have grown. Healthy pride anchors you in self-respect without isolating you from others. It motivates you to continue investing in your development and to take on new challenges."
+    },
+    "needs": {
+      "ro": "recunoastere si celebrare",
+      "en": "recognition and celebration"
+    }
+  },
+  "successful": {
+    "id": "successful",
+    "label": {
+      "ro": "De succes",
+      "en": "Successful"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "proud",
+    "description": {
+      "ro": "Sentimentul de succes este confirmarea emotionala ca ai atins un obiectiv important si ca efortul tau a dat roade. Este o validare profunda a competentei tale. Succesul autentic se masoara nu doar in rezultate externe, ci si in sentimentul de coerenta intre ceea ce faci si ceea ce valorezi.",
+      "en": "The feeling of success is the emotional confirmation that you've reached an important goal and your effort has borne fruit. It is a deep validation of your competence. Authentic success is measured not only in external results, but also in the feeling of coherence between what you do and what you value."
+    },
+    "needs": {
+      "ro": "recunoastere si odihna",
+      "en": "acknowledgment and rest"
+    }
+  },
+  "confident": {
+    "id": "confident",
+    "label": {
+      "ro": "Increzator",
+      "en": "Confident"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "proud",
+    "description": {
+      "ro": "Increderea in sine este convingerea interioara ca ai resursele necesare pentru a face fata provocarilor vietii. Nu inseamna absenta indoielii, ci capacitatea de a actiona in ciuda ei. Increderea sanatoasa se construieste prin experienta repetata a depasirii obstacolelor, nu prin negarea vulnerabilitatilor.",
+      "en": "Self-confidence is the inner conviction that you have the necessary resources to face life's challenges. It doesn't mean the absence of doubt, but the capacity to act despite it. Healthy confidence is built through repeated experience of overcoming obstacles, not through denying vulnerabilities."
+    },
+    "needs": {
+      "ro": "incredere in sine si provocari noi",
+      "en": "trust in self and new challenges"
+    }
+  },
+  "accomplished": {
+    "id": "accomplished",
+    "label": {
+      "ro": "Implinit",
+      "en": "Accomplished"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "proud",
+    "description": {
+      "ro": "Sentimentul de implinire este privirea retrospectiva asupra unui drum parcurs — recunoasterea profunda ca ai depus efort, ai crescut si ai dus ceva la bun sfarsit. Este mai mult decat succesul momentan; este integrarea intregii experiente intr-un sentiment de completare si stapanire. Implinirea sanatoasa include si recunoasterea pretului platit si a lectiilor invatate, nu doar a rezultatului final.",
+      "en": "The feeling of accomplishment is looking back over a path traveled — the deep recognition that you invested effort, grew, and brought something to completion. It is more than momentary success; it is the integration of the entire experience into a sense of completion and mastery. Healthy accomplishment also includes recognizing the price paid and the lessons learned, not just the final result."
+    },
+    "needs": {
+      "ro": "recunoastere si integrare",
+      "en": "recognition and integration"
+    }
+  },
+  "accepted": {
+    "id": "accepted",
+    "label": {
+      "ro": "Acceptat",
+      "en": "Accepted"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "respected",
+      "valued",
+      "included"
+    ],
+    "description": {
+      "ro": "Sentimentul de a fi acceptat este una dintre nevoile umane cele mai profunde — confirmarea ca apartii si ca esti primit asa cum esti. Acceptarea din partea celorlalti activeaza sistemul de atasament si reduce anxietatea sociala. Cand te simti acceptat, iti poti permite vulnerabilitatea si autenticitatea in relatii.",
+      "en": "The feeling of being accepted is one of the deepest human needs — the confirmation that you belong and are received as you are. Acceptance from others activates the attachment system and reduces social anxiety. When you feel accepted, you can afford vulnerability and authenticity in relationships."
+    },
+    "needs": {
+      "ro": "apartinere si validare",
+      "en": "belonging and validation"
+    }
+  },
+  "respected": {
+    "id": "respected",
+    "label": {
+      "ro": "Respectat",
+      "en": "Respected"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "accepted",
+    "description": {
+      "ro": "A te simti respectat inseamna sa stii ca ceilalti iti recunosc demnitatea, opiniile si granitele. Respectul din exterior iti confirma valoarea sociala si iti intareste sentimentul de apartinere. Cand esti respectat, te simti vazut si auzit — doua nevoi fundamentale ale fiintei umane.",
+      "en": "Feeling respected means knowing that others recognize your dignity, opinions, and boundaries. External respect confirms your social value and strengthens your sense of belonging. When you are respected, you feel seen and heard — two fundamental needs of the human being."
+    },
+    "needs": {
+      "ro": "demnitate si a fi auzit",
+      "en": "dignity and being heard"
+    }
+  },
+  "valued": {
+    "id": "valued",
+    "label": {
+      "ro": "Valorizat",
+      "en": "Valued"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "accepted",
+    "description": {
+      "ro": "A te simti valorizat este experienta profunda ca contribui cu ceva important si ca prezenta ta conteaza. Este mai mult decat a fi respectat — este sa stii ca lumea ar fi mai saraca fara tine. Sentimentul de a fi valorizat hraneste stima de sine si te motiveaza sa continui sa oferi din ceea ce ai mai bun.",
+      "en": "Feeling valued is the deep experience that you contribute something important and that your presence matters. It is more than being respected — it is knowing that the world would be poorer without you. The feeling of being valued nourishes self-esteem and motivates you to continue offering your best."
+    },
+    "needs": {
+      "ro": "apreciere si scop",
+      "en": "appreciation and purpose"
+    }
+  },
+  "included": {
+    "id": "included",
+    "label": {
+      "ro": "Inclus",
+      "en": "Included"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "accepted",
+    "description": {
+      "ro": "Sentimentul de a fi inclus este experienta calda de a apartine — stii ca esti parte dintr-un grup, o comunitate sau un proiect care te accepta si te vrea acolo. Este una dintre nevoile umane cele mai fundamentale, legata de supravietuirea noastra ca specie sociala. Cand te simti inclus, anxietatea sociala se diminueaza si poti contribui autentic, stiind ca locul tau este asigurat.",
+      "en": "The feeling of being included is the warm experience of belonging — you know you are part of a group, a community, or a project that accepts you and wants you there. It is one of the most fundamental human needs, tied to our survival as a social species. When you feel included, social anxiety diminishes and you can contribute authentically, knowing your place is secure."
+    },
+    "needs": {
+      "ro": "apartinere si confirmare",
+      "en": "belonging and confirmation"
+    }
+  }
+}

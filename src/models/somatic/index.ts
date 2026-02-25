@@ -2,9 +2,21 @@ import type { EmotionModel, ModelState, SelectionEffect, AnalysisResult } from '
 import { MODEL_IDS } from '../constants'
 import type { SomaticRegion, SomaticSelection } from './types'
 import { scoreSomaticSelections } from './scoring'
-import regionsData from './data.json'
+import headData from './data/head.json'
+import torsoFrontData from './data/torso-front.json'
+import torsoBackData from './data/torso-back.json'
+import armsData from './data/arms.json'
+import legsData from './data/legs.json'
 
-const allEmotions = regionsData as unknown as Record<string, SomaticRegion>
+const allEmotions = {
+  ...headData,
+  ...torsoFrontData,
+  ...torsoBackData,
+  ...armsData,
+  ...legsData,
+} as unknown as Record<string, SomaticRegion>
+
+export { allEmotions as somaticRegions }
 
 const ALL_REGION_IDS = Object.keys(allEmotions)
 

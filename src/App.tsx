@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useMemo, useEffect, Suspense } from 'react'
-import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
+import { AnimatePresence, MotionConfig } from 'framer-motion'
 import { Onboarding } from './components/Onboarding'
 import { Header } from './components/Header'
 import { SettingsMenu } from './components/SettingsMenu'
@@ -13,45 +13,22 @@ import { QuickCheckIn, QUICK_MODEL_ID } from './components/QuickCheckIn'
 import { GranularityTraining } from './components/GranularityTraining'
 import { ChainAnalysis } from './components/ChainAnalysis'
 import { VisualizationErrorBoundary } from './components/VisualizationErrorBoundary'
+import { FirstInteractionHint } from './components/FirstInteractionHint'
 import { useSound } from './hooks/useSound'
 import { useEmotionModel } from './hooks/useEmotionModel'
 import { useModelSelection } from './hooks/useModelSelection'
 import { useHintState } from './hooks/useHintState'
 import { useSessionHistory } from './hooks/useSessionHistory'
 import { useChainAnalysis } from './hooks/useChainAnalysis'
+import { useReminders } from './hooks/useReminders'
 import { useLanguage } from './context/LanguageContext'
 import { getVisualization } from './models/registry'
 import { MODEL_IDS } from './models/constants'
 import { storage } from './data/storage'
-import {
-  getReminderPermission,
-  isDailyReminderEnabled,
-  isReminderSupported,
-  maybeSendDailyReminder,
-  updateDailyReminder,
-} from './data/reminders'
 import { getCrisisTier } from './models/distress'
 import { hasTemporalCrisisPattern } from './data/temporal-crisis'
 import type { BaseEmotion, AnalysisResult, ModelState } from './models/types'
 import type { Session, SerializedSelection } from './data/types'
-
-function FirstInteractionHint({ modelId }: { modelId: string }) {
-  const { section } = useLanguage()
-  const hintsT = section('firstHint')
-
-  const text = (hintsT as Record<string, string | undefined>)[modelId] ?? hintsT.wheel ?? 'Tap an emotion that resonates with you'
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      className="mx-auto w-fit px-4 py-2 bg-indigo-600/90 backdrop-blur-sm rounded-full text-sm text-white shadow-lg pointer-events-none"
-    >
-      {text}
-    </motion.div>
-  )
-}
 
 export default function App() {
   const { language, section } = useLanguage()
@@ -122,7 +99,6 @@ export default function App() {
   const [saveSessions, setSaveSessions] = useState(() => {
     return storage.get('saveSessions') !== 'false'
   })
-  const [dailyReminderEnabled, setDailyReminderEnabled] = useState(() => isDailyReminderEnabled())
 
   const handleSaveSessionsChange = useCallback((save: boolean) => {
     storage.set('saveSessions', String(save))
@@ -135,46 +111,12 @@ export default function App() {
     }
   }, [clearAllSessions, sessions.length, settingsT])
 
-  const handleDailyReminderChange = useCallback(async (enabled: boolean) => {
-    const result = await updateDailyReminder(enabled)
-    if (result === 'enabled') {
-      // Start cadence from now to avoid an immediate surprise notification.
-      storage.set('dailyReminderLastSentAt', String(Date.now()))
-      setDailyReminderEnabled(true)
-      return
-    }
-
-    setDailyReminderEnabled(false)
-    if (result === 'denied') {
-      window.alert(remindersT.permissionDenied ?? 'Notifications are blocked. You can enable them from browser settings.')
-    }
-    if (result === 'unsupported') {
-      window.alert(remindersT.unsupported ?? 'Notifications are not supported on this device.')
-    }
-  }, [remindersT])
-
-  const reminderPermission = getReminderPermission()
-  const reminderSupported = isReminderSupported()
-
-  useEffect(() => {
-    if (!dailyReminderEnabled) return
-
-    const maybeNotify = () => {
-      if (document.visibilityState === 'visible') return
-      void maybeSendDailyReminder({
-        title: remindersT.notificationTitle ?? 'Time for a quick emotional check-in',
-        body: remindersT.notificationBody ?? 'Take 30 seconds to notice what you feel.',
-      })
-    }
-
-    maybeNotify()
-    const intervalId = window.setInterval(maybeNotify, 60 * 1000)
-    document.addEventListener('visibilitychange', maybeNotify)
-    return () => {
-      window.clearInterval(intervalId)
-      document.removeEventListener('visibilitychange', maybeNotify)
-    }
-  }, [dailyReminderEnabled, remindersT])
+  const {
+    dailyReminderEnabled,
+    reminderPermission,
+    reminderSupported,
+    handleDailyReminderChange,
+  } = useReminders(remindersT)
 
   const handleSelect = useCallback(
     (emotion: BaseEmotion) => {
