@@ -1,0 +1,314 @@
+{
+  "surprised": {
+    "id": "surprised",
+    "label": {
+      "ro": "Surprins",
+      "en": "Surprised"
+    },
+    "color": "#A8D8B0",
+    "level": 0,
+    "children": [
+      "startled",
+      "confused",
+      "amazed",
+      "excited"
+    ],
+    "description": {
+      "ro": "Surpriza este reactia imediata la ceva neasteptat — un moment de recalibrare in care toate procesele mentale se opresc pentru a evalua situatia. Este neutra prin natura ei si extrem de scurta; ceea ce urmeaza — bucurie, frica sau furie — depinde de interpretarea ta. Surpriza te readuce in prezent cu o forta care taie prin automatism.",
+      "en": "Surprise is the immediate reaction to something unexpected — a moment of recalibration where all mental processes stop to evaluate the situation. It is neutral by nature and extremely brief; what follows — joy, fear, or anger — depends on your interpretation. Surprise brings you back to the present with a force that cuts through automatism."
+    },
+    "needs": {
+      "ro": "pauza si orientare",
+      "en": "pause and orientation"
+    }
+  },
+  "startled": {
+    "id": "startled",
+    "label": {
+      "ro": "Tresarit",
+      "en": "Startled"
+    },
+    "color": "#B8E0BE",
+    "level": 1,
+    "parent": "surprised",
+    "children": [
+      "shocked",
+      "dismayed",
+      "jolted"
+    ],
+    "description": {
+      "ro": "Tresarirea este raspunsul instinctiv la un stimul brusc si neasteptat — corpul reactioneaza inainte ca mintea sa inteleaga ce se intampla. Este reflexul de orientare la intensitate maxima. Tresarirea este complet involuntara si serveste functiei de protectie, pregatindu-te instant pentru potentiala amenintare.",
+      "en": "Being startled is the instinctive response to a sudden and unexpected stimulus — the body reacts before the mind understands what's happening. It is the orienting reflex at maximum intensity. Being startled is completely involuntary and serves a protective function, preparing you instantly for potential threat."
+    },
+    "needs": {
+      "ro": "siguranta si ancorare",
+      "en": "safety and grounding"
+    }
+  },
+  "confused": {
+    "id": "confused",
+    "label": {
+      "ro": "Confuz",
+      "en": "Confused"
+    },
+    "color": "#B8E0BE",
+    "level": 1,
+    "parent": "surprised",
+    "children": [
+      "disillusioned",
+      "perplexed",
+      "disoriented"
+    ],
+    "description": {
+      "ro": "Confuzia apare cand informatiile pe care le primesti nu se potrivesc cu modelele tale mentale existente. Este un semnal ca trebuie sa iti revizuiesti intelegerea. Confuzia este inconfortabila, dar este de fapt poarta catre invatare — daca o toleri suficient, claritatea va urma. Fuga de confuzie inseamna fuga de crestere.",
+      "en": "Confusion arises when the information you receive doesn't fit your existing mental models. It is a signal that you need to revise your understanding. Confusion is uncomfortable, but is actually the gateway to learning — if you tolerate it long enough, clarity will follow. Fleeing confusion means fleeing growth."
+    },
+    "needs": {
+      "ro": "claritate si rabdare",
+      "en": "clarity and patience"
+    }
+  },
+  "amazed": {
+    "id": "amazed",
+    "label": {
+      "ro": "Uimit",
+      "en": "Amazed"
+    },
+    "color": "#B8E0BE",
+    "level": 1,
+    "parent": "surprised",
+    "children": [
+      "astonished",
+      "awe"
+    ],
+    "description": {
+      "ro": "Uimirea este o surpriza amplificata de admiratie — o stare in care esti coplesit de ceva care iti depaseste asteptarile in mod extraordinar. Mintea se opreste, ochii se deschid larg si simti ca lumea este mai vasta decat credeai. Uimirea te reconecteaza cu misterul existentei si cu propria ta capacitate de a te minuna.",
+      "en": "Being amazed is surprise amplified by admiration — a state where you are overwhelmed by something that exceeds your expectations extraordinarily. The mind stops, the eyes widen, and you feel the world is vaster than you thought. Amazement reconnects you with the mystery of existence and your own capacity for wonder."
+    },
+    "needs": {
+      "ro": "spatiu de asimilare si mirare",
+      "en": "space to absorb and wonder"
+    }
+  },
+  "excited": {
+    "id": "excited",
+    "label": {
+      "ro": "Entuziasmat",
+      "en": "Excited"
+    },
+    "color": "#B8E0BE",
+    "level": 1,
+    "parent": "surprised",
+    "children": [
+      "eager",
+      "energetic",
+      "thrilled"
+    ],
+    "description": {
+      "ro": "Entuziasmul este o stare de energie ridicata si asteptare pozitiva — corpul vibreaza, mintea alearga si simti un impuls puternic catre actiune. Este anticiparea intalnita cu bucuria. Entuziasmul este contagios si te face mai carismatic, mai creativ si mai curajos. Este combustibilul care transforma planurile in actiuni.",
+      "en": "Excitement is a state of heightened energy and positive expectation — the body vibrates, the mind races, and you feel a strong impulse toward action. It is anticipation meeting joy. Excitement is contagious and makes you more charismatic, creative, and courageous. It is the fuel that transforms plans into actions."
+    },
+    "needs": {
+      "ro": "miscare si exprimare",
+      "en": "movement and expression"
+    }
+  },
+  "shocked": {
+    "id": "shocked",
+    "label": {
+      "ro": "Socat",
+      "en": "Shocked"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "startled",
+    "description": {
+      "ro": "Socul emotional este o stare de blocare cauzata de un eveniment extrem de neasteptat si coplesitor. Mintea se opreste, corpul amorteeste si realitatea pare ireala. Socul este un mecanism de protectie care iti permite sa procesezi treptat ceea ce ar fi insuportabil deodata. Vindecarea dupa soc necesita timp, siguranta si sustinere.",
+      "en": "Emotional shock is a state of shutdown caused by an extremely unexpected and overwhelming event. The mind stops, the body numbs, and reality seems unreal. Shock is a protective mechanism that allows you to gradually process what would be unbearable all at once. Recovery from shock requires time, safety, and support."
+    },
+    "needs": {
+      "ro": "siguranta, timp si sustinere",
+      "en": "safety, time, and support"
+    }
+  },
+  "dismayed": {
+    "id": "dismayed",
+    "label": {
+      "ro": "Consternat",
+      "en": "Dismayed"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "startled",
+    "description": {
+      "ro": "Consternarea este amestecul de surpriza si dezamagire profunda — descoperi ceva care iti demoleaza asteptarile intr-un mod dureros. Este momentul in care realizezi ca situatia este mult mai grava decat anticipai. Consternarea te poate mobiliza catre actiune sau te poate paraliza — depinde de resursele tale interioare.",
+      "en": "Dismay is the mix of surprise and deep disappointment — you discover something that demolishes your expectations in a painful way. It is the moment when you realize the situation is much worse than anticipated. Dismay can mobilize you toward action or paralyze you — it depends on your inner resources."
+    },
+    "needs": {
+      "ro": "validare si reasigurare",
+      "en": "validation and reassurance"
+    }
+  },
+  "disillusioned": {
+    "id": "disillusioned",
+    "label": {
+      "ro": "Deziluzionat",
+      "en": "Disillusioned"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "confused",
+    "description": {
+      "ro": "Deziluzionarea este pierderea dureroasa a unei credinte sau idealuri care ti-au dat sens. Descoperi ca ceva sau cineva nu este ceea ce credeai. Desi dureroasa, deziluzionarea poate fi eliberatoare — te forteaza sa te confrunti cu realitatea si sa construiesti pe fundamente mai solide. Maturizarea include inevitabil momente de deziluzionare.",
+      "en": "Disillusionment is the painful loss of a belief or ideal that gave you meaning. You discover that something or someone is not what you believed. Though painful, disillusionment can be liberating — it forces you to confront reality and build on more solid foundations. Maturation inevitably includes moments of disillusionment."
+    },
+    "needs": {
+      "ro": "onestitate si timp pentru doliu",
+      "en": "honesty and time to grieve"
+    }
+  },
+  "perplexed": {
+    "id": "perplexed",
+    "label": {
+      "ro": "Perplex",
+      "en": "Perplexed"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "confused",
+    "description": {
+      "ro": "Perplexitatea este o confuzie profunda in care nu doar nu intelegi, ci nici nu stii cum sa incepi sa intelegi. Este mintea blocata in fata complexitatii sau contradictiei. Perplexitatea poate fi un semn ca problema necesita o abordare complet noua sau ca ai nevoie de perspectiva altcuiva pentru a vedea ce iti scapa.",
+      "en": "Perplexity is a deep confusion where you not only don't understand, but don't even know how to begin understanding. It is the mind blocked in the face of complexity or contradiction. Perplexity can be a sign that the problem requires a completely new approach or that you need someone else's perspective to see what you're missing."
+    },
+    "needs": {
+      "ro": "ghidare si o perspectiva noua",
+      "en": "guidance and a fresh perspective"
+    }
+  },
+  "astonished": {
+    "id": "astonished",
+    "label": {
+      "ro": "Stupefiat",
+      "en": "Astonished"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "amazed",
+    "description": {
+      "ro": "Stupefierea este o uimire atat de intensa incat te lasa fara cuvinte si fara ganduri. Este momentul de suspendare totala a proceselor obisnuite, in care esti complet absorbit de ceea ce percepi. Stupefierea poate fi provocata atat de frumusete extrema, cat si de oroare — este intensitatea, nu valenta, care o defineste.",
+      "en": "Astonishment is amazement so intense it leaves you speechless and thoughtless. It is the moment of total suspension of ordinary processes, where you are completely absorbed by what you perceive. Astonishment can be provoked by both extreme beauty and horror — it is the intensity, not the valence, that defines it."
+    },
+    "needs": {
+      "ro": "liniste si spatiu de procesare",
+      "en": "stillness and space to process"
+    }
+  },
+  "awe": {
+    "id": "awe",
+    "label": {
+      "ro": "Veneratie",
+      "en": "Awe"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "amazed",
+    "description": {
+      "ro": "Veneratia este o stare de respect profund si uimire in fata a ceva mult mai mare decat tine — natura, arta, sacrul sau generozitatea umana. Cercetarile arata ca veneratia te face mai smerit, mai generos si mai conectat cu ceilalti. Este una dintre emotiile care iti amintesc locul tau in ordinea mai mare a lucrurilor.",
+      "en": "Awe is a state of deep respect and wonder before something much greater than yourself — nature, art, the sacred, or human generosity. Research shows that awe makes you more humble, generous, and connected to others. It is one of the emotions that reminds you of your place in the larger order of things."
+    },
+    "needs": {
+      "ro": "contemplare si prezenta",
+      "en": "contemplation and presence"
+    }
+  },
+  "eager": {
+    "id": "eager",
+    "label": {
+      "ro": "Nerabdator",
+      "en": "Eager"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "excited",
+    "description": {
+      "ro": "Nerabdarea pozitiva este dorinta intensa de a incepe, de a ajunge sau de a experimenta ceva ce astepti cu entuziasm. Este energia anticiparii concentrate intr-un impuls catre actiune. Nerabdarea te mentine angajat si orientat catre viitor, dar necesita echilibru cu rabdarea pentru a nu te epuiza sau a lua decizii pripite.",
+      "en": "Eagerness is the intense desire to begin, arrive, or experience something you await with enthusiasm. It is the energy of anticipation concentrated into an impulse toward action. Eagerness keeps you engaged and future-oriented, but requires balance with patience to avoid exhaustion or hasty decisions."
+    },
+    "needs": {
+      "ro": "actiune si energie canalizata",
+      "en": "action and channeled energy"
+    }
+  },
+  "energetic": {
+    "id": "energetic",
+    "label": {
+      "ro": "Energic",
+      "en": "Energetic"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "excited",
+    "description": {
+      "ro": "Energia emotionala este o stare de vitalitate ridicata in care corpul si mintea sunt complet activate si gata de actiune. Te simti capabil de orice si oboseala pare absenta. Energia nu este doar fizica — este o stare de angajament total cu viata. Perioadele de energie mare trebuie echilibrate cu recuperare constienta.",
+      "en": "Emotional energy is a state of heightened vitality where body and mind are fully activated and ready for action. You feel capable of anything and fatigue seems absent. Energy is not just physical — it is a state of total engagement with life. Periods of high energy must be balanced with conscious recovery."
+    },
+    "needs": {
+      "ro": "miscare si activitate cu scop",
+      "en": "movement and purposeful activity"
+    }
+  },
+  "jolted": {
+    "id": "jolted",
+    "label": {
+      "ro": "Zguduit",
+      "en": "Jolted"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "startled",
+    "description": {
+      "ro": "Zguduirea este reactia fiziologica pura de tresarire — corpul tau se activeaza brusc inainte ca mintea sa apuce sa evalueze ce s-a intamplat. Inima bate mai repede, muschii se contracta si atentia se fixeaza instantaneu pe sursa stimulului. Este reflexul de orientare in forma sa cea mai intensa si mai rapida, un mecanism de supravietuire care te pregateste pentru orice ar urma.",
+      "en": "Being jolted is the pure physiological startle response — your body snaps to attention before your mind has time to evaluate what happened. The heart beats faster, muscles tense, and attention locks instantly onto the source of the stimulus. It is the orienting reflex in its most intense and rapid form, a survival mechanism preparing you for whatever comes next."
+    },
+    "needs": {
+      "ro": "siguranta si reancorare",
+      "en": "safety and re-grounding"
+    }
+  },
+  "disoriented": {
+    "id": "disoriented",
+    "label": {
+      "ro": "Dezorientat",
+      "en": "Disoriented"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "confused",
+    "description": {
+      "ro": "Dezorientarea este pierderea reperelor obisnuite — nu mai stii exact unde te afli, ce se intampla sau cum ai ajuns aici. Poate fi spatiala, temporala sau identitara, si aduce cu sine un sentiment de instabilitate si nesiguranta. Dezorientarea apare cand realitatea se schimba mai repede decat te poti adapta sau cand informatiile contrazic tot ce credeai ca stii. Este un semnal ca ai nevoie de repere noi si de timp pentru a te recalibra.",
+      "en": "Disorientation is the loss of familiar reference points — you no longer know exactly where you are, what is happening, or how you got here. It can be spatial, temporal, or identity-related, and brings with it a sense of instability and uncertainty. Disorientation occurs when reality shifts faster than you can adapt or when information contradicts everything you thought you knew. It is a signal that you need new anchors and time to recalibrate."
+    },
+    "needs": {
+      "ro": "repere si orientare",
+      "en": "anchors and orientation"
+    }
+  },
+  "thrilled": {
+    "id": "thrilled",
+    "label": {
+      "ro": "Exaltat",
+      "en": "Thrilled"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "excited",
+    "description": {
+      "ro": "Exaltarea este varful entuziasmului — o stare de excitare atat de intensa incat aproape ca te copleseste. Corpul vibreaza, respiratia se accelereaza si simti un val care te ridica deasupra cotidianului. Este momentul in care anticiparea se intalneste cu realitatea si rezultatul depaseste asteptarile. Exaltarea este scurta prin natura ei, ceea ce o face si mai pretioasa — este emotia care transforma momentele obisnuite in amintiri de neuitat.",
+      "en": "Being thrilled is the peak of excitement — a state of arousal so intense it nearly overwhelms you. The body vibrates, breathing quickens, and you feel a wave lifting you above the ordinary. It is the moment when anticipation meets reality and the result exceeds expectations. Thrill is brief by nature, which makes it all the more precious — it is the emotion that transforms ordinary moments into unforgettable memories."
+    },
+    "needs": {
+      "ro": "exprimare si savurare",
+      "en": "expression and savoring"
+    }
+  }
+}

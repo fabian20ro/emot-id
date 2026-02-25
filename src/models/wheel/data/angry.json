@@ -1,0 +1,588 @@
+{
+  "angry": {
+    "id": "angry",
+    "label": {
+      "ro": "Furios",
+      "en": "Angry"
+    },
+    "color": "#E88888",
+    "level": 0,
+    "children": [
+      "let_down",
+      "humiliated",
+      "bitter",
+      "mad",
+      "aggressive",
+      "frustrated",
+      "distant",
+      "critical"
+    ],
+    "description": {
+      "ro": "Furia este o emotie puternica de mobilizare care apare cand percepi nedreptate, incalcarea granitelor sau frustrarea nevoilor tale fundamentale. Este energia care te impinge sa schimbi ceea ce este gresit. Furia nu este distructiva in sine — modul in care o exprimi face diferenta. Furia ascultata si canalizata devine o forta de transformare.",
+      "en": "Anger is a powerful mobilizing emotion that arises when you perceive injustice, boundary violation, or the frustration of your fundamental needs. It is the energy that pushes you to change what is wrong. Anger is not destructive in itself — how you express it makes the difference. Anger listened to and channeled becomes a force for transformation."
+    },
+    "needs": {
+      "ro": "limite si actiune",
+      "en": "boundaries and action"
+    }
+  },
+  "let_down": {
+    "id": "let_down",
+    "label": {
+      "ro": "Dezamagit",
+      "en": "Let down"
+    },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": [
+      "betrayed",
+      "resentful",
+      "deceived"
+    ],
+    "description": {
+      "ro": "Dezamagirea este durerea asteptarilor neimplinite — ai crezut in cineva sau in ceva si realitatea nu a corespuns. Combina tristetea pierderii cu furia ca promisiunea nu a fost respectata. Dezamagirea repetata erodeaza increderea si poate duce la cinism defensiv. Vindecarea include ajustarea asteptarilor si comunicarea deschisa a nevoilor.",
+      "en": "Being let down is the pain of unfulfilled expectations — you believed in someone or something and reality didn't correspond. It combines the sadness of loss with the anger that the promise wasn't kept. Repeated disappointment erodes trust and can lead to defensive cynicism. Healing includes adjusting expectations and openly communicating needs."
+    },
+    "needs": {
+      "ro": "comunicare onesta si reparatie",
+      "en": "honest communication and repair"
+    }
+  },
+  "humiliated": {
+    "id": "humiliated",
+    "label": {
+      "ro": "Umilit",
+      "en": "Humiliated"
+    },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": [
+      "disrespected",
+      "ridiculed",
+      "degraded"
+    ],
+    "description": {
+      "ro": "Umilirea este experienta de a fi facut sa te simti mic, ndemn si lipsit de valoare in fata celorlalti. Ataca nucleul identitatii tale sociale. Umilirea provoaca o furie intensa amestecata cu rusine — vrei simultan sa dispari si sa te razbuni. Este una dintre cele mai dificile rani emotionale de vindecat si poate genera resentimente de lunga durata.",
+      "en": "Humiliation is the experience of being made to feel small, unworthy, and valueless in front of others. It attacks the core of your social identity. Humiliation provokes intense anger mixed with shame — you simultaneously want to disappear and to retaliate. It is one of the most difficult emotional wounds to heal and can generate long-lasting resentments."
+    },
+    "needs": {
+      "ro": "demnitate si validare",
+      "en": "dignity and validation"
+    }
+  },
+  "bitter": {
+    "id": "bitter",
+    "label": {
+      "ro": "Amarât",
+      "en": "Bitter"
+    },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": [
+      "indignant",
+      "violated"
+    ],
+    "description": {
+      "ro": "Amaraciunea este furia care s-a sedimentat in timp — un resentiment cronic cauzat de nedreptati repetate sau nerezolvate. Este ca o otrava lenta care iti coloreaza perceptia lumii in tonuri intunecate. Amaraciunea te protejeaza de noi dezamagiri, dar te si izoleaza de bucurie si conexiune. Eliberarea vine prin doliu si prin alegerea constienta de a nu mai purta povara.",
+      "en": "Bitterness is anger that has settled over time — a chronic resentment caused by repeated or unresolved injustices. It is like a slow poison that colors your perception of the world in dark tones. Bitterness protects you from new disappointments, but also isolates you from joy and connection. Release comes through grieving and the conscious choice to no longer carry the burden."
+    },
+    "needs": {
+      "ro": "doliu si eliberare",
+      "en": "grieving and release"
+    }
+  },
+  "mad": {
+    "id": "mad",
+    "label": {
+      "ro": "Nebun de furie",
+      "en": "Mad"
+    },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": [
+      "furious",
+      "jealous",
+      "enraged"
+    ],
+    "description": {
+      "ro": "A fi nebun de furie este o stare de intensitate emotionala extrema in care rationalitatii i se ia locul de impulsivitate. Gandirea devine alb-negru, empatia dispare si tot ce simti este nevoia de a actiona. Este furia care a depasit capacitatea de autoreglare. Aceasta stare necesita o pauza imediata inainte de orice actiune pentru a preveni daune ireversibile.",
+      "en": "Being mad is a state of extreme emotional intensity where rationality is replaced by impulsivity. Thinking becomes black-and-white, empathy disappears, and all you feel is the need to act. It is anger that has exceeded the capacity for self-regulation. This state requires an immediate pause before any action to prevent irreversible damage."
+    },
+    "needs": {
+      "ro": "pauza imediata si descarcare sigura",
+      "en": "immediate pause and safe discharge"
+    }
+  },
+  "aggressive": {
+    "id": "aggressive",
+    "label": {
+      "ro": "Agresiv",
+      "en": "Aggressive"
+    },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": [
+      "provoked",
+      "hostile"
+    ],
+    "description": {
+      "ro": "Agresivitatea este energia furiei orientata catre actiune — un impuls de a ataca, domina sau distruge obstacolul. Poate fi fizica, verbala sau pasiva. Agresivitatea nu este intotdeauna disfunctionala — in forme asertive, te ajuta sa iti aperi granitele. Devine problematica cand este disproportionata, indreptata gresit sau cronica.",
+      "en": "Aggressiveness is the energy of anger oriented toward action — an impulse to attack, dominate, or destroy the obstacle. It can be physical, verbal, or passive. Aggression is not always dysfunctional — in assertive forms, it helps you defend your boundaries. It becomes problematic when it is disproportionate, misdirected, or chronic."
+    },
+    "needs": {
+      "ro": "exprimare canalizata si continere",
+      "en": "channeled expression and containment"
+    }
+  },
+  "frustrated": {
+    "id": "frustrated",
+    "label": {
+      "ro": "Frustrat",
+      "en": "Frustrated"
+    },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": [
+      "infuriated",
+      "annoyed",
+      "exasperated"
+    ],
+    "description": {
+      "ro": "Frustrarea apare cand un obstacol sta intre tine si obiectivul tau — vrei sa avansezi dar nu poti. Este furia blocata de neputinta. Frustrarea tolerate te invata rabdare si creativitate in gasirea solutiilor alternative. Frustrarea netolerata poate escalada in furie sau poate duce la renuntare prematura.",
+      "en": "Frustration arises when an obstacle stands between you and your goal — you want to advance but cannot. It is anger blocked by helplessness. Tolerated frustration teaches you patience and creativity in finding alternative solutions. Untolerated frustration can escalate into rage or lead to premature giving up."
+    },
+    "needs": {
+      "ro": "o abordare noua si rabdare",
+      "en": "a new approach and patience"
+    }
+  },
+  "distant": {
+    "id": "distant",
+    "label": {
+      "ro": "Distant",
+      "en": "Distant"
+    },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": [
+      "withdrawn",
+      "numb",
+      "detached"
+    ],
+    "description": {
+      "ro": "Distanta emotionala este retragerea constienta sau inconstienta din conectare — te inchizi in tine, ridici ziduri si nu mai lasi pe nimeni sa se apropie. Poate fi o strategie de protectie dupa rani repetate sau un semn de epuizare emotionala. Distanta cronica iti protejeaza vulnerabilitatea, dar te izoleaza de intimitate si apartinere.",
+      "en": "Emotional distance is the conscious or unconscious withdrawal from connection — you close yourself off, raise walls, and don't let anyone get close. It can be a protective strategy after repeated wounds or a sign of emotional exhaustion. Chronic distance protects your vulnerability, but isolates you from intimacy and belonging."
+    },
+    "needs": {
+      "ro": "reconectare treptata si siguranta",
+      "en": "gradual reconnection and safety"
+    }
+  },
+  "critical": {
+    "id": "critical",
+    "label": {
+      "ro": "Critic",
+      "en": "Critical"
+    },
+    "color": "#EE9E9E",
+    "level": 1,
+    "parent": "angry",
+    "children": [
+      "skeptical",
+      "dismissive"
+    ],
+    "description": {
+      "ro": "A fi critic este tendinta de a evalua si judeca constant — pe tine, pe altii si situatiile din jur. Poate reflecta standarde inalte si discernamant, dar si o furie mascata sau o nesiguranta proiectata. Critica cronica erodeaza relatiile si stima de sine. Alternativa sanatoasa este feedbackul constructiv, oferit cu empatie si respect.",
+      "en": "Being critical is the tendency to constantly evaluate and judge — yourself, others, and surrounding situations. It can reflect high standards and discernment, but also masked anger or projected insecurity. Chronic criticism erodes relationships and self-esteem. The healthy alternative is constructive feedback, offered with empathy and respect."
+    },
+    "needs": {
+      "ro": "constientizare de sine si empatie",
+      "en": "self-awareness and empathy"
+    }
+  },
+  "betrayed": {
+    "id": "betrayed",
+    "label": {
+      "ro": "Tradat",
+      "en": "Betrayed"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "let_down",
+    "description": {
+      "ro": "Tradarea este ruptura devastatoare a increderii de catre cineva in care aveai incredere profunda. Combina socul descoperirii cu furia si durerea pierderii relatiei asa cum o cunosteai. Tradarea poate modifica fundamental modul in care te raportezi la incredere in viitor. Vindecarea este posibila dar lenta si necesita doliu, restabilirea granitelor si, uneori, iertare.",
+      "en": "Betrayal is the devastating rupture of trust by someone in whom you had deep trust. It combines the shock of discovery with anger and the pain of losing the relationship as you knew it. Betrayal can fundamentally change how you relate to trust in the future. Healing is possible but slow and requires grieving, reestablishing boundaries, and sometimes forgiveness."
+    },
+    "needs": {
+      "ro": "timp, limite si doliu",
+      "en": "time, boundaries, and grieving"
+    }
+  },
+  "resentful": {
+    "id": "resentful",
+    "label": {
+      "ro": "Plin de resentimente",
+      "en": "Resentful"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "let_down",
+    "description": {
+      "ro": "Resentimentul este furia care a fost inghitita dar nu digerata — o ranchiuna tacuta care se acumuleaza cu fiecare noua nedreptate perceputa. Te simti victimizat dar nu exprimi. Resentimentul este toxic pentru ca te tine legat de trecut si de persoana care te-a ranit. Eliberarea vine prin exprimarea directa a nevoilor si prin procesarea furiei.",
+      "en": "Resentment is anger that was swallowed but not digested — a silent grudge that accumulates with each new perceived injustice. You feel victimized but don't express it. Resentment is toxic because it keeps you tied to the past and to the person who hurt you. Release comes through direct expression of needs and processing anger."
+    },
+    "needs": {
+      "ro": "exprimarea directa a nevoilor",
+      "en": "direct expression of needs"
+    }
+  },
+  "disrespected": {
+    "id": "disrespected",
+    "label": {
+      "ro": "Lipsa de respect",
+      "en": "Disrespected"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "humiliated",
+    "description": {
+      "ro": "A fi tratat cu lipsa de respect inseamna ca demnitatea ta a fost ignorata sau incalcata. Cineva ti-a comunicat, explicit sau implicit, ca nu contezi suficient. Lipsa de respect activeaza o furie legitima de protectie a sinelui. Raspunsul sanatos este asertivitatea calma — a numi ce s-a intamplat si a cere schimbarea comportamentului.",
+      "en": "Being disrespected means your dignity was ignored or violated. Someone communicated, explicitly or implicitly, that you don't matter enough. Disrespect activates legitimate anger in protection of the self. The healthy response is calm assertiveness — naming what happened and requesting a change in behavior."
+    },
+    "needs": {
+      "ro": "asertivitate si demnitate restabilita",
+      "en": "assertiveness and restored dignity"
+    }
+  },
+  "ridiculed": {
+    "id": "ridiculed",
+    "label": {
+      "ro": "Ridiculizat",
+      "en": "Ridiculed"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "humiliated",
+    "description": {
+      "ro": "Ridiculizarea este o forma de agresiune sociala in care esti transformat in obiect de ras. Combina umilirea cu izolarea — esti scos din grup prin deriziune. Ridiculizarea lasa rani adanci in stima de sine si poate genera fie retragere sociala, fie furie intensa. Vindecarea include validarea durerii si reconstruirea sentimentului de valoare.",
+      "en": "Ridicule is a form of social aggression where you are turned into an object of laughter. It combines humiliation with isolation — you are expelled from the group through mockery. Ridicule leaves deep wounds in self-esteem and can generate either social withdrawal or intense anger. Healing includes validating the pain and rebuilding the sense of worth."
+    },
+    "needs": {
+      "ro": "validare si reconstruirea valorii",
+      "en": "validation and rebuilding worth"
+    }
+  },
+  "indignant": {
+    "id": "indignant",
+    "label": {
+      "ro": "Indignat",
+      "en": "Indignant"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "bitter",
+    "description": {
+      "ro": "Indignarea este furia morala — reactia la ceva profund nedrept sau incorect. Este emotia care spune 'nu ar trebui sa fie asa' cu o convingere puternica. Indignarea sanatoasa te motiveaza sa actionezi pentru dreptate. Devine problematica cand se transforma in superioritate morala sau in furie cronica.",
+      "en": "Indignation is moral anger — the reaction to something profoundly unfair or incorrect. It is the emotion that says 'it shouldn't be this way' with strong conviction. Healthy indignation motivates you to act for justice. It becomes problematic when it transforms into moral superiority or chronic rage."
+    },
+    "needs": {
+      "ro": "dreptate si actiune constructiva",
+      "en": "justice and constructive action"
+    }
+  },
+  "violated": {
+    "id": "violated",
+    "label": {
+      "ro": "Violat",
+      "en": "Violated"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "bitter",
+    "description": {
+      "ro": "A te simti violat inseamna ca o limita fundamentala a fost transgresta fara consimtamantul tau — fizic, emotional sau moral. Este una dintre cele mai devastatoare experiente, care ataca sentimentul de siguranta si de control asupra propriei persoane. Vindecarea este un proces lung care necesita sprijin profesional, validare si restabilirea treptata a sentimentului de agentivitate.",
+      "en": "Feeling violated means a fundamental boundary was transgressed without your consent — physically, emotionally, or morally. It is one of the most devastating experiences, attacking the sense of safety and control over your own person. Healing is a long process requiring professional support, validation, and gradual restoration of the sense of agency."
+    },
+    "needs": {
+      "ro": "sprijin profesional si siguranta restabilita",
+      "en": "professional support and restored safety"
+    }
+  },
+  "furious": {
+    "id": "furious",
+    "label": {
+      "ro": "Furibund",
+      "en": "Furious"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "mad",
+    "description": {
+      "ro": "A fi furibund este intensitatea maxima a furiei — o stare in care energia agresiva iti copleseste toate celelalte procese. Corpul tremura, fata se incinge si simti nevoia imperioasa de distrugere. In aceasta stare, capacitatea de gandire rationala este sever diminuata. Este esential sa recunosti aceasta stare si sa te retragi inainte de a actiona.",
+      "en": "Being furious is the maximum intensity of anger — a state where aggressive energy overwhelms all other processes. The body trembles, the face burns, and you feel an imperious need for destruction. In this state, rational thinking capacity is severely diminished. It is essential to recognize this state and withdraw before acting."
+    },
+    "needs": {
+      "ro": "retragere imediata si calmare",
+      "en": "immediate withdrawal and cooling down"
+    }
+  },
+  "jealous": {
+    "id": "jealous",
+    "label": {
+      "ro": "Gelos",
+      "en": "Jealous"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "mad",
+    "description": {
+      "ro": "Gelozia este frica de a pierde ceva pretios — de obicei o relatie — in favoarea unui rival. Combina iubirea, frica si furia intr-un amestec volatil. Gelozia moderata poate semnala investitie emotionala autentica. Gelozia excesiva reflecta insecuritate profunda si nevoia de control. Lucrul cu gelozia incepe cu examinarea fricilor subiacente.",
+      "en": "Jealousy is the fear of losing something precious — usually a relationship — to a rival. It combines love, fear, and anger in a volatile mix. Moderate jealousy can signal authentic emotional investment. Excessive jealousy reflects deep insecurity and the need for control. Working with jealousy begins with examining the underlying fears."
+    },
+    "needs": {
+      "ro": "examinarea fricilor si reasigurare",
+      "en": "examining fears and reassurance"
+    }
+  },
+  "provoked": {
+    "id": "provoked",
+    "label": {
+      "ro": "Provocat",
+      "en": "Provoked"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "aggressive",
+    "description": {
+      "ro": "A fi provocat inseamna ca cineva ti-a activat intentionat furia sau frustrarea. Te simti manipulat si reactionezi defensiv. Provocarea functioneaza prin exploatarea punctelor tale sensibile. Capacitatea de a nu reactiona automat la provocare este un semn de maturitate emotionala — inseamna ca tu alegi raspunsul, nu provocatorul.",
+      "en": "Being provoked means someone intentionally activated your anger or frustration. You feel manipulated and react defensively. Provocation works by exploiting your sensitive points. The capacity not to react automatically to provocation is a sign of emotional maturity — it means you choose the response, not the provocateur."
+    },
+    "needs": {
+      "ro": "autoreglare si alegere constienta",
+      "en": "self-regulation and conscious choice"
+    }
+  },
+  "hostile": {
+    "id": "hostile",
+    "label": {
+      "ro": "Ostil",
+      "en": "Hostile"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "aggressive",
+    "description": {
+      "ro": "Ostilitatea este o predispozitie generalizata de agresiune — o stare in care percepi lumea ca ostila si reactionezi cu atac preventiv. Este furia cronicizata care a devenit un mod de a fi. Ostilitatea este un factor de risc major pentru sanatatea cardiovasculara si pentru izolarea sociala. Lucrul terapeutic vizeaza randurile profunde sub armura agresiva.",
+      "en": "Hostility is a generalized predisposition to aggression — a state where you perceive the world as hostile and react with preemptive attack. It is chronified anger that has become a way of being. Hostility is a major risk factor for cardiovascular health and social isolation. Therapeutic work targets the deep wounds beneath the aggressive armor."
+    },
+    "needs": {
+      "ro": "sustinere terapeutica si vulnerabilitate",
+      "en": "therapeutic support and vulnerability"
+    }
+  },
+  "infuriated": {
+    "id": "infuriated",
+    "label": {
+      "ro": "Infuriat",
+      "en": "Infuriated"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "frustrated",
+    "description": {
+      "ro": "A fi infuriat este o furia intensa provocata de o frustrare care se acumuleaza dincolo de limita suportabilului. Este punctul de fierbere la care rabdarea se epuizeaza complet. Infurierea este adesea disproportionata fata de evenimentul declansator, deoarece include furia neexprimata din situatii anterioare.",
+      "en": "Being infuriated is intense anger provoked by frustration accumulating beyond the limit of tolerance. It is the boiling point at which patience is completely exhausted. Infuriation is often disproportionate to the triggering event, because it includes unexpressed anger from previous situations."
+    },
+    "needs": {
+      "ro": "descarcare si exprimarea nevoilor neindeplinite",
+      "en": "discharge and expressing unmet needs"
+    }
+  },
+  "annoyed": {
+    "id": "annoyed",
+    "label": {
+      "ro": "Enervat",
+      "en": "Annoyed"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "frustrated",
+    "description": {
+      "ro": "Enervarea este o iritare de suprafata care semnaleaza ca ceva mic dar persistent te deranjeaza. Este furia in forma ei cea mai cotidiana. Enervarea repetata merita atentie — poate indica limite neclare, nevoi nesatisfacute sau o toleranta redusa din cauza stresului acumulat. Adesea, ceea ce te enerveaza la altii te deranjeaza si la tine.",
+      "en": "Annoyance is a surface irritation signaling that something small but persistent bothers you. It is anger in its most everyday form. Repeated annoyance deserves attention — it may indicate unclear boundaries, unmet needs, or reduced tolerance from accumulated stress. Often, what annoys you in others also bothers you in yourself."
+    },
+    "needs": {
+      "ro": "limite clare si verificare interioara",
+      "en": "clear boundaries and self-check"
+    }
+  },
+  "withdrawn": {
+    "id": "withdrawn",
+    "label": {
+      "ro": "Retras",
+      "en": "Withdrawn"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "distant",
+    "description": {
+      "ro": "Retragerea este miscarea de a te indeparta emotional sau fizic de situatii si de oameni. Poate fi o strategie sanatoasa de autoprotectie sau un semn de depresie si izolare. Retragerea devine problematica cand este cronica si inlocuieste comunicarea directa. In spatele retragerii se ascund adesea rani nevindecate si frica de a fi ranit din nou.",
+      "en": "Withdrawal is the movement of distancing yourself emotionally or physically from situations and people. It can be a healthy self-protective strategy or a sign of depression and isolation. Withdrawal becomes problematic when it's chronic and replaces direct communication. Behind withdrawal often hide unhealed wounds and fear of being hurt again."
+    },
+    "needs": {
+      "ro": "reconectare sigura in ritmul propriu",
+      "en": "safe reconnection at own pace"
+    }
+  },
+  "numb": {
+    "id": "numb",
+    "label": {
+      "ro": "Amorțit",
+      "en": "Numb"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "distant",
+    "description": {
+      "ro": "Amortirea emotionala este starea in care nu mai simti nimic — nici durere, nici bucurie. Este un mecanism de protectie al psihicului impotriva suferintei coplesitoare. Amortirea poate aparea dupa traume, pierderi majore sau stres cronic prelungit. Desi te protejeaza pe termen scurt, pe termen lung te deconecteaza de la viata si relatii. Revenirea la simtire necesita siguranta si rabdare.",
+      "en": "Emotional numbness is the state where you no longer feel anything — neither pain nor joy. It is a protective mechanism of the psyche against overwhelming suffering. Numbness can arise after traumas, major losses, or prolonged chronic stress. Though it protects you short-term, long-term it disconnects you from life and relationships. Returning to feeling requires safety and patience."
+    },
+    "needs": {
+      "ro": "rabdare, siguranta si simtire blanda",
+      "en": "patience, safety, and gentle feeling"
+    }
+  },
+  "skeptical": {
+    "id": "skeptical",
+    "label": {
+      "ro": "Sceptic",
+      "en": "Skeptical"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "critical",
+    "description": {
+      "ro": "Scepticismul este tendinta de a pune la indoiala si de a nu accepta lucrurile la valoarea lor de suprafata. Poate reflecta gandire critica sanatoasa sau poate masca frica de a fi pacalit sau dezamagit din nou. Scepticismul constructiv te protejeaza de manipulare; scepticismul toxic te impiedica sa te conectezi si sa ai incredere.",
+      "en": "Skepticism is the tendency to question and not accept things at face value. It can reflect healthy critical thinking or can mask the fear of being fooled or disappointed again. Constructive skepticism protects you from manipulation; toxic skepticism prevents you from connecting and trusting."
+    },
+    "needs": {
+      "ro": "discernamant si deschidere catre incredere",
+      "en": "discernment and openness to trust"
+    }
+  },
+  "dismissive": {
+    "id": "dismissive",
+    "label": {
+      "ro": "Disprețuitor",
+      "en": "Dismissive"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "critical",
+    "description": {
+      "ro": "A fi dipretuitor inseamna a invalida sau minimiza experienta, opiniile sau sentimentele celorlalti. Este o forma de distantare care iti permite sa eviti angajamentul emotional. Dispretul poate masca insecuritate sau superioritate compensatorie. In relatii, comportamentul dipretuitor este profund ranitor si erodeaza conexiunea.",
+      "en": "Being dismissive means invalidating or minimizing the experience, opinions, or feelings of others. It is a form of distancing that allows you to avoid emotional engagement. Dismissiveness can mask insecurity or compensatory superiority. In relationships, dismissive behavior is deeply hurtful and erodes connection."
+    },
+    "needs": {
+      "ro": "constientizare de sine si implicare autentica",
+      "en": "self-awareness and genuine engagement"
+    }
+  },
+  "deceived": {
+    "id": "deceived",
+    "label": {
+      "ro": "Inselat",
+      "en": "Deceived"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "let_down",
+    "description": {
+      "ro": "Sentimentul de a fi inselat este furia specifica care apare cand descoperi ca cineva ti-a prezentat deliberat o realitate falsa — te-a mintit, te-a manipulat sau ti-a ascuns adevarul. Este diferit de tradare, care implica ruperea loialitatii; insalarea este despre realitatea care se dovedeste a fi fost construita. Furia inselaciunii vine din pierderea increderii in propria perceptie — nu doar ca celalalt a gresit, ci ca tu ai fost facut sa crezi ceva fals.",
+      "en": "The feeling of being deceived is the specific anger that arises when you discover someone deliberately presented you with a false reality — they lied to you, manipulated you, or hid the truth from you. It is different from betrayal, which implies broken loyalty; deception is about reality that turns out to have been constructed. The anger of deception comes from losing trust in your own perception — not just that the other person was wrong, but that you were made to believe something false."
+    },
+    "needs": {
+      "ro": "adevar si repararea increderii",
+      "en": "truth and trust repair"
+    }
+  },
+  "degraded": {
+    "id": "degraded",
+    "label": {
+      "ro": "Degradat",
+      "en": "Degraded"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "humiliated",
+    "description": {
+      "ro": "Degradarea este forma cea mai profunda a umilirii — experienta de a fi tratat ca fiind sub nivelul uman, de a ti se nega demnitatea fundamentala. Nu este doar lipsa de respect sau batjocura, ci o negare sistematica a valorii tale ca fiinta umana. Aceasta experienta provoaca o furie intensa amestecata cu socul de a fi dezumanizat. Degradarea lasa rani adanci care necesita reparare constienta a stimei de sine si recunoastere externa a demnitatii tale.",
+      "en": "Degradation is the deepest form of humiliation — the experience of being treated as beneath human level, of having your fundamental dignity denied. It is not just disrespect or mockery, but a systematic denial of your worth as a human being. This experience provokes intense anger mixed with the shock of being dehumanized. Degradation leaves deep wounds that require conscious repair of self-esteem and external recognition of your dignity."
+    },
+    "needs": {
+      "ro": "demnitate si recunoastere",
+      "en": "dignity and recognition"
+    }
+  },
+  "enraged": {
+    "id": "enraged",
+    "label": {
+      "ro": "Turbat de furie",
+      "en": "Enraged"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "mad",
+    "description": {
+      "ro": "Furia extrema este starea in care minia a depasit orice capacitate de control — simti ca esti consumat complet de o energie distructiva care cere eliberare imediata. Corpul tremura, vederea se ingusteaza si gandirea rationala dispare aproape complet. Este o stare periculoasa nu pentru ca emotia in sine ar fi gresita, ci pentru ca actiunile luate in aceasta stare sunt aproape intotdeauna disproportionate. Prioritatea absoluta este pauza — orice actiune poate astepta pana cand corpul se calmeaza.",
+      "en": "Rage is the state where anger has exceeded all capacity for control — you feel completely consumed by a destructive energy that demands immediate release. The body trembles, vision narrows, and rational thinking nearly disappears. It is a dangerous state not because the emotion itself is wrong, but because actions taken in this state are almost always disproportionate. The absolute priority is pause — any action can wait until the body calms down."
+    },
+    "needs": {
+      "ro": "pauza imediata si descarcare fizica sigura",
+      "en": "immediate pause and safe physical discharge"
+    }
+  },
+  "exasperated": {
+    "id": "exasperated",
+    "label": {
+      "ro": "Exasperat",
+      "en": "Exasperated"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "frustrated",
+    "description": {
+      "ro": "Exasperarea este frustrarea care s-a acumulat prin repetitie — acelasi obstacol, aceeasi problema, aceeasi situatie care se repeta pana cand rabdarea ta se epuizeaza complet. Nu este furia brusca, ci uzura lenta a tolerantei. Exasperarea este un semnal ca o abordare fundamental diferita este necesara — nu mai mult efort pe acelasi drum, ci un drum nou. Recunoaste-o ca pe o invitatie la schimbare, nu ca pe un esec al rabdarii tale.",
+      "en": "Exasperation is frustration that has accumulated through repetition — the same obstacle, the same problem, the same situation repeating until your patience is completely depleted. It is not sudden anger, but the slow wearing down of tolerance. Exasperation is a signal that a fundamentally different approach is needed — not more effort on the same path, but a new path. Recognize it as an invitation to change, not as a failure of your patience."
+    },
+    "needs": {
+      "ro": "o abordare noua si sustinere",
+      "en": "a new approach and support"
+    }
+  },
+  "detached": {
+    "id": "detached",
+    "label": {
+      "ro": "Detasat",
+      "en": "Detached"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "distant",
+    "description": {
+      "ro": "Detasarea este deconectarea emotionala constienta sau semiconstienta de la ceea ce se intampla in jurul tau — esti prezent fizic dar absent emotional, observi fara sa participi cu adevarat. Spre deosebire de amorteala, care este involuntara, detasarea poate fi o strategie deliberata de protectie dupa rani repetate. Insa cand devine cronica, te izoleaza de intimitate, de bucurie si de capacitatea de a fi cu adevarat prezent in relatii.",
+      "en": "Detachment is the conscious or semi-conscious emotional disconnection from what is happening around you — you are physically present but emotionally absent, observing without truly participating. Unlike numbness, which is involuntary, detachment can be a deliberate protective strategy after repeated wounds. However, when it becomes chronic, it isolates you from intimacy, joy, and the ability to be truly present in relationships."
+    },
+    "needs": {
+      "ro": "reconectare treptata si siguranta",
+      "en": "gradual reconnection and safety"
+    }
+  }
+}

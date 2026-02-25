@@ -1,0 +1,314 @@
+{
+  "bad": {
+    "id": "bad",
+    "label": {
+      "ro": "Rau",
+      "en": "Bad"
+    },
+    "color": "#B8C0C8",
+    "level": 0,
+    "children": [
+      "tired",
+      "stressed",
+      "overwhelmed",
+      "bored"
+    ],
+    "description": {
+      "ro": "A te simti rau este o stare generala de disconfort emotional care semnaleaza ca ceva nu functioneaza bine in viata ta. Este un semnal difuz care poate include oboseala, nemultumire, lipsa de energie sau dezechilibru. Aceasta stare merita atentie si explorare — sub eticheta 'rau' se ascund adesea emotii mai specifice care cer raspunsuri diferite.",
+      "en": "Feeling bad is a general state of emotional discomfort signaling that something isn't working well in your life. It is a diffuse signal that can include fatigue, dissatisfaction, lack of energy, or imbalance. This state deserves attention and exploration — beneath the label 'bad' often hide more specific emotions that require different responses."
+    },
+    "needs": {
+      "ro": "atentie si explorare blanda",
+      "en": "attention and gentle exploration"
+    }
+  },
+  "tired": {
+    "id": "tired",
+    "label": {
+      "ro": "Obosit",
+      "en": "Tired"
+    },
+    "color": "#C4CCD4",
+    "level": 1,
+    "parent": "bad",
+    "children": [
+      "sleepy",
+      "unfocused",
+      "drained"
+    ],
+    "description": {
+      "ro": "Oboseala emotionala este semnalul ca resursele tale sunt epuizate si ai nevoie de recuperare. Nu este doar fizica — poate fi oboseala de a pretinde, de a performa sau de a face fata stresului cronic. Oboseala ignorata duce la epuizare si la pierderea capacitatii de a simti. Odihna nu este lene, ci o necesitate pentru functionarea sanatoasa.",
+      "en": "Emotional tiredness is the signal that your resources are depleted and you need recovery. It is not just physical — it can be the fatigue of pretending, performing, or coping with chronic stress. Ignored tiredness leads to burnout and the loss of the capacity to feel. Rest is not laziness, but a necessity for healthy functioning."
+    },
+    "needs": {
+      "ro": "odihna si recuperare",
+      "en": "rest and recovery"
+    }
+  },
+  "stressed": {
+    "id": "stressed",
+    "label": {
+      "ro": "Stresat",
+      "en": "Stressed"
+    },
+    "color": "#C4CCD4",
+    "level": 1,
+    "parent": "bad",
+    "children": [
+      "overwhelmed_bad",
+      "out_of_control"
+    ],
+    "description": {
+      "ro": "Stresul este raspunsul organismului la cerinte care depasesc resursele percepute. Corpul se activeaza pentru performanta, dar daca activarea este cronica, sistemele se uzeaza. Stresul moderat poate fi motivant; stresul cronic erodeaza sanatatea fizica si mentala. Gestionarea stresului incepe cu recunoasterea limitelor si prioritizarea nevoilor autentice.",
+      "en": "Stress is the body's response to demands that exceed perceived resources. The body activates for performance, but if activation is chronic, systems wear down. Moderate stress can be motivating; chronic stress erodes physical and mental health. Managing stress begins with recognizing limits and prioritizing authentic needs."
+    },
+    "needs": {
+      "ro": "usurare si limite",
+      "en": "relief and boundaries"
+    }
+  },
+  "overwhelmed": {
+    "id": "overwhelmed",
+    "label": {
+      "ro": "Coplesit",
+      "en": "Overwhelmed"
+    },
+    "color": "#C4CCD4",
+    "level": 1,
+    "parent": "bad",
+    "children": [
+      "pressured",
+      "rushed",
+      "overloaded"
+    ],
+    "description": {
+      "ro": "A te simti coplesit inseamna ca cerintele depasesc capacitatea ta de a le gestiona in acest moment. Este semnalul ca ai nevoie sa eliberezi presiunea — fie prin delegare, fie prin renuntare la ceea ce nu este esential. Coplesirea cronica erodeaza increderea in sine si poate duce la epuizare emotionala si fizica.",
+      "en": "Feeling overwhelmed means that demands exceed your capacity to manage them right now. It is the signal that you need to release pressure — either through delegation or by letting go of what isn't essential. Chronic overwhelm erodes self-confidence and can lead to emotional and physical burnout."
+    },
+    "needs": {
+      "ro": "usurare si prioritizare",
+      "en": "relief and prioritization"
+    }
+  },
+  "bored": {
+    "id": "bored",
+    "label": {
+      "ro": "Plictisit",
+      "en": "Bored"
+    },
+    "color": "#C4CCD4",
+    "level": 1,
+    "parent": "bad",
+    "children": [
+      "indifferent",
+      "apathetic",
+      "restless"
+    ],
+    "description": {
+      "ro": "Plictiseala este semnalul ca stimularea actuala nu iti satisface nevoile de angajament si sens. Nu este un esec personal, ci un mesaj de la psihicul tau ca trebuie sa schimbi ceva. Plictiseala poate fi catalizatorul creativitatii si al schimbarii daca o asculti, sau poate duce la comportamente disfunctionale daca o anestezezi.",
+      "en": "Boredom is the signal that current stimulation doesn't satisfy your needs for engagement and meaning. It is not a personal failure, but a message from your psyche that something needs to change. Boredom can be the catalyst of creativity and change if you listen to it, or can lead to dysfunctional behaviors if you numb it."
+    },
+    "needs": {
+      "ro": "sens si stimulare",
+      "en": "meaning and stimulation"
+    }
+  },
+  "sleepy": {
+    "id": "sleepy",
+    "label": {
+      "ro": "Somnoros",
+      "en": "Sleepy"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "tired",
+    "description": {
+      "ro": "Somnolenta este semnalul primar al corpului ca necesita odihna si regenerare. Poate fi pur fiziologica sau poate reflecta o retragere emotionala — o dorinta inconstienta de a te deconecta de la o realitate suprasolicitanta. Somnolenta persistenta in contexte nepotrivite merita investigata, deoarece poate indica depresie sau epuizare emotionala.",
+      "en": "Sleepiness is the body's primary signal that it needs rest and regeneration. It can be purely physiological or can reflect an emotional withdrawal — an unconscious desire to disconnect from an overwhelming reality. Persistent sleepiness in inappropriate contexts deserves investigation, as it may indicate depression or emotional exhaustion."
+    },
+    "needs": {
+      "ro": "permisiunea de a te odihni",
+      "en": "permission to rest"
+    }
+  },
+  "unfocused": {
+    "id": "unfocused",
+    "label": {
+      "ro": "Neconcentrat",
+      "en": "Unfocused"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "tired",
+    "description": {
+      "ro": "Lipsa de concentrare este incapacitatea de a-ti directiona si mentine atentia pe un singur lucru. Poate semnala oboseala, supraincarcare cognitiva sau evitarea emotionala a ceva dificil. Mintea ta iti spune ca ceva nu este in regula — fie ai nevoie de pauza, fie exista o emotie nesupravizata care iti cere atentia.",
+      "en": "Unfocusedness is the inability to direct and maintain your attention on a single thing. It can signal fatigue, cognitive overload, or emotional avoidance of something difficult. Your mind is telling you something isn't right — either you need a break, or there's an unsupervised emotion demanding your attention."
+    },
+    "needs": {
+      "ro": "o pauza si cerinte reduse",
+      "en": "a break and reduced demands"
+    }
+  },
+  "overwhelmed_bad": {
+    "id": "overwhelmed_bad",
+    "label": {
+      "ro": "Coplesit",
+      "en": "Overwhelmed"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "stressed",
+    "description": {
+      "ro": "A fi coplesit inseamna ca volumul cerintelor a depasit capacitatea ta de procesare. Te simti ingropat, incapabil sa stabilesti prioritati si paralizat de multimea sarcinilor. Coplesirea este un semnal ca trebuie sa te opresti, sa respiri si sa ceri ajutor. Nu este un semn de slabiciune, ci de onestitate fata de limitele umane reale.",
+      "en": "Being overwhelmed means that the volume of demands has exceeded your processing capacity. You feel buried, unable to prioritize, and paralyzed by the multitude of tasks. Overwhelm is a signal that you need to stop, breathe, and ask for help. It is not a sign of weakness, but of honesty about real human limits."
+    },
+    "needs": {
+      "ro": "sustinere si pasi mai mici",
+      "en": "support and smaller steps"
+    }
+  },
+  "out_of_control": {
+    "id": "out_of_control",
+    "label": {
+      "ro": "Scapat de sub control",
+      "en": "Out of control"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "stressed",
+    "description": {
+      "ro": "Sentimentul de a fi scapat de sub control este experienta terifianta ca nu mai poti influenta directia vietii tale. Evenimentele te depasesc, deciziile ti se iau de altii si te simti ca un pasager in propria existenta. Aceasta stare activeaza anxietatea profunda si necesita recastigarea agentivitatii, pas cu pas, incepand cu lucrurile mici.",
+      "en": "Feeling out of control is the terrifying experience that you can no longer influence the direction of your life. Events overwhelm you, decisions are made by others, and you feel like a passenger in your own existence. This state activates deep anxiety and requires regaining agency, step by step, starting with small things."
+    },
+    "needs": {
+      "ro": "o actiune mica controlabila",
+      "en": "one small controllable action"
+    }
+  },
+  "pressured": {
+    "id": "pressured",
+    "label": {
+      "ro": "Presat",
+      "en": "Pressured"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "overwhelmed",
+    "description": {
+      "ro": "Presiunea este senzatia de a fi impins din toate directiile — de timp, de asteptari sau de responsabilitati. Te simti comprimat si fara spatiu de miscare. Presiunea moderata poate stimula performanta, dar presiunea cronica duce la epuizare si la pierderea bucuriei. Este esential sa identifici ce presiuni sunt reale si care sunt auto-impuse.",
+      "en": "Pressure is the sensation of being pushed from all directions — by time, expectations, or responsibilities. You feel compressed and without room to move. Moderate pressure can stimulate performance, but chronic pressure leads to burnout and loss of joy. It is essential to identify which pressures are real and which are self-imposed."
+    },
+    "needs": {
+      "ro": "spatiu si asteptari realiste",
+      "en": "space and realistic expectations"
+    }
+  },
+  "rushed": {
+    "id": "rushed",
+    "label": {
+      "ro": "Grabit",
+      "en": "Rushed"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "overwhelmed",
+    "description": {
+      "ro": "Graba este senzatia ca timpul curge mai repede decat poti actiona — o urgenta constanta care nu iti permite sa fii prezent. In graba, calitatea gandurilor, relatiilor si deciziilor se deterioreaza. Graba cronica este adesea o fugire de sine — daca te opresti, trebuie sa te confrunti cu ce simti cu adevarat.",
+      "en": "Feeling rushed is the sensation that time flows faster than you can act — a constant urgency that doesn't allow you to be present. In a rush, the quality of thoughts, relationships, and decisions deteriorates. Chronic rushing is often a flight from the self — if you stop, you must confront what you truly feel."
+    },
+    "needs": {
+      "ro": "incetinire si prezenta",
+      "en": "slowing down and presence"
+    }
+  },
+  "indifferent": {
+    "id": "indifferent",
+    "label": {
+      "ro": "Indiferent",
+      "en": "Indifferent"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "bored",
+    "description": {
+      "ro": "Indiferenta este absenta investitiei emotionale — nimic nu te mai atrage si nimic nu te mai deranjeaza. Poate fi o protectie temporara dupa suprasolicitare emotionala sau un semn ingrijorator de detasare cronica. Indiferenta prelungita erodeaza relatiile si sensul vietii. Recuperarea incepe cu reconectarea treptata la lucruri mici care iti trezesc simtirea.",
+      "en": "Indifference is the absence of emotional investment — nothing attracts you anymore and nothing disturbs you. It can be temporary protection after emotional overload or a concerning sign of chronic detachment. Prolonged indifference erodes relationships and life's meaning. Recovery begins with gradual reconnection to small things that awaken your feeling."
+    },
+    "needs": {
+      "ro": "reconectare blanda si curiozitate",
+      "en": "gentle reconnection and curiosity"
+    }
+  },
+  "apathetic": {
+    "id": "apathetic",
+    "label": {
+      "ro": "Apatic",
+      "en": "Apathetic"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "bored",
+    "description": {
+      "ro": "Apatia este forma profunda a indeferentei — o stare in care nu mai ai energie, motivatie sau dorinta de a actiona. Este ca si cum motorul emotional s-a oprit. Apatia poate fi un simptom al depresiei, al epuizarii severe sau al pierderii de sens. Nu este lene — este o stare de suferinta care necesita compasiune si sprijin profesional.",
+      "en": "Apathy is the deep form of indifference — a state where you no longer have energy, motivation, or desire to act. It's as if the emotional engine has stopped. Apathy can be a symptom of depression, severe burnout, or loss of meaning. It is not laziness — it is a state of suffering that requires compassion and professional support."
+    },
+    "needs": {
+      "ro": "compasiune si sprijin profesional",
+      "en": "compassion and professional support"
+    }
+  },
+  "drained": {
+    "id": "drained",
+    "label": {
+      "ro": "Epuizat",
+      "en": "Drained"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "tired",
+    "description": {
+      "ro": "Epuizarea este starea in care rezervele tale emotionale si energetice au fost consumate complet — nu mai ai din ce da. Este mai profunda decat oboseala obisnuita; este sentimentul ca s-a cerut prea mult de la tine, prea mult timp, fara reumplere. Epuizarea este un semnal de alarma ca echilibrul dintre dare si primire s-a rupt si ca ai nevoie urgenta de recuperare.",
+      "en": "Feeling drained is the state where your emotional and energetic reserves have been completely consumed — you have nothing left to give. It is deeper than ordinary tiredness; it is the feeling that too much has been demanded of you, for too long, without replenishment. Being drained is an alarm signal that the balance between giving and receiving has broken and you urgently need recovery."
+    },
+    "needs": {
+      "ro": "reumplere si protejare",
+      "en": "replenishment and protection"
+    }
+  },
+  "overloaded": {
+    "id": "overloaded",
+    "label": {
+      "ro": "Suprasolicitat",
+      "en": "Overloaded"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "overwhelmed",
+    "description": {
+      "ro": "Suprasolicitarea este senzatia ca ai prea multe lucruri deodata — informatii, sarcini, cerinte, stimuli — si capacitatea ta de procesare a fost depasita. Nu este vorba de dificultatea lucrurilor, ci de volumul lor. Mintea se simte ca un circuit supraincarcat care este pe punctul de a se deconecta. Suprasolicitarea este un semnal ca trebuie sa reduci, nu sa accelerezi — sa scoti din lista, nu sa adaugi strategii noi.",
+      "en": "Feeling overloaded is the sensation of having too many things at once — information, tasks, demands, stimuli — and your processing capacity has been exceeded. It is not about the difficulty of things, but their volume. The mind feels like an overloaded circuit on the verge of shutting down. Being overloaded is a signal that you need to reduce, not accelerate — to remove from the list, not add new strategies."
+    },
+    "needs": {
+      "ro": "reducere si simplificare",
+      "en": "reduction and simplification"
+    }
+  },
+  "restless": {
+    "id": "restless",
+    "label": {
+      "ro": "Nelinistit",
+      "en": "Restless"
+    },
+    "color": "#D0D8E0",
+    "level": 2,
+    "parent": "bored",
+    "description": {
+      "ro": "Nelinistea din substimulare este o agitatie difuza care apare cand energia ta nu are unde sa se duca — vrei ceva, dar nu stii ce. Este plictiseala transformata in tensiune corporala: nu poti sta locului, nu te poti concentra, dar nici nu gasesti ceva care sa te angajeze. Aceasta stare este un semnal ca ai nevoie de stimulare cu sens — nu de orice distragere, ci de ceva care sa iti capteze cu adevarat atentia.",
+      "en": "Restlessness from understimulation is a diffuse agitation that arises when your energy has nowhere to go — you want something, but you do not know what. It is boredom transformed into bodily tension: you cannot sit still, you cannot focus, yet you cannot find anything that engages you. This state is a signal that you need meaningful stimulation — not just any distraction, but something that truly captures your attention and channels your energy."
+    },
+    "needs": {
+      "ro": "stimulare cu sens si directie",
+      "en": "meaningful stimulation and direction"
+    }
+  }
+}

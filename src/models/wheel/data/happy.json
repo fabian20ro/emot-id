@@ -1,0 +1,723 @@
+{
+  "happy": {
+    "id": "happy",
+    "label": {
+      "ro": "Fericit",
+      "en": "Happy"
+    },
+    "color": "#FFE066",
+    "level": 0,
+    "children": [
+      "playful",
+      "content",
+      "interested",
+      "proud",
+      "accepted",
+      "powerful",
+      "peaceful",
+      "trusting",
+      "optimistic"
+    ],
+    "description": {
+      "ro": "Fericirea este o stare emotionala fundamentala care semnaleaza armonia interioara si satisfacerea nevoilor esentiale. Cuprinde un spectru larg, de la multumire lina la entuziasm intens. Fericirea autentica nu este absenta suferintei, ci capacitatea de a experimenta plenitudine chiar si in mijlocul complexitatii vietii. Este busola care iti arata ca esti aliniat cu valorile tale.",
+      "en": "Happiness is a fundamental emotional state signaling inner harmony and the fulfillment of essential needs. It encompasses a wide spectrum, from gentle contentment to intense enthusiasm. Authentic happiness is not the absence of suffering, but the capacity to experience fullness even amid life's complexity. It is the compass showing you are aligned with your values."
+    },
+    "needs": {
+      "ro": "partajare si savurare",
+      "en": "sharing and savoring"
+    }
+  },
+  "playful": {
+    "id": "playful",
+    "label": {
+      "ro": "Jucaus",
+      "en": "Playful"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "aroused",
+      "cheeky",
+      "silly"
+    ],
+    "description": {
+      "ro": "Starea de joc este expresia libertatii emotionale — momentul in care te eliberezi de presiunea productivitatii si te permiti sa experimentezi fara scop. Joaca activeaza creativitatea, reduce stresul si consolideaza legaturile sociale. Adultii care isi pastreaza capacitatea de joc au o rezilienta emotionala mai mare si relatii mai vii.",
+      "en": "Playfulness is the expression of emotional freedom — the moment when you free yourself from the pressure of productivity and allow yourself to experiment without purpose. Play activates creativity, reduces stress, and strengthens social bonds. Adults who maintain their capacity for play have greater emotional resilience and more vibrant relationships."
+    },
+    "needs": {
+      "ro": "libertate si spontaneitate",
+      "en": "freedom and spontaneity"
+    }
+  },
+  "content": {
+    "id": "content",
+    "label": {
+      "ro": "Multumit",
+      "en": "Content"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "free",
+      "joyful",
+      "serene"
+    ],
+    "description": {
+      "ro": "Multumirea este o stare calma de satisfactie in care nevoile tale prezente sunt implinite si nu simti urgenta de a schimba nimic. Este o forma de fericire care nu depinde de intensitate sau excitatie, ci de acceptarea pasnica a momentului. Multumirea autentica vine din interior si nu poate fi cumparata sau fortata.",
+      "en": "Contentment is a calm state of satisfaction where your present needs are fulfilled and you feel no urgency to change anything. It is a form of happiness that doesn't depend on intensity or excitement, but on the peaceful acceptance of the moment. Authentic contentment comes from within and cannot be bought or forced."
+    },
+    "needs": {
+      "ro": "prezenta si liniste",
+      "en": "presence and stillness"
+    }
+  },
+  "interested": {
+    "id": "interested",
+    "label": {
+      "ro": "Interesat",
+      "en": "Interested"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "curious",
+      "inquisitive"
+    ],
+    "description": {
+      "ro": "Interesul este deschiderea activa catre ceva nou — o energie cognitiva si emotionala care te atrage sa explorezi, sa inveti si sa intelegi. Este fundamentul motivatiei intrinsece si al dezvoltarii personale. Cand esti cu adevarat interesat, timpul pare sa dispara si efortul devine placut. Interesul este semnul unei minti vii.",
+      "en": "Interest is the active openness toward something new — a cognitive and emotional energy that draws you to explore, learn, and understand. It is the foundation of intrinsic motivation and personal development. When you are truly interested, time seems to disappear and effort becomes pleasurable. Interest is the sign of a vibrant mind."
+    },
+    "needs": {
+      "ro": "explorare si stimulare",
+      "en": "exploration and stimulation"
+    }
+  },
+  "proud": {
+    "id": "proud",
+    "label": {
+      "ro": "Mandru",
+      "en": "Proud"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "successful",
+      "confident",
+      "accomplished"
+    ],
+    "description": {
+      "ro": "Mandria este recunoasterea propriei valori si a realizarilor tale. Este emotia care iti confirma ca efortul tau a contat si ca ai crescut. Mandria sanatoasa te ancoreaza in respect de sine fara a te izola de ceilalti. Ea te motiveaza sa continui sa investesti in dezvoltarea ta si sa iti asumi provocari noi.",
+      "en": "Pride is the recognition of your own worth and achievements. It is the emotion that confirms your effort mattered and that you have grown. Healthy pride anchors you in self-respect without isolating you from others. It motivates you to continue investing in your development and to take on new challenges."
+    },
+    "needs": {
+      "ro": "recunoastere si celebrare",
+      "en": "recognition and celebration"
+    }
+  },
+  "accepted": {
+    "id": "accepted",
+    "label": {
+      "ro": "Acceptat",
+      "en": "Accepted"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "respected",
+      "valued",
+      "included"
+    ],
+    "description": {
+      "ro": "Sentimentul de a fi acceptat este una dintre nevoile umane cele mai profunde — confirmarea ca apartii si ca esti primit asa cum esti. Acceptarea din partea celorlalti activeaza sistemul de atasament si reduce anxietatea sociala. Cand te simti acceptat, iti poti permite vulnerabilitatea si autenticitatea in relatii.",
+      "en": "The feeling of being accepted is one of the deepest human needs — the confirmation that you belong and are received as you are. Acceptance from others activates the attachment system and reduces social anxiety. When you feel accepted, you can afford vulnerability and authenticity in relationships."
+    },
+    "needs": {
+      "ro": "apartinere si validare",
+      "en": "belonging and validation"
+    }
+  },
+  "powerful": {
+    "id": "powerful",
+    "label": {
+      "ro": "Puternic",
+      "en": "Powerful"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "courageous",
+      "creative",
+      "determined"
+    ],
+    "description": {
+      "ro": "Sentimentul de putere este experienta de a avea capacitate, influenta si control asupra directiei vietii tale. Nu inseamna dominatie, ci agentivitate — convingerea ca poti face o diferenta. Puterea interioara sanatoasa vine din competenta, curaj si aliniere cu valorile tale, nu din controlul celorlalti.",
+      "en": "The feeling of power is the experience of having capacity, influence, and control over the direction of your life. It doesn't mean domination, but agency — the conviction that you can make a difference. Healthy inner power comes from competence, courage, and alignment with your values, not from controlling others."
+    },
+    "needs": {
+      "ro": "agentivitate si provocare",
+      "en": "agency and challenge"
+    }
+  },
+  "peaceful": {
+    "id": "peaceful",
+    "label": {
+      "ro": "Pasnic",
+      "en": "Peaceful"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "loving",
+      "thankful",
+      "relief",
+      "harmonious"
+    ],
+    "description": {
+      "ro": "Pacea interioara este starea in care conflictele interne s-au calmat si te simti in armonie cu tine insuti si cu lumea. Nu este o stare pasiva, ci o prezenta activa si constienta. Pacea apare cand renunti la lupta cu realitatea si gasesti un echilibru intre acceptare si actiune. Este fundamentul bunastarii durabile.",
+      "en": "Inner peace is the state where internal conflicts have calmed and you feel in harmony with yourself and the world. It is not a passive state, but an active and conscious presence. Peace arises when you stop fighting reality and find a balance between acceptance and action. It is the foundation of lasting wellbeing."
+    },
+    "needs": {
+      "ro": "armonie si liniste",
+      "en": "harmony and quiet"
+    }
+  },
+  "trusting": {
+    "id": "trusting",
+    "label": {
+      "ro": "Incredere",
+      "en": "Trusting"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "sensitive",
+      "intimate",
+      "compassion"
+    ],
+    "description": {
+      "ro": "A fi in stare de incredere inseamna sa te simti suficient de sigur pentru a te deschide catre ceilalti si catre viata. Este capacitatea de a te baza pe altii fara a avea nevoie de garantii absolute. Increderea sanatoasa se bazeaza pe experienta, nu pe naivitate, si include capacitatea de a-ti proteja granitele cand este necesar.",
+      "en": "Being in a trusting state means feeling safe enough to open yourself to others and to life. It is the capacity to rely on others without needing absolute guarantees. Healthy trusting is based on experience, not naivety, and includes the capacity to protect your boundaries when necessary."
+    },
+    "needs": {
+      "ro": "siguranta si deschidere",
+      "en": "safety and openness"
+    }
+  },
+  "optimistic": {
+    "id": "optimistic",
+    "label": {
+      "ro": "Optimist",
+      "en": "Optimistic"
+    },
+    "color": "#FFE57F",
+    "level": 1,
+    "parent": "happy",
+    "children": [
+      "inspired",
+      "open",
+      "hopeful"
+    ],
+    "description": {
+      "ro": "Optimismul este orientarea emotionala catre posibilitati pozitive — convingerea ca lucrurile pot merge bine si ca merita sa incerci. Nu este negarea realitatii, ci o predispozitie de a vedea resursele si oportunitatile chiar si in situatii dificile. Optimismul realist este unul dintre cei mai puternici factori de rezilienta psihologica.",
+      "en": "Optimism is the emotional orientation toward positive possibilities — the conviction that things can go well and that it's worth trying. It is not a denial of reality, but a predisposition to see resources and opportunities even in difficult situations. Realistic optimism is one of the most powerful factors of psychological resilience."
+    },
+    "needs": {
+      "ro": "posibilitate si incurajare",
+      "en": "possibility and encouragement"
+    }
+  },
+  "aroused": {
+    "id": "aroused",
+    "label": {
+      "ro": "Entuziasmat",
+      "en": "Energized"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "playful",
+    "description": {
+      "ro": "Entuziasmul este o stare de activare emotionala intensa si placuta — corpul este plin de energie, mintea este viva si simti un impuls puternic catre actiune sau experienta. Este forma cea mai vitala a starii de joc, unde creativitatea si spontaneitatea se manifesta la intensitate maxima.",
+      "en": "Energized is a state of intense and pleasurable emotional activation — the body is full of energy, the mind is alive, and you feel a strong impulse toward action or experience. It is the most vital form of playfulness, where creativity and spontaneity manifest at maximum intensity."
+    },
+    "needs": {
+      "ro": "exprimare si miscare",
+      "en": "expression and movement"
+    }
+  },
+  "cheeky": {
+    "id": "cheeky",
+    "label": {
+      "ro": "Obraznic",
+      "en": "Cheeky"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "playful",
+    "description": {
+      "ro": "Obraznicia este o forma jucausa de sfidare — un umor subtil de transgresiune care testeaza limitele conventiilor fara a rani. Este expresia unui sine care se simte suficient de sigur pentru a fi nonconformist. Obraznicia sanatoasa aduce lejeritate in relatii si sparge tiparele rigide ale interactiunilor formale.",
+      "en": "Cheekiness is a playful form of defiance — a subtle humor of transgression that tests the boundaries of convention without causing harm. It is the expression of a self that feels safe enough to be nonconformist. Healthy cheekiness brings lightness to relationships and breaks the rigid patterns of formal interactions."
+    },
+    "needs": {
+      "ro": "spatiu de joc si permisiune",
+      "en": "playful space and permission"
+    }
+  },
+  "free": {
+    "id": "free",
+    "label": {
+      "ro": "Liber",
+      "en": "Free"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "content",
+    "description": {
+      "ro": "Libertatea emotionala este experienta de a nu fi constrins — nici de circumstante externe, nici de blocaje interioare. Te simti capabil sa alegi, sa te exprimi si sa te misti in directia care ti se potriveste. Libertatea autentica include si responsabilitatea pentru alegerile tale, nu doar absenta restrictiilor.",
+      "en": "Emotional freedom is the experience of being unconstrained — neither by external circumstances nor by internal blockages. You feel capable of choosing, expressing yourself, and moving in the direction that suits you. Authentic freedom also includes responsibility for your choices, not just the absence of restrictions."
+    },
+    "needs": {
+      "ro": "spatiu deschis si autonomie",
+      "en": "open space and autonomy"
+    }
+  },
+  "joyful": {
+    "id": "joyful",
+    "label": {
+      "ro": "Bucuros",
+      "en": "Joyful"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "content",
+    "description": {
+      "ro": "Bucuria este o explozie calda de fericire care te umple complet — o stare de plenitudine emotionala in care viata pare frumoasa si plina de sens. Este mai intensa decat multumirea si mai sustinuta decat incantarea. Bucuria autentiva iradeaza si catre ceilalti, fiind una dintre cele mai contagioase emotii pozitive.",
+      "en": "Joyfulness is a warm explosion of happiness that fills you completely — a state of emotional fullness where life seems beautiful and meaningful. It is more intense than contentment and more sustained than delight. Authentic joy radiates toward others as well, being one of the most contagious positive emotions."
+    },
+    "needs": {
+      "ro": "partajare si celebrare",
+      "en": "sharing and celebration"
+    }
+  },
+  "curious": {
+    "id": "curious",
+    "label": {
+      "ro": "Curios",
+      "en": "Curious"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "interested",
+    "description": {
+      "ro": "Curiozitatea este impulsul de a sti, de a intelege si de a descoperi. Este mintea ta in starea ei cea mai deschisa si mai receptiva. Curiozitatea te scoate din zona de confort si te duce catre crestere. In relatii, curiozitatea fata de experienta celuilalt este una dintre cele mai puternice forme de respect si iubire.",
+      "en": "Curiosity is the impulse to know, understand, and discover. It is your mind in its most open and receptive state. Curiosity takes you out of your comfort zone and leads you toward growth. In relationships, curiosity about the other's experience is one of the most powerful forms of respect and love."
+    },
+    "needs": {
+      "ro": "noutate si explorare",
+      "en": "novelty and exploration"
+    }
+  },
+  "inquisitive": {
+    "id": "inquisitive",
+    "label": {
+      "ro": "Iscoditor",
+      "en": "Inquisitive"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "interested",
+    "description": {
+      "ro": "Iscodirea este forma persistenta si activa a curiozitatii — nu doar vrei sa stii, ci urmaresti raspunsuri cu determinare. Este energia cercetatorului interior care nu se multumeste cu suprafata lucrurilor. Iscodirea sanatoasa respecta granitele celorlalti; cea nesanatoasa le incalca sub pretextul cunoasterii.",
+      "en": "Inquisitiveness is the persistent and active form of curiosity — you don't just want to know, but pursue answers with determination. It is the energy of the inner researcher who isn't satisfied with the surface of things. Healthy inquisitiveness respects others' boundaries; unhealthy inquisitiveness violates them under the pretext of knowledge."
+    },
+    "needs": {
+      "ro": "raspunsuri si profunzime",
+      "en": "answers and depth"
+    }
+  },
+  "successful": {
+    "id": "successful",
+    "label": {
+      "ro": "De succes",
+      "en": "Successful"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "proud",
+    "description": {
+      "ro": "Sentimentul de succes este confirmarea emotionala ca ai atins un obiectiv important si ca efortul tau a dat roade. Este o validare profunda a competentei tale. Succesul autentic se masoara nu doar in rezultate externe, ci si in sentimentul de coerenta intre ceea ce faci si ceea ce valorezi.",
+      "en": "The feeling of success is the emotional confirmation that you've reached an important goal and your effort has borne fruit. It is a deep validation of your competence. Authentic success is measured not only in external results, but also in the feeling of coherence between what you do and what you value."
+    },
+    "needs": {
+      "ro": "recunoastere si odihna",
+      "en": "acknowledgment and rest"
+    }
+  },
+  "confident": {
+    "id": "confident",
+    "label": {
+      "ro": "Increzator",
+      "en": "Confident"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "proud",
+    "description": {
+      "ro": "Increderea in sine este convingerea interioara ca ai resursele necesare pentru a face fata provocarilor vietii. Nu inseamna absenta indoielii, ci capacitatea de a actiona in ciuda ei. Increderea sanatoasa se construieste prin experienta repetata a depasirii obstacolelor, nu prin negarea vulnerabilitatilor.",
+      "en": "Self-confidence is the inner conviction that you have the necessary resources to face life's challenges. It doesn't mean the absence of doubt, but the capacity to act despite it. Healthy confidence is built through repeated experience of overcoming obstacles, not through denying vulnerabilities."
+    },
+    "needs": {
+      "ro": "incredere in sine si provocari noi",
+      "en": "trust in self and new challenges"
+    }
+  },
+  "respected": {
+    "id": "respected",
+    "label": {
+      "ro": "Respectat",
+      "en": "Respected"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "accepted",
+    "description": {
+      "ro": "A te simti respectat inseamna sa stii ca ceilalti iti recunosc demnitatea, opiniile si granitele. Respectul din exterior iti confirma valoarea sociala si iti intareste sentimentul de apartinere. Cand esti respectat, te simti vazut si auzit — doua nevoi fundamentale ale fiintei umane.",
+      "en": "Feeling respected means knowing that others recognize your dignity, opinions, and boundaries. External respect confirms your social value and strengthens your sense of belonging. When you are respected, you feel seen and heard — two fundamental needs of the human being."
+    },
+    "needs": {
+      "ro": "demnitate si a fi auzit",
+      "en": "dignity and being heard"
+    }
+  },
+  "valued": {
+    "id": "valued",
+    "label": {
+      "ro": "Valorizat",
+      "en": "Valued"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "accepted",
+    "description": {
+      "ro": "A te simti valorizat este experienta profunda ca contribui cu ceva important si ca prezenta ta conteaza. Este mai mult decat a fi respectat — este sa stii ca lumea ar fi mai saraca fara tine. Sentimentul de a fi valorizat hraneste stima de sine si te motiveaza sa continui sa oferi din ceea ce ai mai bun.",
+      "en": "Feeling valued is the deep experience that you contribute something important and that your presence matters. It is more than being respected — it is knowing that the world would be poorer without you. The feeling of being valued nourishes self-esteem and motivates you to continue offering your best."
+    },
+    "needs": {
+      "ro": "apreciere si scop",
+      "en": "appreciation and purpose"
+    }
+  },
+  "courageous": {
+    "id": "courageous",
+    "label": {
+      "ro": "Curajos",
+      "en": "Courageous"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "powerful",
+    "description": {
+      "ro": "Curajul nu este absenta fricii, ci alegerea constienta de a actiona in ciuda ei. Este capacitatea de a merge inainte cand totul in tine vrea sa se retraga. Curajul emotional — sa fii vulnerabil, sa spui adevarul, sa ceri ajutor — este adesea mai dificil decat curajul fizic si la fel de necesar.",
+      "en": "Courage is not the absence of fear, but the conscious choice to act despite it. It is the capacity to move forward when everything in you wants to retreat. Emotional courage — being vulnerable, speaking the truth, asking for help — is often more difficult than physical courage and equally necessary."
+    },
+    "needs": {
+      "ro": "sustinere si spatiu de actiune",
+      "en": "support and space to act"
+    }
+  },
+  "creative": {
+    "id": "creative",
+    "label": {
+      "ro": "Creativ",
+      "en": "Creative"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "powerful",
+    "description": {
+      "ro": "Creativitatea este capacitatea de a vedea conexiuni noi si de a genera ceva care nu exista inca. Este expresia libertatii interioare si a jocului cu posibilitati. Starea creativa apare cand te simti suficient de sigur pentru a risca esecul si suficient de curios pentru a explora necunoscutul. Creativitatea nu este un talent rar, ci o capacitate umana universala.",
+      "en": "Creativity is the capacity to see new connections and generate something that doesn't yet exist. It is the expression of inner freedom and the play with possibilities. The creative state arises when you feel safe enough to risk failure and curious enough to explore the unknown. Creativity is not a rare talent, but a universal human capacity."
+    },
+    "needs": {
+      "ro": "inspiratie si libertate de a experimenta",
+      "en": "inspiration and freedom to experiment"
+    }
+  },
+  "loving": {
+    "id": "loving",
+    "label": {
+      "ro": "Iubitor",
+      "en": "Loving"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "peaceful",
+    "description": {
+      "ro": "A fi iubitor este o stare activa de grija si devotament — nu doar primesti iubire, ci o oferi constient si generos. Este capacitatea de a vedea frumusetea si valoarea celuilalt si de a actiona in consecinta. Starea de iubire te deschide, te face vulnerabil si te conecteaza la ceea ce este cel mai profund uman in tine.",
+      "en": "Being loving is an active state of care and devotion — you don't just receive love, but offer it consciously and generously. It is the capacity to see the beauty and value of the other and to act accordingly. The loving state opens you, makes you vulnerable, and connects you to what is most deeply human in you."
+    },
+    "needs": {
+      "ro": "reciprocitate si prezenta",
+      "en": "reciprocity and presence"
+    }
+  },
+  "thankful": {
+    "id": "thankful",
+    "label": {
+      "ro": "Recunoscator",
+      "en": "Thankful"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "peaceful",
+    "description": {
+      "ro": "Recunostinta este capacitatea de a recunoaste si aprecia binele din viata ta — de la darurile mari pana la gesturile marunte. Cercetarile arata ca practica recunostintei reduce depresia, imbunatateste somnul si intareste relatiile. Recunostinta autentica nu este o obligatie sociala, ci o deschidere a inimii catre abundenta care exista deja.",
+      "en": "Thankfulness is the capacity to recognize and appreciate the good in your life — from great gifts to small gestures. Research shows that gratitude practice reduces depression, improves sleep, and strengthens relationships. Authentic thankfulness is not a social obligation, but an opening of the heart to the abundance that already exists."
+    },
+    "needs": {
+      "ro": "savurare si exprimare",
+      "en": "savoring and expression"
+    }
+  },
+  "relief": {
+    "id": "relief",
+    "label": {
+      "ro": "Usurare",
+      "en": "Relief"
+    },
+    "color": "#81C784",
+    "level": 2,
+    "parent": "peaceful",
+    "description": {
+      "ro": "Usurarea este eliberarea emotionala care vine dupa ce o amenintare, o tensiune sau o incertitudine a trecut. Este corpul si mintea ta care se relaxeaza dupa o perioada de alerta. Functia adaptiva a usurarii este sa semnaleze ca esti din nou in siguranta si sa permita sistemului nervos sa revina la echilibru, creand spatiu pentru odihna si recuperare.",
+      "en": "Relief is the emotional release that comes after a threat, tension, or uncertainty has passed. It is your body and mind relaxing after a period of alertness. The adaptive function of relief is to signal that you are safe again and allow the nervous system to return to balance, creating space for rest and recovery."
+    },
+    "needs": {
+      "ro": "siguranta si odihna",
+      "en": "safety and rest"
+    }
+  },
+  "sensitive": {
+    "id": "sensitive",
+    "label": {
+      "ro": "Sensibil",
+      "en": "Sensitive"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "trusting",
+    "description": {
+      "ro": "Sensibilitatea este capacitatea de a percepe nuante subtile — ale propriilor emotii, ale celorlalti si ale mediului. Este un dar care aduce profunzime experientei, dar care poate fi si coplesitor. Persoanele sensibile proceseaza informatia mai profund si reactioneaza mai intens. Sensibilitatea necesita ingrijire constienta si granite sanatoase.",
+      "en": "Sensitivity is the capacity to perceive subtle nuances — of your own emotions, of others, and of the environment. It is a gift that brings depth to experience, but can also be overwhelming. Sensitive people process information more deeply and react more intensely. Sensitivity requires conscious care and healthy boundaries."
+    },
+    "needs": {
+      "ro": "blandete si limite",
+      "en": "gentleness and boundaries"
+    }
+  },
+  "intimate": {
+    "id": "intimate",
+    "label": {
+      "ro": "Intim",
+      "en": "Intimate"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "trusting",
+    "description": {
+      "ro": "Intimitatea este experienta de a fi complet deschis si vulnerabil in prezenta cuiva in care ai incredere totala. Este cea mai profunda forma de conexiune umana — spatiul in care poti fi complet tu insuti fara masca. Intimitatea se construieste lent, prin momente repetate de vulnerabilitate reciproca si raspuns empatic.",
+      "en": "Intimacy is the experience of being completely open and vulnerable in the presence of someone you fully trust. It is the deepest form of human connection — the space where you can be completely yourself without a mask. Intimacy is built slowly, through repeated moments of mutual vulnerability and empathic response."
+    },
+    "needs": {
+      "ro": "incredere si vulnerabilitate",
+      "en": "trust and vulnerability"
+    }
+  },
+  "compassion": {
+    "id": "compassion",
+    "label": {
+      "ro": "Compasiune",
+      "en": "Compassion"
+    },
+    "color": "#66BB6A",
+    "level": 2,
+    "parent": "trusting",
+    "description": {
+      "ro": "Compasiunea este capacitatea de a recunoaste suferinta celuilalt si de a simti un impuls autentic de a ajuta. Este mai mult decat empatie — include si actiunea, dorinta de a alina durerea pe care o percepi. Functia ei adaptiva este sa intareasca legaturile sociale si sa creeze retele de sprijin reciproc, facandu-ne mai rezilienti impreuna decat singuri.",
+      "en": "Compassion is the capacity to recognize another's suffering and feel a genuine impulse to help. It is more than empathy — it includes action, the desire to ease the pain you perceive. Its adaptive function is to strengthen social bonds and create networks of mutual support, making us more resilient together than alone."
+    },
+    "needs": {
+      "ro": "exprimare si reciprocitate",
+      "en": "expression and reciprocity"
+    }
+  },
+  "inspired": {
+    "id": "inspired",
+    "label": {
+      "ro": "Inspirat",
+      "en": "Inspired"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "optimistic",
+    "description": {
+      "ro": "Inspiratia este momentul in care ceva din exterior aprinde o flacara in interior — simti un elan creativ, o viziune clara sau o motivatie puternica de a actiona. Este emotia care te conecteaza cu un sens mai mare decat tine. Inspiratia nu poate fi fortata, dar poate fi cultivata prin expunerea la frumusete, idei noi si oameni autentici.",
+      "en": "Inspiration is the moment when something external ignites a flame within — you feel a creative impulse, a clear vision, or a powerful motivation to act. It is the emotion that connects you to a meaning greater than yourself. Inspiration cannot be forced, but can be cultivated through exposure to beauty, new ideas, and authentic people."
+    },
+    "needs": {
+      "ro": "exprimare creativa si actiune",
+      "en": "creative expression and action"
+    }
+  },
+  "open": {
+    "id": "open",
+    "label": {
+      "ro": "Deschis",
+      "en": "Open"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "optimistic",
+    "description": {
+      "ro": "Deschiderea este disponibilitatea de a primi experienta noua fara filtrele obisnuite ale judecatii si prejudecatii. Este o stare de receptivitate in care mintea si inima nu sunt aparate, ci accesibile. Deschiderea iti permite sa inveti, sa te schimbi si sa te conectezi cu diversitatea vietii.",
+      "en": "Openness is the willingness to receive new experience without the usual filters of judgment and prejudice. It is a state of receptivity where the mind and heart are not defended, but accessible. Openness allows you to learn, change, and connect with the diversity of life."
+    },
+    "needs": {
+      "ro": "acceptare si experienta noua",
+      "en": "acceptance and new experience"
+    }
+  },
+  "silly": {
+    "id": "silly",
+    "label": {
+      "ro": "Zburdalnic",
+      "en": "Silly"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "playful",
+    "description": {
+      "ro": "Starea de zburdalnie este momentul in care te eliberezi complet de nevoia de a fi luat in serios — te lasi purtat de absurd, de spontaneitate si de bucuria pura a prostiilor. Este o forma de joaca in care renunti la autocontrol si iti permiti sa fii ridicol fara jena. Zburdalnia sanatoasa este un semn de siguranta emotionala: doar cand te simti suficient de liber poti renunta la imagine si te poti bucura fara filtru.",
+      "en": "Silliness is the moment when you completely free yourself from the need to be taken seriously — you let yourself be carried by absurdity, spontaneity, and the pure joy of goofiness. It is a form of play where you release self-consciousness and allow yourself to be ridiculous without embarrassment. Healthy silliness is a sign of emotional safety: only when you feel free enough can you let go of your image and enjoy without filter."
+    },
+    "needs": {
+      "ro": "permisiune si lipsa judecatii",
+      "en": "permission and freedom from judgment"
+    }
+  },
+  "serene": {
+    "id": "serene",
+    "label": {
+      "ro": "Senin",
+      "en": "Serene"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "content",
+    "description": {
+      "ro": "Serenitatea este linistea profunda care apare cand nu mai lupti cu nimic — nici cu lumea din exterior, nici cu gandurile din interior. Este o multumire imobila si meditativa, ca o suprafata de apa perfect nemiscata. Spre deosebire de fericirea activa, serenitatea nu cere nimic si nu urmareste nimic; ea apare cand te opresti suficient de mult incat sa auzi tacerea din tine.",
+      "en": "Serenity is the deep stillness that arises when you are no longer struggling with anything — neither the world outside nor the thoughts within. It is a motionless, meditative contentment, like a perfectly undisturbed surface of water. Unlike active happiness, serenity demands nothing and pursues nothing; it appears when you pause long enough to hear the silence within you."
+    },
+    "needs": {
+      "ro": "liniste si neasteptari",
+      "en": "quiet and absence of demands"
+    }
+  },
+  "accomplished": {
+    "id": "accomplished",
+    "label": {
+      "ro": "Implinit",
+      "en": "Accomplished"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "proud",
+    "description": {
+      "ro": "Sentimentul de implinire este privirea retrospectiva asupra unui drum parcurs — recunoasterea profunda ca ai depus efort, ai crescut si ai dus ceva la bun sfarsit. Este mai mult decat succesul momentan; este integrarea intregii experiente intr-un sentiment de completare si stapanire. Implinirea sanatoasa include si recunoasterea pretului platit si a lectiilor invatate, nu doar a rezultatului final.",
+      "en": "The feeling of accomplishment is looking back over a path traveled — the deep recognition that you invested effort, grew, and brought something to completion. It is more than momentary success; it is the integration of the entire experience into a sense of completion and mastery. Healthy accomplishment also includes recognizing the price paid and the lessons learned, not just the final result."
+    },
+    "needs": {
+      "ro": "recunoastere si integrare",
+      "en": "recognition and integration"
+    }
+  },
+  "included": {
+    "id": "included",
+    "label": {
+      "ro": "Inclus",
+      "en": "Included"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "accepted",
+    "description": {
+      "ro": "Sentimentul de a fi inclus este experienta calda de a apartine — stii ca esti parte dintr-un grup, o comunitate sau un proiect care te accepta si te vrea acolo. Este una dintre nevoile umane cele mai fundamentale, legata de supravietuirea noastra ca specie sociala. Cand te simti inclus, anxietatea sociala se diminueaza si poti contribui autentic, stiind ca locul tau este asigurat.",
+      "en": "The feeling of being included is the warm experience of belonging — you know you are part of a group, a community, or a project that accepts you and wants you there. It is one of the most fundamental human needs, tied to our survival as a social species. When you feel included, social anxiety diminishes and you can contribute authentically, knowing your place is secure."
+    },
+    "needs": {
+      "ro": "apartinere si confirmare",
+      "en": "belonging and confirmation"
+    }
+  },
+  "determined": {
+    "id": "determined",
+    "label": {
+      "ro": "Hotarat",
+      "en": "Determined"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "powerful",
+    "description": {
+      "ro": "Hotararea este forta volitiva care te tine pe drum cand obstacolele apar — o rezolvare interioara clara si neclintita de a continua, indiferent de dificultati. Nu este rigiditate, ci angajament constient fata de un scop care conteaza cu adevarat pentru tine. Hotararea sanatoasa include si flexibilitatea de a-ti ajusta metoda, nu doar tenacitatea de a persista.",
+      "en": "Determination is the volitional force that keeps you on course when obstacles appear — a clear and unwavering inner resolve to continue regardless of difficulty. It is not rigidity, but conscious commitment to a goal that truly matters to you. Healthy determination also includes the flexibility to adjust your method, not just the tenacity to persist."
+    },
+    "needs": {
+      "ro": "claritate si perseverenta",
+      "en": "clarity and perseverance"
+    }
+  },
+  "harmonious": {
+    "id": "harmonious",
+    "label": {
+      "ro": "Armonios",
+      "en": "Harmonious"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "peaceful",
+    "description": {
+      "ro": "Armonia interioara este starea in care toate partile tale — gandurile, emotiile, valorile si actiunile — se simt aliniate si coerente. Nu mai exista conflicte interne care sa te traga in directii diferite. Este o pace care vine din integrare, nu din evitare. Armonia nu inseamna absenta complexitatii, ci capacitatea de a tine impreuna toate aspectele experientei tale intr-un echilibru care te sustine.",
+      "en": "Inner harmony is the state where all your parts — thoughts, emotions, values, and actions — feel aligned and coherent. There are no longer internal conflicts pulling you in different directions. It is a peace that comes from integration, not avoidance. Harmony does not mean the absence of complexity, but the capacity to hold all aspects of your experience together in a balance that sustains you."
+    },
+    "needs": {
+      "ro": "coerenta si echilibru",
+      "en": "coherence and balance"
+    }
+  },
+  "hopeful": {
+    "id": "hopeful",
+    "label": {
+      "ro": "Plin de speranta",
+      "en": "Hopeful"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "optimistic",
+    "description": {
+      "ro": "Speranta este credinta linistita ca lucrurile se pot imbunatati — nu o certitudine, ci o deschidere catre posibilitate chiar si atunci cand prezentul este dificil. Este miezul optimismului, resursa interioara care te sustine in perioadele de incertitudine si tranzitie. Speranta nu neaga suferinta prezenta, ci refuza sa o considere permanenta. Cercetarile arata ca speranta este unul dintre cei mai puternici predictori ai rezilientei psihologice.",
+      "en": "Hope is the quiet belief that things can improve — not a certainty, but an openness to possibility even when the present is difficult. It is the core of optimism, the inner resource that sustains you through periods of uncertainty and transition. Hope does not deny present suffering, but refuses to consider it permanent. Research shows that hope is one of the strongest predictors of psychological resilience."
+    },
+    "needs": {
+      "ro": "posibilitate si rabdare",
+      "en": "possibility and patience"
+    }
+  }
+}
