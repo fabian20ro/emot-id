@@ -1,0 +1,331 @@
+{
+  "love": {
+    "id": "love",
+    "label": {
+      "ro": "iubire",
+      "en": "love"
+    },
+    "description": {
+      "ro": "Iubirea este diada bucuriei si increderii — starea in care te simti si fericit si in siguranta in prezenta celuilalt. Este cea mai complexa emotie umana, combinand atasament, grija, vulnerabilitate si devotament. Iubirea matura include acceptarea imperfectiunilor si angajamentul de a creste impreuna, nu doar euforia initiala a conexiunii.",
+      "en": "Love is the dyad of joy and trust — the state where you feel both happy and safe in another's presence. It is the most complex human emotion, combining attachment, care, vulnerability, and devotion. Mature love includes accepting imperfections and the commitment to grow together, not just the initial euphoria of connection."
+    },
+    "needs": {
+      "ro": "grija si vulnerabilitate",
+      "en": "nurturing and vulnerability"
+    },
+    "category": "dyad",
+    "color": "#FFD1DC",
+    "intensity": 0.6,
+    "components": [
+      "joy",
+      "trust"
+    ],
+    "spawns": [
+      "joy",
+      "trust",
+      "serenity",
+      "admiration"
+    ]
+  },
+  "submission": {
+    "id": "submission",
+    "label": {
+      "ro": "supunere",
+      "en": "submission"
+    },
+    "description": {
+      "ro": "Supunerea este diada increderii si fricii — cedezi controlul pentru ca ai incredere in celalalt, dar si pentru ca te temi de consecintele rezistentei. Poate fi sanatoasa in contexte de mentorat si invatare, unde te supui expertizei cuiva de incredere. Devine disfunctionala cand este motivata predominant de frica si erodeaza respectul de sine.",
+      "en": "Submission is the dyad of trust and fear — you yield control because you trust the other, but also because you fear the consequences of resistance. It can be healthy in mentoring and learning contexts, where you defer to someone's trusted expertise. It becomes dysfunctional when predominantly motivated by fear and eroding self-respect."
+    },
+    "needs": {
+      "ro": "autonomie si incredere in sine",
+      "en": "autonomy and self-trust"
+    },
+    "category": "dyad",
+    "color": "#98E8C8",
+    "intensity": 0.6,
+    "components": [
+      "trust",
+      "fear"
+    ],
+    "spawns": [
+      "trust",
+      "fear",
+      "acceptance",
+      "apprehension"
+    ]
+  },
+  "awe": {
+    "id": "awe",
+    "label": {
+      "ro": "venerație",
+      "en": "awe"
+    },
+    "description": {
+      "ro": "Veneratia este diada fricii si surprinderii — o stare de uimire respectuoasa in fata a ceva mult mai mare decat tine. Combina sentimentul de a fi mic cu fascinatia pentru imens. Cercetarile arata ca experienta veneratiei reduce egocentrismul, creste generozitatea si imbunatateste bunastarea — este una dintre emotiile cele mai transformatoare.",
+      "en": "Awe is the dyad of fear and surprise — a state of respectful wonder before something much greater than yourself. It combines the feeling of being small with fascination for the immense. Research shows that experiencing awe reduces egocentrism, increases generosity, and improves wellbeing — it is one of the most transformative emotions."
+    },
+    "needs": {
+      "ro": "deschidere si smerenie",
+      "en": "openness and humility"
+    },
+    "category": "dyad",
+    "color": "#7FD8D8",
+    "intensity": 0.6,
+    "components": [
+      "fear",
+      "surprise"
+    ],
+    "spawns": [
+      "fear",
+      "surprise",
+      "amazement",
+      "terror"
+    ]
+  },
+  "disapproval": {
+    "id": "disapproval",
+    "label": {
+      "ro": "dezaprobare",
+      "en": "disapproval"
+    },
+    "description": {
+      "ro": "Dezaprobarea este diada surprinderii si tristetii — reactia cand ceva neasteptat te dezamageste sau iti incalca valorile. Combina socul descoperirii cu durerea pierderii asteptarilor. Este mecanismul prin care iti comunici standardele morale si asteptarile sociale. Dezaprobarea cronica poate indica rigiditate sau dificultatea de a accepta diversitatea umana.",
+      "en": "Disapproval is the dyad of surprise and sadness — the reaction when something unexpected disappoints you or violates your values. It combines the shock of discovery with the pain of lost expectations. It is the mechanism through which you communicate your moral standards and social expectations. Chronic disapproval may indicate rigidity or difficulty accepting human diversity."
+    },
+    "needs": {
+      "ro": "claritate si reevaluare",
+      "en": "clarity and re-evaluation"
+    },
+    "category": "dyad",
+    "color": "#7BB8E8",
+    "intensity": 0.6,
+    "components": [
+      "surprise",
+      "sadness"
+    ],
+    "spawns": [
+      "surprise",
+      "sadness",
+      "pensiveness",
+      "distraction"
+    ]
+  },
+  "remorse": {
+    "id": "remorse",
+    "label": {
+      "ro": "remușcare",
+      "en": "remorse"
+    },
+    "description": {
+      "ro": "Remuscarea este diada tristetii si dezgustului — o combinatie dureroasa de regret si auto-respingere pentru ceva ce ai facut. Spre deosebire de vinovatie, care este cognitiva, remuscarea se simte in corp — o greata existentiala. Este emotia care motiveaza reparatia autentica si schimbarea comportamentului, dar devine toxica cand se transforma in auto-flagelare permanenta.",
+      "en": "Remorse is the dyad of sadness and disgust — a painful combination of regret and self-rejection for something you've done. Unlike guilt, which is cognitive, remorse is felt in the body — an existential nausea. It is the emotion that motivates authentic repair and behavioral change, but becomes toxic when it turns into permanent self-flagellation."
+    },
+    "needs": {
+      "ro": "reparatie si auto-iertare",
+      "en": "repair and self-forgiveness"
+    },
+    "category": "dyad",
+    "color": "#9B8DC8",
+    "intensity": 0.6,
+    "components": [
+      "sadness",
+      "disgust"
+    ],
+    "spawns": [
+      "sadness",
+      "disgust",
+      "grief",
+      "loathing"
+    ]
+  },
+  "contempt": {
+    "id": "contempt",
+    "label": {
+      "ro": "dispreț",
+      "en": "contempt"
+    },
+    "description": {
+      "ro": "Dispretul este diada dezgustului si furiei — o combinatie de respingere morala si indignare care te pozitioneaza deasupra celuilalt. Cercetarile lui Gottman au demonstrat ca dispretul este cel mai toxic predictor al destramare relationale. Dispretul ridica un zid intre tine si celalalt, eliminand posibilitatea empatiei si reparatiei.",
+      "en": "Contempt is the dyad of disgust and anger — a combination of moral rejection and indignation that positions you above the other. Gottman's research has shown that contempt is the most toxic predictor of relational dissolution. Contempt raises a wall between you and the other, eliminating the possibility of empathy and repair."
+    },
+    "needs": {
+      "ro": "empatie si schimbare de perspectiva",
+      "en": "empathy and perspective-taking"
+    },
+    "category": "dyad",
+    "color": "#795548",
+    "intensity": 0.6,
+    "opposite": "compassion",
+    "components": [
+      "anger",
+      "disgust"
+    ],
+    "spawns": [
+      "disgust",
+      "anger",
+      "loathing",
+      "rage"
+    ]
+  },
+  "aggression": {
+    "id": "aggression",
+    "label": {
+      "ro": "agresivitate",
+      "en": "aggression"
+    },
+    "description": {
+      "ro": "Agresivitatea este diada furiei si anticiparii — combinatia dintre nevoia de a ataca si planificarea strategica a atacului. Este energia orientata catre distrugerea obstacolelor si dominarea situatiei. Canalizata constructiv, agresivitatea devine determinare si asertivitate. Necontrolata, produce daune relationale si izolare.",
+      "en": "Aggression is the dyad of anger and anticipation — the combination of the urge to attack and the strategic planning of the attack. It is energy directed toward destroying obstacles and dominating the situation. Channeled constructively, aggression becomes determination and assertiveness. Uncontrolled, it produces relational damage and isolation."
+    },
+    "needs": {
+      "ro": "canalizare si asertivitate",
+      "en": "channeling and assertiveness"
+    },
+    "category": "dyad",
+    "color": "#FF8860",
+    "intensity": 0.6,
+    "components": [
+      "anger",
+      "anticipation"
+    ],
+    "spawns": [
+      "anger",
+      "anticipation",
+      "rage",
+      "vigilance"
+    ]
+  },
+  "optimism": {
+    "id": "optimism",
+    "label": {
+      "ro": "optimism",
+      "en": "optimism"
+    },
+    "description": {
+      "ro": "Optimismul este diada anticiparii si bucuriei — o incredere calda ca viitorul va aduce lucruri bune. Combina planificarea activa cu starea de bine emotionala. Optimismul realist nu ignora dificultatile, ci mentine convingerea ca ai resurse suficiente pentru a le face fata. Este un factor protector puternic impotriva depresiei si epuizarii.",
+      "en": "Optimism is the dyad of anticipation and joy — a warm confidence that the future will bring good things. It combines active planning with emotional wellbeing. Realistic optimism doesn't ignore difficulties, but maintains the conviction that you have sufficient resources to face them. It is a powerful protective factor against depression and burnout."
+    },
+    "needs": {
+      "ro": "planificare si celebrare",
+      "en": "planning and celebration"
+    },
+    "category": "dyad",
+    "color": "#FFD080",
+    "intensity": 0.6,
+    "components": [
+      "anticipation",
+      "joy"
+    ],
+    "spawns": [
+      "anticipation",
+      "joy",
+      "interest",
+      "ecstasy"
+    ]
+  },
+  "hope": {
+    "id": "hope",
+    "label": {
+      "ro": "speranță",
+      "en": "hope"
+    },
+    "description": {
+      "ro": "Speranta este diada anticiparii si increderii — convingerea ca viitorul poate fi bun si ca ai pe cineva sau ceva pe care te poti baza pe drum. Este una dintre cele mai puternice resurse psihologice. Speranta nu este optimism naiv — include recunoasterea dificultatii si totusi alegerea de a merge mai departe. Fara speranta, motivatia se stinge.",
+      "en": "Hope is the dyad of anticipation and trust — the conviction that the future can be good and that you have someone or something you can rely on along the way. It is one of the most powerful psychological resources. Hope is not naive optimism — it includes recognizing difficulty and still choosing to move forward. Without hope, motivation fades."
+    },
+    "needs": {
+      "ro": "rabdare si pasi mici",
+      "en": "patience and small steps"
+    },
+    "category": "dyad",
+    "color": "#C8E8A8",
+    "intensity": 0.6,
+    "components": [
+      "anticipation",
+      "trust"
+    ],
+    "spawns": [
+      "anticipation",
+      "trust",
+      "interest",
+      "acceptance"
+    ]
+  },
+  "anxiety": {
+    "id": "anxiety",
+    "label": {
+      "ro": "anxietate",
+      "en": "anxiety"
+    },
+    "description": {
+      "ro": "Anxietatea este diada anticiparii si fricii — o stare de alerta orientata catre viitor in care te pregatesti pentru pericole care inca nu s-au materializat. Combina dorinta de control cu frica de necunoscut. Anxietatea moderata te ajuta sa performezi; anxietatea excesiva te paralyzeaza. Corpul tau reactioneaza ca si cum pericolul este real, chiar cand este doar imaginat.",
+      "en": "Anxiety is the dyad of anticipation and fear — a future-oriented state of alertness where you prepare for dangers that haven't materialized yet. It combines the desire for control with fear of the unknown. Moderate anxiety helps you perform; excessive anxiety paralyzes you. Your body reacts as if the danger is real, even when it is only imagined."
+    },
+    "needs": {
+      "ro": "ancorare, respiratie si prezenta",
+      "en": "grounding, breath, and present focus"
+    },
+    "category": "dyad",
+    "color": "#A8D8A0",
+    "intensity": 0.6,
+    "components": [
+      "anticipation",
+      "fear"
+    ],
+    "spawns": [
+      "anticipation",
+      "fear",
+      "interest",
+      "apprehension"
+    ]
+  },
+  "compassion": {
+    "id": "compassion",
+    "label": {
+      "ro": "compasiune",
+      "en": "compassion"
+    },
+    "description": {
+      "ro": "Compasiunea este diada iubirii si tristetii — capacitatea de a percepe suferinta celuilalt si de a raspunde cu caldura si grija, nu cu retragere. Ea transforma durerea observata in impuls de actiune blanda. Compasiunea nu inseamna a prelua suferinta celuilalt, ci a fi prezent alaturi de ea fara a te pierde. Este fundamentul vindecarii relationale si al resilientei comunitare.",
+      "en": "Compassion is the dyad of love and sadness — the capacity to perceive another's suffering and respond with warmth and care, not withdrawal. It transforms observed pain into a gentle impulse to act. Compassion does not mean taking on another's suffering, but being present alongside it without losing yourself. It is the foundation of relational healing and community resilience."
+    },
+    "needs": {
+      "ro": "echilibru intre grija si auto-protectie",
+      "en": "balance between care and self-protection"
+    },
+    "category": "dyad",
+    "color": "#66BB6A",
+    "intensity": 0.5,
+    "opposite": "contempt",
+    "components": [
+      "trust",
+      "sadness"
+    ],
+    "spawns": []
+  },
+  "nostalgia": {
+    "id": "nostalgia",
+    "label": {
+      "ro": "nostalgie",
+      "en": "nostalgia"
+    },
+    "description": {
+      "ro": "Nostalgia este diada seninatații si tristetii — o dor dulce-amar pentru momente, locuri sau persoane din trecut care au avut o semnificatie profunda. Ea iti reaminteste ce a contat cu adevarat si iti ancoreaza identitatea in povestea ta de viata. Nostalgia sanatoasa te reconecteaza cu valorile tale si iti ofera caldura; devine problematica doar cand te impiedica sa te angajezi in prezent.",
+      "en": "Nostalgia is the dyad of serenity and sadness — a gentle, bittersweet longing for moments, places, or people from the past that held deep significance. It reminds you of what truly mattered and anchors your identity in your life story. Healthy nostalgia reconnects you with your values and offers warmth; it becomes problematic only when it prevents you from engaging with the present."
+    },
+    "needs": {
+      "ro": "onorarea trecutului si ancorare in prezent",
+      "en": "honoring the past and anchoring in the present"
+    },
+    "category": "dyad",
+    "color": "#AB47BC",
+    "intensity": 0.5,
+    "opposite": "",
+    "components": [
+      "serenity",
+      "sadness"
+    ],
+    "spawns": []
+  }
+}

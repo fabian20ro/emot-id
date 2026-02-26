@@ -1,0 +1,273 @@
+{
+  "shoulders": {
+    "id": "shoulders",
+    "label": {
+      "ro": "Umeri",
+      "en": "Shoulders"
+    },
+    "description": {
+      "ro": "Zona umerilor — poarta poveri emotionale, asociata cu stres, tensiune, responsabilitate",
+      "en": "Shoulder area — carries emotional burdens, associated with stress, tension, responsibility"
+    },
+    "needs": {
+      "ro": "miscare blanda si relaxare",
+      "en": "gentle movement and relaxation"
+    },
+    "color": "#f43f5e",
+    "svgRegionId": "shoulders",
+    "group": "torso",
+    "commonSensations": [
+      "tension",
+      "heaviness",
+      "lightness",
+      "pressure",
+      "numbness"
+    ],
+    "emotionSignals": [
+      {
+        "emotionId": "stress",
+        "emotionLabel": {
+          "ro": "Stres",
+          "en": "Stress"
+        },
+        "emotionColor": "#ef4444",
+        "emotionDescription": {
+          "ro": "Umeri ridicați, tensiune cronică, senzație de povară. Stresul te mobilizează pentru provocări — dar are nevoie și de pauze.",
+          "en": "Raised shoulders, chronic tension, sense of burden. Stress mobilizes you for challenges — but it also needs rest."
+        },
+        "emotionNeeds": {
+          "ro": "pauza si eliberare a tensiunii",
+          "en": "pause and tension release"
+        },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.9,
+        "source": "clinical"
+      },
+      {
+        "emotionId": "overwhelm",
+        "emotionLabel": {
+          "ro": "Copleșire",
+          "en": "Overwhelm"
+        },
+        "emotionColor": "#78716c",
+        "emotionDescription": {
+          "ro": "Greutate pe umeri, senzație de a purta lumea pe umeri. Copleșirea semnalează că ai nevoie de sprijin sau de a reduce sarcinile.",
+          "en": "Weight on shoulders, feeling of carrying the world. Overwhelm signals a need for support or to lighten your load."
+        },
+        "emotionNeeds": {
+          "ro": "sprijin si reducerea sarcinilor",
+          "en": "support and lightening the load"
+        },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.8,
+        "source": "clinical"
+      },
+      {
+        "emotionId": "anger",
+        "emotionLabel": {
+          "ro": "Furie",
+          "en": "Anger"
+        },
+        "emotionColor": "#ef4444",
+        "emotionDescription": {
+          "ro": "Tensiune rigidă în umeri, postură defensivă. Furia în umeri pregătește corpul pentru protecție.",
+          "en": "Rigid shoulder tension, defensive posture. Shoulder anger prepares the body for protection."
+        },
+        "emotionNeeds": {
+          "ro": "miscare si exprimare a limitelor",
+          "en": "movement and boundary expression"
+        },
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.6,
+        "source": "Nummenmaa2014"
+      },
+      {
+        "emotionId": "relief",
+        "emotionLabel": {
+          "ro": "Ușurare",
+          "en": "Relief"
+        },
+        "emotionColor": "#81c784",
+        "emotionDescription": {
+          "ro": "Umeri care coboară, eliberare bruscă a tensiunii. Ușurarea în umeri indică trecerea unei poveri — corpul se destinde.",
+          "en": "Shoulders dropping, sudden tension release. Shoulder relief indicates a burden has lifted — the body is unwinding."
+        },
+        "emotionNeeds": {
+          "ro": "odihna si revenire",
+          "en": "rest and recovery"
+        },
+        "sensationType": "lightness",
+        "minIntensity": 1,
+        "weight": 0.7,
+        "source": "clinical"
+      }
+    ]
+  },
+  "upper-back": {
+    "id": "upper-back",
+    "label": {
+      "ro": "Spate sus",
+      "en": "Upper back"
+    },
+    "description": {
+      "ro": "Zona spatelui superior — asociata cu povara emotionala, tristete, tensiune cronica",
+      "en": "Upper back area — associated with emotional burden, sadness, chronic tension"
+    },
+    "needs": {
+      "ro": "intindere si postura sustinuta",
+      "en": "stretching and supported posture"
+    },
+    "color": "#64748b",
+    "svgRegionId": "upper-back",
+    "group": "torso",
+    "commonSensations": [
+      "tension",
+      "heaviness",
+      "pressure",
+      "numbness"
+    ],
+    "emotionSignals": [
+      {
+        "emotionId": "sadness",
+        "emotionLabel": {
+          "ro": "Tristete",
+          "en": "Sadness"
+        },
+        "emotionColor": "#3b82f6",
+        "emotionDescription": {
+          "ro": "Încovoiere, greutate în spate, postură închisă. Tristețea în spate reflectă nevoia de sprijin și compasiune.",
+          "en": "Hunching, back heaviness, closed posture. Back sadness reflects a need for support and compassion."
+        },
+        "emotionNeeds": {
+          "ro": "sprijin si compasiune",
+          "en": "support and compassion"
+        },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.7,
+        "source": "Nummenmaa2014"
+      },
+      {
+        "emotionId": "overwhelm",
+        "emotionLabel": {
+          "ro": "Copleșire",
+          "en": "Overwhelm"
+        },
+        "emotionColor": "#78716c",
+        "emotionDescription": {
+          "ro": "Tensiune între omoplați, senzație de comprimare. Copleșirea se poate manifesta ca rigiditate în spate — corpul arată că porți prea mult.",
+          "en": "Tension between shoulder blades, compression feeling. Overwhelm can show up as back stiffness — your body is telling you that you're carrying too much."
+        },
+        "emotionNeeds": {
+          "ro": "delegare si pauza",
+          "en": "delegation and pause"
+        },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.7,
+        "source": "clinical"
+      },
+      {
+        "emotionId": "stress",
+        "emotionLabel": {
+          "ro": "Stres",
+          "en": "Stress"
+        },
+        "emotionColor": "#ef4444",
+        "sensationType": "tension",
+        "minIntensity": 2,
+        "weight": 0.6,
+        "source": "clinical"
+      }
+    ]
+  },
+  "lower-back": {
+    "id": "lower-back",
+    "label": {
+      "ro": "Spate jos",
+      "en": "Lower back"
+    },
+    "description": {
+      "ro": "Zona lombara — asociata cu stres cronic, frica, epuizare, instabilitate",
+      "en": "Lower back area — associated with chronic stress, fear, exhaustion, instability"
+    },
+    "needs": {
+      "ro": "intindere blanda si caldura",
+      "en": "gentle stretching and warmth"
+    },
+    "color": "#94a3b8",
+    "svgRegionId": "lower-back",
+    "group": "torso",
+    "commonSensations": [
+      "tension",
+      "heaviness",
+      "pressure",
+      "numbness"
+    ],
+    "emotionSignals": [
+      {
+        "emotionId": "stress",
+        "emotionLabel": {
+          "ro": "Stres",
+          "en": "Stress"
+        },
+        "emotionColor": "#ef4444",
+        "emotionDescription": {
+          "ro": "Tensiune lombară persistentă, rigiditate, disconfort. Stresul cronic în zona lombară semnalează nevoia de relaxare și recuperare.",
+          "en": "Persistent lower back tension, stiffness, discomfort. Chronic lower back stress signals a need for relaxation and recovery."
+        },
+        "emotionNeeds": {
+          "ro": "relaxare si recuperare",
+          "en": "relaxation and recovery"
+        },
+        "sensationType": "tension",
+        "minIntensity": 1,
+        "weight": 0.7,
+        "source": "clinical"
+      },
+      {
+        "emotionId": "fear",
+        "emotionLabel": {
+          "ro": "Frica",
+          "en": "Fear"
+        },
+        "emotionColor": "#059669",
+        "emotionDescription": {
+          "ro": "Senzație de instabilitate, slăbiciune lombară. Frica în zona lombară semnalează lipsa de siguranță și stabilitate.",
+          "en": "Feeling of instability, lower back weakness. Lower back fear signals a lack of safety and stability."
+        },
+        "emotionNeeds": {
+          "ro": "stabilitate si siguranta",
+          "en": "stability and safety"
+        },
+        "sensationType": "heaviness",
+        "minIntensity": 2,
+        "weight": 0.5,
+        "source": "Nummenmaa2014"
+      },
+      {
+        "emotionId": "exhaustion",
+        "emotionLabel": {
+          "ro": "Epuizare",
+          "en": "Exhaustion"
+        },
+        "emotionColor": "#6b7280",
+        "emotionDescription": {
+          "ro": "Greutate în spate, oboseală profundă, lipsă de susținere. Epuizarea este semnalul corpului că resursele s-au consumat — ai nevoie de odihnă.",
+          "en": "Back heaviness, deep fatigue, lack of support. Exhaustion is your body's signal that resources are depleted — you need rest."
+        },
+        "emotionNeeds": {
+          "ro": "odihna si sustinere",
+          "en": "rest and support"
+        },
+        "sensationType": "heaviness",
+        "minIntensity": 1,
+        "weight": 0.7,
+        "source": "clinical"
+      }
+    ]
+  }
+}

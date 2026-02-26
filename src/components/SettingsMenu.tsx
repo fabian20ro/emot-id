@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { useFocusTrap } from '../hooks/useFocusTrap'
 import { getAvailableModels } from '../models/registry'
 import { InfoButton } from './InfoButton'
+import { SettingsToggle, toggleClass } from './SettingsToggle'
 
 interface SettingsMenuProps {
   isOpen: boolean
@@ -21,12 +22,6 @@ interface SettingsMenuProps {
   onOpenHistory?: () => void
   onOpenGranularity?: () => void
   onOpenChainAnalysis?: () => void
-}
-
-function toggleClass(active: boolean): string {
-  return active
-    ? 'bg-purple-500 text-white'
-    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
 }
 
 export function SettingsMenu({
@@ -139,20 +134,13 @@ export function SettingsMenu({
                   {simpleT.label ?? 'Simple language'}
                 </span>
               </div>
-              <div className="flex gap-1 px-2 pb-1">
-                <button
-                  onClick={() => { setSimpleLanguage(true); onClose() }}
-                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(simpleLanguage)}`}
-                >
-                  {simpleT.on ?? 'On'}
-                </button>
-                <button
-                  onClick={() => { setSimpleLanguage(false); onClose() }}
-                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(!simpleLanguage)}`}
-                >
-                  {simpleT.off ?? 'Off'}
-                </button>
-              </div>
+              <SettingsToggle
+                value={simpleLanguage}
+                onLabel={simpleT.on ?? 'On'}
+                offLabel={simpleT.off ?? 'Off'}
+                onChange={setSimpleLanguage}
+                onClose={onClose}
+              />
               <div className="px-3 pb-2">
                 <p className="text-xs text-gray-500">
                   {simpleT.hint ?? 'Use shorter wording and simpler descriptions.'}
@@ -190,20 +178,13 @@ export function SettingsMenu({
                   {settingsT.soundLabel ?? 'Sound effects'}
                 </span>
               </div>
-              <div className="flex gap-1 px-2 pb-2">
-                <button
-                  onClick={() => { onSoundMutedChange(false); onClose() }}
-                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(!soundMuted)}`}
-                >
-                  {settingsT.soundOn ?? 'On'}
-                </button>
-                <button
-                  onClick={() => { onSoundMutedChange(true); onClose() }}
-                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(soundMuted)}`}
-                >
-                  {settingsT.soundOff ?? 'Off'}
-                </button>
-              </div>
+              <SettingsToggle
+                value={!soundMuted}
+                onLabel={settingsT.soundOn ?? 'On'}
+                offLabel={settingsT.soundOff ?? 'Off'}
+                onChange={(v) => onSoundMutedChange(!v)}
+                onClose={onClose}
+              />
 
               {/* Save Sessions Toggle */}
               <div className="px-3 py-2">
@@ -211,20 +192,13 @@ export function SettingsMenu({
                   {settingsT.saveSessionsLabel ?? 'Save sessions'}
                 </span>
               </div>
-              <div className="flex gap-1 px-2 pb-2">
-                <button
-                  onClick={() => { onSaveSessionsChange(true); onClose() }}
-                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(saveSessions)}`}
-                >
-                  {settingsT.saveSessionsOn ?? 'On'}
-                </button>
-                <button
-                  onClick={() => { onSaveSessionsChange(false); onClose() }}
-                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(!saveSessions)}`}
-                >
-                  {settingsT.saveSessionsOff ?? 'Off'}
-                </button>
-              </div>
+              <SettingsToggle
+                value={saveSessions}
+                onLabel={settingsT.saveSessionsOn ?? 'On'}
+                offLabel={settingsT.saveSessionsOff ?? 'Off'}
+                onChange={onSaveSessionsChange}
+                onClose={onClose}
+              />
 
               {/* Daily reminders */}
               <div className="px-3 py-2">
@@ -232,21 +206,14 @@ export function SettingsMenu({
                   {remindersT.label ?? 'Daily reminder'}
                 </span>
               </div>
-              <div className="flex gap-1 px-2 pb-1">
-                <button
-                  onClick={() => { void onDailyReminderChange(true); onClose() }}
-                  disabled={!reminderSupported}
-                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors disabled:bg-gray-800 disabled:text-gray-500 ${toggleClass(dailyReminderEnabled)}`}
-                >
-                  {remindersT.on ?? 'On'}
-                </button>
-                <button
-                  onClick={() => { void onDailyReminderChange(false); onClose() }}
-                  className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(!dailyReminderEnabled)}`}
-                >
-                  {remindersT.off ?? 'Off'}
-                </button>
-              </div>
+              <SettingsToggle
+                value={dailyReminderEnabled}
+                onLabel={remindersT.on ?? 'On'}
+                offLabel={remindersT.off ?? 'Off'}
+                onChange={(v) => { void onDailyReminderChange(v) }}
+                onClose={onClose}
+                disabled={!reminderSupported}
+              />
               <div className="px-3 pb-2">
                 {!reminderSupported && (
                   <p className="text-xs text-amber-300/90">

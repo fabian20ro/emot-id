@@ -5,44 +5,13 @@ import { useFocusTrap } from '../hooks/useFocusTrap'
 import { synthesize } from '../models/synthesis'
 import { getCrisisTier, type CrisisTier } from '../models/distress'
 import { getOppositeAction } from '../data/opposite-action'
-import { ResultCard } from './ResultCard'
 import { getModelBridge } from './model-bridges'
-import { CrisisBanner } from './CrisisBanner'
 import { MicroIntervention, getInterventionType } from './MicroIntervention'
 import { ModalShell } from './ModalShell'
-import { InfoButton } from './InfoButton'
-import type { BaseEmotion, AnalysisResult } from '../models/types'
-
-type ReflectionState = 'results' | 'reflection' | 'warmClose' | 'followUp' | 'intervention'
-type ReflectionAnswer = 'yes' | 'partly' | 'no' | null
-type InterventionResponse = 'better' | 'same' | 'worse' | null
-
-function getInterventionOfferText(
-  type: 'breathing' | 'savoring' | 'curiosity',
-  t: Record<string, string>
-): string {
-  switch (type) {
-    case 'breathing':
-      return t.offerBreathing ?? 'Would you like to try something calming?'
-    case 'savoring':
-      return t.offerSavoring ?? 'Take a moment to savor this?'
-    case 'curiosity':
-      return t.offerCuriosity ?? 'What might these feelings be telling you?'
-  }
-}
-
-interface ResultModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onExploreMore?: () => void
-  onSwitchModel?: (modelId: string) => void
-  onSessionComplete?: (data: { reflectionAnswer: ReflectionAnswer; interventionResponse: InterventionResponse }) => void
-  /** When true, escalates crisis tier by one level (temporal pattern detected) */
-  escalateCrisis?: boolean
-  currentModelId?: string
-  selections: BaseEmotion[]
-  results: AnalysisResult[]
-}
+import { ReflectionView, WarmCloseView, FollowUpView } from './ResultModalViews'
+import { ResultsView } from './ResultsView'
+import type { ResultModalProps } from './result-modal-types'
+import type { ReflectionState, ReflectionAnswer, InterventionResponse } from './result-modal-types'
 
 export function ResultModal({
   isOpen,
@@ -228,192 +197,60 @@ export function ResultModal({
             <AnimatePresence mode="wait">
               {/* Results view */}
               {reflectionState === 'results' && (
-                <motion.div
+                <ResultsView
                   key="results"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="flex-1 flex flex-col overflow-hidden"
-                >
-                  {/* Scrollable results section */}
-                  <div className="flex-1 overflow-y-auto mb-3">
-                    {/* Crisis resources — above results so distressed users see them first */}
-                    {hasCrisis && (
-                      <CrisisBanner
-                        tier={crisisTier}
-                        crisisT={crisisT}
-                        showTemporalNote={Boolean(escalateCrisis)}
-                      />
-                    )}
-
-                    {requiresTier4Acknowledge ? (
-                      <div className="mb-3 p-3 rounded-xl bg-red-900/25 border border-red-700/45">
-                        <button
-                          onClick={() => setTier4Acknowledged(true)}
-                          className="w-full min-h-[44px] px-4 py-2 rounded-lg bg-red-700/60 text-red-50 font-semibold hover:bg-red-700/80 transition-colors"
-                        >
-                          {crisisT.tier4Acknowledge ?? 'I understand — show my results'}
-                        </button>
-                      </div>
-                    ) : (
-                      <>
-                        {results.length > 0 ? (
-                          <div className="space-y-2">
-                            {results.some((r) => r.componentLabels) && (
-                              <p className="text-sm text-gray-400 font-medium">
-                                {modalT.combinationsFound ?? 'Found combinations'}:
-                              </p>
-                            )}
-                            {results.map((result) => (
-                              <ResultCard
-                                key={result.id}
-                                result={result}
-                                language={language}
-                                expanded={results.length <= 2}
-                                showDescriptionLabel={modalT.showDescription}
-                                readMoreLabel={modalT.readMore}
-                                needsLabel={modalT.needsLabel}
-                              />
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="text-center py-6 px-4 rounded-xl bg-gray-700">
-                            <span className="text-gray-400">
-                              {modalT.noCombinations ?? 'No combinations found from your selections'}
-                            </span>
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-
-                  {!requiresTier4Acknowledge && (
-                    <div className="pt-1 space-y-1.5">
-                      <a
-                        href={getAILink()}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-full py-3 px-6 rounded-xl font-semibold text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 transition-all"
-                      >
-                        {analyzeT.exploreAI ?? 'Explore with AI'} &rarr;
-                      </a>
-
-                      {results.length > 0 && (
-                        <div className="flex items-center justify-center gap-1">
-                          <button
-                            onClick={() => setReflectionState('reflection')}
-                            className="min-h-[44px] text-sm text-gray-400 hover:text-gray-300 transition-colors text-center px-1"
-                          >
-                            {reflectionPrompt}
-                          </button>
-                          <InfoButton
-                            title={modalT.moreInfoTitle ?? 'More context'}
-                            ariaLabel={modalT.moreInfoAria ?? 'Show more context'}
-                            className="text-gray-500 hover:text-gray-300"
-                          >
-                            {(closeInfo) => (
-                              <div className="space-y-3">
-                                {analyzeT.aiWarning && (
-                                  <p className="text-xs text-gray-400">
-                                    {analyzeT.aiWarning}
-                                  </p>
-                                )}
-                                {synthesisText && (
-                                  <p className="text-sm text-gray-200 leading-relaxed">
-                                    {synthesisText}
-                                  </p>
-                                )}
-                                {oppositeAction && (
-                                  <div className="p-3 rounded-xl bg-amber-900/10 border border-amber-700/20">
-                                    <p className="text-xs text-amber-300/80 leading-relaxed">
-                                      {oppositeAction}
-                                    </p>
-                                  </div>
-                                )}
-                                {interventionType && (
-                                  <button
-                                    onClick={() => {
-                                      closeInfo()
-                                      setReflectionState('intervention')
-                                    }}
-                                    className="w-full min-h-[44px] rounded-xl border border-indigo-500/40 px-3 py-2 text-sm text-indigo-300 hover:bg-indigo-600/20 transition-colors"
-                                  >
-                                    {getInterventionOfferText(interventionType, interventionT)}
-                                  </button>
-                                )}
-                                {!hasSecondaryInfo && (
-                                  <p className="text-xs text-gray-500">
-                                    {modalT.noExtraInfo ?? 'No extra context available for this result.'}
-                                  </p>
-                                )}
-                              </div>
-                            )}
-                          </InfoButton>
-                        </div>
-                      )}
-
-                      <p className="text-xs text-gray-600 text-center">
-                        {resultsT.microDisclaimer ?? 'For self-exploration, not diagnosis'}
-                      </p>
-                    </div>
-                  )}
-                </motion.div>
+                  results={results}
+                  language={language}
+                  hasCrisis={hasCrisis}
+                  crisisTier={crisisTier}
+                  showTemporalNote={Boolean(escalateCrisis)}
+                  requiresTier4Acknowledge={requiresTier4Acknowledge}
+                  onAcknowledgeTier4={() => setTier4Acknowledged(true)}
+                  aiLink={getAILink()}
+                  synthesisText={synthesisText}
+                  oppositeAction={oppositeAction}
+                  interventionType={interventionType}
+                  hasSecondaryInfo={hasSecondaryInfo}
+                  reflectionPrompt={reflectionPrompt}
+                  onStartReflection={() => setReflectionState('reflection')}
+                  onStartIntervention={() => setReflectionState('intervention')}
+                  crisisT={crisisT}
+                  interventionT={interventionT}
+                  combinationsFoundLabel={modalT.combinationsFound ?? 'Found combinations'}
+                  noCombinationsLabel={modalT.noCombinations ?? 'No combinations found from your selections'}
+                  tier4AcknowledgeLabel={crisisT.tier4Acknowledge ?? 'I understand — show my results'}
+                  exploreAILabel={analyzeT.exploreAI ?? 'Explore with AI'}
+                  showDescriptionLabel={modalT.showDescription}
+                  readMoreLabel={modalT.readMore}
+                  needsLabel={modalT.needsLabel}
+                  moreInfoTitle={modalT.moreInfoTitle ?? 'More context'}
+                  moreInfoAria={modalT.moreInfoAria ?? 'Show more context'}
+                  aiWarning={analyzeT.aiWarning}
+                  noExtraInfoLabel={modalT.noExtraInfo ?? 'No extra context available for this result.'}
+                  microDisclaimerLabel={resultsT.microDisclaimer ?? 'For self-exploration, not diagnosis'}
+                />
               )}
 
               {/* Reflection view */}
               {reflectionState === 'reflection' && (
-                <motion.div
+                <ReflectionView
                   key="reflection"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="flex-1 flex flex-col items-center justify-center py-8"
-                >
-                  <p className="text-lg text-gray-200 mb-6 text-center">
-                    {reflectionPrompt}
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                    <button
-                      onClick={() => handleReflection('yes')}
-                      className="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl bg-gray-600/20 border border-gray-600/50 text-gray-300 hover:bg-gray-600/30 transition-colors text-sm"
-                    >
-                      {reflectionT.yes ?? 'Yes'}
-                    </button>
-                    <button
-                      onClick={() => handleReflection('partly')}
-                      className="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl bg-gray-600/20 border border-gray-600/50 text-gray-300 hover:bg-gray-600/30 transition-colors text-sm"
-                    >
-                      {reflectionT.partly ?? 'Somewhat'}
-                    </button>
-                    <button
-                      onClick={() => handleReflection('no')}
-                      className="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl bg-gray-600/20 border border-gray-600/50 text-gray-300 hover:bg-gray-600/30 transition-colors text-sm"
-                    >
-                      {reflectionT.no ?? 'Not really'}
-                    </button>
-                  </div>
-                </motion.div>
+                  prompt={reflectionPrompt}
+                  yesLabel={reflectionT.yes ?? 'Yes'}
+                  partlyLabel={reflectionT.partly ?? 'Somewhat'}
+                  noLabel={reflectionT.no ?? 'Not really'}
+                  onReflect={handleReflection}
+                />
               )}
 
               {/* Warm close — brief acknowledgment after "Yes" */}
               {reflectionState === 'warmClose' && (
-                <motion.div
+                <WarmCloseView
                   key="warmClose"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="flex-1 flex flex-col items-center justify-center py-12"
-                >
-                  <p className="text-lg text-gray-200 text-center leading-relaxed px-4">
-                    {reflectionWarmClose}
-                  </p>
-                  <button
-                    onClick={handleClose}
-                    className="mt-6 min-h-[44px] px-4 text-sm text-gray-500 hover:text-gray-400 transition-colors"
-                  >
-                    {modalT.close ?? 'Close'}
-                  </button>
-                </motion.div>
+                  message={reflectionWarmClose}
+                  closeLabel={modalT.close ?? 'Close'}
+                  onClose={handleClose}
+                />
               )}
 
               {/* Micro-intervention view */}
@@ -436,55 +273,19 @@ export function ResultModal({
 
               {/* Follow-up view — differentiated by answer */}
               {reflectionState === 'followUp' && (
-                <motion.div
+                <FollowUpView
                   key="followUp"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="flex-1 flex flex-col items-center justify-center py-8"
-                >
-                  {reflectionAnswer === 'no' ? (
-                    <>
-                      <p className="text-sm text-gray-300 mb-4 text-center px-4">
-                        {reflectionT.notQuiteValidation ?? "Your felt experience is the best guide."}
-                      </p>
-                      <p className="text-lg text-gray-200 mb-6 text-center">
-                        {reflectionFollowUp}
-                      </p>
-                    </>
-                  ) : (
-                    <p className="text-lg text-gray-200 mb-6 text-center">
-                      {reflectionFollowUp}
-                    </p>
-                  )}
-                  <div className="flex flex-wrap gap-3 justify-center">
-                    <button
-                      onClick={handleExploreMore}
-                      className="min-h-[44px] px-5 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500 transition-colors text-sm font-medium"
-                    >
-                      {reflectionT.backToModel ?? 'Go back and explore'}
-                    </button>
-                    {onSwitchModel && bridge && (
-                      <div className="p-3 rounded-xl bg-indigo-900/20 border border-indigo-700/30 max-w-full">
-                        <p className="text-sm text-indigo-300 mb-2 text-center">
-                          {bridge.message}
-                        </p>
-                        <button
-                          onClick={() => handleSwitchModel(bridge.targetModelId)}
-                          className="w-full min-h-[44px] px-4 py-2 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-200 hover:bg-indigo-600/40 transition-colors text-sm"
-                        >
-                          {bridge.buttonLabel}
-                        </button>
-                      </div>
-                    )}
-                    <button
-                      onClick={handleClose}
-                      className="min-h-[44px] px-5 py-2 rounded-xl bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors text-sm"
-                    >
-                      {reflectionT.stayHere ?? "That's okay for now"}
-                    </button>
-                  </div>
-                </motion.div>
+                  reflectionAnswer={reflectionAnswer}
+                  followUpText={reflectionFollowUp}
+                  notQuiteValidation={reflectionT.notQuiteValidation ?? "Your felt experience is the best guide."}
+                  backToModelLabel={reflectionT.backToModel ?? 'Go back and explore'}
+                  stayHereLabel={reflectionT.stayHere ?? "That's okay for now"}
+                  bridge={bridge}
+                  showSwitchModel={Boolean(onSwitchModel)}
+                  onExploreMore={handleExploreMore}
+                  onSwitchModel={handleSwitchModel}
+                  onClose={handleClose}
+                />
               )}
             </AnimatePresence>
         </ModalShell>

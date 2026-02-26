@@ -1,4 +1,4 @@
-import plutchikData from '../models/plutchik/data.json'
+import { plutchikEmotions as plutchikData } from '../models/plutchik'
 
 export type GranularityLanguage = 'ro' | 'en'
 export type GranularityDistinction = 'intensity' | 'duration' | 'focus' | 'time'

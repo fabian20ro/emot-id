@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { scoreSomaticSelections } from '../models/somatic/scoring'
 import type { SomaticSelection, SomaticRegion } from '../models/somatic/types'
-import somaticData from '../models/somatic/data.json'
+import { somaticRegions as somaticData } from '../models/somatic'
 
 type RegionMap = Record<string, SomaticRegion>
 

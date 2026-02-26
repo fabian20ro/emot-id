@@ -1,6 +1,6 @@
 # Frontend Codemap
 
-**Last Updated:** 2026-02-07
+**Last Updated:** 2026-02-25
 **Framework:** React 19 (App Router-less SPA), Framer Motion 12, Tailwind CSS 4
 
 ## Component Tree
@@ -13,6 +13,7 @@ App (src/App.tsx)
  |    +-- ModelBar (inline)       # Model tab bar (flex-1, responsive shortName at <480px)
  +-- Offline banner               # Shows when navigator is offline (cached/PWA state)
  +-- SettingsMenu*                # Bottom sheet drawer (portal to body)
+ |    +-- SettingsToggle[]        # Reusable on/off toggle component
  |    +-- InfoButton[]            # Privacy + disclaimer info modals (portal to body)
  +-- AnalyzeButton                # Gradient CTA with selection count, disabled when empty
  +-- QuickCheckIn                 # 30-second curated emotion grid (tap up to 3)
@@ -29,16 +30,20 @@ App (src/App.tsx)
  |         |    +-- BodyRegion[]  # SVG path elements (12 regions)
  |         |    +-- SensationPicker  # Bottom sheet: sensation -> intensity
  |         |    +-- GuidedScan    # Sequential body scan overlay
+ |         |    |    +-- CenteringPhase / PausePhase / CompletionPhase  # Extracted phase views
  |         +-- DimensionalField   # For dimensional (aspect-square plot + suggestion tray below)
- +-- ResultModal                  # Full-screen modal with analysis results
- |    +-- CrisisBanner            # Tiered crisis banner — renders ABOVE results (tier1/2/3/4)
- |    +-- ResultCard[]            # Color-coded result cards (InfoButton for collapsed descriptions)
+ +-- ResultModal                  # Orchestrator modal (imports sub-views)
+ |    +-- ResultsView             # Main results display (AI link, reflection prompt, info panel)
+ |    |    +-- CrisisBanner       # Tiered crisis banner — renders ABOVE results (tier1/2/3/4)
+ |    |    +-- ResultCard[]       # Color-coded result cards (InfoButton for collapsed descriptions)
+ |    +-- ReflectionView          # Yes/Somewhat/Not really reflection prompt
+ |    +-- WarmCloseView           # Brief acknowledgment after "Yes" reflection
+ |    +-- FollowUpView            # Explore more / model bridge after "No"/"Somewhat"
  |    +-- MicroIntervention       # Breathing / savoring / curiosity exercise
- |    +-- OppositeAction          # DBT opposite action suggestion (amber box)
- |    +-- ModelBridge             # Cross-model bridge suggestion
  +-- DontKnowModal               # Suggests Somatic or Dimensional model (explicit close button)
  +-- UndoToast                   # 5-second undo toast after clear
- +-- SessionHistory              # History modal (vocabulary, patterns, export)
+ +-- SessionHistory              # History modal (imports panels and utils)
+ |    +-- VocabSummary / ProgressionNudge / ValenceRatioPanel / SomaticPatternsPanel
 ```
 
 `*` SettingsMenu renders via `createPortal(…, document.body)` — portal sibling, not child of Header.

@@ -1,6 +1,6 @@
 # Emotion Models Codemap
 
-**Last Updated:** 2026-02-07
+**Last Updated:** 2026-02-25
 **Location:** `src/models/`
 
 ## Type Hierarchy
@@ -94,7 +94,7 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 | Aspect | Detail |
 |--------|--------|
 | Initial state | 8 primaries visible: joy, trust, fear, surprise, sadness, disgust, anger, anticipation |
-| Data | `data.json` -- flat map of ~55 emotions with spawns and components |
+| Data | `data/` -- 6 JSON files split by category, merged in `index.ts` |
 | Visualization | `BubbleField` |
 
 **onSelect behavior:**
@@ -121,7 +121,7 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 | Aspect | Detail |
 |--------|--------|
 | Initial state | 7 root emotions: happy, surprised, bad, fearful, angry, disgusted, sad |
-| Data | `data.json` -- tree structure with ~135 emotions, `parent`/`children` links, `level` 0-2 |
+| Data | `data/` -- 11 JSON files (4 large roots split in halves + 3 smaller roots), merged in `index.ts` |
 | Visualization | `BubbleField` |
 
 **onSelect behavior:**
@@ -144,17 +144,21 @@ type ModelId = 'plutchik' | 'wheel' | 'somatic' | 'dimensional'
 | Aspect | Detail |
 |--------|--------|
 | Initial state | All regions always visible |
-| Data | `data.json` -- regions with `emotionSignals[]` mapping sensation+intensity to emotions + `source` provenance |
+| Data | `data/` -- 5 JSON files split by body group, merged in `index.ts` |
 | Visualization | `BodyMap` (not BubbleField) |
 | Scoring | `scoring.ts` -- weighted signal matching |
 | Emotions | 30+ candidate emotions (expanded from original 21) |
 
 **Files:**
 - `types.ts` -- `SomaticRegion`, `SomaticSelection`, `EmotionSignal`, `SensationType`, `BodyGroup`
-- `index.ts` -- model implementation (simple pass-through, delegates scoring)
+- `index.ts` -- model implementation (merges 5 data files, delegates scoring)
 - `scoring.ts` -- `scoreSomaticSelections()` algorithm
-- `data.json` -- body regions with sensation-to-emotion signal mappings
-- `data.json` emotion signals include `source`: `Nummenmaa2014`, `clinical`, or `interpolated`
+- `data/head.json` -- head, jaw, throat regions
+- `data/torso-front.json` -- chest, stomach regions
+- `data/torso-back.json` -- shoulders, upper-back, lower-back regions
+- `data/arms.json` -- hands, arms regions
+- `data/legs.json` -- legs, feet regions
+- Emotion signals include `source`: `Nummenmaa2014`, `clinical`, or `interpolated`
 
 **onSelect / onDeselect:** No-op on state (all regions always visible). BodyMap component enriches selections with `selectedSensation` and `selectedIntensity` before passing upstream.
 
@@ -239,14 +243,16 @@ Tag with matchStrength: strong resonance (>=70%), possible connection (>=40%), w
 
 ## Data Files
 
-| File | Records | Shape |
-|------|---------|-------|
-| `plutchik/data.json` | ~55 emotions | `PlutchikEmotion` (id, label, color, category, spawns, components) |
-| `wheel/data.json` | ~135 emotions | `WheelEmotion` (id, label, color, level, parent, children) |
-| `somatic/data.json` | 12 regions | `SomaticRegion` (id, label, color, svgRegionId, group, commonSensations, emotionSignals[]) |
-| `dimensional/data.json` | ~38 emotions | `DimensionalEmotion` (id, label, color, valence, arousal, quadrant) |
+All data files use inline bilingual labels `{ ro, en }`. Large files are split into `data/` subdirectories and merged via spread imports in `index.ts` (no runtime cost — Vite inlines JSON at build time).
 
-All data files use inline bilingual labels `{ ro, en }`.
+| Model | Files | Records | Shape |
+|-------|-------|---------|-------|
+| `plutchik/data/` | 6 files (primary, intensity, dyad, secondary-dyad, tertiary-dyad, opposite-dyad) | ~55 emotions | `PlutchikEmotion` |
+| `wheel/data/` | 11 files (happy-1/2, angry-1/2, sad-1/2, fearful-1/2, surprised, bad, disgusted) | ~135 emotions | `WheelEmotion` |
+| `somatic/data/` | 5 files (head, torso-front, torso-back, arms, legs) | 12 regions | `SomaticRegion` |
+| `dimensional/data.json` | 1 file | ~38 emotions | `DimensionalEmotion` |
+
+All split files are under 25KB (agent file-loading limit).
 
 ## Model Registry (`src/models/registry.ts`)
 

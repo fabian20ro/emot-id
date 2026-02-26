@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import emotionsData from '../models/plutchik/data.json'
+import { plutchikEmotions as emotionsData } from '../models/plutchik'
 
 interface Emotion {
   id: string

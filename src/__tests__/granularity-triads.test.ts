@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import plutchikData from '../models/plutchik/data.json'
+import { plutchikEmotions as plutchikData } from '../models/plutchik'
 import {
   GRANULARITY_SETS,
   getGranularityLabel,

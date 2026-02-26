@@ -1,22 +1,30 @@
 import type { EmotionModel, ModelState, SelectionEffect, AnalysisResult } from '../types'
 import { MODEL_IDS } from '../constants'
 import type { WheelEmotion } from './types'
-import happyData from './data/happy.json'
+import happy1Data from './data/happy-1.json'
+import happy2Data from './data/happy-2.json'
 import surprisedData from './data/surprised.json'
 import badData from './data/bad.json'
-import fearfulData from './data/fearful.json'
-import angryData from './data/angry.json'
+import fearful1Data from './data/fearful-1.json'
+import fearful2Data from './data/fearful-2.json'
+import angry1Data from './data/angry-1.json'
+import angry2Data from './data/angry-2.json'
 import disgustedData from './data/disgusted.json'
-import sadData from './data/sad.json'
+import sad1Data from './data/sad-1.json'
+import sad2Data from './data/sad-2.json'
 
 const allEmotions = {
-  ...happyData,
+  ...happy1Data,
+  ...happy2Data,
   ...surprisedData,
   ...badData,
-  ...fearfulData,
-  ...angryData,
+  ...fearful1Data,
+  ...fearful2Data,
+  ...angry1Data,
+  ...angry2Data,
   ...disgustedData,
-  ...sadData,
+  ...sad1Data,
+  ...sad2Data,
 } as Record<string, WheelEmotion>
 
 const CENTER_IDS = [

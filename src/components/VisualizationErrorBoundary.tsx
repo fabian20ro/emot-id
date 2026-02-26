@@ -30,7 +30,9 @@ export class VisualizationErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error('Visualization error:', error, info.componentStack)
+    if (import.meta.env.DEV) {
+      console.error('Visualization error:', error, info.componentStack)
+    }
   }
 
   render() {

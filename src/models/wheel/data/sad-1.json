@@ -1,0 +1,258 @@
+{
+  "sad": {
+    "id": "sad",
+    "label": {
+      "ro": "Trist",
+      "en": "Sad"
+    },
+    "color": "#88A8D0",
+    "level": 0,
+    "children": [
+      "hurt",
+      "depressed",
+      "guilty",
+      "despair",
+      "vulnerable",
+      "lonely"
+    ],
+    "description": {
+      "ro": "Tristetea este raspunsul natural la pierdere si dezamagire — un semnal ca ceva important s-a schimbat sau a disparut din viata ta. Tristetea te incetineste, te intoarce spre interior si te invita sa procesezi ceea ce s-a intamplat. A-ti permite sa fii trist nu este slabiciune, ci curaj — inseamna ca esti dispus sa simti pe deplin ceea ce inseamna sa fii om.",
+      "en": "Sadness is the natural response to loss and disappointment — a signal that something important has changed or disappeared from your life. Sadness slows you down, turns you inward, and invites you to process what happened. Allowing yourself to be sad is not weakness, but courage — it means you're willing to fully feel what it means to be human."
+    },
+    "needs": {
+      "ro": "compasiune si spatiu",
+      "en": "compassion and space"
+    }
+  },
+  "hurt": {
+    "id": "hurt",
+    "label": {
+      "ro": "Ranit",
+      "en": "Hurt"
+    },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": [
+      "embarrassed_sad",
+      "disappointed_sad",
+      "wounded"
+    ],
+    "description": {
+      "ro": "A fi ranit este experienta dureroasa a unei vatamari emotionale — cineva a facut sau a spus ceva care ti-a atins un loc vulnerabil. Durerea emotionala este la fel de reala ca cea fizica si creierul o proceseaza in zone similare. Rana emotionala are nevoie de aceeasi ingrijire ca o rana fizica — recunoastere, protectie si timp pentru vindecare.",
+      "en": "Being hurt is the painful experience of emotional injury — someone did or said something that touched a vulnerable place. Emotional pain is just as real as physical pain and the brain processes it in similar areas. Emotional wounds need the same care as physical wounds — recognition, protection, and time for healing."
+    },
+    "needs": {
+      "ro": "recunoastere si grija blanda",
+      "en": "recognition and gentle care"
+    }
+  },
+  "embarrassed_sad": {
+    "id": "embarrassed_sad",
+    "label": {
+      "ro": "Jenat",
+      "en": "Embarrassed"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "hurt",
+    "description": {
+      "ro": "Jena in contextul tristetii este o rusine blanda amestecata cu vulnerabilitate — te simti expus intr-un mod care te face sa vrei sa te ascunzi. Este sentimentul de a fi vazut intr-un moment de slabiciune sau de a fi facut ceva stangaci. Jena este tranzitorie si de obicei disproportionata fata de situatie — altii o observa mult mai putin decat crezi.",
+      "en": "Embarrassment in the context of sadness is a mild shame mixed with vulnerability — you feel exposed in a way that makes you want to hide. It is the feeling of being seen in a moment of weakness or having done something clumsy. Embarrassment is transient and usually disproportionate to the situation — others notice it far less than you think."
+    },
+    "needs": {
+      "ro": "reasigurare si perspectiva",
+      "en": "reassurance and perspective"
+    }
+  },
+  "disappointed_sad": {
+    "id": "disappointed_sad",
+    "label": {
+      "ro": "Dezamagit",
+      "en": "Disappointed"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "hurt",
+    "description": {
+      "ro": "Dezamagirea in contextul tristetii este durerea calma a asteptarilor neimplinite — nu furia, ci doliul pentru ceea ce ar fi putut fi. Este acceptarea trista ca realitatea nu corespunde sperantelor tale. Dezamagirea repetata poate eroda optimismul si increderea. Procesarea constientea a dezamagirii include ajustarea asteptarilor fara a renunta la speranta.",
+      "en": "Disappointment in the context of sadness is the calm pain of unfulfilled expectations — not anger, but grief for what could have been. It is the sad acceptance that reality doesn't match your hopes. Repeated disappointment can erode optimism and trust. Conscious processing of disappointment includes adjusting expectations without giving up hope."
+    },
+    "needs": {
+      "ro": "ajustarea sperantelor si doliu bland",
+      "en": "adjusting hopes and gentle grieving"
+    }
+  },
+  "wounded": {
+    "id": "wounded",
+    "label": {
+      "ro": "Ranit profund",
+      "en": "Wounded"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "hurt",
+    "description": {
+      "ro": "A te simti ranit profund este experienta unei dureri emotionale ascutite provocate de cuvintele sau actiunile cuiva — nu o dezamagire difuza, ci o rana precisa care te atinge intr-un loc vulnerabil. Simti ca cineva a trecut prin apararea ta si a lovit intr-un punct sensibil pe care poate nici nu stiai ca il ai. Aceasta durere este un semnal ca relatia cu acea persoana conteaza — nu ne pot rani profund decat cei carora le-am acordat importanta. Vindecarea incepe cu recunoasterea ranei, nu cu minimizarea ei.",
+      "en": "Feeling deeply wounded is the experience of a sharp emotional pain caused by someone's words or actions — not a diffuse disappointment, but a precise wound that reaches a vulnerable place. You feel that someone got past your defenses and struck a sensitive point you may not even have known you had. This pain is a signal that your relationship with that person matters — only those we've given importance to can wound us deeply. Healing begins with acknowledging the wound, not minimizing it."
+    },
+    "needs": {
+      "ro": "recunoastere si ingrijire blanda",
+      "en": "acknowledgment and gentle care"
+    }
+  },
+  "depressed": {
+    "id": "depressed",
+    "label": {
+      "ro": "Deprimat",
+      "en": "Depressed"
+    },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": [
+      "empty",
+      "inferior_sad",
+      "hopeless"
+    ],
+    "description": {
+      "ro": "Depresia este mai mult decat tristete — este o stare pervasiva de golire emotionala in care energia, motivatia si capacitatea de a simti placere se diminueaza semnificativ. Lumea pare gri, viitorul pare fara speranta si chiar activitatile obisnuite devin coplesitoare. Depresia este o conditie medicala reala care raspunde la tratament si nu ar trebui niciodata minimizata sau ignorata.",
+      "en": "Depression is more than sadness — it is a pervasive state of emotional emptiness where energy, motivation, and the capacity to feel pleasure diminish significantly. The world seems gray, the future seems hopeless, and even ordinary activities become overwhelming. Depression is a real medical condition that responds to treatment and should never be minimized or ignored."
+    },
+    "needs": {
+      "ro": "sprijin profesional si rabdare",
+      "en": "professional support and patience"
+    }
+  },
+  "empty": {
+    "id": "empty",
+    "label": {
+      "ro": "Gol",
+      "en": "Empty"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "depressed",
+    "description": {
+      "ro": "Golul emotional este absenta dureroasa a sentimentului — o stare in care interiorul tau pare vid si deconectat de viata. Nu durere, nu bucurie — doar un spatiu pustiu. Golul poate fi un simptom al depresiei, al dezlegarii de sine sau al pierderii sensului. Recuperarea vine prin reconectarea treptata cu corpul, cu natura si cu relatiile care te ancoreaza.",
+      "en": "Emotional emptiness is the painful absence of feeling — a state where your interior seems void and disconnected from life. No pain, no joy — just a barren space. Emptiness can be a symptom of depression, disconnection from self, or loss of meaning. Recovery comes through gradual reconnection with the body, nature, and relationships that anchor you."
+    },
+    "needs": {
+      "ro": "reconectare senzoriala si prezenta",
+      "en": "sensory reconnection and presence"
+    }
+  },
+  "inferior_sad": {
+    "id": "inferior_sad",
+    "label": {
+      "ro": "Inferior",
+      "en": "Inferior"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "depressed",
+    "description": {
+      "ro": "Sentimentul de inferioritate in contextul tristetii este durerea tacuta a comparatiei — te vezi constant mai putin decat ceilalti si aceasta convingere iti coloreaza toata experienta. Nu este furie, ci resemnare trista. Este ecoul vocilor critice care ti-au spus ca nu esti destul. Vindecarea incepe cu recunoasterea ca valoarea ta nu se masoara prin comparatie.",
+      "en": "The feeling of inferiority in the context of sadness is the quiet pain of comparison — you constantly see yourself as less than others and this conviction colors all your experience. It's not anger, but sad resignation. It is the echo of critical voices that told you you're not enough. Healing begins with recognizing that your value is not measured by comparison."
+    },
+    "needs": {
+      "ro": "afirmarea valorii inerente",
+      "en": "affirmation of inherent worth"
+    }
+  },
+  "hopeless": {
+    "id": "hopeless",
+    "label": {
+      "ro": "Deznadajduit",
+      "en": "Hopeless"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "depressed",
+    "description": {
+      "ro": "Deznadejdea este convingerea ca lucrurile nu se vor imbunatati niciodata — viitorul pare inchis, iar orice efort pare zadarnic. Este important sa stii ca deznadejdea este un semnal emotional, nu un adevar despre viitorul tau. Creierul, cand este epuizat sau coplesit, produce aceasta senzatie de impas total ca mecanism de conservare a energiei. Deznadejdea iti spune ca ai nevoie de sprijin si de o perspectiva pe care nu o poti gasi singur in acest moment — nu ca situatia ta este cu adevarat fara iesire.",
+      "en": "Hopelessness is the conviction that things will never get better — the future seems closed and any effort seems futile. It is important to know that hopelessness is an emotional signal, not a truth about your future. The brain, when exhausted or overwhelmed, produces this sensation of total impasse as an energy conservation mechanism. Hopelessness tells you that you need support and a perspective you cannot find alone right now — not that your situation is truly without exit."
+    },
+    "needs": {
+      "ro": "sprijin si o perspectiva noua",
+      "en": "support and a new perspective"
+    }
+  },
+  "guilty": {
+    "id": "guilty",
+    "label": {
+      "ro": "Vinovat",
+      "en": "Guilty"
+    },
+    "color": "#9CB8DA",
+    "level": 1,
+    "parent": "sad",
+    "children": [
+      "remorseful",
+      "ashamed",
+      "regretful"
+    ],
+    "description": {
+      "ro": "Vinovatia este constientizarea dureroasa ca ai facut ceva gresit sau ca ai ranit pe cineva. Spre deosebire de rusine, care ataca identitatea, vinovatia priveste comportamentul — 'am facut ceva rau', nu 'sunt rau'. Vinovatia sanatoasa te motiveaza sa repari si sa te schimbi. Vinovatia cronica si nerezolvata devine o povara care erodeaza bucuria de a trai.",
+      "en": "Guilt is the painful awareness that you did something wrong or hurt someone. Unlike shame, which attacks identity, guilt targets behavior — 'I did something bad', not 'I am bad'. Healthy guilt motivates you to repair and change. Chronic and unresolved guilt becomes a burden that erodes the joy of living."
+    },
+    "needs": {
+      "ro": "reparatie si auto-iertare",
+      "en": "repair and self-forgiveness"
+    }
+  },
+  "remorseful": {
+    "id": "remorseful",
+    "label": {
+      "ro": "Plin de remuscari",
+      "en": "Remorseful"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "guilty",
+    "description": {
+      "ro": "Remuscarea este forma profunda a vinovatiei — nu doar stii ca ai gresit, ci simti in tot corpul greutatea a ceea ce ai facut. Este emotia care te face sa vrei sa intorci timpul si sa repari ce ai stricat. Remuscarea autentica este necesara pentru reparatie si iertare, dar trebuie sa duca la actiune, nu sa ramana o auto-pedepsire perpetua.",
+      "en": "Remorse is the deep form of guilt — you don't just know you were wrong, but feel in your entire body the weight of what you did. It is the emotion that makes you want to turn back time and repair what you broke. Authentic remorse is necessary for repair and forgiveness, but it must lead to action, not remain perpetual self-punishment."
+    },
+    "needs": {
+      "ro": "actiune reparatorie si auto-iertare",
+      "en": "reparative action and self-forgiveness"
+    }
+  },
+  "ashamed": {
+    "id": "ashamed",
+    "label": {
+      "ro": "Rusinat",
+      "en": "Ashamed"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "guilty",
+    "description": {
+      "ro": "Rusinea este convingerea dureroasa ca esti defect in esenta ta — nu ca ai facut ceva gresit, ci ca esti ceva gresit. Este una dintre cele mai dureroase emotii umane, care te face sa vrei sa dispari sau sa te ascunzi. Rusinea toxica isi are originile in experienta de a nu fi fost acceptat neconditionat. Vindecarea vine prin relatii in care esti primit complet.",
+      "en": "Shame is the painful conviction that you are defective at your core — not that you did something wrong, but that you are something wrong. It is one of the most painful human emotions, making you want to disappear or hide. Toxic shame originates in the experience of not having been unconditionally accepted. Healing comes through relationships where you are fully received."
+    },
+    "needs": {
+      "ro": "acceptare neconditionata si apartinere",
+      "en": "unconditional acceptance and belonging"
+    }
+  },
+  "regretful": {
+    "id": "regretful",
+    "label": {
+      "ro": "Plin de regret",
+      "en": "Regretful"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "guilty",
+    "description": {
+      "ro": "Regretul este reflectia calma si dureroasa ca ai fi putut actiona altfel — o constientizare lipsita de dramatismul remuscarii sau de prabusirea rusinii, dar nu mai putin reala. Privesti inapoi si vezi clar ce ai fi putut face diferit, si aceasta claritate vine cu o tristete lina. Regretul este de fapt un semn de maturitate emotionala — inseamna ca ai crescut suficient incat sa vezi lucrurile dintr-o perspectiva pe care nu o aveai atunci. El te poate ghida spre alegeri mai aliniate cu valorile tale.",
+      "en": "Regret is the calm, painful reflection that you could have acted differently — an awareness that lacks the drama of remorse or the collapse of shame, but is no less real. You look back and clearly see what you could have done differently, and this clarity comes with a gentle sadness. Regret is actually a sign of emotional maturity — it means you have grown enough to see things from a perspective you didn't have then. It can guide you toward choices more aligned with your values."
+    },
+    "needs": {
+      "ro": "acceptare si invatare din experienta",
+      "en": "acceptance and learning from experience"
+    }
+  }
+}

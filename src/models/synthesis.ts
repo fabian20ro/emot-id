@@ -110,17 +110,19 @@ const templates = {
       `Your ${name} may signal: ${desc}`,
     needsClosing: (needs: string[]) => {
       const unique = [...new Set(needs)]
+      if (unique.length === 0) return ''
       if (unique.length === 1) return `Right now, you may need ${unique[0]}.`
       if (unique.length === 2) return `Right now, you may need ${unique[0]} and ${unique[1]}.`
-      const last = unique.pop()
-      return `Right now, you may need ${unique.join(', ')}, and ${last}.`
+      const last = unique.at(-1)
+      return `Right now, you may need ${unique.slice(0, -1).join(', ')}, and ${last}.`
     },
     needsClosingSevere: (needs: string[]) => {
       const unique = [...new Set(needs)]
+      if (unique.length === 0) return ''
       if (unique.length === 1) return `Right now, you deserve ${unique[0]}.`
       if (unique.length === 2) return `Right now, you deserve ${unique[0]} and ${unique[1]}.`
-      const last = unique.pop()
-      return `Right now, you deserve ${unique.join(', ')}, and ${last}.`
+      const last = unique.at(-1)
+      return `Right now, you deserve ${unique.slice(0, -1).join(', ')}, and ${last}.`
     },
   },
   ro: {
@@ -148,17 +150,19 @@ const templates = {
       `${name} poate semnala: ${desc}`,
     needsClosing: (needs: string[]) => {
       const unique = [...new Set(needs)]
+      if (unique.length === 0) return ''
       if (unique.length === 1) return `Acum, ai putea avea nevoie de ${unique[0]}.`
       if (unique.length === 2) return `Acum, ai putea avea nevoie de ${unique[0]} si ${unique[1]}.`
-      const last = unique.pop()
-      return `Acum, ai putea avea nevoie de ${unique.join(', ')} si ${last}.`
+      const last = unique.at(-1)
+      return `Acum, ai putea avea nevoie de ${unique.slice(0, -1).join(', ')} si ${last}.`
     },
     needsClosingSevere: (needs: string[]) => {
       const unique = [...new Set(needs)]
+      if (unique.length === 0) return ''
       if (unique.length === 1) return `Acum, meriti ${unique[0]}.`
       if (unique.length === 2) return `Acum, meriti ${unique[0]} si ${unique[1]}.`
-      const last = unique.pop()
-      return `Acum, meriti ${unique.join(', ')} si ${last}.`
+      const last = unique.at(-1)
+      return `Acum, meriti ${unique.slice(0, -1).join(', ')} si ${last}.`
     },
   },
 }
