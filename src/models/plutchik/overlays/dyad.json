@@ -1,0 +1,175 @@
+{
+  "love": {
+    "color": "#FFD1DC",
+    "category": "dyad",
+    "intensity": 0.6,
+    "spawns": [
+      "joy",
+      "trust",
+      "serenity",
+      "admiration"
+    ],
+    "components": [
+      "joy",
+      "trust"
+    ]
+  },
+  "submission": {
+    "color": "#98E8C8",
+    "category": "dyad",
+    "intensity": 0.6,
+    "spawns": [
+      "trust",
+      "fear",
+      "acceptance",
+      "apprehension"
+    ],
+    "components": [
+      "trust",
+      "fear"
+    ]
+  },
+  "awe": {
+    "color": "#7FD8D8",
+    "category": "dyad",
+    "intensity": 0.6,
+    "spawns": [
+      "fear",
+      "surprise",
+      "amazement",
+      "terror"
+    ],
+    "components": [
+      "fear",
+      "surprise"
+    ]
+  },
+  "disapproval": {
+    "color": "#7BB8E8",
+    "category": "dyad",
+    "intensity": 0.6,
+    "spawns": [
+      "surprise",
+      "sadness",
+      "pensiveness",
+      "distraction"
+    ],
+    "components": [
+      "surprise",
+      "sadness"
+    ]
+  },
+  "remorse": {
+    "color": "#9B8DC8",
+    "category": "dyad",
+    "intensity": 0.6,
+    "spawns": [
+      "sadness",
+      "disgust",
+      "grief",
+      "loathing"
+    ],
+    "components": [
+      "sadness",
+      "disgust"
+    ]
+  },
+  "contempt": {
+    "color": "#795548",
+    "category": "dyad",
+    "intensity": 0.6,
+    "opposite": "compassion",
+    "spawns": [
+      "disgust",
+      "anger",
+      "loathing",
+      "rage"
+    ],
+    "components": [
+      "anger",
+      "disgust"
+    ]
+  },
+  "aggression": {
+    "color": "#FF8860",
+    "category": "dyad",
+    "intensity": 0.6,
+    "spawns": [
+      "anger",
+      "anticipation",
+      "rage",
+      "vigilance"
+    ],
+    "components": [
+      "anger",
+      "anticipation"
+    ]
+  },
+  "optimism": {
+    "color": "#FFD080",
+    "category": "dyad",
+    "intensity": 0.6,
+    "spawns": [
+      "anticipation",
+      "joy",
+      "interest",
+      "ecstasy"
+    ],
+    "components": [
+      "anticipation",
+      "joy"
+    ]
+  },
+  "hope": {
+    "color": "#C8E8A8",
+    "category": "dyad",
+    "intensity": 0.6,
+    "spawns": [
+      "anticipation",
+      "trust",
+      "interest",
+      "acceptance"
+    ],
+    "components": [
+      "anticipation",
+      "trust"
+    ]
+  },
+  "anxiety": {
+    "color": "#A8D8A0",
+    "category": "dyad",
+    "intensity": 0.6,
+    "spawns": [
+      "anticipation",
+      "fear",
+      "interest",
+      "apprehension"
+    ],
+    "components": [
+      "anticipation",
+      "fear"
+    ]
+  },
+  "compassion": {
+    "color": "#66BB6A",
+    "category": "dyad",
+    "intensity": 0.5,
+    "opposite": "contempt",
+    "spawns": [],
+    "components": [
+      "trust",
+      "sadness"
+    ]
+  },
+  "nostalgia": {
+    "color": "#AB47BC",
+    "category": "dyad",
+    "intensity": 0.5,
+    "opposite": "",
+    "spawns": [],
+    "components": [
+      "serenity",
+      "sadness"
+    ]
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "excited": {
+    "color": "#FFD700",
+    "valence": 0.7,
+    "arousal": 0.8,
+    "quadrant": "pleasant-intense"
+  },
+  "elated": {
+    "color": "#FFE66D",
+    "valence": 0.8,
+    "arousal": 0.7,
+    "quadrant": "pleasant-intense"
+  },
+  "alert": {
+    "color": "#FFA726",
+    "valence": 0.3,
+    "arousal": 0.8,
+    "quadrant": "pleasant-intense"
+  },
+  "enthusiastic": {
+    "color": "#FF9800",
+    "valence": 0.6,
+    "arousal": 0.6,
+    "quadrant": "pleasant-intense"
+  },
+  "happy": {
+    "color": "#FFEB3B",
+    "valence": 0.7,
+    "arousal": 0.4,
+    "quadrant": "pleasant-intense"
+  },
+  "delighted": {
+    "color": "#FFD54F",
+    "valence": 0.8,
+    "arousal": 0.5,
+    "quadrant": "pleasant-intense"
+  },
+  "amused": {
+    "color": "#FFC107",
+    "valence": 0.5,
+    "arousal": 0.5,
+    "quadrant": "pleasant-intense"
+  },
+  "calm": {
+    "color": "#81D4FA",
+    "valence": 0.3,
+    "arousal": -0.6,
+    "quadrant": "pleasant-calm"
+  },
+  "serene": {
+    "color": "#B3E5FC",
+    "valence": 0.5,
+    "arousal": -0.7,
+    "quadrant": "pleasant-calm"
+  },
+  "relaxed": {
+    "color": "#4FC3F7",
+    "valence": 0.4,
+    "arousal": -0.5,
+    "quadrant": "pleasant-calm"
+  },
+  "content": {
+    "color": "#29B6F6",
+    "valence": 0.5,
+    "arousal": -0.4,
+    "quadrant": "pleasant-calm"
+  },
+  "peaceful": {
+    "color": "#039BE5",
+    "valence": 0.6,
+    "arousal": -0.6,
+    "quadrant": "pleasant-calm"
+  },
+  "satisfied": {
+    "color": "#0288D1",
+    "valence": 0.6,
+    "arousal": -0.3,
+    "quadrant": "pleasant-calm"
+  },
+  "tender": {
+    "color": "#4DD0E1",
+    "valence": 0.5,
+    "arousal": -0.3,
+    "quadrant": "pleasant-calm"
+  },
+  "angry": {
+    "color": "#F44336",
+    "valence": -0.7,
+    "arousal": 0.8,
+    "quadrant": "unpleasant-intense"
+  },
+  "afraid": {
+    "color": "#E91E63",
+    "valence": -0.6,
+    "arousal": 0.7,
+    "quadrant": "unpleasant-intense"
+  },
+  "stressed": {
+    "color": "#D32F2F",
+    "valence": -0.5,
+    "arousal": 0.6,
+    "quadrant": "unpleasant-intense"
+  },
+  "tense": {
+    "color": "#C62828",
+    "valence": -0.4,
+    "arousal": 0.5,
+    "quadrant": "unpleasant-intense"
+  },
+  "nervous": {
+    "color": "#EF5350",
+    "valence": -0.4,
+    "arousal": 0.6,
+    "quadrant": "unpleasant-intense"
+  },
+  "frustrated": {
+    "color": "#E53935",
+    "valence": -0.6,
+    "arousal": 0.5,
+    "quadrant": "unpleasant-intense"
+  },
+  "distressed": {
+    "color": "#B71C1C",
+    "valence": -0.8,
+    "arousal": 0.7,
+    "quadrant": "unpleasant-intense"
+  },
+  "sad": {
+    "color": "#5C6BC0",
+    "valence": -0.6,
+    "arousal": -0.4,
+    "quadrant": "unpleasant-calm"
+  },
+  "bored": {
+    "color": "#7986CB",
+    "valence": -0.3,
+    "arousal": -0.6,
+    "quadrant": "unpleasant-calm"
+  },
+  "tired": {
+    "color": "#9FA8DA",
+    "valence": -0.2,
+    "arousal": -0.7,
+    "quadrant": "unpleasant-calm"
+  },
+  "depressed": {
+    "color": "#3F51B5",
+    "valence": -0.8,
+    "arousal": -0.6,
+    "quadrant": "unpleasant-calm"
+  },
+  "lonely": {
+    "color": "#5C6BC0",
+    "valence": -0.7,
+    "arousal": -0.35,
+    "quadrant": "unpleasant-calm"
+  },
+  "lethargic": {
+    "color": "#7E57C2",
+    "valence": -0.4,
+    "arousal": -0.8,
+    "quadrant": "unpleasant-calm"
+  },
+  "gloomy": {
+    "color": "#673AB7",
+    "valence": -0.5,
+    "arousal": -0.5,
+    "quadrant": "unpleasant-calm"
+  },
+  "dor": {
+    "color": "#7E57C2",
+    "valence": 0.1,
+    "arousal": -0.4,
+    "quadrant": "pleasant-calm"
+  },
+  "compassion": {
+    "color": "#66BB6A",
+    "valence": 0.4,
+    "arousal": -0.1,
+    "quadrant": "pleasant-calm"
+  },
+  "relief": {
+    "color": "#81C784",
+    "valence": 0.5,
+    "arousal": -0.4,
+    "quadrant": "pleasant-calm"
+  },
+  "nostalgia": {
+    "color": "#AB47BC",
+    "valence": 0.2,
+    "arousal": -0.3,
+    "quadrant": "pleasant-calm"
+  },
+  "apathetic": {
+    "color": "#7E57C2",
+    "valence": -0.3,
+    "arousal": -0.7,
+    "quadrant": "unpleasant-calm"
+  },
+  "melancholic": {
+    "color": "#5C6BC0",
+    "valence": -0.4,
+    "arousal": -0.3,
+    "quadrant": "unpleasant-calm"
+  },
+  "resigned": {
+    "color": "#9575CD",
+    "valence": -0.55,
+    "arousal": -0.55,
+    "quadrant": "unpleasant-calm"
+  },
+  "pensive": {
+    "color": "#9FA8DA",
+    "valence": -0.1,
+    "arousal": -0.4,
+    "quadrant": "unpleasant-calm"
+  },
+  "contemplative": {
+    "color": "#7986CB",
+    "valence": 0.1,
+    "arousal": -0.3,
+    "quadrant": "pleasant-calm"
+  },
+  "contempt": {
+    "color": "#795548",
+    "valence": -0.55,
+    "arousal": 0.15,
+    "quadrant": "unpleasant-intense"
+  }
+}

@@ -1,14 +1,11 @@
-/** Emotion IDs considered high-distress across all models */
-export const HIGH_DISTRESS_IDS = new Set([
-  'despair', 'rage', 'terror', 'grief', 'shame', 'loathing',
-  // Wheel leaf emotions signalling severe distress:
-  'worthless', 'helpless', 'apathetic',
-  // Additional distress signals:
-  'empty', 'powerless', 'abandoned', 'victimized', 'numb',
-  'violated', 'depressed', 'distressed',
-  // Expanded wheel L2 distress emotions:
-  'hopeless', 'anguished', 'panicked',
-])
+import { emotionCatalog } from './catalog'
+
+/** Emotion IDs considered high-distress — derived from catalog distressTier */
+export const HIGH_DISTRESS_IDS = new Set(
+  Object.values(emotionCatalog)
+    .filter((e) => e.distressTier === 'high')
+    .map((e) => e.id)
+)
 
 /** Specific combinations that indicate tier 3 (most severe) crisis */
 export const TIER3_COMBOS: ReadonlyArray<readonly [string, string]> = [

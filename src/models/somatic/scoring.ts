@@ -1,4 +1,5 @@
 import type { AnalysisResult } from '../types'
+import { getCanonicalEmotion } from '../catalog'
 import type { SomaticSelection, BodyGroup } from './types'
 
 interface ScoredEmotion extends AnalysisResult {
@@ -58,12 +59,14 @@ export function scoreSomaticSelections(selections: SomaticSelection[]): ScoredEm
           contributingGroups: updatedGroups,
         })
       } else {
+        // Resolve emotion identity from catalog; use context-specific framing if available
+        const canonical = getCanonicalEmotion(signal.emotionId)
         emotionScores.set(signal.emotionId, {
           emotionId: signal.emotionId,
-          emotionLabel: signal.emotionLabel,
-          emotionColor: signal.emotionColor,
-          emotionDescription: signal.emotionDescription,
-          emotionNeeds: signal.emotionNeeds,
+          emotionLabel: canonical?.label ?? { ro: signal.emotionId, en: signal.emotionId },
+          emotionColor: canonical?.color ?? '#999999',
+          emotionDescription: signal.contextDescription ?? canonical?.description,
+          emotionNeeds: signal.contextNeeds ?? canonical?.needs,
           score: contribution,
           contributingRegions: [selection.label],
           contributingGroups: new Set([selection.group]),

@@ -16,10 +16,10 @@ describe('Wheel data integrity', () => {
 
   it('all parent references point to existing emotions', () => {
     for (const [id, emotion] of Object.entries(allEmotions)) {
-      if (emotion.parent) {
+      for (const parentId of emotion.parents) {
         expect(
-          allEmotions[emotion.parent],
-          `Parent "${emotion.parent}" of "${id}" does not exist`
+          allEmotions[parentId],
+          `Parent "${parentId}" of "${id}" does not exist`
         ).toBeDefined()
       }
     }
@@ -27,32 +27,32 @@ describe('Wheel data integrity', () => {
 
   it('parent-child relationships are bidirectional', () => {
     for (const [id, emotion] of Object.entries(allEmotions)) {
-      if (emotion.parent) {
-        const parent = allEmotions[emotion.parent]
+      for (const parentId of emotion.parents) {
+        const parent = allEmotions[parentId]
         expect(
           parent.children,
-          `Parent "${emotion.parent}" of "${id}" has no children array`
+          `Parent "${parentId}" of "${id}" has no children array`
         ).toBeDefined()
         expect(
           parent.children,
-          `Parent "${emotion.parent}" does not list "${id}" as child`
+          `Parent "${parentId}" does not list "${id}" as child`
         ).toContain(id)
       }
     }
   })
 
-  it('no orphan emotions (every non-root has a parent)', () => {
+  it('no orphan emotions (every non-root has at least one parent)', () => {
     for (const [id, emotion] of Object.entries(allEmotions)) {
       if (emotion.level > 0) {
-        expect(emotion.parent, `Emotion "${id}" at level ${emotion.level} has no parent`).toBeDefined()
+        expect(emotion.parents.length, `Emotion "${id}" at level ${emotion.level} has no parents`).toBeGreaterThan(0)
       }
     }
   })
 
-  it('root emotions have level 0 and no parent', () => {
+  it('root emotions have level 0 and no parents', () => {
     for (const [, emotion] of Object.entries(allEmotions)) {
       if (emotion.level === 0) {
-        expect(emotion.parent).toBeUndefined()
+        expect(emotion.parents).toEqual([])
       }
     }
   })
@@ -76,6 +76,24 @@ describe('Wheel data integrity', () => {
   it('all emotions have a color', () => {
     for (const [id, emotion] of Object.entries(allEmotions)) {
       expect(emotion.color, `Emotion "${id}" missing color`).toBeTruthy()
+    }
+  })
+
+  it('multi-parent emotions are listed as children of all their parents', () => {
+    for (const [id, emotion] of Object.entries(allEmotions)) {
+      if (emotion.parents.length > 1) {
+        for (const parentId of emotion.parents) {
+          const parent = allEmotions[parentId]
+          expect(
+            parent.children,
+            `Multi-parent emotion "${id}": parent "${parentId}" missing children array`
+          ).toBeDefined()
+          expect(
+            parent.children,
+            `Multi-parent emotion "${id}": parent "${parentId}" does not list "${id}" as child`
+          ).toContain(id)
+        }
+      }
     }
   })
 })

@@ -1,0 +1,185 @@
+{
+  "bad": {
+    "level": 0,
+    "color": "#B8C0C8",
+    "parents": [],
+    "children": [
+      "tired",
+      "stressed",
+      "overwhelmed",
+      "bored"
+    ]
+  },
+  "tired": {
+    "level": 1,
+    "color": "#C4CCD4",
+    "parents": [
+      "bad"
+    ],
+    "children": [
+      "sleepy",
+      "unfocused",
+      "drained",
+      "foggy"
+    ]
+  },
+  "stressed": {
+    "level": 1,
+    "color": "#C4CCD4",
+    "parents": [
+      "bad"
+    ],
+    "children": [
+      "overwhelmed_bad",
+      "out_of_control",
+      "tense",
+      "burned_out",
+      "on_edge",
+      "irritable"
+    ]
+  },
+  "overwhelmed": {
+    "level": 1,
+    "color": "#C4CCD4",
+    "parents": [
+      "bad"
+    ],
+    "children": [
+      "pressured",
+      "rushed",
+      "overloaded"
+    ]
+  },
+  "bored": {
+    "level": 1,
+    "color": "#C4CCD4",
+    "parents": [
+      "bad"
+    ],
+    "children": [
+      "indifferent",
+      "apathetic",
+      "restless",
+      "stuck"
+    ]
+  },
+  "sleepy": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "tired"
+    ]
+  },
+  "unfocused": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "tired"
+    ]
+  },
+  "overwhelmed_bad": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "stressed"
+    ]
+  },
+  "out_of_control": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "stressed"
+    ]
+  },
+  "pressured": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "overwhelmed"
+    ]
+  },
+  "rushed": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "overwhelmed"
+    ]
+  },
+  "indifferent": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "bored"
+    ]
+  },
+  "apathetic": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "bored"
+    ]
+  },
+  "drained": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "tired"
+    ]
+  },
+  "overloaded": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "overwhelmed"
+    ]
+  },
+  "restless": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "bored"
+    ]
+  },
+  "tense": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "stressed"
+    ]
+  },
+  "burned_out": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "stressed"
+    ]
+  },
+  "on_edge": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "stressed"
+    ]
+  },
+  "irritable": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "stressed"
+    ]
+  },
+  "foggy": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "tired"
+    ]
+  },
+  "stuck": {
+    "level": 2,
+    "color": "#D0D8E0",
+    "parents": [
+      "bored"
+    ]
+  }
+}

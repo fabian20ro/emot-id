@@ -1,0 +1,395 @@
+{
+  "happy": {
+    "level": 0,
+    "color": "#FFE066",
+    "parents": [],
+    "children": [
+      "playful",
+      "content",
+      "interested",
+      "proud",
+      "accepted",
+      "powerful",
+      "peaceful",
+      "trusting",
+      "optimistic"
+    ]
+  },
+  "playful": {
+    "level": 1,
+    "color": "#FFE57F",
+    "parents": [
+      "happy"
+    ],
+    "children": [
+      "aroused",
+      "cheeky",
+      "silly",
+      "delighted",
+      "amused"
+    ]
+  },
+  "aroused": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "playful"
+    ]
+  },
+  "cheeky": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "playful"
+    ]
+  },
+  "silly": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "playful"
+    ]
+  },
+  "content": {
+    "level": 1,
+    "color": "#FFE57F",
+    "parents": [
+      "happy"
+    ],
+    "children": [
+      "free",
+      "joyful",
+      "serene",
+      "satisfied",
+      "blessed"
+    ]
+  },
+  "free": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "content"
+    ]
+  },
+  "joyful": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "content"
+    ]
+  },
+  "serene": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "content"
+    ]
+  },
+  "interested": {
+    "level": 1,
+    "color": "#FFE57F",
+    "parents": [
+      "happy"
+    ],
+    "children": [
+      "curious",
+      "inquisitive",
+      "fascinated",
+      "absorbed"
+    ]
+  },
+  "curious": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "interested"
+    ]
+  },
+  "inquisitive": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "interested"
+    ]
+  },
+  "proud": {
+    "level": 1,
+    "color": "#FFE57F",
+    "parents": [
+      "happy"
+    ],
+    "children": [
+      "successful",
+      "confident",
+      "accomplished",
+      "worthy"
+    ]
+  },
+  "successful": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "proud"
+    ]
+  },
+  "confident": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "proud"
+    ]
+  },
+  "accomplished": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "proud"
+    ]
+  },
+  "accepted": {
+    "level": 1,
+    "color": "#FFE57F",
+    "parents": [
+      "happy"
+    ],
+    "children": [
+      "respected",
+      "valued",
+      "included"
+    ]
+  },
+  "respected": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "accepted"
+    ]
+  },
+  "valued": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "accepted"
+    ]
+  },
+  "included": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "accepted"
+    ]
+  },
+  "delighted": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "playful"
+    ]
+  },
+  "amused": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "playful"
+    ]
+  },
+  "satisfied": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "content"
+    ]
+  },
+  "blessed": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "content"
+    ]
+  },
+  "fascinated": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "interested"
+    ]
+  },
+  "absorbed": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "interested"
+    ]
+  },
+  "worthy": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "proud"
+    ]
+  },
+  "powerful": {
+    "level": 1,
+    "color": "#FFE57F",
+    "parents": [
+      "happy"
+    ],
+    "children": [
+      "courageous",
+      "creative",
+      "determined",
+      "brave"
+    ]
+  },
+  "courageous": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "powerful"
+    ]
+  },
+  "creative": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "powerful"
+    ]
+  },
+  "determined": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "powerful"
+    ]
+  },
+  "peaceful": {
+    "level": 1,
+    "color": "#FFE57F",
+    "parents": [
+      "happy"
+    ],
+    "children": [
+      "loving",
+      "thankful",
+      "relief",
+      "harmonious",
+      "tender"
+    ]
+  },
+  "loving": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "peaceful"
+    ]
+  },
+  "thankful": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "peaceful"
+    ]
+  },
+  "relief": {
+    "level": 2,
+    "color": "#81C784",
+    "parents": [
+      "peaceful"
+    ]
+  },
+  "harmonious": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "peaceful"
+    ]
+  },
+  "trusting": {
+    "level": 1,
+    "color": "#FFE57F",
+    "parents": [
+      "happy"
+    ],
+    "children": [
+      "sensitive",
+      "intimate",
+      "compassion",
+      "safe"
+    ]
+  },
+  "sensitive": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "trusting"
+    ]
+  },
+  "intimate": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "trusting"
+    ]
+  },
+  "compassion": {
+    "level": 2,
+    "color": "#66BB6A",
+    "parents": [
+      "trusting"
+    ]
+  },
+  "optimistic": {
+    "level": 1,
+    "color": "#FFE57F",
+    "parents": [
+      "happy"
+    ],
+    "children": [
+      "inspired",
+      "open",
+      "hopeful"
+    ]
+  },
+  "inspired": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "optimistic"
+    ]
+  },
+  "open": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "optimistic"
+    ]
+  },
+  "hopeful": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "optimistic"
+    ]
+  },
+  "brave": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "powerful"
+    ]
+  },
+  "tender": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "peaceful"
+    ]
+  },
+  "safe": {
+    "level": 2,
+    "color": "#FFF0A0",
+    "parents": [
+      "trusting"
+    ]
+  }
+}

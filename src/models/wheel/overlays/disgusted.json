@@ -1,0 +1,162 @@
+{
+  "disgusted": {
+    "level": 0,
+    "color": "#C888B8",
+    "parents": [],
+    "children": [
+      "disapproving",
+      "disappointed_disg",
+      "awful",
+      "repelled"
+    ]
+  },
+  "disapproving": {
+    "level": 1,
+    "color": "#D49ECA",
+    "parents": [
+      "disgusted"
+    ],
+    "children": [
+      "judgmental",
+      "embarrassed",
+      "contemptuous"
+    ]
+  },
+  "disappointed_disg": {
+    "level": 1,
+    "color": "#D49ECA",
+    "parents": [
+      "disgusted"
+    ],
+    "children": [
+      "appalled",
+      "revolted",
+      "sickened",
+      "scandalized"
+    ]
+  },
+  "awful": {
+    "level": 1,
+    "color": "#D49ECA",
+    "parents": [
+      "disgusted"
+    ],
+    "children": [
+      "nauseated",
+      "detestable",
+      "self_loathing",
+      "tainted",
+      "repugnant"
+    ]
+  },
+  "repelled": {
+    "level": 1,
+    "color": "#D49ECA",
+    "parents": [
+      "disgusted"
+    ],
+    "children": [
+      "hesitant",
+      "horrified",
+      "repulsed"
+    ]
+  },
+  "judgmental": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "disapproving"
+    ]
+  },
+  "appalled": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "disappointed_disg"
+    ]
+  },
+  "revolted": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "disappointed_disg"
+    ]
+  },
+  "nauseated": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "awful"
+    ]
+  },
+  "detestable": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "awful"
+    ]
+  },
+  "hesitant": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "repelled"
+    ]
+  },
+  "horrified": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "repelled"
+    ]
+  },
+  "contemptuous": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "disapproving"
+    ]
+  },
+  "repulsed": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "repelled"
+    ]
+  },
+  "sickened": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "disappointed_disg"
+    ]
+  },
+  "scandalized": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "disappointed_disg"
+    ]
+  },
+  "self_loathing": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "awful"
+    ]
+  },
+  "tainted": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "awful"
+    ]
+  },
+  "repugnant": {
+    "level": 2,
+    "color": "#E0B4D8",
+    "parents": [
+      "awful"
+    ]
+  }
+}

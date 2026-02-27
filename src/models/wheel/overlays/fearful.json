@@ -1,0 +1,264 @@
+{
+  "fearful": {
+    "level": 0,
+    "color": "#88C8A0",
+    "parents": [],
+    "children": [
+      "scared",
+      "anxious",
+      "insecure",
+      "weak",
+      "rejected",
+      "threatened"
+    ]
+  },
+  "scared": {
+    "level": 1,
+    "color": "#9CD4B0",
+    "parents": [
+      "fearful"
+    ],
+    "children": [
+      "helpless",
+      "frightened",
+      "panicked",
+      "dread",
+      "paralyzed"
+    ]
+  },
+  "helpless": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "scared",
+      "vulnerable"
+    ]
+  },
+  "frightened": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "scared"
+    ]
+  },
+  "panicked": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "scared"
+    ]
+  },
+  "anxious": {
+    "level": 1,
+    "color": "#9CD4B0",
+    "parents": [
+      "fearful"
+    ],
+    "children": [
+      "overwhelmed_fear",
+      "worried",
+      "apprehensive",
+      "obsessive"
+    ]
+  },
+  "overwhelmed_fear": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "anxious"
+    ]
+  },
+  "worried": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "anxious"
+    ]
+  },
+  "apprehensive": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "anxious"
+    ]
+  },
+  "insecure": {
+    "level": 1,
+    "color": "#9CD4B0",
+    "parents": [
+      "fearful"
+    ],
+    "children": [
+      "inadequate",
+      "inferior",
+      "self_doubting",
+      "self_conscious"
+    ]
+  },
+  "inadequate": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "insecure"
+    ]
+  },
+  "self_doubting": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "insecure"
+    ]
+  },
+  "dread": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "scared"
+    ]
+  },
+  "paralyzed": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "scared"
+    ]
+  },
+  "obsessive": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "anxious"
+    ]
+  },
+  "self_conscious": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "insecure"
+    ]
+  },
+  "weak": {
+    "level": 1,
+    "color": "#9CD4B0",
+    "parents": [
+      "fearful"
+    ],
+    "children": [
+      "worthless",
+      "insignificant",
+      "small"
+    ]
+  },
+  "worthless": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "weak"
+    ]
+  },
+  "insignificant": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "weak"
+    ]
+  },
+  "rejected": {
+    "level": 1,
+    "color": "#9CD4B0",
+    "parents": [
+      "fearful"
+    ],
+    "children": [
+      "excluded",
+      "persecuted",
+      "unwanted",
+      "alienated"
+    ]
+  },
+  "excluded": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "rejected"
+    ]
+  },
+  "persecuted": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "rejected"
+    ]
+  },
+  "unwanted": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "rejected"
+    ]
+  },
+  "threatened": {
+    "level": 1,
+    "color": "#9CD4B0",
+    "parents": [
+      "fearful"
+    ],
+    "children": [
+      "nervous",
+      "exposed",
+      "on_guard",
+      "suspicious",
+      "trapped"
+    ]
+  },
+  "nervous": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "threatened"
+    ]
+  },
+  "exposed": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "threatened",
+      "vulnerable"
+    ]
+  },
+  "on_guard": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "threatened"
+    ]
+  },
+  "small": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "weak"
+    ]
+  },
+  "alienated": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "rejected"
+    ]
+  },
+  "suspicious": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "threatened"
+    ]
+  },
+  "trapped": {
+    "level": 2,
+    "color": "#B0E0C0",
+    "parents": [
+      "threatened"
+    ]
+  }
+}

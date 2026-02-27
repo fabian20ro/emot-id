@@ -1,0 +1,47 @@
+{
+  "morbidness": {
+    "color": "#C8A0C8",
+    "category": "tertiary_dyad",
+    "intensity": 0.4,
+    "spawns": [
+      "disgust",
+      "joy",
+      "boredom",
+      "serenity"
+    ],
+    "components": [
+      "disgust",
+      "joy"
+    ]
+  },
+  "unbelief": {
+    "color": "#A898C8",
+    "category": "tertiary_dyad",
+    "intensity": 0.4,
+    "spawns": [
+      "surprise",
+      "disgust",
+      "distraction",
+      "boredom"
+    ],
+    "components": [
+      "surprise",
+      "disgust"
+    ]
+  },
+  "ruthlessness": {
+    "color": "#FF7850",
+    "category": "tertiary_dyad",
+    "intensity": 0.7,
+    "spawns": [
+      "anger",
+      "anticipation",
+      "rage",
+      "vigilance"
+    ],
+    "components": [
+      "rage",
+      "vigilance"
+    ]
+  }
+}

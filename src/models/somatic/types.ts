@@ -15,14 +15,13 @@ export type SensationType =
 
 export interface EmotionSignal {
   emotionId: string
-  emotionLabel: { ro: string; en: string }
-  emotionColor: string
-  emotionDescription?: { ro: string; en: string }
-  emotionNeeds?: { ro: string; en: string }
   sensationType: SensationType
   minIntensity: 1 | 2 | 3
   weight: number
   source: 'Nummenmaa2014' | 'clinical' | 'interpolated'
+  /** Body-region-specific framing (not duplication of canonical description) */
+  contextDescription?: { ro: string; en: string }
+  contextNeeds?: { ro: string; en: string }
 }
 
 export interface SomaticRegion extends BaseEmotion {

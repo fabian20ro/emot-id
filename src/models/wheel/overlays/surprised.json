@@ -1,0 +1,169 @@
+{
+  "surprised": {
+    "level": 0,
+    "color": "#A8D8B0",
+    "parents": [],
+    "children": [
+      "startled",
+      "confused",
+      "amazed",
+      "excited"
+    ]
+  },
+  "startled": {
+    "level": 1,
+    "color": "#B8E0BE",
+    "parents": [
+      "surprised"
+    ],
+    "children": [
+      "shocked",
+      "dismayed",
+      "jolted"
+    ]
+  },
+  "confused": {
+    "level": 1,
+    "color": "#B8E0BE",
+    "parents": [
+      "surprised"
+    ],
+    "children": [
+      "disillusioned",
+      "perplexed",
+      "disoriented"
+    ]
+  },
+  "amazed": {
+    "level": 1,
+    "color": "#B8E0BE",
+    "parents": [
+      "surprised"
+    ],
+    "children": [
+      "astonished",
+      "awe",
+      "impressed",
+      "speechless",
+      "moved"
+    ]
+  },
+  "excited": {
+    "level": 1,
+    "color": "#B8E0BE",
+    "parents": [
+      "surprised"
+    ],
+    "children": [
+      "eager",
+      "energetic",
+      "thrilled",
+      "electrified"
+    ]
+  },
+  "shocked": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "startled"
+    ]
+  },
+  "dismayed": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "startled"
+    ]
+  },
+  "disillusioned": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "confused"
+    ]
+  },
+  "perplexed": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "confused"
+    ]
+  },
+  "astonished": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "amazed"
+    ]
+  },
+  "awe": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "amazed"
+    ]
+  },
+  "eager": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "excited"
+    ]
+  },
+  "energetic": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "excited"
+    ]
+  },
+  "jolted": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "startled"
+    ]
+  },
+  "disoriented": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "confused"
+    ]
+  },
+  "thrilled": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "excited"
+    ]
+  },
+  "impressed": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "amazed"
+    ]
+  },
+  "speechless": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "amazed"
+    ]
+  },
+  "moved": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "amazed"
+    ]
+  },
+  "electrified": {
+    "level": 2,
+    "color": "#C8E8CC",
+    "parents": [
+      "excited"
+    ]
+  }
+}
