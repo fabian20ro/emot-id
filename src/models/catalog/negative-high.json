@@ -1,0 +1,200 @@
+{
+  "anxiety": {
+    "id": "anxiety",
+    "label": {
+      "ro": "anxietate",
+      "en": "anxiety"
+    },
+    "description": {
+      "ro": "Anxietatea este diada anticiparii si fricii — o stare de alerta orientata catre viitor in care te pregatesti pentru pericole care inca nu s-au materializat. Combina dorinta de control cu frica de necunoscut. Anxietatea moderata te ajuta sa performezi; anxietatea excesiva te paralyzeaza. Corpul tau reactioneaza ca si cum pericolul este real, chiar cand este doar imaginat.",
+      "en": "Anxiety is the dyad of anticipation and fear — a future-oriented state of alertness where you prepare for dangers that haven't materialized yet. It combines the desire for control with fear of the unknown. Moderate anxiety helps you perform; excessive anxiety paralyzes you. Your body reacts as if the danger is real, even when it is only imagined."
+    },
+    "needs": {
+      "ro": "ancorare, respiratie si prezenta",
+      "en": "grounding, breath, and present focus"
+    },
+    "color": "#A8D8A0"
+  },
+  "rage": {
+    "id": "rage",
+    "label": {
+      "ro": "mânie",
+      "en": "rage"
+    },
+    "description": {
+      "ro": "Mania este forma cea mai intensa a furiei — o explozie emotionala in care simti ca trebuie sa distrugi obstacolul, indiferent de consecinte. Corpul se inunda cu adrenalina, gandirea se ingusteaza si capacitatea de empatie dispare temporar. Mania cronica indica adesea rani vechi nerezolvate si necesita un spatiu sigur pentru a fi explorata si integrata.",
+      "en": "Rage is the most intense form of anger — an emotional explosion where you feel you must destroy the obstacle, regardless of consequences. The body floods with adrenaline, thinking narrows, and the capacity for empathy temporarily disappears. Chronic rage often indicates unresolved old wounds and requires a safe space to be explored and integrated."
+    },
+    "needs": {
+      "ro": "containment si eliberare sigura",
+      "en": "containment and safe release"
+    },
+    "color": "#E74C3C",
+    "distressTier": "high"
+  },
+  "terror": {
+    "id": "terror",
+    "label": {
+      "ro": "teroare",
+      "en": "terror"
+    },
+    "description": {
+      "ro": "Teroarea este forma extrema a fricii — o stare de panica totala in care corpul preia controlul si mintea rationala se deconecteaza. Sistemul nervos intra in suprasolicitare, pregatindu-te pentru supravietuire imediata. Este raspunsul la amenintari percepute ca fiind de viata si de moarte, chiar daca uneori amenintarea nu este reala.",
+      "en": "Terror is the extreme form of fear — a state of total panic where the body takes control and the rational mind disconnects. The nervous system enters overload, preparing you for immediate survival. It is the response to threats perceived as life-or-death, even when sometimes the threat is not real."
+    },
+    "needs": {
+      "ro": "siguranta imediata si co-reglare",
+      "en": "immediate safety and co-regulation"
+    },
+    "color": "#68C898",
+    "distressTier": "high"
+  },
+  "grief": {
+    "id": "grief",
+    "label": {
+      "ro": "durere",
+      "en": "grief"
+    },
+    "description": {
+      "ro": "Durerea este forma cea mai intensa a tristetii — o suferinta profunda care apare dupa pierderi majore. Corpul si mintea sunt complet absorbite de absenta a ceea ce a fost. Durerea nu se vindeca liniar, ci vine in valuri. Nu exista un mod corect de a suferi — procesul tau este unic, si vindecarea inseamna integrare, nu uitare.",
+      "en": "Grief is the most intense form of sadness — a profound suffering that arises after major losses. Body and mind are completely absorbed by the absence of what was. Grief does not heal linearly, but comes in waves. There is no correct way to grieve — your process is unique, and healing means integration, not forgetting."
+    },
+    "needs": {
+      "ro": "sprijin, timp si martori",
+      "en": "support, time, and witness"
+    },
+    "color": "#3498DB",
+    "distressTier": "high"
+  },
+  "shame": {
+    "id": "shame",
+    "label": {
+      "ro": "rușine",
+      "en": "shame"
+    },
+    "description": {
+      "ro": "Rusinea este diada secundara a fricii si dezgustului — convingerea dureroasa ca nu doar ai facut ceva gresit, ci ca esti ceva gresit. Spre deosebire de vinovatie, care priveste comportamentul, rusinea ataca identitatea. Este una dintre cele mai devastatoare emotii, care te face sa vrei sa dispari. Vindecarea rusinii necesita conexiune umana si vulnerabilitate deliberata.",
+      "en": "Shame is the secondary dyad of fear and disgust — the painful conviction that not only did you do something wrong, but that you are something wrong. Unlike guilt, which targets behavior, shame attacks identity. It is one of the most devastating emotions, making you want to disappear. Healing shame requires human connection and deliberate vulnerability."
+    },
+    "needs": {
+      "ro": "conexiune si acceptare neconditionata",
+      "en": "connection and unconditional acceptance"
+    },
+    "color": "#90C8A8",
+    "distressTier": "high"
+  },
+  "despair": {
+    "id": "despair",
+    "label": {
+      "ro": "disperare",
+      "en": "despair"
+    },
+    "description": {
+      "ro": "Disperarea este diada secundara a fricii si tristetii — o stare in care pierderea se combina cu teroarea ca nimic nu se va mai imbunatati. Este punctul in care speranta pare sa dispara complet. Disperarea este un semnal de alarma ca ai nevoie de sprijin — nu trebuie traversata singur. Chiar si in cele mai intunecate momente, conexiunea umana poate reaprinde speranta.",
+      "en": "Despair is the secondary dyad of fear and sadness — a state where loss combines with the terror that nothing will ever improve. It is the point where hope seems to disappear completely. Despair is an alarm signal that you need support — it should not be traversed alone. Even in the darkest moments, human connection can reignite hope."
+    },
+    "needs": {
+      "ro": "sprijin uman si ajutor profesional",
+      "en": "human support and professional help"
+    },
+    "color": "#68A8B8",
+    "distressTier": "high"
+  },
+  "angry": {
+    "id": "angry",
+    "label": {
+      "ro": "Furios",
+      "en": "Angry"
+    },
+    "description": {
+      "ro": "Furia este o emotie puternica de mobilizare care apare cand percepi nedreptate, incalcarea granitelor sau frustrarea nevoilor tale fundamentale. Este energia care te impinge sa schimbi ceea ce este gresit. Furia nu este distructiva in sine — modul in care o exprimi face diferenta. Furia ascultata si canalizata devine o forta de transformare.",
+      "en": "Anger is a powerful mobilizing emotion that arises when you perceive injustice, boundary violation, or the frustration of your fundamental needs. It is the energy that pushes you to change what is wrong. Anger is not destructive in itself — how you express it makes the difference. Anger listened to and channeled becomes a force for transformation."
+    },
+    "needs": {
+      "ro": "limite si actiune",
+      "en": "boundaries and action"
+    },
+    "color": "#E88888"
+  },
+  "frustrated": {
+    "id": "frustrated",
+    "label": {
+      "ro": "Frustrat",
+      "en": "Frustrated"
+    },
+    "description": {
+      "ro": "Frustrarea apare cand un obstacol sta intre tine si obiectivul tau — vrei sa avansezi dar nu poti. Este furia blocata de neputinta. Frustrarea tolerate te invata rabdare si creativitate in gasirea solutiilor alternative. Frustrarea netolerata poate escalada in furie sau poate duce la renuntare prematura.",
+      "en": "Frustration arises when an obstacle stands between you and your goal — you want to advance but cannot. It is anger blocked by helplessness. Tolerated frustration teaches you patience and creativity in finding alternative solutions. Untolerated frustration can escalate into rage or lead to premature giving up."
+    },
+    "needs": {
+      "ro": "o abordare noua si rabdare",
+      "en": "a new approach and patience"
+    },
+    "color": "#EE9E9E"
+  },
+  "stressed": {
+    "id": "stressed",
+    "label": {
+      "ro": "Stresat",
+      "en": "Stressed"
+    },
+    "description": {
+      "ro": "Stresul este raspunsul organismului la cerinte care depasesc resursele percepute. Corpul se activeaza pentru performanta, dar daca activarea este cronica, sistemele se uzeaza. Stresul moderat poate fi motivant; stresul cronic erodeaza sanatatea fizica si mentala. Gestionarea stresului incepe cu recunoasterea limitelor si prioritizarea nevoilor autentice.",
+      "en": "Stress is the body's response to demands that exceed perceived resources. The body activates for performance, but if activation is chronic, systems wear down. Moderate stress can be motivating; chronic stress erodes physical and mental health. Managing stress begins with recognizing limits and prioritizing authentic needs."
+    },
+    "needs": {
+      "ro": "usurare si limite",
+      "en": "relief and boundaries"
+    },
+    "color": "#C4CCD4"
+  },
+  "tense": {
+    "id": "tense",
+    "label": {
+      "ro": "Tensionat",
+      "en": "Tense"
+    },
+    "description": {
+      "ro": "Tensiunea este stresul inscris in corp — muschii se incordeaza, maxilarul se strange, umerii se ridica si respiratia devine superficiala. Este semnalul fizic ca sistemul tau nervos este in alerta prelungita fara descarcare. Tensiunea cronica poate duce la dureri de cap, de spate si la probleme digestive. Corpul tau iti cere sa te opresti, sa respiri adanc si sa eliberezi constient ceea ce retii. Relaxarea nu este un lux, ci o necesitate fiziologica.",
+      "en": "Tension is stress inscribed in the body — muscles tighten, jaw clenches, shoulders rise, and breathing becomes shallow. It is the physical signal that your nervous system is on prolonged alert without discharge. Chronic tension can lead to headaches, back pain, and digestive problems. Your body is asking you to stop, breathe deeply, and consciously release what you are holding. Relaxation is not a luxury, but a physiological necessity."
+    },
+    "needs": {
+      "ro": "relaxare si eliberare corporala",
+      "en": "relaxation and bodily release"
+    },
+    "color": "#D0D8E0"
+  },
+  "nervous": {
+    "id": "nervous",
+    "label": {
+      "ro": "Nervos",
+      "en": "Nervous"
+    },
+    "description": {
+      "ro": "Nervozitatea este o stare de agitatie interioara — corpul este tensionat, gandurile alearga si te simti pe marginea unei explozii sau a unui colaps. Este semnalul ca sistemul nervos este suprasolicitat si are nevoie de reglare. Tehnicile de calmare somatica — respiratia profunda, miscarea fizica, contactul cu natura — pot ajuta la resetarea sistemului.",
+      "en": "Nervousness is a state of inner agitation — the body is tense, thoughts race, and you feel on the edge of an explosion or collapse. It is the signal that the nervous system is overloaded and needs regulation. Somatic calming techniques — deep breathing, physical movement, contact with nature — can help reset the system."
+    },
+    "needs": {
+      "ro": "calmare somatica si miscare",
+      "en": "somatic calming and movement"
+    },
+    "color": "#B0E0C0"
+  },
+  "distressed": {
+    "id": "distressed",
+    "label": {
+      "ro": "tulburat",
+      "en": "distressed"
+    },
+    "description": {
+      "ro": "Tulburarea este o suferinta activa — un semnal ca ceva important este amenintat si necesita atentie imediata.",
+      "en": "Distress is active suffering — a signal that something important is threatened and needs immediate attention."
+    },
+    "needs": {
+      "ro": "sprijin si compassiune",
+      "en": "support and compassion"
+    },
+    "color": "#B71C1C",
+    "distressTier": "high"
+  }
+}

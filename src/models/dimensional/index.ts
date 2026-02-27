@@ -1,9 +1,21 @@
 import type { EmotionModel, ModelState, SelectionEffect, AnalysisResult } from '../types'
 import { MODEL_IDS } from '../constants'
+import { getCanonicalEmotion } from '../catalog'
 import type { DimensionalEmotion } from './types'
-import emotionsData from './data.json'
+import overlayData from './overlay.json'
 
-const allEmotions = emotionsData as Record<string, DimensionalEmotion>
+const allEmotions: Record<string, DimensionalEmotion> = {}
+for (const [id, overlay] of Object.entries(overlayData)) {
+  const base = getCanonicalEmotion(id)
+  if (!base) throw new Error(`Dimensional references unknown emotion: ${id}`)
+  allEmotions[id] = {
+    ...base,
+    color: overlay.color,
+    valence: overlay.valence,
+    arousal: overlay.arousal,
+    quadrant: overlay.quadrant as DimensionalEmotion['quadrant'],
+  }
+}
 const ALL_IDS = Object.keys(allEmotions)
 
 export function findNearest(

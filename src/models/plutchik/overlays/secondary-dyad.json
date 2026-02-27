@@ -1,0 +1,197 @@
+{
+  "guilt": {
+    "color": "#C8D888",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "joy",
+      "fear",
+      "serenity",
+      "apprehension"
+    ],
+    "components": [
+      "joy",
+      "fear"
+    ]
+  },
+  "bittersweetness": {
+    "color": "#C8A8D8",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "joy",
+      "sadness",
+      "serenity",
+      "pensiveness"
+    ],
+    "components": [
+      "joy",
+      "sadness"
+    ]
+  },
+  "curiosity": {
+    "color": "#88D8D8",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "trust",
+      "surprise",
+      "acceptance",
+      "amazement"
+    ],
+    "components": [
+      "trust",
+      "surprise"
+    ]
+  },
+  "shame": {
+    "color": "#90C8A8",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "fear",
+      "disgust",
+      "apprehension",
+      "boredom"
+    ],
+    "components": [
+      "fear",
+      "disgust"
+    ]
+  },
+  "outrage": {
+    "color": "#E87878",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "surprise",
+      "anger",
+      "amazement",
+      "rage"
+    ],
+    "components": [
+      "surprise",
+      "anger"
+    ]
+  },
+  "envy": {
+    "color": "#7898C8",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "sadness",
+      "anger",
+      "grief",
+      "annoyance"
+    ],
+    "components": [
+      "sadness",
+      "anger"
+    ]
+  },
+  "cynicism": {
+    "color": "#C898A8",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "disgust",
+      "anticipation",
+      "boredom",
+      "interest"
+    ],
+    "components": [
+      "disgust",
+      "anticipation"
+    ]
+  },
+  "pride": {
+    "color": "#FFB868",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "anger",
+      "joy",
+      "ecstasy",
+      "annoyance"
+    ],
+    "components": [
+      "anger",
+      "joy"
+    ]
+  },
+  "sentimentality": {
+    "color": "#A8C8D8",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "trust",
+      "sadness",
+      "acceptance",
+      "pensiveness"
+    ],
+    "components": [
+      "trust",
+      "sadness"
+    ]
+  },
+  "despair": {
+    "color": "#68A8B8",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "fear",
+      "sadness",
+      "apprehension",
+      "grief"
+    ],
+    "components": [
+      "fear",
+      "sadness"
+    ]
+  },
+  "dominance": {
+    "color": "#D89888",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "anger",
+      "trust",
+      "annoyance",
+      "admiration"
+    ],
+    "components": [
+      "anger",
+      "trust"
+    ]
+  },
+  "delight": {
+    "color": "#FFE898",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "joy",
+      "surprise",
+      "serenity",
+      "amazement"
+    ],
+    "components": [
+      "joy",
+      "surprise"
+    ]
+  },
+  "pessimism": {
+    "color": "#8898C8",
+    "category": "secondary_dyad",
+    "intensity": 0.5,
+    "spawns": [
+      "sadness",
+      "anticipation",
+      "pensiveness",
+      "interest"
+    ],
+    "components": [
+      "sadness",
+      "anticipation"
+    ]
+  }
+}

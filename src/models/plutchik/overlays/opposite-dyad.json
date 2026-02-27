@@ -1,0 +1,47 @@
+{
+  "ambivalence": {
+    "color": "#B8C8A8",
+    "category": "opposite_dyad",
+    "intensity": 0.4,
+    "spawns": [
+      "trust",
+      "disgust",
+      "acceptance",
+      "boredom"
+    ],
+    "components": [
+      "trust",
+      "disgust"
+    ]
+  },
+  "frozenness": {
+    "color": "#78B898",
+    "category": "opposite_dyad",
+    "intensity": 0.4,
+    "spawns": [
+      "fear",
+      "anger",
+      "apprehension",
+      "annoyance"
+    ],
+    "components": [
+      "fear",
+      "anger"
+    ]
+  },
+  "confusion": {
+    "color": "#98C8D8",
+    "category": "opposite_dyad",
+    "intensity": 0.4,
+    "spawns": [
+      "surprise",
+      "anticipation",
+      "distraction",
+      "interest"
+    ],
+    "components": [
+      "surprise",
+      "anticipation"
+    ]
+  }
+}

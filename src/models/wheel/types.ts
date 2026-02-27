@@ -2,6 +2,6 @@ import type { BaseEmotion } from '../types'
 
 export interface WheelEmotion extends BaseEmotion {
   level: number
-  parent?: string
+  parents: string[]
   children?: string[]
 }

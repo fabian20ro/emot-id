@@ -2,10 +2,10 @@ import { useMemo, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import { useFocusTrap } from '../hooks/useFocusTrap'
-import { getModel } from '../models/registry'
-import { MODEL_IDS } from '../models/constants'
 import { ModalShell } from './ModalShell'
-import type { BaseEmotion, AnalysisResult } from '../models/types'
+import { getCanonicalEmotion } from '../models/catalog'
+import type { CanonicalEmotion } from '../models/catalog/types'
+import type { AnalysisResult, BaseEmotion } from '../models/types'
 
 const QUICK_MODEL_ID = 'quick-check-in'
 const QUICK_EMOTION_IDS = [
@@ -21,26 +21,9 @@ const QUICK_EMOTION_IDS = [
   'overwhelmed',
 ] as const
 
-const SOURCE_MODELS = [MODEL_IDS.WHEEL, MODEL_IDS.PLUTCHIK, MODEL_IDS.DIMENSIONAL, MODEL_IDS.SOMATIC]
-
-const QUICK_FALLBACKS: Record<string, BaseEmotion> = {
-  numb: { id: 'numb', label: { ro: 'amorteala', en: 'numb' }, color: '#6B7280' },
-  overwhelmed: { id: 'overwhelmed', label: { ro: 'coplesit', en: 'overwhelmed' }, color: '#8B5CF6' },
-}
-
-function resolveEmotionById(id: string): BaseEmotion | null {
-  for (const modelId of SOURCE_MODELS) {
-    const model = getModel(modelId)
-    if (!model) continue
-    const emotion = model.allEmotions[id]
-    if (emotion) return emotion
-  }
-  return QUICK_FALLBACKS[id] ?? null
-}
-
 const QUICK_EMOTIONS = QUICK_EMOTION_IDS
-  .map((id) => resolveEmotionById(id))
-  .filter((e): e is BaseEmotion => e !== null)
+  .map((id) => getCanonicalEmotion(id))
+  .filter((e): e is CanonicalEmotion => e !== undefined)
 
 interface QuickCheckInProps {
   isOpen: boolean
@@ -80,8 +63,6 @@ export function QuickCheckIn({ isOpen, onClose, onComplete }: QuickCheckInProps)
       color: emotion.color,
       description: emotion.description,
       needs: emotion.needs,
-      valence: (emotion as { valence?: number }).valence,
-      arousal: (emotion as { arousal?: number }).arousal,
     }))
     onComplete(selectedEmotions, results)
     setSelectedIds([])

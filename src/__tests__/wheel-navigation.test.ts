@@ -77,14 +77,14 @@ describe('Wheel breadcrumb path derivation', () => {
     const visibleIds = Array.from(effect.newState.visibleEmotionIds.keys())
     // Pick any visible emotion and walk its parent chain
     const firstChild = e[visibleIds[0]]
-    expect(firstChild.parent).toBe('happy')
+    expect(firstChild.parents[0]).toBe('happy')
 
     // Build path by walking parents
     const path: string[] = []
     let current = firstChild
-    while (current?.parent) {
-      path.push(current.parent)
-      current = e[current.parent]
+    while (current?.parents[0]) {
+      path.push(current.parents[0])
+      current = e[current.parents[0]]
     }
     path.reverse()
     expect(path).toEqual(['happy'])
@@ -101,9 +101,9 @@ describe('Wheel breadcrumb path derivation', () => {
     // Build path
     const path: string[] = []
     let current = firstLeaf
-    while (current?.parent) {
-      path.push(current.parent)
-      current = e[current.parent]
+    while (current?.parents[0]) {
+      path.push(current.parents[0])
+      current = e[current.parents[0]]
     }
     path.reverse()
     expect(path).toEqual(['happy', 'playful'])

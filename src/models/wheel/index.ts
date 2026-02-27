@@ -1,31 +1,44 @@
 import type { EmotionModel, ModelState, SelectionEffect, AnalysisResult } from '../types'
 import { MODEL_IDS } from '../constants'
+import { getCanonicalEmotion } from '../catalog'
 import type { WheelEmotion } from './types'
-import happy1Data from './data/happy-1.json'
-import happy2Data from './data/happy-2.json'
-import surprisedData from './data/surprised.json'
-import badData from './data/bad.json'
-import fearful1Data from './data/fearful-1.json'
-import fearful2Data from './data/fearful-2.json'
-import angry1Data from './data/angry-1.json'
-import angry2Data from './data/angry-2.json'
-import disgustedData from './data/disgusted.json'
-import sad1Data from './data/sad-1.json'
-import sad2Data from './data/sad-2.json'
+import happyOverlay from './overlays/happy.json'
+import surprisedOverlay from './overlays/surprised.json'
+import badOverlay from './overlays/bad.json'
+import fearfulOverlay from './overlays/fearful.json'
+import angryOverlay from './overlays/angry.json'
+import disgustedOverlay from './overlays/disgusted.json'
+import sadOverlay from './overlays/sad.json'
 
-const allEmotions = {
-  ...happy1Data,
-  ...happy2Data,
-  ...surprisedData,
-  ...badData,
-  ...fearful1Data,
-  ...fearful2Data,
-  ...angry1Data,
-  ...angry2Data,
-  ...disgustedData,
-  ...sad1Data,
-  ...sad2Data,
-} as Record<string, WheelEmotion>
+interface WheelOverlay {
+  level: number
+  color: string
+  parents: string[]
+  children?: string[]
+}
+
+const allOverlays: Record<string, WheelOverlay> = {
+  ...(happyOverlay as Record<string, WheelOverlay>),
+  ...(surprisedOverlay as Record<string, WheelOverlay>),
+  ...(badOverlay as Record<string, WheelOverlay>),
+  ...(fearfulOverlay as Record<string, WheelOverlay>),
+  ...(angryOverlay as Record<string, WheelOverlay>),
+  ...(disgustedOverlay as Record<string, WheelOverlay>),
+  ...(sadOverlay as Record<string, WheelOverlay>),
+}
+
+const allEmotions: Record<string, WheelEmotion> = {}
+for (const [id, overlay] of Object.entries(allOverlays)) {
+  const base = getCanonicalEmotion(id)
+  if (!base) throw new Error(`Wheel references unknown emotion: ${id}`)
+  allEmotions[id] = {
+    ...base,
+    color: overlay.color,
+    level: overlay.level,
+    parents: overlay.parents,
+    children: overlay.children,
+  }
+}
 
 const CENTER_IDS = [
   'happy',
@@ -101,12 +114,14 @@ export const wheelModel: EmotionModel<WheelEmotion> = {
 
   analyze(selections: WheelEmotion[]): AnalysisResult[] {
     return selections.map((s) => {
+      // Walk up parents[0] to build hierarchy path
+      // Future: track actual drill-down path via ModelState.custom.navPath
       const path: { ro: string; en: string }[] = []
       let current: WheelEmotion | undefined = s
       let depth = 0
       while (current && depth < 10) {
         path.push(current.label)
-        current = current.parent ? allEmotions[current.parent] : undefined
+        current = current.parents[0] ? allEmotions[current.parents[0]] : undefined
         depth++
       }
       path.reverse()

@@ -1,0 +1,337 @@
+{
+  "angry": {
+    "level": 0,
+    "color": "#E88888",
+    "parents": [],
+    "children": [
+      "let_down",
+      "humiliated",
+      "bitter",
+      "mad",
+      "aggressive",
+      "frustrated",
+      "distant",
+      "critical"
+    ]
+  },
+  "let_down": {
+    "level": 1,
+    "color": "#EE9E9E",
+    "parents": [
+      "angry"
+    ],
+    "children": [
+      "betrayed",
+      "resentful",
+      "deceived"
+    ]
+  },
+  "betrayed": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "let_down"
+    ]
+  },
+  "resentful": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "let_down"
+    ]
+  },
+  "deceived": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "let_down"
+    ]
+  },
+  "humiliated": {
+    "level": 1,
+    "color": "#EE9E9E",
+    "parents": [
+      "angry"
+    ],
+    "children": [
+      "disrespected",
+      "ridiculed",
+      "degraded",
+      "patronized"
+    ]
+  },
+  "disrespected": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "humiliated"
+    ]
+  },
+  "ridiculed": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "humiliated"
+    ]
+  },
+  "degraded": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "humiliated"
+    ]
+  },
+  "bitter": {
+    "level": 1,
+    "color": "#EE9E9E",
+    "parents": [
+      "angry"
+    ],
+    "children": [
+      "indignant",
+      "violated",
+      "spiteful",
+      "vengeful"
+    ]
+  },
+  "indignant": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "bitter"
+    ]
+  },
+  "violated": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "bitter"
+    ]
+  },
+  "mad": {
+    "level": 1,
+    "color": "#EE9E9E",
+    "parents": [
+      "angry"
+    ],
+    "children": [
+      "furious",
+      "jealous",
+      "enraged"
+    ]
+  },
+  "furious": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "mad"
+    ]
+  },
+  "jealous": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "mad"
+    ]
+  },
+  "enraged": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "mad"
+    ]
+  },
+  "spiteful": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "bitter"
+    ]
+  },
+  "vengeful": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "bitter"
+    ]
+  },
+  "patronized": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "humiliated"
+    ]
+  },
+  "aggressive": {
+    "level": 1,
+    "color": "#EE9E9E",
+    "parents": [
+      "angry"
+    ],
+    "children": [
+      "provoked",
+      "hostile",
+      "defiant",
+      "combative",
+      "seething"
+    ]
+  },
+  "provoked": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "aggressive"
+    ]
+  },
+  "hostile": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "aggressive"
+    ]
+  },
+  "frustrated": {
+    "level": 1,
+    "color": "#EE9E9E",
+    "parents": [
+      "angry"
+    ],
+    "children": [
+      "infuriated",
+      "annoyed",
+      "exasperated",
+      "fed_up"
+    ]
+  },
+  "infuriated": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "frustrated"
+    ]
+  },
+  "annoyed": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "frustrated"
+    ]
+  },
+  "exasperated": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "frustrated"
+    ]
+  },
+  "distant": {
+    "level": 1,
+    "color": "#EE9E9E",
+    "parents": [
+      "angry"
+    ],
+    "children": [
+      "withdrawn",
+      "numb",
+      "detached",
+      "passive_aggressive"
+    ]
+  },
+  "withdrawn": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "distant"
+    ]
+  },
+  "numb": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "distant"
+    ]
+  },
+  "detached": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "distant"
+    ]
+  },
+  "critical": {
+    "level": 1,
+    "color": "#EE9E9E",
+    "parents": [
+      "angry"
+    ],
+    "children": [
+      "skeptical",
+      "dismissive",
+      "cynical",
+      "self_critical"
+    ]
+  },
+  "skeptical": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "critical"
+    ]
+  },
+  "dismissive": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "critical"
+    ]
+  },
+  "defiant": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "aggressive"
+    ]
+  },
+  "combative": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "aggressive"
+    ]
+  },
+  "seething": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "aggressive"
+    ]
+  },
+  "fed_up": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "frustrated"
+    ]
+  },
+  "cynical": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "critical"
+    ]
+  },
+  "self_critical": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "critical"
+    ]
+  },
+  "passive_aggressive": {
+    "level": 2,
+    "color": "#F4B4B4",
+    "parents": [
+      "distant"
+    ]
+  }
+}

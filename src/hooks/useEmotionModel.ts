@@ -110,13 +110,13 @@ export function useEmotionModel(modelId: string = defaultModelId) {
     const firstId = modelState.visibleEmotionIds.keys().next().value
     if (!firstId) return []
     const path: BaseEmotion[] = []
-    let current = model.allEmotions[firstId] as BaseEmotion & { parent?: string }
+    let current = model.allEmotions[firstId] as BaseEmotion & { parents?: string[] }
     // Walk up the parent chain (skip the visible emotion itself — it's a child, not an ancestor)
-    while (current?.parent) {
-      const parent = model.allEmotions[current.parent]
+    while (current?.parents?.[0]) {
+      const parent = model.allEmotions[current.parents[0]]
       if (!parent) break
       path.push(parent)
-      current = parent as BaseEmotion & { parent?: string }
+      current = parent as BaseEmotion & { parents?: string[] }
     }
     path.reverse()
     return path

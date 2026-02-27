@@ -1,0 +1,297 @@
+{
+  "sad": {
+    "level": 0,
+    "color": "#88A8D0",
+    "parents": [],
+    "children": [
+      "hurt",
+      "depressed",
+      "guilty",
+      "despair",
+      "vulnerable",
+      "lonely"
+    ]
+  },
+  "hurt": {
+    "level": 1,
+    "color": "#9CB8DA",
+    "parents": [
+      "sad"
+    ],
+    "children": [
+      "embarrassed",
+      "disappointed_sad",
+      "wounded",
+      "heartbroken",
+      "humbled"
+    ]
+  },
+  "disappointed_sad": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "hurt"
+    ]
+  },
+  "wounded": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "hurt"
+    ]
+  },
+  "depressed": {
+    "level": 1,
+    "color": "#9CB8DA",
+    "parents": [
+      "sad"
+    ],
+    "children": [
+      "empty",
+      "inferior",
+      "hopeless",
+      "depleted",
+      "melancholic"
+    ]
+  },
+  "empty": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "depressed"
+    ]
+  },
+  "hopeless": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "depressed"
+    ]
+  },
+  "guilty": {
+    "level": 1,
+    "color": "#9CB8DA",
+    "parents": [
+      "sad"
+    ],
+    "children": [
+      "remorseful",
+      "ashamed",
+      "regretful",
+      "self_blaming",
+      "unworthy"
+    ]
+  },
+  "remorseful": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "guilty"
+    ]
+  },
+  "ashamed": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "guilty"
+    ]
+  },
+  "regretful": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "guilty"
+    ]
+  },
+  "heartbroken": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "hurt"
+    ]
+  },
+  "depleted": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "depressed"
+    ]
+  },
+  "melancholic": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "depressed"
+    ]
+  },
+  "self_blaming": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "guilty"
+    ]
+  },
+  "unworthy": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "guilty"
+    ]
+  },
+  "despair": {
+    "level": 1,
+    "color": "#9CB8DA",
+    "parents": [
+      "sad"
+    ],
+    "children": [
+      "grief",
+      "powerless",
+      "anguished",
+      "devastated",
+      "desolate"
+    ]
+  },
+  "grief": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "despair"
+    ]
+  },
+  "powerless": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "despair"
+    ]
+  },
+  "anguished": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "despair"
+    ]
+  },
+  "vulnerable": {
+    "level": 1,
+    "color": "#9CB8DA",
+    "parents": [
+      "sad"
+    ],
+    "children": [
+      "fragile",
+      "victimized",
+      "defenseless",
+      "exposed",
+      "helpless"
+    ]
+  },
+  "fragile": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "vulnerable"
+    ]
+  },
+  "victimized": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "vulnerable"
+    ]
+  },
+  "defenseless": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "vulnerable"
+    ]
+  },
+  "lonely": {
+    "level": 1,
+    "color": "#9CB8DA",
+    "parents": [
+      "sad"
+    ],
+    "children": [
+      "abandoned",
+      "isolated",
+      "dor",
+      "loneliness",
+      "nostalgia"
+    ]
+  },
+  "abandoned": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "lonely"
+    ]
+  },
+  "isolated": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "lonely"
+    ]
+  },
+  "dor": {
+    "level": 2,
+    "color": "#7E57C2",
+    "parents": [
+      "lonely"
+    ]
+  },
+  "loneliness": {
+    "level": 2,
+    "color": "#5C6BC0",
+    "parents": [
+      "lonely"
+    ]
+  },
+  "nostalgia": {
+    "level": 2,
+    "color": "#AB47BC",
+    "parents": [
+      "lonely"
+    ]
+  },
+  "devastated": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "despair"
+    ]
+  },
+  "desolate": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "despair"
+    ]
+  },
+  "embarrassed": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "hurt",
+      "disapproving"
+    ]
+  },
+  "inferior": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "depressed",
+      "insecure"
+    ]
+  },
+  "humbled": {
+    "level": 2,
+    "color": "#B0C8E4",
+    "parents": [
+      "hurt"
+    ]
+  }
+}

@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import emotionsData from '../models/dimensional/data.json'
+import { dimensionalModel } from '../models/dimensional'
 import type { DimensionalEmotion } from '../models/dimensional/types'
 
-const emotions = Object.values(emotionsData) as DimensionalEmotion[]
+const emotions = Object.values(dimensionalModel.allEmotions) as DimensionalEmotion[]
 
 describe('dimensional data', () => {
   it('has at least 28 reference emotions', () => {

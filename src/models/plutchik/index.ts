@@ -1,21 +1,46 @@
 import type { EmotionModel, ModelState, SelectionEffect, AnalysisResult } from '../types'
 import { MODEL_IDS } from '../constants'
+import { getCanonicalEmotion } from '../catalog'
 import type { PlutchikEmotion } from './types'
-import primaryData from './data/primary.json'
-import intensityData from './data/intensity.json'
-import dyadData from './data/dyad.json'
-import secondaryDyadData from './data/secondary-dyad.json'
-import tertiaryDyadData from './data/tertiary-dyad.json'
-import oppositeDyadData from './data/opposite-dyad.json'
+import primaryOverlay from './overlays/primary.json'
+import intensityOverlay from './overlays/intensity.json'
+import dyadOverlay from './overlays/dyad.json'
+import secondaryDyadOverlay from './overlays/secondary-dyad.json'
+import tertiaryDyadOverlay from './overlays/tertiary-dyad.json'
+import oppositeDyadOverlay from './overlays/opposite-dyad.json'
 
-const allEmotions = {
-  ...primaryData,
-  ...intensityData,
-  ...dyadData,
-  ...secondaryDyadData,
-  ...tertiaryDyadData,
-  ...oppositeDyadData,
-} as Record<string, PlutchikEmotion>
+interface PlutchikOverlay {
+  color: string
+  category: string
+  intensity: number
+  opposite?: string
+  spawns?: string[]
+  components?: string[]
+}
+
+const allOverlays: Record<string, PlutchikOverlay> = {
+  ...(primaryOverlay as Record<string, PlutchikOverlay>),
+  ...(intensityOverlay as Record<string, PlutchikOverlay>),
+  ...(dyadOverlay as Record<string, PlutchikOverlay>),
+  ...(secondaryDyadOverlay as Record<string, PlutchikOverlay>),
+  ...(tertiaryDyadOverlay as Record<string, PlutchikOverlay>),
+  ...(oppositeDyadOverlay as Record<string, PlutchikOverlay>),
+}
+
+const allEmotions: Record<string, PlutchikEmotion> = {}
+for (const [id, overlay] of Object.entries(allOverlays)) {
+  const base = getCanonicalEmotion(id)
+  if (!base) throw new Error(`Plutchik references unknown emotion: ${id}`)
+  allEmotions[id] = {
+    ...base,
+    color: overlay.color,
+    category: overlay.category,
+    intensity: overlay.intensity,
+    opposite: overlay.opposite,
+    spawns: overlay.spawns ?? [],
+    components: overlay.components,
+  }
+}
 
 export { allEmotions as plutchikEmotions }
 

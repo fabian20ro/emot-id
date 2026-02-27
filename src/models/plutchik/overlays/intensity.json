@@ -1,0 +1,178 @@
+{
+  "serenity": {
+    "color": "#FFF59D",
+    "category": "intensity",
+    "intensity": 0.3,
+    "opposite": "pensiveness",
+    "spawns": [
+      "joy",
+      "acceptance",
+      "love"
+    ]
+  },
+  "ecstasy": {
+    "color": "#FFD700",
+    "category": "intensity",
+    "intensity": 0.8,
+    "opposite": "grief",
+    "spawns": [
+      "joy",
+      "admiration",
+      "optimism"
+    ]
+  },
+  "acceptance": {
+    "color": "#C8F7DC",
+    "category": "intensity",
+    "intensity": 0.3,
+    "opposite": "boredom",
+    "spawns": [
+      "trust",
+      "serenity",
+      "submission"
+    ]
+  },
+  "admiration": {
+    "color": "#7DD9A8",
+    "category": "intensity",
+    "intensity": 0.8,
+    "opposite": "loathing",
+    "spawns": [
+      "trust",
+      "ecstasy",
+      "love"
+    ]
+  },
+  "apprehension": {
+    "color": "#A8E8C8",
+    "category": "intensity",
+    "intensity": 0.3,
+    "opposite": "annoyance",
+    "spawns": [
+      "fear",
+      "acceptance",
+      "awe"
+    ]
+  },
+  "terror": {
+    "color": "#68C898",
+    "category": "intensity",
+    "intensity": 0.8,
+    "opposite": "rage",
+    "spawns": [
+      "fear",
+      "amazement",
+      "submission"
+    ]
+  },
+  "distraction": {
+    "color": "#A8E8FF",
+    "category": "intensity",
+    "intensity": 0.3,
+    "opposite": "interest",
+    "spawns": [
+      "surprise",
+      "apprehension",
+      "disapproval"
+    ]
+  },
+  "amazement": {
+    "color": "#5FC8E8",
+    "category": "intensity",
+    "intensity": 0.8,
+    "opposite": "vigilance",
+    "spawns": [
+      "surprise",
+      "terror",
+      "awe"
+    ]
+  },
+  "pensiveness": {
+    "color": "#85C1E9",
+    "category": "intensity",
+    "intensity": 0.3,
+    "opposite": "serenity",
+    "spawns": [
+      "sadness",
+      "distraction",
+      "remorse"
+    ]
+  },
+  "grief": {
+    "color": "#3498DB",
+    "category": "intensity",
+    "intensity": 0.8,
+    "opposite": "ecstasy",
+    "spawns": [
+      "sadness",
+      "loathing",
+      "disapproval"
+    ]
+  },
+  "boredom": {
+    "color": "#D2B4DE",
+    "category": "intensity",
+    "intensity": 0.3,
+    "opposite": "acceptance",
+    "spawns": [
+      "disgust",
+      "pensiveness",
+      "contempt"
+    ]
+  },
+  "loathing": {
+    "color": "#9B59B6",
+    "category": "intensity",
+    "intensity": 0.8,
+    "opposite": "admiration",
+    "spawns": [
+      "disgust",
+      "grief",
+      "remorse"
+    ]
+  },
+  "annoyance": {
+    "color": "#FF9999",
+    "category": "intensity",
+    "intensity": 0.3,
+    "opposite": "apprehension",
+    "spawns": [
+      "anger",
+      "boredom",
+      "aggression"
+    ]
+  },
+  "rage": {
+    "color": "#E74C3C",
+    "category": "intensity",
+    "intensity": 0.8,
+    "opposite": "terror",
+    "spawns": [
+      "anger",
+      "vigilance",
+      "contempt"
+    ]
+  },
+  "interest": {
+    "color": "#FFC8A0",
+    "category": "intensity",
+    "intensity": 0.3,
+    "opposite": "distraction",
+    "spawns": [
+      "anticipation",
+      "serenity",
+      "optimism"
+    ]
+  },
+  "vigilance": {
+    "color": "#FF8C42",
+    "category": "intensity",
+    "intensity": 0.8,
+    "opposite": "amazement",
+    "spawns": [
+      "anticipation",
+      "rage",
+      "aggression"
+    ]
+  }
+}

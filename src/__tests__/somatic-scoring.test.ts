@@ -4,8 +4,6 @@ import type { SomaticSelection, EmotionSignal, BodyGroup } from '../models/somat
 
 function makeSignal(overrides: Partial<EmotionSignal> & Pick<EmotionSignal, 'emotionId' | 'sensationType'>): EmotionSignal {
   return {
-    emotionLabel: { ro: overrides.emotionId, en: overrides.emotionId },
-    emotionColor: '#ff0000',
     minIntensity: 1,
     weight: 1,
     source: 'clinical',
