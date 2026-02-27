@@ -83,4 +83,21 @@ Each entry should follow this structure:
 
 ---
 
+### 2026-02-27 — Wheel breadcrumb navigation for multi-level selection
+
+**Context:** The Emotion Wheel only allowed selecting level 2 (leaf/tertiary) emotions. Users who felt a broad emotion like "happy" without specificity were forced to pick an arbitrary leaf, producing inauthentic selections.
+**What happened:**
+- Added `WheelBreadcrumb.tsx` component — absolute overlay at top of visualization area showing drill-down path (e.g., `Happy > Playful`). Tapping any segment selects that emotion and resets to root.
+- Added `breadcrumbPath` (derived from parent chain) and `handleBreadcrumbSelect` to `useEmotionModel` hook. Path is computed, not stored — no ModelState changes needed.
+- Used `BaseEmotion & { parent?: string }` type assertion in hook since `parent` lives on `WheelEmotion`, not `BaseEmotion`. Generic hook can't import wheel-specific types.
+- Added `topInset` parameter to `calculateDeterministicPositions` and `calculateRandomPositions` in `bubble-layout.ts` so bubbles don't spawn under the breadcrumb overlay. Passed through `VisualizationProps`.
+- Consulted psychologist agent: multi-level selection is clinically valid. Forced leaf selection can produce inauthentic data for alexithymic users or those experiencing broad undifferentiated states.
+- UX expert recommended absolute overlay positioning (same pattern as `FirstInteractionHint`) to avoid layout shift / ResizeObserver issues. This was critical given the user's note about visibility issues when space changed.
+- Added i18n strings for en/ro. Added 9 tests (path derivation, breadcrumb selection, duplicate prevention).
+**Outcome:** Success. 374 tests pass, build succeeds, typecheck clean.
+**Insight:** When a generic hook needs to access model-specific fields (like `parent`), use inline type assertion rather than importing model-specific types to preserve the hook's model-agnostic design. Derived state (walking parent chains) is preferable to stored state for simple hierarchies.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

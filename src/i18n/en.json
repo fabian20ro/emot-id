@@ -273,6 +273,10 @@
   "dimensional": {
     "instructions": "Locate your state on two axes: how pleasant/unpleasant and how intense/calm you feel"
   },
+  "wheelBreadcrumb": {
+    "label": "Emotion navigation path",
+    "selectAndReturn": "Select {emotion} and return to start"
+  },
   "history": {
     "title": "Past Sessions",
     "close": "Close history",
