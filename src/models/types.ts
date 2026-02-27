@@ -38,6 +38,7 @@ export interface VisualizationProps {
   onDeselect: (emotion: BaseEmotion) => void
   sizes: Map<string, 'small' | 'medium' | 'large'>
   selections?: BaseEmotion[]
+  topInset?: number
 }
 
 export interface EmotionModel<E extends BaseEmotion = BaseEmotion> {

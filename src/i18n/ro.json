@@ -273,6 +273,10 @@
   "dimensional": {
     "instructions": "Localizeaza-ti starea pe cele doua axe: cat de placut/neplacut si cat de intens/calm te simti"
   },
+  "wheelBreadcrumb": {
+    "label": "Calea de navigare emotii",
+    "selectAndReturn": "Selecteaza {emotion} si revino la inceput"
+  },
   "history": {
     "title": "Sesiuni anterioare",
     "close": "Inchide istoricul",

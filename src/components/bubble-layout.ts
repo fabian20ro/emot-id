@@ -22,10 +22,11 @@ export function calculateDeterministicPositions(
   containerWidth: number,
   containerHeight: number,
   sizes: Map<string, 'small' | 'medium' | 'large'>,
+  topInset = 0,
 ): Map<string, { x: number; y: number }> {
   const sizeMap = getSizePixels(containerWidth)
   const isMobile = containerWidth < MOBILE_BREAKPOINT
-  const padding = isMobile ? 8 : 16
+  const padding = isMobile ? 8 + topInset : 16 + topInset
   const gap = isMobile ? 8 : 10
   const availableWidth = containerWidth - padding * 2
 
@@ -125,13 +126,14 @@ export function calculateRandomPositions(
   containerWidth: number,
   containerHeight: number,
   sizes: Map<string, 'small' | 'medium' | 'large'>,
-  existingRects: { x: number; y: number; w: number; h: number }[]
+  existingRects: { x: number; y: number; w: number; h: number }[],
+  topInset = 0,
 ): Map<string, { x: number; y: number }> {
   const sizeMap = getSizePixels(containerWidth)
   const positions = new Map<string, { x: number; y: number }>()
   const placed = [...existingRects]
 
-  const padding = 16
+  const padding = 16 + topInset
   const availableWidth = containerWidth - padding * 2
   const availableHeight = containerHeight - padding * 2
 

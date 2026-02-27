@@ -14,6 +14,7 @@ import { GranularityTraining } from './components/GranularityTraining'
 import { ChainAnalysis } from './components/ChainAnalysis'
 import { VisualizationErrorBoundary } from './components/VisualizationErrorBoundary'
 import { FirstInteractionHint } from './components/FirstInteractionHint'
+import { WheelBreadcrumb } from './components/WheelBreadcrumb'
 import { useSound } from './hooks/useSound'
 import { useEmotionModel } from './hooks/useEmotionModel'
 import { useModelSelection } from './hooks/useModelSelection'
@@ -55,6 +56,8 @@ export default function App() {
     handleSelect: modelSelect,
     handleDeselect: modelDeselect,
     handleClear: modelClear,
+    handleBreadcrumbSelect: modelBreadcrumbSelect,
+    breadcrumbPath,
     restore,
     analyze,
   } = useEmotionModel(modelId)
@@ -143,6 +146,16 @@ export default function App() {
     modelClear()
     setShowUndoToast(true)
   }, [selections, modelState, playSound, modelClear])
+
+  const handleBreadcrumbSelect = useCallback(
+    (emotion: BaseEmotion) => {
+      if (showHint) dismissHint()
+      playSound('select')
+      navigator.vibrate?.(10)
+      modelBreadcrumbSelect(emotion)
+    },
+    [playSound, modelBreadcrumbSelect, showHint, dismissHint],
+  )
 
   const handleUndo = useCallback(() => {
     const snapshot = undoSnapshotRef.current
@@ -292,6 +305,15 @@ export default function App() {
             )}
           </AnimatePresence>
 
+          <AnimatePresence>
+            {modelId === MODEL_IDS.WHEEL && breadcrumbPath.length > 0 && (
+              <WheelBreadcrumb
+                path={breadcrumbPath}
+                onSelect={handleBreadcrumbSelect}
+              />
+            )}
+          </AnimatePresence>
+
           {Visualization && (
             <Suspense
               fallback={
@@ -306,6 +328,7 @@ export default function App() {
                 onDeselect={handleDeselect}
                 sizes={sizes}
                 selections={selections}
+                topInset={modelId === MODEL_IDS.WHEEL && breadcrumbPath.length > 0 ? 48 : 0}
               />
             </Suspense>
           )}

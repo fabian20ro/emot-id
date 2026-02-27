@@ -14,6 +14,7 @@ function BubbleFieldBase({
   emotions,
   onSelect,
   sizes,
+  topInset = 0,
 }: VisualizationProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
@@ -52,7 +53,7 @@ function BubbleFieldBase({
     // On mobile, recompute all positions deterministically on every change
     if (containerSize.width < MOBILE_BREAKPOINT) {
       setPositions(
-        calculateDeterministicPositions(emotions, containerSize.width, containerSize.height, sizes)
+        calculateDeterministicPositions(emotions, containerSize.width, containerSize.height, sizes, topInset)
       )
       return
     }
@@ -87,7 +88,7 @@ function BubbleFieldBase({
 
       // Calculate positions for new emotions
       const newPositions = calculateRandomPositions(
-        newEmotions, containerSize.width, containerSize.height, sizes, existingRects
+        newEmotions, containerSize.width, containerSize.height, sizes, existingRects, topInset
       )
 
       // Merge clamped existing + new
@@ -96,7 +97,7 @@ function BubbleFieldBase({
       }
       return clamped
     })
-  }, [emotions, sizes, containerSize.width, containerSize.height])
+  }, [emotions, sizes, containerSize.width, containerSize.height, topInset])
 
   return (
     <div className="h-full w-full min-h-0 flex flex-col items-center justify-start sm:justify-center p-2 sm:p-4">
