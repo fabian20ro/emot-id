@@ -11,7 +11,9 @@
     "children": [
       "grief",
       "powerless",
-      "anguished"
+      "anguished",
+      "devastated",
+      "desolate"
     ],
     "description": {
       "ro": "Disperarea este starea in care speranta pare sa fi disparut complet — viitorul pare inchis si nu mai vezi nicio cale de iesire. Este una dintre cele mai intunecate experiente emotionale umane. Disperarea este un semnal de alarma ca ai nevoie urgenta de conexiune si sprijin. Chiar si in cele mai intunecate momente, o mana intinsa poate face diferenta.",
@@ -88,7 +90,9 @@
     "children": [
       "fragile",
       "victimized",
-      "defenseless"
+      "defenseless",
+      "exposed_sad",
+      "helpless_sad"
     ],
     "description": {
       "ro": "Vulnerabilitatea este starea de a fi deschis si expus la potentiala durere. Desi instinctiv cautam sa evitam vulnerabilitatea, cercetarile arata ca este poarta catre intimitate, autenticitate si conexiune profunda. A fi vulnerabil nu inseamna a fi slab — inseamna a avea curajul de a te arata asa cum esti, fara garantia ca vei fi acceptat.",
@@ -266,6 +270,78 @@
     "needs": {
       "ro": "sens si continuitate",
       "en": "meaning and continuity"
+    }
+  },
+  "devastated": {
+    "id": "devastated",
+    "label": {
+      "ro": "Devastat",
+      "en": "Devastated"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "despair",
+    "description": {
+      "ro": "Devastarea este starea de soc emotional dupa o pierdere sau o catastrofa care ti-a daramat lumea — nu doar tristete, ci prabusirea structurii pe care ti-ai construit viata. Peisajul interior arata ca dupa un cutremur: nimic nu mai e la locul lui si nu stii de unde sa incepi sa reconstruiesti. Devastarea este un raspuns normal la pierderi anormale. Nu trebuie sa stii cum sa faci fata — trebuie doar sa lasi pe cineva sa fie langa tine in timp ce peisajul se aseaza.",
+      "en": "Devastation is the state of emotional shock after a loss or catastrophe that has demolished your world — not just sadness, but the collapse of the structure on which you built your life. The inner landscape looks like after an earthquake: nothing is in its place and you don't know where to begin rebuilding. Devastation is a normal response to abnormal losses. You don't need to know how to cope — you just need to let someone be beside you while the landscape settles."
+    },
+    "needs": {
+      "ro": "prezenta umana si timp",
+      "en": "human presence and time"
+    }
+  },
+  "desolate": {
+    "id": "desolate",
+    "label": {
+      "ro": "Pustiit",
+      "en": "Desolate"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "despair",
+    "description": {
+      "ro": "Pustiirea este starea de golire totala care urmeaza dupa ce totul a fost luat — nu mai exista durere acuta, ci un peisaj interior arid, fara contur si fara viata. Este ca un camp dupa incendiu — cenusa si tacere. Pustiirea este diferita de gol prin calitatea ei de dupa-catastrofa — nu lipsa sentimentului, ci ceea ce ramane dupa ce valurile de durere s-au retras. In aceasta ariditate aparenta, semintele noului inceput inca exista — dar au nevoie de rabdare si de ploaie blanda, nu de forta.",
+      "en": "Desolation is the state of total emptying that follows after everything has been taken — there is no longer acute pain, but an arid inner landscape, without contour and without life. It is like a field after fire — ash and silence. Desolation is different from emptiness in its post-catastrophe quality — not the absence of feeling, but what remains after the waves of pain have receded. In this apparent aridity, the seeds of a new beginning still exist — but they need patience and gentle rain, not force."
+    },
+    "needs": {
+      "ro": "rabdare si hranire blanda",
+      "en": "patience and gentle nourishment"
+    }
+  },
+  "exposed_sad": {
+    "id": "exposed_sad",
+    "label": {
+      "ro": "Expus",
+      "en": "Exposed"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "vulnerable",
+    "description": {
+      "ro": "A te simti expus in registrul tristetii este experienta gingasa a vulnerabilitatii de a fi vazut — nu amenintarea din frica, ci tandretetea dureroasa a deschiderii. Straturile de protectie au cazut si stai gol emotional in fata lumii. Aceasta expunere poate fi rana sau vindecare — depinde de raspunsul pe care il primesti. Cand esti primit cu blandete in expunerea ta, vindecarea profunda devine posibila. Cand esti judecat, rana se adanceste. A-ti permite sa fii expus in prezenta cuiva sigur este unul dintre cele mai curajoase lucruri pe care le poti face.",
+      "en": "Feeling exposed in the register of sadness is the tender experience of the vulnerability of being seen — not the threat from fear, but the painful tenderness of openness. The protective layers have fallen and you stand emotionally naked before the world. This exposure can be wound or healing — it depends on the response you receive. When you are met with gentleness in your exposure, deep healing becomes possible. When you are judged, the wound deepens. Allowing yourself to be exposed in the presence of someone safe is one of the most courageous things you can do."
+    },
+    "needs": {
+      "ro": "primire blanda si siguranta relationala",
+      "en": "gentle reception and relational safety"
+    }
+  },
+  "helpless_sad": {
+    "id": "helpless_sad",
+    "label": {
+      "ro": "Neajutorat",
+      "en": "Helpless"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "vulnerable",
+    "description": {
+      "ro": "Neajutorarea in registrul tristetii este recunoasterea umila ca ai o nevoie pe care nu o poti satisface singur — nu paralizarea din frica, ci constienta blanda ca ai nevoie de altcineva. Este momentul in care independenta ta atinge un perete si trebuie sa ceri ajutor. Aceasta neajutorare nu este slabiciune, ci onestitate — recunoasterea ca suntem fiinte interdependente care au nevoie unele de altele. Cel mai greu lucru este adesea nu sa ai nevoie de ajutor, ci sa il ceri.",
+      "en": "Helplessness in the register of sadness is the humble recognition that you have a need you cannot meet alone — not the paralysis from fear, but the gentle awareness that you need someone else. It is the moment when your independence hits a wall and you must ask for help. This helplessness is not weakness, but honesty — the recognition that we are interdependent beings who need each other. The hardest thing is often not needing help, but asking for it."
+    },
+    "needs": {
+      "ro": "permisiunea de a cere si de a primi",
+      "en": "permission to ask and to receive"
     }
   }
 }

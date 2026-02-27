@@ -10,7 +10,8 @@
     "parent": "fearful",
     "children": [
       "worthless",
-      "insignificant"
+      "insignificant",
+      "small"
     ],
     "description": {
       "ro": "A te simti slab este experienta dureroasa a lipsei de putere si de resurse. Simti ca nu ai forta necesara pentru a face fata cerintelor vietii. Slabiciunea poate fi temporara — dupa boala, soc sau pierdere — sau cronica, reflectand o imagine de sine deteriorata. Recunoasterea slabiciunii este paradoxal un act de forta care deschide calea catre recuperare.",
@@ -69,7 +70,8 @@
     "children": [
       "excluded",
       "persecuted",
-      "unwanted"
+      "unwanted",
+      "alienated"
     ],
     "description": {
       "ro": "Respingerea este una dintre cele mai dureroase experiente emotionale — semnalul ca nu esti dorit sau acceptat de cei care conteaza pentru tine. Creierul proceseaza respingerea in aceleasi zone ca durerea fizica. Respingerea activeaza rani vechi de atasament si poate declansa retragere sau agresivitate defensiva. Vindecarea necesita relatii reparatorii sigure.",
@@ -146,7 +148,9 @@
     "children": [
       "nervous",
       "exposed",
-      "on_guard"
+      "on_guard",
+      "suspicious",
+      "trapped"
     ],
     "description": {
       "ro": "A te simti amenintat este perceptia ca ceva sau cineva iti pune in pericol siguranta, pozitia sau integritatea. Corpul intra in mod de protectie — musculatura se tensoneaza, atentia se ingusteaza si esti gata sa reactionezi. Amenintarea poate fi fizica, emotionala sau sociala. Raspunsul la amenintare depinde de evaluarea ta si de resursele disponibile.",
@@ -209,6 +213,78 @@
     "needs": {
       "ro": "siguranta confirmata si relaxare",
       "en": "confirmed safety and relaxation"
+    }
+  },
+  "small": {
+    "id": "small",
+    "label": {
+      "ro": "Mic",
+      "en": "Small"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "weak",
+    "description": {
+      "ro": "A te simti mic este experienta somatica a diminuarii — corpul se face ghem, vocea scade, privirea se coboara si simti ca ocupi prea mult spatiu in lume. Nu este doar o metafora: te simti fizic redus, ca si cum ai putea disparea. Aceasta senzatie apare in fata autoritatii, criticii sau a situatiilor care iti reamintesc de momente din copilarie cand erai cu adevarat mic si fara putere. Recuperarea incepe cu ocuparea constienta a spatiului tau — ridicarea capului, deschiderea umerilor, amintirea ca ai dreptul sa fii aici.",
+      "en": "Feeling small is the somatic experience of diminishment — the body curls up, the voice drops, the gaze lowers, and you feel you take up too much space in the world. It is not just a metaphor: you feel physically reduced, as if you could disappear. This sensation appears in the face of authority, criticism, or situations that remind you of childhood moments when you were truly small and powerless. Recovery begins with consciously occupying your space — lifting your head, opening your shoulders, remembering that you have the right to be here."
+    },
+    "needs": {
+      "ro": "reocuparea spatiului si afirmarea prezentei",
+      "en": "reclaiming space and affirming presence"
+    }
+  },
+  "alienated": {
+    "id": "alienated",
+    "label": {
+      "ro": "Instrainat",
+      "en": "Alienated"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "rejected",
+    "description": {
+      "ro": "Instrainarea este sentimentul profund ca nu apartii nicaieri — nu doar ca esti exclus dintr-un grup, ci ca esti fundamental diferit de ceilalti intr-un mod care pare de neponte. Este singuratate amplificata de convingerea ca diferenta ta este permanenta si ireductibila. Instrainarea poate fi dureroasa, dar poate fi si o poarta — recunoasterea ca cauti un loc in care sa fii primit asa cum esti, nu un loc in care sa te potrivesti fortandu-te.",
+      "en": "Alienation is the deep feeling that you belong nowhere — not just that you are excluded from a group, but that you are fundamentally different from others in a way that seems unbridgeable. It is loneliness amplified by the conviction that your difference is permanent and irreducible. Alienation can be painful, but it can also be a gateway — the recognition that you are searching for a place where you are received as you are, not a place where you fit by forcing yourself."
+    },
+    "needs": {
+      "ro": "apartinere autentica si acceptarea diferentei",
+      "en": "authentic belonging and acceptance of difference"
+    }
+  },
+  "suspicious": {
+    "id": "suspicious",
+    "label": {
+      "ro": "Suspicios",
+      "en": "Suspicious"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "threatened",
+    "description": {
+      "ro": "Suspiciunea este neincrederea activa — nu doar absenta increderii, ci cautarea activa a semnelor de pericol sau inselaciune in comportamentul celorlalti. Mintea interpreteaza gesturile ambigue ca amenintari si construieste scenarii de tradare. Suspiciunea poate fi un raspuns adaptativ dupa experiente reale de inselatorie, dar devine toxica cand coloreaza toate relatiile. Vindecarea nu inseamna sa devii naiv, ci sa inveti sa diferentiezi intre precautie sanatoasa si proiectia fricii tale asupra celorlalti.",
+      "en": "Suspicion is active distrust — not just the absence of trust, but the active search for signs of danger or deception in others' behavior. The mind interprets ambiguous gestures as threats and constructs scenarios of betrayal. Suspicion can be an adaptive response after real experiences of being deceived, but becomes toxic when it colors all relationships. Healing does not mean becoming naive, but learning to differentiate between healthy caution and the projection of your fear onto others."
+    },
+    "needs": {
+      "ro": "discernamant si experienta de incredere",
+      "en": "discernment and trust experience"
+    }
+  },
+  "trapped": {
+    "id": "trapped",
+    "label": {
+      "ro": "Prins in capcana",
+      "en": "Trapped"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "threatened",
+    "description": {
+      "ro": "A te simti prins in capcana este perceptia ca nu exista iesire — esti blocat intr-o situatie, relatie sau circumstanta de care nu poti scapa. Peretii se strang, optiunile dispar si senzatia de claustrofobie emotionala devine coplesitoare. Sentimentul de a fi captiv activeaza frica primitiva si disperarea. Este important sa stii ca aceasta senzatie este adesea mai restransa decat realitatea — frica inchide perspective pe care un ochi calm le-ar putea vedea. Primul pas este sa respiri si sa cauti o singura optiune, oricat de mica.",
+      "en": "Feeling trapped is the perception that there is no way out — you are stuck in a situation, relationship, or circumstance you cannot escape. The walls close in, options disappear, and the sensation of emotional claustrophobia becomes overwhelming. Feeling captive activates primitive fear and desperation. It is important to know that this sensation is often more restrictive than reality — fear closes perspectives that a calm eye could see. The first step is to breathe and look for a single option, however small."
+    },
+    "needs": {
+      "ro": "o optiune si perspectiva",
+      "en": "one option and perspective"
     }
   }
 }

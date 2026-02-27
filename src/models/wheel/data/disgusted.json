@@ -56,7 +56,9 @@
     "parent": "disgusted",
     "children": [
       "appalled",
-      "revolted"
+      "revolted",
+      "sickened",
+      "scandalized"
     ],
     "description": {
       "ro": "Dezamagirea in contextul dezgustului este reactia la ceva care nu doar nu corespunde asteptarilor, ci le incalca intr-un mod care iti provoaca repulsie. Este sentimentul de a fi dezamagit la un nivel visceral — nu doar intelectual. Aceasta forma de dezamagire te face sa vrei sa te retragi complet din situatie.",
@@ -78,7 +80,10 @@
     "parent": "disgusted",
     "children": [
       "nauseated",
-      "detestable"
+      "detestable",
+      "self_loathing",
+      "tainted",
+      "repugnant"
     ],
     "description": {
       "ro": "A te simti groaznic este o stare de disconfort profund in care totul pare gresit si respingator — inclusiv propria ta stare. Este o combinatie de dezgust, oboseala si demoralizare. Cand te simti groaznic, lumea pare lipsite de culoare si fiecare sarcina pare o povara enorma. Este un semnal ca ai nevoie de grija si de compasiune, nu de critica.",
@@ -290,6 +295,96 @@
     "needs": {
       "ro": "distanta imediata si siguranta",
       "en": "immediate distance and safety"
+    }
+  },
+  "sickened": {
+    "id": "sickened",
+    "label": {
+      "ro": "Ingretosat",
+      "en": "Sickened"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disappointed_disg",
+    "description": {
+      "ro": "Ingretosarea este revulsia morala cu aparitie lenta — nu un soc brusc, ci o dezamagire care se adanceste pe masura ce descoperi dimensiunea reala a ceea ce s-a intamplat. Stomacul se strange, o greata difuza se instaleaza si simti ca ceva s-a alterat iremediabil. Ingretosarea apare cand cineva iti dezvaluie un caracter pe care nu il banueai — nu un singur gest gresit, ci un pattern de comportament care iti provoaca repulsie crescanda. Este semnalul ca valorile tale fundamentale au fost incalcate la un nivel profund.",
+      "en": "Being sickened is a slow-dawning moral revulsion — not a sudden shock, but a disappointment that deepens as you discover the real dimension of what happened. The stomach tightens, a diffuse nausea sets in, and you feel that something has been irremediably altered. Being sickened occurs when someone reveals a character you hadn't suspected — not a single wrong gesture, but a pattern of behavior that provokes increasing revulsion. It is the signal that your fundamental values have been violated at a deep level."
+    },
+    "needs": {
+      "ro": "distanta si procesare morala",
+      "en": "distance and moral processing"
+    }
+  },
+  "scandalized": {
+    "id": "scandalized",
+    "label": {
+      "ro": "Scandalizat",
+      "en": "Scandalized"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "disappointed_disg",
+    "description": {
+      "ro": "Scandalizarea este socul moral in fata incalcarii flagrante a normelor sociale sau etice — nu doar dezamagire, ci indignare amestecata cu dezgust in fata a ceva ce nu ar fi trebuit sa se intample. Este reactia ta cand limitele acceptabilului sunt incalcate in mod public sau vizibil. Scandalizarea are o componenta sociala puternica — simti nevoia de a numi ce s-a intamplat si de a restabili standardele. Provocarea este sa folosesti aceasta energie pentru actiune constructiva, nu doar pentru indignare sterila.",
+      "en": "Being scandalized is the moral shock at the flagrant violation of social or ethical norms — not just disappointment, but indignation mixed with disgust at something that should not have happened. It is your reaction when the limits of acceptability are violated publicly or visibly. Being scandalized has a strong social component — you feel the need to name what happened and to restore standards. The challenge is to use this energy for constructive action, not just sterile indignation."
+    },
+    "needs": {
+      "ro": "restabilirea standardelor si actiune",
+      "en": "restoring standards and action"
+    }
+  },
+  "self_loathing": {
+    "id": "self_loathing",
+    "label": {
+      "ro": "Autodezgust",
+      "en": "Self-loathing"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "awful",
+    "description": {
+      "ro": "Autodezgustul este dezgustul intors catre interior — o repulsie fata de propria persoana care iti face sa vrei sa fugi de tine insuti. Nu este doar autocritica sau nemultumire de sine, ci o respingere viscerala a ceea ce esti sau a ceea ce ai facut. Autodezgustul este una dintre cele mai dureroase stari emotionale si poate fi un semn al depresiei sau al traumei. Este important sa stii ca aceasta emotie, oricat de coplesitoare, nu reflecta realitatea ta — reflecta o rana care are nevoie de vindecare. Sprijinul profesional poate fi esential in procesarea autodezgustului.",
+      "en": "Self-loathing is disgust turned inward — a revulsion toward your own person that makes you want to flee from yourself. It is not just self-criticism or dissatisfaction with yourself, but a visceral rejection of what you are or what you have done. Self-loathing is one of the most painful emotional states and can be a sign of depression or trauma. It is important to know that this emotion, however overwhelming, does not reflect your reality — it reflects a wound that needs healing. Professional support can be essential in processing self-loathing."
+    },
+    "needs": {
+      "ro": "sprijin profesional si autocompasiune",
+      "en": "professional support and self-compassion"
+    }
+  },
+  "tainted": {
+    "id": "tainted",
+    "label": {
+      "ro": "Intinat",
+      "en": "Tainted"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "awful",
+    "description": {
+      "ro": "A te simti intinat este senzatia de a fi fost contaminat sau murdarit de o experienta — ca si cum ceva toxic ti-a patruns sub piele si nu il poti spala. Nu este o realitate fizica, dar se simte la fel de real: simti ca ceva din tine a fost alterat de contactul cu ceva profund respingator. Intinarea poate aparea dupa expunerea la cruzime, coruptie sau abuz. Vindecarea incepe cu separarea sinelui de experienta — ceea ce ti s-a intamplat nu te defineste si nu te contamineaza permanent.",
+      "en": "Feeling tainted is the sensation of having been contaminated or soiled by an experience — as if something toxic has penetrated under your skin and you cannot wash it off. It is not a physical reality, but it feels just as real: you sense that something in you has been altered by contact with something deeply repulsive. Feeling tainted can appear after exposure to cruelty, corruption, or abuse. Healing begins with separating the self from the experience — what happened to you does not define you and does not permanently contaminate you."
+    },
+    "needs": {
+      "ro": "purificare simbolica si separare de experienta",
+      "en": "symbolic purification and separation from experience"
+    }
+  },
+  "repugnant": {
+    "id": "repugnant",
+    "label": {
+      "ro": "Respingator",
+      "en": "Repugnant"
+    },
+    "color": "#E0B4D8",
+    "level": 2,
+    "parent": "awful",
+    "description": {
+      "ro": "Sentimentul de repugnanta este respingerea pe multiple niveluri simultan — estetic, visceral si moral. Nu este doar dezgust fizic sau doar condamnare morala, ci ambele impreuna, amplificate reciproc. Este reactia la ceva ce iti ofenseaza toate simturile si toate valorile deodata. Repugnanta iti semnaleaza o incompatibilitate fundamentala cu ceea ce ai intalnit. Aceasta intensitate merita examinare constienta — este reactia proportionala cu realitatea, sau frica ta o amplifica?",
+      "en": "The feeling of repugnance is rejection on multiple levels simultaneously — aesthetic, visceral, and moral. It is not just physical disgust or just moral condemnation, but both together, mutually amplified. It is the reaction to something that offends all your senses and all your values at once. Repugnance signals a fundamental incompatibility with what you have encountered. This intensity deserves conscious examination — is the reaction proportional to reality, or is your fear amplifying it?"
+    },
+    "needs": {
+      "ro": "distanta si examinare constienta",
+      "en": "distance and conscious examination"
     }
   }
 }

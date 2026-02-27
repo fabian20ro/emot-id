@@ -11,7 +11,8 @@
     "children": [
       "courageous",
       "creative",
-      "determined"
+      "determined",
+      "brave"
     ],
     "description": {
       "ro": "Sentimentul de putere este experienta de a avea capacitate, influenta si control asupra directiei vietii tale. Nu inseamna dominatie, ci agentivitate — convingerea ca poti face o diferenta. Puterea interioara sanatoasa vine din competenta, curaj si aliniere cu valorile tale, nu din controlul celorlalti.",
@@ -89,7 +90,8 @@
       "loving",
       "thankful",
       "relief",
-      "harmonious"
+      "harmonious",
+      "tender"
     ],
     "description": {
       "ro": "Pacea interioara este starea in care conflictele interne s-au calmat si te simti in armonie cu tine insuti si cu lumea. Nu este o stare pasiva, ci o prezenta activa si constienta. Pacea apare cand renunti la lupta cu realitatea si gasesti un echilibru intre acceptare si actiune. Este fundamentul bunastarii durabile.",
@@ -184,7 +186,8 @@
     "children": [
       "sensitive",
       "intimate",
-      "compassion"
+      "compassion",
+      "safe"
     ],
     "description": {
       "ro": "A fi in stare de incredere inseamna sa te simti suficient de sigur pentru a te deschide catre ceilalti si catre viata. Este capacitatea de a te baza pe altii fara a avea nevoie de garantii absolute. Increderea sanatoasa se bazeaza pe experienta, nu pe naivitate, si include capacitatea de a-ti proteja granitele cand este necesar.",
@@ -324,6 +327,60 @@
     "needs": {
       "ro": "posibilitate si rabdare",
       "en": "possibility and patience"
+    }
+  },
+  "brave": {
+    "id": "brave",
+    "label": {
+      "ro": "Indraznet",
+      "en": "Brave"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "powerful",
+    "description": {
+      "ro": "Indrazneala este curajul momentului — un impuls de a actiona cand totul in tine ezita. Nu este lipsa fricii, ci decizia de a face un pas inainte in ciuda ei. Spre deosebire de curajul sustinut, indrazneala este o sclipire de hotarare care apare in momente critice — cand trebuie sa vorbesti, sa sari sau sa te expui. Este vocea interioara care spune 'acum' cand frica spune 'nu inca'. Indrazneala iti aminteste ca esti mai puternic decat crezi in momentele care conteaza.",
+      "en": "Bravery is the courage of the moment — an impulse to act when everything in you hesitates. It is not the absence of fear, but the decision to step forward despite it. Unlike sustained courage, bravery is a flash of resolve that emerges at critical moments — when you need to speak up, leap, or expose yourself. It is the inner voice saying 'now' when fear says 'not yet'. Bravery reminds you that you are stronger than you think in the moments that matter."
+    },
+    "needs": {
+      "ro": "sustinere si recunoastere",
+      "en": "support and recognition"
+    }
+  },
+  "tender": {
+    "id": "tender",
+    "label": {
+      "ro": "Gingas",
+      "en": "Tender"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "peaceful",
+    "description": {
+      "ro": "Gingasia este o emotie calda si blanda care apare cand intalnesti vulnerabilitatea — propria sau a altuia. Este inima care se deschide fara aparare, o caldura care nu cere nimic in schimb. Gingasia se manifesta in atingeri delicate, cuvinte spuse incet si priviri pline de grija. Este reversul fortei — nu slabiciune, ci puterea de a fi moale cand lumea te invata sa fii tare. Gingasia vindeca pentru ca ofera ceea ce rana a pierdut: contact uman cald si neamenitator.",
+      "en": "Tenderness is a warm, gentle emotion that arises when you encounter vulnerability — your own or another's. It is the heart opening without defense, a warmth that asks nothing in return. Tenderness manifests in soft touches, quietly spoken words, and caring gazes. It is the reverse of force — not weakness, but the strength to be soft when the world teaches you to be hard. Tenderness heals because it offers what the wound lost: warm, non-threatening human contact."
+    },
+    "needs": {
+      "ro": "proximitate si blandete",
+      "en": "closeness and gentleness"
+    }
+  },
+  "safe": {
+    "id": "safe",
+    "label": {
+      "ro": "In siguranta",
+      "en": "Safe"
+    },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "trusting",
+    "description": {
+      "ro": "Siguranta resimtita este starea fundamentala in care corpul si mintea ta stiu ca nu esti amenintat — nu prin gandire, ci prin simtire. Este ceea ce teoria polivagala numeste activarea sistemului vagal ventral: respiratia se calmeaza, muschii se relaxeaza si esti capabil de conexiune sociala autentica. Siguranta nu este absenta pericolului, ci prezenta unei increderi profunde ca poti face fata. Este fundatia pe care se construiesc toate celelalte emotii pozitive.",
+      "en": "Felt safety is the foundational state where your body and mind know you are not threatened — not through thinking, but through feeling. It is what polyvagal theory calls ventral vagal activation: breathing calms, muscles relax, and you are capable of authentic social connection. Safety is not the absence of danger, but the presence of a deep trust that you can cope. It is the foundation upon which all other positive emotions are built."
+    },
+    "needs": {
+      "ro": "stabilitate si predictibilitate",
+      "en": "stability and predictability"
     }
   }
 }

@@ -100,4 +100,22 @@ Each entry should follow this structure:
 
 ---
 
+### 2026-02-27 — Expand Emotion Wheel with 53 new leaf-level emotions
+
+**Context:** The emotion wheel had 165 emotions (7 L0 root, 41 L1 intermediate, 117 L2 leaf). User requested analysis by psychologist agents per emotion family to identify gaps and add new leaf-level emotions that make sense in both English and Romanian.
+**What happened:**
+- Launched 7 psychologist sub-agents (one per emotion family: Happy, Surprised, Bad, Fearful, Angry, Disgusted, Sad) to analyze gaps in emotional granularity.
+- Agents returned ~65 candidates. After conflict resolution (9 cross-family ID collisions resolved via suffix patterns, different RO labels, or drops), finalized 53 new L2 emotions.
+- Added entries across all 11 data files: happy-1 (+7), happy-2 (+3), surprised (+4), bad (+6), fearful-1 (+4), fearful-2 (+4), angry-1 (+3), angry-2 (+7), disgusted (+5), sad-1 (+6), sad-2 (+4).
+- Each entry includes bilingual labels, adaptive descriptions (~100-150 words each in RO/EN), needs, correct color matching siblings, parent reference, and parent children array update.
+- Zero code changes — the spread-operator auto-discovery in `index.ts` picks up all new JSON entries automatically.
+- Created `IMPROVEMENT_PLAN.md` documenting multi-tree emotion membership (emotions belonging to multiple parent families) as a future architectural improvement, with 11 specific cross-family duplicate observations.
+- Key conflict resolutions: `depleted` uses "Secatuit" (RO) to avoid collision with `drained/Epuizat`; `exposed_sad` and `helpless_sad` use suffix pattern to avoid collisions with fearful equivalents; `self_critical` (Angry) vs `self_blaming` (Sad) differentiated by focus.
+- Special description care: "obsessive" framed as transient anxiety loop not OCD; "burned_out" as emotional state not clinical syndrome; "passive_aggressive" as learned communication strategy; "self_loathing" validates while encouraging professional support.
+**Outcome:** Success. 374 tests pass (49 files), all parent-child bidirectionality validated, no duplicate IDs, no orphans. Total emotions: 165 → 218.
+**Insight:** When adding emotions across families, always check for ID collisions across all 11 data files first. The suffix pattern (e.g., `embarrassed_sad`, `exposed_sad`) is the established convention for same-concept-different-context emotions. Romanian labels need extra care for compound phrases (e.g., "Tratat cu condescendenta" for patronized is long but necessary).
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->
