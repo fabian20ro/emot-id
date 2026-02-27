@@ -10,7 +10,10 @@
     "parent": "angry",
     "children": [
       "provoked",
-      "hostile"
+      "hostile",
+      "defiant",
+      "combative",
+      "seething"
     ],
     "description": {
       "ro": "Agresivitatea este energia furiei orientata catre actiune — un impuls de a ataca, domina sau distruge obstacolul. Poate fi fizica, verbala sau pasiva. Agresivitatea nu este intotdeauna disfunctionala — in forme asertive, te ajuta sa iti aperi granitele. Devine problematica cand este disproportionata, indreptata gresit sau cronica.",
@@ -69,7 +72,8 @@
     "children": [
       "infuriated",
       "annoyed",
-      "exasperated"
+      "exasperated",
+      "fed_up"
     ],
     "description": {
       "ro": "Frustrarea apare cand un obstacol sta intre tine si obiectivul tau — vrei sa avansezi dar nu poti. Este furia blocata de neputinta. Frustrarea tolerate te invata rabdare si creativitate in gasirea solutiilor alternative. Frustrarea netolerata poate escalada in furie sau poate duce la renuntare prematura.",
@@ -146,7 +150,8 @@
     "children": [
       "withdrawn",
       "numb",
-      "detached"
+      "detached",
+      "passive_aggressive"
     ],
     "description": {
       "ro": "Distanta emotionala este retragerea constienta sau inconstienta din conectare — te inchizi in tine, ridici ziduri si nu mai lasi pe nimeni sa se apropie. Poate fi o strategie de protectie dupa rani repetate sau un semn de epuizare emotionala. Distanta cronica iti protejeaza vulnerabilitatea, dar te izoleaza de intimitate si apartinere.",
@@ -222,7 +227,9 @@
     "parent": "angry",
     "children": [
       "skeptical",
-      "dismissive"
+      "dismissive",
+      "cynical",
+      "self_critical"
     ],
     "description": {
       "ro": "A fi critic este tendinta de a evalua si judeca constant — pe tine, pe altii si situatiile din jur. Poate reflecta standarde inalte si discernamant, dar si o furie mascata sau o nesiguranta proiectata. Critica cronica erodeaza relatiile si stima de sine. Alternativa sanatoasa este feedbackul constructiv, oferit cu empatie si respect.",
@@ -267,6 +274,132 @@
     "needs": {
       "ro": "constientizare de sine si implicare autentica",
       "en": "self-awareness and genuine engagement"
+    }
+  },
+  "defiant": {
+    "id": "defiant",
+    "label": {
+      "ro": "Sfidator",
+      "en": "Defiant"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "aggressive",
+    "description": {
+      "ro": "Sfidarea este refuzul mandru de a te supune — o rezistenta activa fata de autoritate, control sau asteptari pe care le percepi ca nedrepte sau constrangatoare. Spre deosebire de agresivitatea bruta, sfidarea are o componenta de demnitate — spui 'nu' nu din ura, ci din convingerea ca ai dreptul de a alege. Sfidarea sanatoasa iti protejeaza autonomia; sfidarea cronica te poate izola si te impiedica sa primesti sprijinul de care ai nevoie. Intrebarea esentiala este: rezist pentru ca acest lucru conteaza, sau rezist din obisnuinta?",
+      "en": "Defiance is the proud refusal to submit — an active resistance to authority, control, or expectations you perceive as unjust or constraining. Unlike brute aggression, defiance has a component of dignity — you say 'no' not out of hatred, but from the conviction that you have the right to choose. Healthy defiance protects your autonomy; chronic defiance can isolate you and prevent you from receiving the support you need. The essential question is: am I resisting because this matters, or am I resisting out of habit?"
+    },
+    "needs": {
+      "ro": "autonomie si respect reciproc",
+      "en": "autonomy and mutual respect"
+    }
+  },
+  "combative": {
+    "id": "combative",
+    "label": {
+      "ro": "Combativ",
+      "en": "Combative"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "aggressive",
+    "description": {
+      "ro": "Combativitatea este disponibilitatea activa de a te lupta — nu astepti provocarea, ci o cauti. Esti incordat, alert si gata de confruntare. Aceasta stare poate fi adaptativa in contexte competitive sau cand trebuie sa iti aperi drepturile, dar devine problematica cand transformi fiecare interactiune intr-o batalie. Combativitatea cronica epuizeaza relatiile si te lasa izolat intr-o lume care pare mereu ostila. A recunoaste ca nu toate situatiile sunt lupte este un semn de forta, nu de slabiciune.",
+      "en": "Combativeness is the active readiness to fight — you don't wait for provocation, you seek it. You are tense, alert, and ready for confrontation. This state can be adaptive in competitive contexts or when you need to defend your rights, but becomes problematic when you turn every interaction into a battle. Chronic combativeness exhausts relationships and leaves you isolated in a world that always seems hostile. Recognizing that not all situations are fights is a sign of strength, not weakness."
+    },
+    "needs": {
+      "ro": "discernamant si canalizare",
+      "en": "discernment and channeling"
+    }
+  },
+  "seething": {
+    "id": "seething",
+    "label": {
+      "ro": "Clocotind",
+      "en": "Seething"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "aggressive",
+    "description": {
+      "ro": "A clocoti este experienta furiei intense reprimate — fierbi pe interior dar nu exprimi nimic pe exterior. Fiecare cuvant pe care nu il spui si fiecare gest pe care il retii adauga presiune. Corpul se incinge, gandurile devin repetitive si razbunaitoare, si simti ca esti pe punctul de a exploda. Clocotirea este periculoasa nu prin furia in sine, ci prin presiunea acumulata — cand explozia vine, este adesea disproportionata si distructiva. Eliberarea treptata si constienta a furiei este mult mai sanatoasa decat asteptarea pana la punctul de fierbere.",
+      "en": "Seething is the experience of intense suppressed anger — you are boiling inside but expressing nothing on the outside. Every word you don't say and every gesture you hold back adds pressure. The body heats up, thoughts become repetitive and vengeful, and you feel you are on the verge of exploding. Seething is dangerous not because of the anger itself, but because of the accumulated pressure — when the explosion comes, it is often disproportionate and destructive. Gradual, conscious release of anger is far healthier than waiting until the boiling point."
+    },
+    "needs": {
+      "ro": "exprimare treptata si sigura",
+      "en": "gradual and safe expression"
+    }
+  },
+  "fed_up": {
+    "id": "fed_up",
+    "label": {
+      "ro": "Saturat",
+      "en": "Fed up"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "frustrated",
+    "description": {
+      "ro": "A fi saturat este momentul in care frustrarea acumulata se transforma in hotarare — nu mai esti doar frustrat, ci ai ajuns la limita si esti gata sa schimbi ceva. Este punctul de cotitura in care toleranta se epuizeaza si energia furiei se canalizeaza spre actiune. A fi saturat poate fi un catalizator puternic al schimbarii — este momentul in care spui 'destul' si incepi sa actionezi. Provocarea este sa actionezi cu claritate, nu cu impulsivitate.",
+      "en": "Being fed up is the moment when accumulated frustration transforms into resolve — you are no longer just frustrated, but have reached your limit and are ready to change something. It is the turning point where tolerance is exhausted and the energy of anger channels toward action. Being fed up can be a powerful catalyst for change — it is the moment you say 'enough' and begin to act. The challenge is to act with clarity, not impulsivity."
+    },
+    "needs": {
+      "ro": "actiune cu claritate si hotarare",
+      "en": "action with clarity and resolve"
+    }
+  },
+  "cynical": {
+    "id": "cynical",
+    "label": {
+      "ro": "Cinic",
+      "en": "Cynical"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "critical",
+    "description": {
+      "ro": "Cinismul este convingerea amara ca oamenii sunt fundamental egoisti si ca motivele lor sunt intotdeauna interesate. Este o forma de dezgust amestecata cu anticipare negativa — te astepti mereu la ce este mai rau de la ceilalti si interpreti fiecare gest generos ca avand o agenda ascunsa. Cinismul este adesea o armura construita dupa dezamagiri repetate — te protejeaza de a fi ranit din nou, dar te izoleaza de conexiune si de frumusetea relatiilor umane. Sub cinic se ascunde adesea un idealist ranit.",
+      "en": "Cynicism is the bitter conviction that people are fundamentally selfish and that their motives are always self-interested. It is a form of disgust mixed with negative anticipation — you always expect the worst from others and interpret every generous gesture as having a hidden agenda. Cynicism is often an armor built after repeated disappointments — it protects you from being hurt again, but isolates you from connection and the beauty of human relationships. Under the cynic often hides a wounded idealist."
+    },
+    "needs": {
+      "ro": "experienta pozitiva si deschidere treptata",
+      "en": "positive experience and gradual openness"
+    }
+  },
+  "self_critical": {
+    "id": "self_critical",
+    "label": {
+      "ro": "Autocritic",
+      "en": "Self-critical"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "critical",
+    "description": {
+      "ro": "Autocritica este furia indreptata catre interior — o voce interioara severa care te judeca, te evalueaza si te gaseste mereu insuficient. Este criticul intern care transforma fiecare greseala intr-o confirmare a inadecvarii tale. Autocritica moderata te ajuta sa cresti si sa te corectezi. Autocritica cronica si severa este o forma de agresiune fata de sine care erodeaza stima de sine si poate duce la depresie. Antidotul nu este eliminarea vocii critice, ci adaugarea unei voci la fel de puternice de autocompasiune.",
+      "en": "Self-criticism is anger directed inward — a harsh inner voice that judges you, evaluates you, and always finds you insufficient. It is the inner critic that turns every mistake into a confirmation of your inadequacy. Moderate self-criticism helps you grow and self-correct. Chronic and severe self-criticism is a form of aggression against yourself that erodes self-esteem and can lead to depression. The antidote is not eliminating the critical voice, but adding an equally strong voice of self-compassion."
+    },
+    "needs": {
+      "ro": "autocompasiune si echilibru intern",
+      "en": "self-compassion and inner balance"
+    }
+  },
+  "passive_aggressive": {
+    "id": "passive_aggressive",
+    "label": {
+      "ro": "Pasiv-agresiv",
+      "en": "Passive-aggressive"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "distant",
+    "description": {
+      "ro": "Pasiv-agresivitatea este furia exprimata prin mijloace indirecte — sarcasm, tacere punitivia, amanare intentionata sau conformism aparent urmat de sabotaj subtil. Este un stil de comunicare invatat in medii unde exprimarea directa a furiei nu era sigura. Nu este manipulare constienta, ci un mod de a spune 'sunt furios' fara a risca conflictul deschis. Recunoasterea propriei pasiv-agresivitati este primul pas spre comunicare directa — a invata ca este sigur sa spui ce simti, chiar daca este incomod.",
+      "en": "Passive aggression is anger expressed through indirect means — sarcasm, punitive silence, intentional delay, or apparent compliance followed by subtle sabotage. It is a communication style learned in environments where direct expression of anger was not safe. It is not conscious manipulation, but a way of saying 'I am angry' without risking open conflict. Recognizing your own passive aggression is the first step toward direct communication — learning that it is safe to say what you feel, even if it is uncomfortable."
+    },
+    "needs": {
+      "ro": "siguranta pentru exprimare directa",
+      "en": "safety for direct expression"
     }
   }
 }

@@ -36,7 +36,9 @@
     "children": [
       "embarrassed_sad",
       "disappointed_sad",
-      "wounded"
+      "wounded",
+      "heartbroken",
+      "humbled_sad"
     ],
     "description": {
       "ro": "A fi ranit este experienta dureroasa a unei vatamari emotionale — cineva a facut sau a spus ceva care ti-a atins un loc vulnerabil. Durerea emotionala este la fel de reala ca cea fizica si creierul o proceseaza in zone similare. Rana emotionala are nevoie de aceeasi ingrijire ca o rana fizica — recunoastere, protectie si timp pentru vindecare.",
@@ -113,7 +115,9 @@
     "children": [
       "empty",
       "inferior_sad",
-      "hopeless"
+      "hopeless",
+      "depleted",
+      "melancholic"
     ],
     "description": {
       "ro": "Depresia este mai mult decat tristete — este o stare pervasiva de golire emotionala in care energia, motivatia si capacitatea de a simti placere se diminueaza semnificativ. Lumea pare gri, viitorul pare fara speranta si chiar activitatile obisnuite devin coplesitoare. Depresia este o conditie medicala reala care raspunde la tratament si nu ar trebui niciodata minimizata sau ignorata.",
@@ -190,7 +194,9 @@
     "children": [
       "remorseful",
       "ashamed",
-      "regretful"
+      "regretful",
+      "self_blaming",
+      "unworthy"
     ],
     "description": {
       "ro": "Vinovatia este constientizarea dureroasa ca ai facut ceva gresit sau ca ai ranit pe cineva. Spre deosebire de rusine, care ataca identitatea, vinovatia priveste comportamentul — 'am facut ceva rau', nu 'sunt rau'. Vinovatia sanatoasa te motiveaza sa repari si sa te schimbi. Vinovatia cronica si nerezolvata devine o povara care erodeaza bucuria de a trai.",
@@ -253,6 +259,114 @@
     "needs": {
       "ro": "acceptare si invatare din experienta",
       "en": "acceptance and learning from experience"
+    }
+  },
+  "heartbroken": {
+    "id": "heartbroken",
+    "label": {
+      "ro": "Cu inima franta",
+      "en": "Heartbroken"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "hurt",
+    "description": {
+      "ro": "Inima franta este durerea pura a unei legaturi care s-a rupt — nu o dezamagire sau o rana, ci prabusirea unui pod relational pe care te bazai. Simti o durere fizica in piept, ca si cum ceva s-a rupt cu adevarat inauntrul tau. Lumea pare golita de culoare si de sens. Inima franta este pretul iubirii — nu poti avea una fara riscul celeilalte. Vindecarea nu inseamna sa uiti, ci sa inveti sa traiesti cu cicatricea si sa iti deschizi din nou inima cand esti gata.",
+      "en": "Heartbreak is the pure pain of a bond that has been severed — not a disappointment or a wound, but the collapse of a relational bridge you depended on. You feel a physical pain in your chest, as if something truly broke inside you. The world seems emptied of color and meaning. Heartbreak is the price of love — you cannot have one without risking the other. Healing does not mean forgetting, but learning to live with the scar and opening your heart again when you are ready."
+    },
+    "needs": {
+      "ro": "timp, doliu si prezenta",
+      "en": "time, grieving, and presence"
+    }
+  },
+  "humbled_sad": {
+    "id": "humbled_sad",
+    "label": {
+      "ro": "Smerit",
+      "en": "Humbled"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "hurt",
+    "description": {
+      "ro": "Smerenia este deflarea demna a egoului in fata realitatii — nu umilire, ci recunoasterea calma ca ai supraestimat ceva in tine sau in situatie. Este o tristete lina amestecata cu claritate — vezi lucrurile asa cum sunt, nu cum ai vrut sa fie. Smerenia doare, dar este curata — nu te distruge, ci te aseaza pe un fundament mai solid. Este emotia care inlocuieste mandria cu autenticitate si care te deschide catre invatare si crestere reala.",
+      "en": "Being humbled is the dignified deflation of the ego in the face of reality — not humiliation, but the calm recognition that you overestimated something in yourself or in the situation. It is a gentle sadness mixed with clarity — you see things as they are, not as you wanted them to be. Being humbled hurts, but it is clean — it doesn't destroy you, but places you on a more solid foundation. It is the emotion that replaces pride with authenticity and opens you to learning and real growth."
+    },
+    "needs": {
+      "ro": "acceptare si fundament nou",
+      "en": "acceptance and new foundation"
+    }
+  },
+  "depleted": {
+    "id": "depleted",
+    "label": {
+      "ro": "Secatuit",
+      "en": "Depleted"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "depressed",
+    "description": {
+      "ro": "Secatuirea este epuizarea resurselor emotionale dupa o perioada prelungita de dare fara primire — ai oferit empatie, grija si energie pana cand nu a mai ramas nimic. Nu este oboseala obisnuita, ci golirea pana la fund a rezervorului emotional. Secatuirea apare frecvent la cei care au grija de altii — parinti, ingrijitori, terapeuti, profesori. Recuperarea necesita nu doar odihna, ci si primirea constienta a grijii de la altii — invatarea ca si tu meriti sa fii ingrijit.",
+      "en": "Depletion is the exhaustion of emotional resources after a prolonged period of giving without receiving — you offered empathy, care, and energy until nothing remained. It is not ordinary fatigue, but the draining to the bottom of the emotional reservoir. Depletion frequently occurs in caregivers — parents, caretakers, therapists, teachers. Recovery requires not just rest, but consciously receiving care from others — learning that you too deserve to be cared for."
+    },
+    "needs": {
+      "ro": "primire si reumplere",
+      "en": "receiving and replenishment"
+    }
+  },
+  "melancholic": {
+    "id": "melancholic",
+    "label": {
+      "ro": "Melancolic",
+      "en": "Melancholic"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "depressed",
+    "description": {
+      "ro": "Melancolia este o tristete reflectiva cu o calitate aproape estetica — nu disperare bruta, ci o constienta duios-dureroasa a trecerii timpului, a fragilitatii frumusetii si a naturii efemere a tuturor lucrurilor. Melancolia are o profunzime pe care tristetea obisnuita nu o are — te conecteaza cu ceva universal in experienta umana. Artistii, scriitorii si ganditorii au transformat melancolia in opera si intelegere. Nu este o stare de reparat, ci una de traversat cu atentie — ea iti ofera acces la straturi de simtire pe care graba le ignora.",
+      "en": "Melancholy is a reflective sadness with an almost aesthetic quality — not raw despair, but a tender-painful awareness of the passage of time, the fragility of beauty, and the ephemeral nature of all things. Melancholy has a depth that ordinary sadness lacks — it connects you to something universal in human experience. Artists, writers, and thinkers have transformed melancholy into work and understanding. It is not a state to fix, but one to traverse with attention — it gives you access to layers of feeling that haste ignores."
+    },
+    "needs": {
+      "ro": "contemplare si exprimare creativa",
+      "en": "contemplation and creative expression"
+    }
+  },
+  "self_blaming": {
+    "id": "self_blaming",
+    "label": {
+      "ro": "Autocondamnator",
+      "en": "Self-blaming"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "guilty",
+    "description": {
+      "ro": "Autocondamnarea este tendinta persistenta de a-ti atribui vina pentru lucruri care nu sunt integral sau deloc responsabilitatea ta. Nu este vinovatie sanatoasa, ci o distorsiune cognitiva in care devii tinta propriei furii — 'totul este vina mea' devine un refren intern care te erodeaza. Autocondamnarea este adesea invatata in medii unde erai facut responsabil pentru emotiile si comportamentele altora. Vindecarea vine prin discernamant — inveti sa diferentiezi intre responsabilitate reala si vina preluata.",
+      "en": "Self-blame is the persistent tendency to attribute fault to yourself for things that are not entirely or at all your responsibility. It is not healthy guilt, but a cognitive distortion where you become the target of your own fury — 'everything is my fault' becomes an internal refrain that erodes you. Self-blame is often learned in environments where you were made responsible for others' emotions and behaviors. Healing comes through discernment — learning to differentiate between real responsibility and assumed blame."
+    },
+    "needs": {
+      "ro": "discernamant si eliberare de vina preluata",
+      "en": "discernment and release from assumed blame"
+    }
+  },
+  "unworthy": {
+    "id": "unworthy",
+    "label": {
+      "ro": "Nedemn",
+      "en": "Unworthy"
+    },
+    "color": "#B0C8E4",
+    "level": 2,
+    "parent": "guilty",
+    "description": {
+      "ro": "A te simti nedemn este convingerea dureroasa ca nu meriti binele din viata ta — nu pentru ca ai facut ceva specific gresit, ci pentru ca simti o inadecvare morala fundamentala. 'Nu merit sa fiu iubit', 'nu merit aceasta sansa', 'nu merit sa fiu fericit' — aceste ganduri reflecta o vinovatie difuza care nu are un obiect clar. Nedemnitatea este adesea ecoul unor mesaje internalizate din copilarie. Vindecarea vine prin experienta repetata ca esti primit si acceptat fara conditii — ca meritarea nu este un prerequisit al iubirii.",
+      "en": "Feeling unworthy is the painful conviction that you don't deserve the good in your life — not because you did something specifically wrong, but because you feel a fundamental moral inadequacy. 'I don't deserve to be loved', 'I don't deserve this chance', 'I don't deserve to be happy' — these thoughts reflect a diffuse guilt without a clear object. Unworthiness is often the echo of messages internalized from childhood. Healing comes through repeated experience of being received and accepted without conditions — that deserving is not a prerequisite of love."
+    },
+    "needs": {
+      "ro": "acceptare neconditionata si experienta de merit",
+      "en": "unconditional acceptance and experience of deservingness"
     }
   }
 }

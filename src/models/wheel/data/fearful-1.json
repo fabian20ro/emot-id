@@ -36,7 +36,9 @@
     "children": [
       "helpless",
       "frightened",
-      "panicked"
+      "panicked",
+      "dread",
+      "paralyzed"
     ],
     "description": {
       "ro": "A fi speriat este raspunsul emotional la un pericol perceput ca imediat si concret. Corpul se pregateste de fuga sau lupta, inima bate rapid si atentia se concentreaza exclusiv pe amenintare. Spaima este un raspuns adaptativ esential, dar poate deveni debilitanta cand este declansata de situatii care nu sunt realmente periculoase.",
@@ -113,7 +115,8 @@
     "children": [
       "overwhelmed_fear",
       "worried",
-      "apprehensive"
+      "apprehensive",
+      "obsessive"
     ],
     "description": {
       "ro": "Anxietatea este o stare de neliniste persistenta orientata catre viitor — o anticipare cronica a pericolelor care nu s-au materializat inca. Spre deosebire de frica, care are un obiect clar, anxietatea este adesea difuza si greu de localizat. Corpul ramane in alerta permanenta, consumand resurse pretioase. Anxietatea se trateaza prin constientizare, reglare somatica si expunere treptata.",
@@ -190,7 +193,8 @@
     "children": [
       "inadequate",
       "inferior_fear",
-      "self_doubting"
+      "self_doubting",
+      "self_conscious"
     ],
     "description": {
       "ro": "Nesiguranta este indoiala persistenta cu privire la propria valoare, competenta sau pozitie sociala. Te simti instabil, vulnerabil la critica si dependent de validarea externa. Nesiguranta isi are adesea originile in experienta timpurie de atasament. Vindecarea vine din construirea treptata a unei baze interne de siguranta prin experienta constienta.",
@@ -253,6 +257,78 @@
     "needs": {
       "ro": "validare si incredere treptata",
       "en": "validation and gradual confidence"
+    }
+  },
+  "dread": {
+    "id": "dread",
+    "label": {
+      "ro": "Groaza",
+      "en": "Dread"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "scared",
+    "description": {
+      "ro": "Groaza este frica orientata catre viitor — nu o reactie la un pericol prezent, ci anticiparea unui lucru rau care pare inevitabil. Simti o greutate in piept si o certitudine sumbra ca ceva teribil se apropie, chiar daca nu il poti vedea clar. Groaza este diferita de ingrijorare prin intensitatea ei viscerala — nu gandesti despre pericol, ci il simti in tot corpul. Aceasta emotie iti semnaleaza ca ai nevoie de sprijin si de o perspectiva lucida care sa testeze daca amenintarea este reala sau amplificata de frica.",
+      "en": "Dread is fear oriented toward the future — not a reaction to a present danger, but the anticipation of something bad that seems inevitable. You feel a heaviness in your chest and a somber certainty that something terrible is approaching, even if you cannot see it clearly. Dread differs from worry by its visceral intensity — you do not think about danger, you feel it in your entire body. This emotion signals that you need support and a lucid perspective to test whether the threat is real or amplified by fear."
+    },
+    "needs": {
+      "ro": "perspectiva lucida si ancorare in prezent",
+      "en": "lucid perspective and grounding in the present"
+    }
+  },
+  "paralyzed": {
+    "id": "paralyzed",
+    "label": {
+      "ro": "Paralizat",
+      "en": "Paralyzed"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "scared",
+    "description": {
+      "ro": "Paralizarea este raspunsul de inghetare al corpului in fata fricii — nici fugire, nici luptare, ci imobilizare completa. Mintea se goleste, corpul se rigidizeaza si nu poti actiona chiar daca stii ce ar trebui sa faci. Este un mecanism de aparare ancestral, la fel de valid ca luptarea sau fugirea, dar care devine problematic cand se activeaza in situatii care nu sunt realmente amenintatoare. Iesirea din paralizie incepe cu miscari mici — un deget, o respiratie, un sunet — care iti reamintesc corpului ca are optiuni.",
+      "en": "Paralysis is the body's freeze response to fear — neither flight nor fight, but complete immobilization. The mind empties, the body stiffens, and you cannot act even though you know what you should do. It is an ancestral defense mechanism, as valid as fighting or fleeing, but becomes problematic when activated in situations that are not truly threatening. Breaking out of paralysis begins with small movements — a finger, a breath, a sound — reminding your body that it has options."
+    },
+    "needs": {
+      "ro": "miscari mici si siguranta graduala",
+      "en": "small movements and gradual safety"
+    }
+  },
+  "obsessive": {
+    "id": "obsessive",
+    "label": {
+      "ro": "Obsedat",
+      "en": "Obsessive"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "anxious",
+    "description": {
+      "ro": "Starea obsesiva este buclarea anxioasa a mintii pe aceeasi gandire — o grijire repetitiva care nu duce nicaieri, dar pe care nu o poti opri. Mintea revine mereu la aceeasi tema, aceeasi frica, aceeasi intrebare fara raspuns, ca un disc stricat. Aceasta nu este o tulburare, ci un mod in care anxietatea se manifesta cand se intensifica — mintea incearca sa rezolve ceva ce nu poate fi rezolvat prin gandire. Iesirea din bucla vine prin ancorare in corp, prin actiune concreta si prin acceptarea incertitudinii.",
+      "en": "The obsessive state is the anxious looping of the mind on the same thought — a repetitive worrying that leads nowhere but which you cannot stop. The mind returns again and again to the same theme, the same fear, the same unanswered question, like a broken record. This is not a disorder, but a way anxiety manifests when it intensifies — the mind tries to solve something that cannot be solved through thinking. Breaking the loop comes through grounding in the body, concrete action, and accepting uncertainty."
+    },
+    "needs": {
+      "ro": "ancorare corporala si acceptarea incertitudinii",
+      "en": "bodily grounding and accepting uncertainty"
+    }
+  },
+  "self_conscious": {
+    "id": "self_conscious",
+    "label": {
+      "ro": "Stanjenit",
+      "en": "Self-conscious"
+    },
+    "color": "#B0E0C0",
+    "level": 2,
+    "parent": "insecure",
+    "description": {
+      "ro": "Stanjenirea este constiinta acuta de sine in context social — senzatia ca toti ochii sunt pe tine si ca fiecare gest, cuvant sau expresie este observat si evaluat. Te simti expus si vulnerabil sub o lupa invizibila. Aceasta hipercontientizare de sine iti distorsioneaza perceptia — crezi ca altii te observa mult mai mult decat o fac in realitate. Stanjenirea este de fapt un semn ca iti pasa de felul in care te prezinti, dar devine limitativa cand te impiedica sa fii spontan si autentic.",
+      "en": "Self-consciousness is the acute awareness of oneself in a social context — the sensation that all eyes are on you and that every gesture, word, or expression is being observed and evaluated. You feel exposed and vulnerable under an invisible magnifying glass. This hyper-self-awareness distorts your perception — you believe others notice you far more than they actually do. Self-consciousness is actually a sign that you care about how you present yourself, but becomes limiting when it prevents you from being spontaneous and authentic."
+    },
+    "needs": {
+      "ro": "acceptare de sine si siguranta sociala",
+      "en": "self-acceptance and social safety"
     }
   }
 }

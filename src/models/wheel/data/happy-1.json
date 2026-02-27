@@ -39,7 +39,9 @@
     "children": [
       "aroused",
       "cheeky",
-      "silly"
+      "silly",
+      "delighted",
+      "amused"
     ],
     "description": {
       "ro": "Starea de joc este expresia libertatii emotionale — momentul in care te eliberezi de presiunea productivitatii si te permiti sa experimentezi fara scop. Joaca activeaza creativitatea, reduce stresul si consolideaza legaturile sociale. Adultii care isi pastreaza capacitatea de joc au o rezilienta emotionala mai mare si relatii mai vii.",
@@ -116,7 +118,9 @@
     "children": [
       "free",
       "joyful",
-      "serene"
+      "serene",
+      "satisfied",
+      "blessed"
     ],
     "description": {
       "ro": "Multumirea este o stare calma de satisfactie in care nevoile tale prezente sunt implinite si nu simti urgenta de a schimba nimic. Este o forma de fericire care nu depinde de intensitate sau excitatie, ci de acceptarea pasnica a momentului. Multumirea autentica vine din interior si nu poate fi cumparata sau fortata.",
@@ -192,7 +196,9 @@
     "parent": "happy",
     "children": [
       "curious",
-      "inquisitive"
+      "inquisitive",
+      "fascinated",
+      "absorbed"
     ],
     "description": {
       "ro": "Interesul este deschiderea activa catre ceva nou — o energie cognitiva si emotionala care te atrage sa explorezi, sa inveti si sa intelegi. Este fundamentul motivatiei intrinsece si al dezvoltarii personale. Cand esti cu adevarat interesat, timpul pare sa dispara si efortul devine placut. Interesul este semnul unei minti vii.",
@@ -251,7 +257,8 @@
     "children": [
       "successful",
       "confident",
-      "accomplished"
+      "accomplished",
+      "worthy"
     ],
     "description": {
       "ro": "Mandria este recunoasterea propriei valori si a realizarilor tale. Este emotia care iti confirma ca efortul tau a contat si ca ai crescut. Mandria sanatoasa te ancoreaza in respect de sine fara a te izola de ceilalti. Ea te motiveaza sa continui sa investesti in dezvoltarea ta si sa iti asumi provocari noi.",
@@ -392,5 +399,89 @@
       "ro": "apartinere si confirmare",
       "en": "belonging and confirmation"
     }
+  },
+  "delighted": {
+    "id": "delighted",
+    "label": { "ro": "Incantat", "en": "Delighted" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "playful",
+    "description": {
+      "ro": "Incantarea este o bucurie spontana care apare cand ceva te surprinde placut — un cadou neasteptat, un gest frumos, o coincidenta fericita. Este mai usoara decat bucuria profunda si mai calda decat simplul entuziasm. Incantarea combina surpriza cu placerea, creand un moment de efervescenta emotionala care se simte proaspat si viu. Functia ei adaptiva este sa te orienteze catre sursele de noutate placuta din viata ta, amplificand receptivitatea si deschiderea catre experiente noi.",
+      "en": "Delight is a spontaneous joy that arises when something pleasantly surprises you — an unexpected gift, a kind gesture, a happy coincidence. It is lighter than deep joy and warmer than mere excitement. Delight combines surprise with pleasure, creating a moment of emotional effervescence that feels fresh and alive. Its adaptive function is to orient you toward sources of pleasant novelty in your life, amplifying receptivity and openness to new experiences."
+    },
+    "needs": { "ro": "savurare si prezenta", "en": "savoring and presence" }
+  },
+  "amused": {
+    "id": "amused",
+    "label": { "ro": "Amuzat", "en": "Amused" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "playful",
+    "description": {
+      "ro": "Amuzamentul este raspunsul emotional la ceea ce este comic, neasteptat sau absurd — momentul in care mintea ta percepe o incongruenta si o transforma in placere. Este o forma receptiva de joc, spre deosebire de obraznicie, care este activa si provocatoare. Amuzamentul relaxeaza tensiunea, reduce distanta sociala si semnaleaza ca esti intr-o stare de siguranta suficienta pentru a gasi lucrurile amuzante. Umorul si rasul care insotesc amuzamentul regleaza stresul, intaresc legaturile sociale si imbunatatesc flexibilitatea cognitiva.",
+      "en": "Amusement is the emotional response to what is comic, unexpected, or absurd — the moment when your mind perceives an incongruity and transforms it into pleasure. It is a receptive form of play, unlike cheekiness, which is active and provocative. Amusement eases tension, reduces social distance, and signals that you are in a state of sufficient safety to find things funny. The humor and laughter that accompany amusement regulate stress, strengthen social bonds, and improve cognitive flexibility."
+    },
+    "needs": { "ro": "lejeritate si conexiune", "en": "levity and connection" }
+  },
+  "satisfied": {
+    "id": "satisfied",
+    "label": { "ro": "Satisfacut", "en": "Satisfied" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "content",
+    "description": {
+      "ro": "Satisfactia este sentimentul cald de completare care apare cand o nevoie a fost indeplinita sau o sarcina a fost dusa la bun sfarsit. Este o forma activa de multumire — nu doar absenta dorintei, ci confirmarea ca efortul tau a produs un rezultat pe masura. Spre deosebire de serenitate, care este o pace imobila, satisfactia pastreaza o nota de energie si implinire. Functia ei adaptiva este sa semnaleze ca poti incheia un ciclu si sa te pregateasca pentru urmatorul.",
+      "en": "Satisfaction is the warm feeling of completion that arises when a need has been met or a task brought to a close. It is an active form of contentment — not merely the absence of desire, but the confirmation that your effort has produced a fitting result. Unlike serenity, which is a motionless peace, satisfaction retains a note of energy and fulfillment. Its adaptive function is to signal that you can close a cycle and prepare for the next one."
+    },
+    "needs": { "ro": "completare si recunoastere", "en": "completion and acknowledgment" }
+  },
+  "blessed": {
+    "id": "blessed",
+    "label": { "ro": "Binecuvantat", "en": "Blessed" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "content",
+    "description": {
+      "ro": "Sentimentul de binecuvantare este experienta coplesitoare a abundentei nemeritate — momentul in care realizezi ca ai primit mai mult decat ai cerut sau ai asteptat. Este o multumire adanca amestecata cu uimire si smerenie. Spre deosebire de recunostinta, care este orientata catre un gest specific, binecuvantarea este un sentiment difuz de a fi purtat de viata. Acest sentiment nu depinde de credinta religioasa — el apare ori de cate ori viata depaseste asteptarile tale intr-un mod care te umple de gratitudine.",
+      "en": "The feeling of being blessed is the overwhelming experience of unearned abundance — the moment when you realize you have received more than you asked for or expected. It is a deep contentment mixed with wonder and humility. Unlike thankfulness, which is directed toward a specific gesture, blessedness is a diffuse sense of being carried by life. This feeling does not depend on religious belief — it arises whenever life exceeds your expectations in a way that fills you with gratitude."
+    },
+    "needs": { "ro": "smerenie si savurare", "en": "humility and savoring" }
+  },
+  "fascinated": {
+    "id": "fascinated",
+    "label": { "ro": "Fascinat", "en": "Fascinated" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "interested",
+    "description": {
+      "ro": "Fascinatia este o captare completa a atentiei de catre ceva care te uimeste sau te intriga profund. Este mai intensa decat curiozitatea obisnuita — in fascinatie, obiectul interesului tau pare sa straluceasca si sa atraga tot focusul tau fara efort. Este pragul unei stari de flux, momentul in care treci de la a alege sa fii atent la a nu te putea opri din a fi atent. Functia ei adaptiva este sa te ghideze catre domeniile in care ai cel mai mare potential de invatare si crestere.",
+      "en": "Fascination is the complete capture of your attention by something that awes or deeply intrigues you. It is more intense than ordinary curiosity — in fascination, the object of your interest seems to glow and draw all your focus effortlessly. It is the threshold of a flow state, the moment when you shift from choosing to pay attention to being unable to stop paying attention. Its adaptive function is to guide you toward the domains where you have the greatest potential for learning and growth."
+    },
+    "needs": { "ro": "imersiune si timp neintrerupt", "en": "immersion and uninterrupted time" }
+  },
+  "absorbed": {
+    "id": "absorbed",
+    "label": { "ro": "Captivat", "en": "Absorbed" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "interested",
+    "description": {
+      "ro": "Absorbtia este starea de imersiune completa in care constientizarea de sine si simtul timpului se estompeaza — esti atat de angajat in ceea ce faci incat restul lumii pare sa dispara. Spre deosebire de fascinatie, care este un prag de captare, absorbtia este deja in interiorul experientei: nu mai observi ca esti atent, pur si simplu esti acolo. Este forma cea mai profunda a interesului, aproape de ceea ce psihologul Csikszentmihalyi numea flux.",
+      "en": "Absorption is the state of complete immersion in which self-awareness and the sense of time fade — you are so engaged in what you are doing that the rest of the world seems to disappear. Unlike fascination, which is a threshold of capture, absorption is already inside the experience: you no longer notice you are paying attention, you simply are there. It is the deepest form of interest, close to what psychologist Csikszentmihalyi called flow."
+    },
+    "needs": { "ro": "continuitate si lipsa intreruperilor", "en": "continuity and freedom from interruption" }
+  },
+  "worthy": {
+    "id": "worthy",
+    "label": { "ro": "Demn", "en": "Worthy" },
+    "color": "#FFF0A0",
+    "level": 2,
+    "parent": "proud",
+    "description": {
+      "ro": "Sentimentul de demnitate este recunoasterea interioara ca ai valoare intrinseca — nu pentru ceea ce ai realizat, ci pentru ceea ce esti. Spre deosebire de succesul care vine din performanta sau de increderea care vine din competenta, demnitatea este anterioara oricarei dovezi. Este vocea interioara care spune: merit sa fiu aici, merit sa fiu tratat cu respect. Functia ei adaptiva este sa protejeze granitele personale si sa sustina alegerile care te onoreaza. Demnitatea sanatoasa este opusul rusinii.",
+      "en": "The feeling of worthiness is the inner recognition that you have intrinsic value — not for what you have accomplished, but for who you are. Unlike success, which comes from performance, or confidence, which comes from competence, worthiness precedes any evidence. It is the inner voice that says: I deserve to be here, I deserve to be treated with respect. Its adaptive function is to protect personal boundaries and sustain choices that honor you. Healthy worthiness is the opposite of shame."
+    },
+    "needs": { "ro": "validare si auto-compasiune", "en": "validation and self-compassion" }
   }
 }

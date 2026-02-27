@@ -115,7 +115,8 @@
     "children": [
       "disrespected",
       "ridiculed",
-      "degraded"
+      "degraded",
+      "patronized"
     ],
     "description": {
       "ro": "Umilirea este experienta de a fi facut sa te simti mic, ndemn si lipsit de valoare in fata celorlalti. Ataca nucleul identitatii tale sociale. Umilirea provoaca o furie intensa amestecata cu rusine — vrei simultan sa dispari si sa te razbuni. Este una dintre cele mai dificile rani emotionale de vindecat si poate genera resentimente de lunga durata.",
@@ -191,7 +192,9 @@
     "parent": "angry",
     "children": [
       "indignant",
-      "violated"
+      "violated",
+      "spiteful",
+      "vengeful"
     ],
     "description": {
       "ro": "Amaraciunea este furia care s-a sedimentat in timp — un resentiment cronic cauzat de nedreptati repetate sau nerezolvate. Este ca o otrava lenta care iti coloreaza perceptia lumii in tonuri intunecate. Amaraciunea te protejeaza de noi dezamagiri, dar te si izoleaza de bucurie si conexiune. Eliberarea vine prin doliu si prin alegerea constienta de a nu mai purta povara.",
@@ -313,6 +316,60 @@
     "needs": {
       "ro": "pauza imediata si descarcare fizica sigura",
       "en": "immediate pause and safe physical discharge"
+    }
+  },
+  "spiteful": {
+    "id": "spiteful",
+    "label": {
+      "ro": "Rauvoitor",
+      "en": "Spiteful"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "bitter",
+    "description": {
+      "ro": "Rauvointa este amaraciunea transformata in dorinta activa de a face rau — nu doar ca suferi, ci vrei ca si celalalt sa sufere. Este furia care a trecut de la aparare la atac si de la reactie la intentie. Rauvointa iti ofera o iluzie de putere si de dreptate, dar in realitate te leaga mai strans de durerea care a generat-o. A recunoaste rauvointa in tine nu este un esec moral, ci un semnal ca porti o rana neingrijita care cere atentie, nu razbunare.",
+      "en": "Spite is bitterness transformed into the active desire to cause harm — you are not just suffering, but want the other to suffer too. It is anger that has moved from defense to attack and from reaction to intention. Spite gives you an illusion of power and justice, but in reality it binds you more tightly to the pain that generated it. Recognizing spite in yourself is not a moral failure, but a signal that you carry an untended wound that needs attention, not revenge."
+    },
+    "needs": {
+      "ro": "ingrijirea ranii si eliberare",
+      "en": "tending the wound and release"
+    }
+  },
+  "vengeful": {
+    "id": "vengeful",
+    "label": {
+      "ro": "Dornic de razbunare",
+      "en": "Vengeful"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "bitter",
+    "description": {
+      "ro": "Dorinta de razbunare este preocuparea strategica sustinuta de a restabili echilibrul prin pedepsirea celui care te-a ranit. Spre deosebire de rauvointa, care este reactiva si impulsiva, razbunarea este planificata si raspunde unei logici interne de dreptate. Te gandesti mereu la cum sa raspunzi, la cum sa echilibrezi balanta. Aceasta preocupare iti consuma resurse emotionale enorme si te tine ancorat in trecut. Vindecarea nu inseamna ca nedreptatea nu a contat, ci ca alegi sa nu iti mai sacrifici prezentul pentru a pedepsi trecutul.",
+      "en": "Vengefulness is the sustained strategic preoccupation with restoring balance by punishing the one who hurt you. Unlike spite, which is reactive and impulsive, vengeance is planned and responds to an internal logic of justice. You constantly think about how to respond, how to even the scales. This preoccupation consumes enormous emotional resources and keeps you anchored in the past. Healing does not mean the injustice didn't matter, but that you choose to no longer sacrifice your present to punish the past."
+    },
+    "needs": {
+      "ro": "dreptate si eliberarea trecutului",
+      "en": "justice and releasing the past"
+    }
+  },
+  "patronized": {
+    "id": "patronized",
+    "label": {
+      "ro": "Tratat cu condescendenta",
+      "en": "Patronized"
+    },
+    "color": "#F4B4B4",
+    "level": 2,
+    "parent": "humiliated",
+    "description": {
+      "ro": "A fi tratat cu condescendenta este o umilire subtila si greu de contestat — cineva iti vorbeste de parca ar fi superior, iti explica ce deja stii sau iti ofera ajutor pe care nu l-ai cerut, totul sub masca bunatatii. Este o agresiune pasiva care iti neaga competenta si autonomia. Furia pe care o simti este legitima — instinctul tau iti spune ca egalitatea ta a fost negata. Raspunsul sanatos este asertivitatea calma — a numi ce s-a intamplat fara a escalada conflictul.",
+      "en": "Being patronized is a subtle and hard-to-contest humiliation — someone speaks to you as if they were superior, explains what you already know, or offers help you didn't ask for, all under the guise of kindness. It is a passive aggression that denies your competence and autonomy. The anger you feel is legitimate — your instinct tells you that your equality was denied. The healthy response is calm assertiveness — naming what happened without escalating the conflict."
+    },
+    "needs": {
+      "ro": "recunoasterea competentei si egalitate",
+      "en": "recognition of competence and equality"
     }
   }
 }

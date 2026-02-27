@@ -79,7 +79,10 @@
     "parent": "surprised",
     "children": [
       "astonished",
-      "awe"
+      "awe",
+      "impressed",
+      "speechless",
+      "moved"
     ],
     "description": {
       "ro": "Uimirea este o surpriza amplificata de admiratie — o stare in care esti coplesit de ceva care iti depaseste asteptarile in mod extraordinar. Mintea se opreste, ochii se deschid larg si simti ca lumea este mai vasta decat credeai. Uimirea te reconecteaza cu misterul existentei si cu propria ta capacitate de a te minuna.",
@@ -102,7 +105,8 @@
     "children": [
       "eager",
       "energetic",
-      "thrilled"
+      "thrilled",
+      "electrified"
     ],
     "description": {
       "ro": "Entuziasmul este o stare de energie ridicata si asteptare pozitiva — corpul vibreaza, mintea alearga si simti un impuls puternic catre actiune. Este anticiparea intalnita cu bucuria. Entuziasmul este contagios si te face mai carismatic, mai creativ si mai curajos. Este combustibilul care transforma planurile in actiuni.",
@@ -309,6 +313,78 @@
     "needs": {
       "ro": "exprimare si savurare",
       "en": "expression and savoring"
+    }
+  },
+  "impressed": {
+    "id": "impressed",
+    "label": {
+      "ro": "Impresionat",
+      "en": "Impressed"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "amazed",
+    "description": {
+      "ro": "A fi impresionat este uimirea indreptata catre o persoana — recunosti in altcineva o calitate, o realizare sau o capacitate care iti depaseste asteptarile. Este amestecul de surpriza cu admiratie care te face sa privesti cu alti ochi pe cel din fata ta. A fi impresionat te deschide catre invatare si inspiratie — recunosti ca cineva a reusit ceva ce merita atentia ta. Este o emotie care te conecteaza cu excelenta si te motiveaza sa cresti.",
+      "en": "Being impressed is amazement directed toward a person — you recognize in someone a quality, achievement, or capacity that exceeds your expectations. It is the blend of surprise with admiration that makes you see the person before you in a new light. Being impressed opens you to learning and inspiration — you recognize that someone achieved something worthy of your attention. It is an emotion that connects you with excellence and motivates you to grow."
+    },
+    "needs": {
+      "ro": "recunoastere si inspiratie",
+      "en": "recognition and inspiration"
+    }
+  },
+  "speechless": {
+    "id": "speechless",
+    "label": {
+      "ro": "Fara cuvinte",
+      "en": "Speechless"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "amazed",
+    "description": {
+      "ro": "A ramane fara cuvinte este momentul in care experienta depaseste capacitatea limbajului de a o captura — esti atat de coplesit de ceea ce simti incat nu gasesti cuvinte. Nu este lipsa de vocabular, ci recunoasterea ca unele momente sunt mai mari decat orice expresie verbala. Este o forma de uimire care iti reduce mintea la tacere respectuoasa, lasand loc simtirii pure. A fi fara cuvinte este un semn ca ai intalnit ceva cu adevarat extraordinar.",
+      "en": "Being speechless is the moment when experience exceeds language's capacity to capture it — you are so overwhelmed by what you feel that you cannot find words. It is not a lack of vocabulary, but the recognition that some moments are larger than any verbal expression. It is a form of amazement that reduces your mind to respectful silence, making room for pure feeling. Being speechless is a sign that you have encountered something truly extraordinary."
+    },
+    "needs": {
+      "ro": "tacere si procesare",
+      "en": "silence and processing"
+    }
+  },
+  "moved": {
+    "id": "moved",
+    "label": {
+      "ro": "Emotionat",
+      "en": "Moved"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "amazed",
+    "description": {
+      "ro": "A fi emotionat este experienta de a fi atins in profunzimea fiintei tale de ceva frumos, autentic sau neasteptat de bun — un gest de bunatate, o poveste de curaj, un moment de vulnerabilitate partajata. Ochii se umezesc, gatul se strange si simti o caldura care iti umple pieptul. A fi emotionat este surpriza amestecata cu gingasia — descoperi ca lumea poate fi mai frumoasa decat te asteptai. Este una dintre emotiile care ne reamintesc de ce merita sa fim umani.",
+      "en": "Being moved is the experience of being touched in the depths of your being by something beautiful, authentic, or unexpectedly good — a gesture of kindness, a story of courage, a moment of shared vulnerability. Eyes moisten, throat tightens, and you feel a warmth filling your chest. Being moved is surprise blended with tenderness — you discover the world can be more beautiful than you expected. It is one of the emotions that reminds us why it is worth being human."
+    },
+    "needs": {
+      "ro": "savurare si partajare",
+      "en": "savoring and sharing"
+    }
+  },
+  "electrified": {
+    "id": "electrified",
+    "label": {
+      "ro": "Electrizat",
+      "en": "Electrified"
+    },
+    "color": "#C8E8CC",
+    "level": 2,
+    "parent": "excited",
+    "description": {
+      "ro": "A fi electrizat este un soc pozitiv de energie care te traverseaza ca un fulger — un entuziasm brusc si intens care iti activeaza intreg corpul intr-o clipa. Pielea se infioara, pulsul se accelereaza si simti un val de posibilitate care te ridica. Spre deosebire de entuziasmul sustinut, electrizarea este momentana si fulgeratoare — o descarcaere de excitare pura care vine si trece rapid, lasand in urma un sentiment de vitalitate si disponibilitate pentru actiune.",
+      "en": "Being electrified is a positive shock of energy that traverses you like lightning — a sudden and intense enthusiasm that activates your entire body in an instant. Skin tingles, pulse quickens, and you feel a wave of possibility lifting you up. Unlike sustained excitement, electrification is momentary and flash-like — a discharge of pure arousal that comes and goes quickly, leaving behind a feeling of vitality and readiness for action."
+    },
+    "needs": {
+      "ro": "exprimare si actiune imediata",
+      "en": "expression and immediate action"
     }
   }
 }
