@@ -10,6 +10,36 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['apple-touch-icon.png'],
+      workbox: {
+        globPatterns: [],
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.destination === 'document',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'html-cache',
+              expiration: { maxAgeSeconds: 180 },
+            },
+          },
+          {
+            urlPattern: ({ request }) =>
+              ['style', 'script', 'worker'].includes(request.destination),
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'asset-cache',
+              expiration: { maxAgeSeconds: 180 },
+            },
+          },
+          {
+            urlPattern: ({ request }) => request.destination === 'image',
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'image-cache',
+              expiration: { maxAgeSeconds: 180, maxEntries: 50 },
+            },
+          },
+        ],
+      },
       manifest: {
         name: 'Emot-ID',
         short_name: 'Emot-ID',
