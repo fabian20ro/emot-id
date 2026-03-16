@@ -1,27 +1,14 @@
 # Lessons Learned
 
-> This file is maintained by AI agents working on this project.
-> It captures validated, reusable insights discovered during development.
-> **Read this file at the start of every task. Update it at the end of every iteration.**
+> maintained by AI agents. validated, reusable insights.
+> **read start of every task. update end of every iteration.**
 
-## How to Use This File
+## How to Use
 
-### Reading (Start of Every Task)
-Before starting any work, read this file to avoid repeating known mistakes
-and to leverage proven approaches.
-
-### Writing (End of Every Iteration)
-After completing a task or iteration, evaluate whether any new insight was
-gained that would be valuable for future sessions. If yes, add it to the
-appropriate category below.
-
-### Promotion from Iteration Log
-Patterns that appear 2+ times in `ITERATION_LOG.md` should be promoted
-here as a validated lesson.
-
-### Pruning
-If a lesson becomes obsolete (e.g., a dependency was removed, an API changed),
-move it to the Archive section at the bottom with a date and reason.
+- **start of task:** read before writing code — avoid known mistakes
+- **end of iteration:** new reusable insight? → add to appropriate category
+- **promotion:** pattern 2+ times in `ITERATION_LOG.md` → promote here
+- **pruning:** obsolete → Archive section (date + reason). never delete.
 
 ---
 
