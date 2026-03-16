@@ -1,23 +1,14 @@
-# Emot-ID
+# AGENTS.md
 
-> Non-discoverable bootstrap context.
-> If the model can find it in the codebase, it does not belong here.
-> For corrections and patterns, see LESSONS_LEARNED.md.
+work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
-Privacy-first, clinically respectful emotion identification tool. No backend, no telemetry.
-
-## Operating Priorities
-
-1. Safety and correctness
-2. Accessibility and UX quality
-3. Extensibility and maintainability
-4. Performance and bundle discipline
-5. Delivery speed
+> bootstrap context only. discoverable from codebase → don't put here.
+> corrections + patterns → LESSONS_LEARNED.md.
 
 ## Constraints
 
 - Client-only. No backend, no telemetry, no outbound network calls without explicit product/security intent.
-- i18n is mandatory for all user-facing copy (`src/i18n/en.json` + `ro.json`).
+- i18n mandatory for all user-facing copy (`src/i18n/en.json` + `ro.json`).
 - Fixed overlays must portal to `document.body` and focus-trap (WebKit stacking context bug).
 - Crisis logic (`src/models/distress.ts`, `src/data/temporal-crisis.ts`) must remain deterministic and auditable.
 
@@ -37,36 +28,40 @@ Privacy-first, clinically respectful emotion identification tool. No backend, no
 - Wheel replaced non-emotion label `busy` with `overwhelmed`.
 - Dimensional model includes extra unpleasant-calm emotions to reduce quadrant sparsity.
 
-## Workflow
+## Legacy & Deprecated
 
-- Before editing: read relevant docs in `docs/CODEMAPS/`, read `LESSONS_LEARNED.md`. If prioritizing, read `ANALYSIS.md` first.
-- After structural changes: update codemaps in the same PR.
+<!-- codebase parts that actively mislead. add only if removal isn't possible. -->
 
 ## Learning System
 
-This project uses a persistent learning system. Follow this every session:
+Every session:
+1. start: read `LESSONS_LEARNED.md`
+2. during: note surprises
+3. end: append `ITERATION_LOG.md`
+4. reusable insight? → also add `LESSONS_LEARNED.md`
+5. same issue 2+ times in log? → promote to `LESSONS_LEARNED.md`
+6. surprise? → flag to developer (they decide: fix codebase / update LESSONS_LEARNED / adjust this file)
 
-1. **Start of task:** Read `LESSONS_LEARNED.md` — validated corrections and patterns
-2. **During work:** Note any surprises or non-obvious discoveries
-3. **End of iteration:** Append to `ITERATION_LOG.md` (always). Update `LESSONS_LEARNED.md` (if reusable insight)
-4. **Pattern detection:** Same issue 2+ times in the log → promote to `LESSONS_LEARNED.md`
+| File | Purpose | Write When |
+|------|---------|------------|
+| `LESSONS_LEARNED.md` | curated wisdom + corrections | reusable insight gained |
+| `ITERATION_LOG.md` | raw session journal, append-only | every iteration |
 
-| File | Purpose | When to Write |
-|------|---------|---------------|
-| `LESSONS_LEARNED.md` | Curated, validated wisdom | When insight is reusable |
-| `ITERATION_LOG.md` | Raw session journal (append-only) | Every iteration (always) |
+Rules: never delete from ITERATION_LOG. Obsolete lessons → Archive in LESSONS_LEARNED. Date-stamp YYYY-MM-DD. When in doubt: log it.
 
-Rules: Never delete from `ITERATION_LOG.md`. Obsolete lessons → Archive section in `LESSONS_LEARNED.md` (not deleted). Date-stamp everything `YYYY-MM-DD`. When in doubt: log it.
+### Periodic Maintenance
+Config files audited periodically via `SETUP_AI_AGENT_CONFIG.md`.
+See "Periodic Maintenance Protocol" section.
 
 ## Sub-Agents
 
-Specialized agents in `.claude/agents/`. Invoke proactively — don't wait to be asked.
+`.claude/agents/`. Invoke proactively.
 
-| Agent | When to Use |
-|-------|-------------|
-| psychologist | Adding/modifying emotion models, writing descriptions, crisis logic review |
-| senior-software-engineer | Planning features, reviewing architecture, structural decisions |
-| code-simplifier | Post-implementation refinement, refactoring |
-| ux-expert | Layout changes, interaction design, accessibility, responsive behavior |
-| planner | Complex multi-step features, cross-cutting changes |
-| agent-creator | Creating new specialist sub-agents |
+| Agent | File | When |
+|-------|------|------|
+| Psychologist | `.claude/agents/psychologist.md` | emotion models, descriptions, crisis logic review |
+| Senior Software Engineer | `.claude/agents/senior-software-engineer.md` | architecture, implementation strategy, technical tradeoffs |
+| Code Simplifier | `.claude/agents/code-simplifier.md` | post-implementation refinement, refactoring |
+| UX Expert | `.claude/agents/ux-expert.md` | layout, interaction design, a11y, responsive |
+| Planner | `.claude/agents/planner.md` | complex multi-step features, cross-cutting changes |
+| Agent Creator | `.claude/agents/agent-creator.md` | new agent needed for recurring domain |

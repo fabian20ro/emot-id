@@ -20,6 +20,21 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-03-16] Periodic maintenance audit of agent config files
+
+**Context:** Applied SETUP_AI_AGENT_CONFIG.md periodic maintenance protocol to audit all config files against the research-backed guide.
+**What happened:**
+- Audited AGENTS.md: added `work style: telegraph` directive, removed discoverable project description (already in README), added `Legacy & Deprecated` section, added periodic maintenance reference, added file paths to sub-agents table, condensed to template structure. Went from ~73 lines to ~65 lines.
+- Audited LESSONS_LEARNED.md: condensed verbose "How to Use" section to match template's compact format. All 11 active lessons retained — all still relevant.
+- Audited ITERATION_LOG.md: 5 entries since last maintenance (2026-02-17 to 2026-02-27). No unhandled patterns detected — all promotable insights were already handled.
+- Audited sub-agents: 6 agents. 3 under 100-line limit (agent-creator 65, planner 70, code-simplifier 85). 3 over limit (psychologist 130, senior-software-engineer 126, ux-expert 176). Flagged ux-expert as most bloated but preserved domain-specific content that earns its place per SkillsBench research.
+- Cross-file consistency: zero overlap between AGENTS.md and LESSONS_LEARNED.md. Sub-agents table matches `.claude/agents/` directory. All file references valid.
+**Outcome:** Success. Config files leaner, aligned with guide template. No content lost.
+**Insight:** The 100-line limit for sub-agents is a guideline, not a hard rule — domain-specific advisory agents (psychologist, ux-expert) carry knowledge that isn't model-native or codebase-discoverable. Trimming would lose curated value.
+**Promoted to Lessons Learned:** No
+
+---
+
 ### [2026-02-24] Restructure AI agent config per setup guide
 
 **Context:** Applied research-backed AI agent configuration guide (Evaluating AGENTS.md, SkillsBench) to restructure project config files. Goal: remove discoverable content from agent context, keep only non-discoverable policy/constraints.
