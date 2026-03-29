@@ -58,7 +58,7 @@ When creating a new agent, produce:
 - [ ] "When to Activate" has 3+ specific triggers
 - [ ] "Output Format" has concrete template
 - [ ] 3-5 actionable principles
-- [ ] Does NOT overlap with existing agents (psychologist, senior-software-engineer, code-simplifier, ux-expert, planner)
+- [ ] Does NOT overlap with existing agents (architect, psychologist, code-simplifier, ux-expert, planner)
 - [ ] Scope is 2-3 modules
 - [ ] File is under 100 lines
 - [ ] AGENTS.md table updated

@@ -18,6 +18,8 @@
 
 **[2026-02-07]** Mobile clipping/overlap issues come from weak height constraints — Enforce explicit parent-child height chains (`h-full`, `min-h-0`) and normal-flow layout. Prefer structural sizing fixes over hardcoded transforms. Keep touch targets >=44px (>=48px for dense chip rows).
 
+**[2026-02-24]** Emotion seed data includes deliberate non-obvious corrections — Preserve these unless explicitly revalidated: Plutchik `nostalgia = [serenity, sadness]`, Plutchik `compassion = [trust, sadness]`, duplicate `aggressiveness` stays replaced by `ruthlessness`, wheel uses `overwhelmed` instead of non-emotion label `busy`, and the dimensional model keeps extra unpleasant-calm emotions to avoid quadrant sparsity.
+
 ## Code Patterns & Pitfalls
 
 **[2026-02-07]** Temporary script format must match module mode — `.js` + `require(...)` fails in `"type": "module"` repos. Use `.cjs` for CommonJS temporary scripts. Always check `package.json` module type before writing temp scripts.
@@ -50,7 +52,7 @@
 
 ## Process & Workflow
 
-<!-- No entries yet -->
+**[2026-03-29]** Keep `AGENTS.md` in the ROM layer only — if a fact is discoverable from code, docs, configs, or tests, keep it out of bootstrap memory. Put repeated corrections in `LESSONS_LEARNED.md`; keep raw single-session observations in `ITERATION_LOG.md`.
 
 ---
 

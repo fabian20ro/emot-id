@@ -20,6 +20,21 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-03-29] Maintenance audit after pulled config changes
+
+**Context:** Re-audited the repo after a `git pull` to align the existing agent-memory system with the setup guide without dropping project-specific memory.
+**What happened:**
+- Slimmed `AGENTS.md` down to bootstrap-only ROM content: refs to `LESSONS_LEARNED.md`, `ITERATION_LOG.md`, `SETUP_AI_AGENT_CONFIG.md`, core constraints, and active sub-agents only.
+- Moved non-obvious model data corrections out of `AGENTS.md` into `LESSONS_LEARNED.md`; added a process lesson clarifying the ROM/RAM/log split.
+- Replaced overlapping generalist sub-agent `senior-software-engineer.md` with focused `architect.md`.
+- Fixed stale `CLAUDE.md` references inside `code-simplifier.md`.
+- Added missing `SETUP_AI_AGENT_CONFIG.md` and `.github/pull_request_template.md`.
+**Outcome:** Success. Memory layers clearer, stale references removed, missing maintenance artifacts added.
+**Insight:** After config files already exist, setup work should behave like a maintenance migration, not a reset. Preserve durable lessons; only move them to the right layer.
+**Promoted to Lessons Learned:** Yes
+
+---
+
 ### [2026-03-16] Periodic maintenance audit of agent config files
 
 **Context:** Applied SETUP_AI_AGENT_CONFIG.md periodic maintenance protocol to audit all config files against the research-backed guide.
