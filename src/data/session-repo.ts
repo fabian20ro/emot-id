@@ -1,4 +1,4 @@
-import { createStore, get, set, del, keys } from 'idb-keyval'
+import { createStore, set, del, keys, values } from 'idb-keyval'
 import type { Session } from './types'
 
 const store = createStore('emot-id-sessions', 'sessions')
@@ -8,12 +8,8 @@ export async function saveSession(session: Session): Promise<void> {
 }
 
 export async function getAllSessions(): Promise<Session[]> {
-  const allKeys = await keys(store)
-  const sessions: Session[] = []
-  for (const key of allKeys) {
-    const session = await get<Session>(key, store)
-    if (session) sessions.push(session)
-  }
+  const allValues = await values<Session>(store)
+  const sessions = allValues.filter((session): session is Session => session !== undefined)
   return sessions.sort((a, b) => b.timestamp - a.timestamp)
 }
 
