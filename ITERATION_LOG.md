@@ -148,4 +148,17 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-04-11] Fix GitHub Actions npm ci failure from Vitest peer mismatch
+
+**Context:** GitHub Pages deploy run `24269632901` failed during `npm ci` with `ERESOLVE` because `vitest` was bumped to `^4.1.2` while `@vitest/coverage-v8` stayed on `^4.0.18`.
+**What happened:**
+- Read `LESSONS_LEARNED.md` first; then checked local repo and found it stale versus remote `main`, so fetched `origin/main` and switched to a fix branch from the failing revision.
+- Confirmed remote `package.json`/`package-lock.json` mismatch via `gh api`: root requested `vitest ^4.1.2` but `@vitest/coverage-v8 ^4.0.18`, and the lockfile still carried `@vitest/coverage-v8` peer `vitest 4.0.18`.
+- Updated `package.json` to `@vitest/coverage-v8 ^4.1.2`, regenerated `package-lock.json`, then verified with fresh `npm ci`, `npm test`, and `npm run build`.
+**Outcome:** Success. `npm ci` now passes locally; tests passed (`52` files, `396` tests) and production build succeeded.
+**Insight:** For Vitest upgrades, helper packages like `@vitest/coverage-v8` need to stay on the same release line as `vitest` or CI will fail before tests even start.
+**Promoted to Lessons Learned:** Yes
+
+---
+
 <!-- New entries go above this line, most recent first -->
