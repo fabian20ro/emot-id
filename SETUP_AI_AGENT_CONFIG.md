@@ -143,6 +143,7 @@ Periodic maintenance -> hand this doc to agent, full audit
 project-root/
 |- AGENTS.md                 # bootstrap (minimal, non-discoverable only)
 |- CLAUDE.md                 # redirect -> AGENTS.md
+|- GEMINI.md                 # redirect -> AGENTS.md
 |- LESSONS_LEARNED.md        # curated corrections + validated wisdom
 |- ITERATION_LOG.md          # append-only session journal
 |- SETUP_AI_AGENT_CONFIG.md  # setup + maintenance protocol
@@ -156,15 +157,15 @@ project-root/
 
 ---
 
-## Step 1: `CLAUDE.md`
+## Step 1: `CLAUDE.md` and `GEMINI.md`
 
 Entire file content:
 
 ```markdown
-Read AGENTS.md
+Read AGENTS.md asap
 ```
 
-Nothing else. Redirect for tools expecting `CLAUDE.md`.
+Nothing else. Redirect for tools expecting `CLAUDE.md` or `GEMINI.md`
 
 ---
 
@@ -541,7 +542,7 @@ Raw append-only journal. Source of truth for what happened. Patterns promoted to
 ## Step 6: Git
 
 ```bash
-git add AGENTS.md CLAUDE.md LESSONS_LEARNED.md ITERATION_LOG.md SETUP_AI_AGENT_CONFIG.md .claude/agents/ .github/pull_request_template.md
+git add AGENTS.md CLAUDE.md GEMINI.md LESSONS_LEARNED.md ITERATION_LOG.md SETUP_AI_AGENT_CONFIG.md .claude/agents/ .github/pull_request_template.md
 git commit -m "chore: add AI agent config + memory system"
 ```
 
@@ -558,7 +559,8 @@ PR template addition:
 
 ## Verification
 
-- [ ] `CLAUDE.md` = only `Read AGENTS.md`
+- [ ] `CLAUDE.md` = only `Read AGENTS.md asap`
+- [ ] `GEMINI.md` = only `Read AGENTS.md asap`
 - [ ] `AGENTS.md`: minimal, no `/init` content, no corrections (`LESSONS_LEARNED.md` instead), starts with `work style: telegraph`
 - [ ] `AGENTS.md` references `LESSONS_LEARNED.md`, `ITERATION_LOG.md`, sub-agents
 - [ ] `.claude/agents/architect.md` exists
