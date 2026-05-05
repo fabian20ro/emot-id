@@ -28,7 +28,8 @@
     "exploreAI": "Explore with AI",
     "aiPrompt": "I am feeling {emotions}. What does this emotion mean and how can I understand it better?",
     "aiPromptMultiple": "I am feeling a combination of {emotions}. How do these emotions relate and what might this mean?",
-    "aiWarning": "This will search for general information online. Results are not a substitute for professional support."
+    "aiWarning": "This will search for general information online. Results are not a substitute for professional support.",
+    "externalAIDisabled": "External AI search is off. You can enable it in Settings."
   },
   "modal": {
     "close": "Close",
@@ -103,7 +104,11 @@
     "saveSessionsLabel": "Save sessions",
     "saveSessionsOn": "On",
     "saveSessionsOff": "Off",
-    "deleteExistingSessions": "Delete existing sessions?"
+    "deleteExistingSessions": "Delete existing sessions?",
+    "allowExternalAI": "External AI links",
+    "allowExternalAIOn": "On",
+    "allowExternalAIOff": "Off",
+    "allowExternalAIHint": "When enabled, opening AI links sends your selected emotions to an external search engine."
   },
   "reminders": {
     "label": "Daily reminder",

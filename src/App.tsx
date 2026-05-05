@@ -102,6 +102,9 @@ export default function App() {
   const [saveSessions, setSaveSessions] = useState(() => {
     return storage.get('saveSessions') !== 'false'
   })
+  const [allowExternalAI, setAllowExternalAI] = useState(() => {
+    return storage.get('allowExternalAI') === 'true'
+  })
 
   const handleSaveSessionsChange = useCallback((save: boolean) => {
     storage.set('saveSessions', String(save))
@@ -113,6 +116,11 @@ export default function App() {
       }
     }
   }, [clearAllSessions, sessions.length, settingsT])
+
+  const handleAllowExternalAIChange = useCallback((allow: boolean) => {
+    storage.set('allowExternalAI', String(allow))
+    setAllowExternalAI(allow)
+  }, [])
 
   const {
     dailyReminderEnabled,
@@ -278,6 +286,8 @@ export default function App() {
         onSoundMutedChange={setMuted}
         saveSessions={saveSessions}
         onSaveSessionsChange={handleSaveSessionsChange}
+        allowExternalAI={allowExternalAI}
+        onAllowExternalAIChange={handleAllowExternalAIChange}
         dailyReminderEnabled={dailyReminderEnabled}
         reminderSupported={reminderSupported}
         reminderPermission={reminderPermission}
@@ -368,6 +378,7 @@ export default function App() {
         onSessionComplete={handleSessionComplete}
         escalateCrisis={shouldEscalateCrisis}
         currentModelId={analysisSource === 'quick' ? undefined : modelId}
+        allowExternalAI={allowExternalAI}
         selections={modalSelections}
         results={analysisResults}
       />

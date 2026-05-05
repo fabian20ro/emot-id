@@ -28,7 +28,8 @@
     "exploreAI": "Exploreaza cu AI",
     "aiPrompt": "Simt {emotions}. Ce inseamna aceasta emotie si cum o pot intelege mai bine?",
     "aiPromptMultiple": "Simt o combinatie de {emotions}. Cum se leaga aceste emotii si ce ar putea insemna?",
-    "aiWarning": "Aceasta va cauta informatii generale online. Rezultatele nu inlocuiesc sprijinul profesional."
+    "aiWarning": "Aceasta va cauta informatii generale online. Rezultatele nu inlocuiesc sprijinul profesional.",
+    "externalAIDisabled": "Cautarea AI externa este oprita. O poti activa din Setari."
   },
   "modal": {
     "close": "Inchide",
@@ -103,7 +104,11 @@
     "saveSessionsLabel": "Salveaza sesiunile",
     "saveSessionsOn": "Pornit",
     "saveSessionsOff": "Oprit",
-    "deleteExistingSessions": "Stergi sesiunile existente?"
+    "deleteExistingSessions": "Stergi sesiunile existente?",
+    "allowExternalAI": "Linkuri AI externe",
+    "allowExternalAIOn": "Pornit",
+    "allowExternalAIOff": "Oprit",
+    "allowExternalAIHint": "Cand e activat, deschiderea linkurilor AI trimite emotiile selectate catre un motor extern de cautare."
   },
   "reminders": {
     "label": "Memento zilnic",

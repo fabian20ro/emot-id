@@ -31,6 +31,7 @@ interface ResultsViewProps {
   noCombinationsLabel: string
   tier4AcknowledgeLabel: string
   exploreAILabel: string
+  externalAIDisabledLabel: string
   showDescriptionLabel?: string
   readMoreLabel?: string
   needsLabel?: string
@@ -63,6 +64,7 @@ export function ResultsView({
   noCombinationsLabel,
   tier4AcknowledgeLabel,
   exploreAILabel,
+  externalAIDisabledLabel,
   showDescriptionLabel,
   readMoreLabel,
   needsLabel,
@@ -134,14 +136,20 @@ export function ResultsView({
 
       {!requiresTier4Acknowledge && (
         <div className="pt-1 space-y-1.5">
-          <a
-            href={aiLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full py-3 px-6 rounded-xl font-semibold text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 transition-all"
-          >
-            {exploreAILabel} &rarr;
-          </a>
+          {aiLink !== '#' ? (
+            <a
+              href={aiLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full py-3 px-6 rounded-xl font-semibold text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 transition-all"
+            >
+              {exploreAILabel} &rarr;
+            </a>
+          ) : (
+            <p className="text-xs text-gray-500 text-center px-3">
+              {externalAIDisabledLabel}
+            </p>
+          )}
 
           {results.length > 0 && (
             <div className="flex items-center justify-center gap-1">
