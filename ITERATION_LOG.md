@@ -161,4 +161,20 @@ Each entry should follow this structure:
 
 ---
 
+---
+
+### [2026-05-05] Safety hardening: modal portals, external-link consent, deterministic crisis time, focus trap drift
+
+**Context:** Implement 4 high-priority audit tasks (overlay safety, privacy gate, trap robustness, deterministic crisis semantics).
+**What happened:**
+- Refactored `ModalShell` to always render through `createPortal(..., document.body)` with SSR-safe fallback.
+- Added explicit external AI consent setting (`allowExternalAI`) in storage + App state + Settings UI; default remains off; Result modal hides outbound CTA when off and shows explanation copy.
+- Extended EN/RO i18n with external-link consent labels and disabled-state messaging.
+- Hardened `useFocusTrap` against focus drift (Tab when active element outside trap now rehomes to first/last focus target).
+- Refactored temporal crisis functions to accept optional `nowMs` injection for deterministic boundary testing; expanded tests for exact 7-day cutoff behavior.
+- Updated tests for new settings props and external-link gating; all targeted tests pass.
+**Outcome:** Success.
+**Insight:** One shared modal primitive with internal portalization gives low-change, high-leverage compliance across all overlays and keeps behavior consistent.
+**Promoted to Lessons Learned:** No
+
 <!-- New entries go above this line, most recent first -->

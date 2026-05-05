@@ -4,8 +4,8 @@ import type { Session } from './types'
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 const MIN_HIGH_DISTRESS_SESSIONS = 3
 
-export function hasTemporalCrisisPattern(sessions: Session[]): boolean {
-  const cutoff = Date.now() - SEVEN_DAYS_MS
+export function hasTemporalCrisisPattern(sessions: Session[], nowMs = Date.now()): boolean {
+  const cutoff = nowMs - SEVEN_DAYS_MS
   const recentHighDistress = sessions.filter(
     (s) =>
       s.timestamp >= cutoff &&
@@ -17,8 +17,9 @@ export function hasTemporalCrisisPattern(sessions: Session[]): boolean {
 export function escalateCrisisTier(
   currentTier: CrisisTier,
   sessions: Session[],
+  nowMs = Date.now(),
 ): CrisisTier {
-  if (!hasTemporalCrisisPattern(sessions)) {
+  if (!hasTemporalCrisisPattern(sessions, nowMs)) {
     return currentTier
   }
 

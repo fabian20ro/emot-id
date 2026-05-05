@@ -10,6 +10,7 @@ function renderModal(props: Partial<React.ComponentProps<typeof ResultModal>> = 
   const defaults: React.ComponentProps<typeof ResultModal> = {
     isOpen: true,
     onClose: () => {},
+    allowExternalAI: true,
     selections: [],
     results: [],
     ...props,
@@ -134,6 +135,13 @@ describe('ResultModal', () => {
     const link = screen.getByText(/Explore with AI/)
     expect(link).toHaveAttribute('href')
     expect(link.getAttribute('href')).toContain('google.com/search')
+  })
+
+  it('hides AI link when external AI is disabled', () => {
+    const results = [makeResult('joy')]
+    renderModal({ results, selections: [makeEmotion('joy')], allowExternalAI: false })
+    expect(screen.queryByText(/Explore with AI/)).not.toBeInTheDocument()
+    expect(screen.getByText(/External AI search is off/i)).toBeInTheDocument()
   })
 
   it('shows reflection prompt', () => {

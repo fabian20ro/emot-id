@@ -15,6 +15,8 @@ function renderMenu(overrides: Partial<React.ComponentProps<typeof SettingsMenu>
     onSoundMutedChange: vi.fn(),
     saveSessions: true,
     onSaveSessionsChange: vi.fn(),
+    allowExternalAI: false,
+    onAllowExternalAIChange: vi.fn(),
     dailyReminderEnabled: false,
     reminderSupported: true,
     reminderPermission: 'granted',

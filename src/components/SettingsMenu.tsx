@@ -15,6 +15,8 @@ interface SettingsMenuProps {
   onSoundMutedChange: (muted: boolean) => void
   saveSessions: boolean
   onSaveSessionsChange: (save: boolean) => void
+  allowExternalAI: boolean
+  onAllowExternalAIChange: (allow: boolean) => void
   dailyReminderEnabled: boolean
   reminderSupported: boolean
   reminderPermission: NotificationPermission | 'unsupported'
@@ -33,6 +35,8 @@ export function SettingsMenu({
   onSoundMutedChange,
   saveSessions,
   onSaveSessionsChange,
+  allowExternalAI,
+  onAllowExternalAIChange,
   dailyReminderEnabled,
   reminderSupported,
   reminderPermission,
@@ -199,6 +203,23 @@ export function SettingsMenu({
                 onChange={onSaveSessionsChange}
                 onClose={onClose}
               />
+              <div className="px-3 py-2">
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                  {settingsT.allowExternalAI ?? 'External AI links'}
+                </span>
+              </div>
+              <SettingsToggle
+                value={allowExternalAI}
+                onLabel={settingsT.allowExternalAIOn ?? 'On'}
+                offLabel={settingsT.allowExternalAIOff ?? 'Off'}
+                onChange={onAllowExternalAIChange}
+                onClose={onClose}
+              />
+              <div className="px-3 pb-2">
+                <p className="text-xs text-gray-500">
+                  {settingsT.allowExternalAIHint ?? 'When enabled, opening AI links sends your selected emotions to an external search engine.'}
+                </p>
+              </div>
 
               {/* Daily reminders */}
               <div className="px-3 py-2">

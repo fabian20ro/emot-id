@@ -10,6 +10,7 @@ const KEYS = {
   dailyReminderEnabled: `${PREFIX}daily-reminder-enabled`,
   dailyReminderLastSentAt: `${PREFIX}daily-reminder-last-sent-at`,
   simpleLanguage: `${PREFIX}simple-language`,
+  allowExternalAI: `${PREFIX}allow-external-ai`,
 } as const
 
 type StorageKey = keyof typeof KEYS

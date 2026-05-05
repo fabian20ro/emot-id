@@ -32,11 +32,20 @@ export function useFocusTrap(active: boolean, onClose?: () => void) {
 
       const firstEl = focusableEls[0]
       const lastEl = focusableEls[focusableEls.length - 1]
+      const activeEl = document.activeElement as HTMLElement | null
+      const isInsideTrap = activeEl ? container.contains(activeEl) : false
 
-      if (e.shiftKey && document.activeElement === firstEl) {
+      if (!isInsideTrap) {
+        e.preventDefault()
+        if (e.shiftKey) lastEl.focus()
+        else firstEl.focus()
+        return
+      }
+
+      if (e.shiftKey && activeEl === firstEl) {
         e.preventDefault()
         lastEl.focus()
-      } else if (!e.shiftKey && document.activeElement === lastEl) {
+      } else if (!e.shiftKey && activeEl === lastEl) {
         e.preventDefault()
         firstEl.focus()
       }

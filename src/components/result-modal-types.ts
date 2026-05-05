@@ -27,6 +27,7 @@ export interface ResultModalProps {
   /** When true, escalates crisis tier by one level (temporal pattern detected) */
   escalateCrisis?: boolean
   currentModelId?: string
+  allowExternalAI?: boolean
   selections: BaseEmotion[]
   results: AnalysisResult[]
 }

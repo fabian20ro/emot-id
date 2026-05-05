@@ -1,5 +1,6 @@
 import type { ComponentProps, ReactNode, RefObject } from 'react'
 import { motion } from 'framer-motion'
+import { createPortal } from 'react-dom'
 
 type MotionDivProps = ComponentProps<typeof motion.div>
 
@@ -31,7 +32,7 @@ export function ModalShell({
   panelProps,
   children,
 }: ModalShellProps) {
-  return (
+  const content = (
     <>
       <motion.div
         initial={{ opacity: 0 }}
@@ -61,4 +62,10 @@ export function ModalShell({
       </div>
     </>
   )
+
+  if (typeof document === 'undefined') {
+    return content
+  }
+
+  return createPortal(content, document.body)
 }

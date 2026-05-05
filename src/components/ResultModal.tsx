@@ -20,6 +20,7 @@ export function ResultModal({
   onSwitchModel,
   onSessionComplete,
   escalateCrisis,
+  allowExternalAI = false,
   currentModelId,
   selections,
   results,
@@ -106,7 +107,7 @@ export function ResultModal({
   }, [results, requiresTier4Acknowledge])
 
   const getAILink = () => {
-    if (results.length === 0) return '#'
+    if (!allowExternalAI || results.length === 0) return '#'
     const names = results.map((r) => r.label[language])
     const conjunction = language === 'ro' ? ' si ' : ' and '
     const emotionStr =
@@ -220,6 +221,7 @@ export function ResultModal({
                   noCombinationsLabel={modalT.noCombinations ?? 'No combinations found from your selections'}
                   tier4AcknowledgeLabel={crisisT.tier4Acknowledge ?? 'I understand — show my results'}
                   exploreAILabel={analyzeT.exploreAI ?? 'Explore with AI'}
+                  externalAIDisabledLabel={analyzeT.externalAIDisabled ?? 'External AI search is off. You can enable it in Settings.'}
                   showDescriptionLabel={modalT.showDescription}
                   readMoreLabel={modalT.readMore}
                   needsLabel={modalT.needsLabel}
