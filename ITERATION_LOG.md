@@ -177,4 +177,16 @@ Each entry should follow this structure:
 **Insight:** One shared modal primitive with internal portalization gives low-change, high-leverage compliance across all overlays and keeps behavior consistent.
 **Promoted to Lessons Learned:** No
 
+### [2026-05-07] Tighten temporal crisis escalation coverage
+
+**Context:** Hourly maintenance pass. Temporal crisis logic is safety-critical and already has deterministic boundary tests; a missing escalation case was a low-risk, useful regression guard.
+**What happened:**
+- Added a regression test proving `escalateCrisisTier('tier2', ...)` advances to `tier3` when the temporal high-distress threshold is met.
+- Verified the focused temporal crisis test file after installing dependencies with `npm ci`.
+**Outcome:** Success. Behavior unchanged; coverage slightly stronger.
+**Insight:** Tier-by-tier escalation deserves explicit coverage, especially in crisis-gating code where auditable behavior matters.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->
