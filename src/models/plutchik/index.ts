@@ -27,20 +27,24 @@ const allOverlays: Record<string, PlutchikOverlay> = {
   ...(oppositeDyadOverlay as Record<string, PlutchikOverlay>),
 }
 
-const allEmotions: Record<string, PlutchikEmotion> = {}
-for (const [id, overlay] of Object.entries(allOverlays)) {
-  const base = getCanonicalEmotion(id)
-  if (!base) throw new Error(`Plutchik references unknown emotion: ${id}`)
-  allEmotions[id] = {
-    ...base,
-    color: overlay.color,
-    category: overlay.category,
-    intensity: overlay.intensity,
-    opposite: overlay.opposite,
-    spawns: overlay.spawns ?? [],
-    components: overlay.components,
-  }
-}
+const allEmotions: Record<string, PlutchikEmotion> = Object.fromEntries(
+  Object.entries(allOverlays).map(([id, overlay]) => {
+    const base = getCanonicalEmotion(id)
+    if (!base) throw new Error(`Plutchik references unknown emotion: ${id}`)
+    return [
+      id,
+      {
+        ...base,
+        color: overlay.color,
+        category: overlay.category,
+        intensity: overlay.intensity,
+        opposite: overlay.opposite,
+        spawns: overlay.spawns ?? [],
+        components: overlay.components,
+      },
+    ]
+  })
+)
 
 export { allEmotions as plutchikEmotions }
 
