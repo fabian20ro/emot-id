@@ -189,4 +189,14 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-11] Repo sweep: keep tests green during branch audit
+
+**Context:** Ran a one-by-one test sweep across the repos under `/workspace/git` on the current branch.
+**What happened:** Verified `npm test` in `emot-id` failed, traced it to Romanian translation keys missing from the completeness check, added the missing `groundingTitle`, `groundingBody`, and `bridges.cognitiveFromDimensional` entries in `src/i18n/ro.json`, and re-ran the suite successfully.
+**Outcome:** Success — `npm test` passes and the repo is left with only the intended tracked edit.
+**Insight:** Translation completeness tests are easiest to satisfy by restoring the missing source-of-truth keys instead of weakening the check.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->
