@@ -199,4 +199,14 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-11] Polish dimensional copy in EN/RO
+
+**Context:** Small maintenance pass on the locale strings for the dimensional model.
+**What happened:** Corrected Romanian typos in the dimensional prompts and aligned both locales around clearer pleasantness/intensity wording in `src/i18n/en.json` and `src/i18n/ro.json`.
+**Outcome:** Success. Copy is cleaner, and the i18n completeness test still passes.
+**Insight:** Locale text drifts are easiest to catch when the paired EN/RO strings stay semantically parallel instead of only matching key sets.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

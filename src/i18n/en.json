@@ -131,7 +131,7 @@
       "somatic": "Notice body sensations first.",
       "wheel": "Pick feeling words from broad to specific.",
       "plutchik": "Explore how emotions mix together.",
-      "dimensional": "Place your state by pleasantness and intensity."
+      "dimensional": "Place your state on the pleasantness and intensity axes."
     }
   },
   "bridges": {
@@ -142,7 +142,7 @@
     "tryWheel": "Try the Emotion Wheel",
     "tryPlutchik": "Try Plutchik's Wheel",
     "tryDimensional": "Try the Emotional Space",
-    "dimensionalFromCognitive": "How intense and pleasant/unpleasant is this?",
+    "dimensionalFromCognitive": "How intense and how pleasant or unpleasant is this?",
     "somaticFromDimensional": "Where do you feel this in your body?",
     "dimensionalFromSomatic": "How pleasant and intense is this sensation?",
     "pleasantEmbodiment": "Where do you feel that warmth? Take a moment to notice."
@@ -159,7 +159,7 @@
     "title": "That's okay — here are two ways to start",
     "bodyOption": "Start with your body",
     "bodyDesc": "Notice physical sensations first",
-    "dimensionalOption": "Start with pleasant/unpleasant",
+    "dimensionalOption": "Start with pleasantness",
     "dimensionalDesc": "Locate your state on a simple scale",
     "close": "Close"
   },
@@ -276,7 +276,7 @@
     "detail": "All your data — emotion selections, session history, body maps, and preferences — is stored locally on your device using IndexedDB and localStorage. Nothing is sent to any server. There are no analytics, no accounts, and no cloud sync. You can delete all data anytime from Past Sessions."
   },
   "dimensional": {
-    "instructions": "Locate your state on two axes: how pleasant/unpleasant and how intense/calm you feel"
+    "instructions": "Locate your state on two axes: how pleasant or unpleasant and how intense or calm you feel"
   },
   "wheelBreadcrumb": {
     "label": "Emotion navigation path",

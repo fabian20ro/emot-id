@@ -131,7 +131,7 @@
       "somatic": "Începeți cu senzațiile corporale.",
       "wheel": "Alegeți cuvinte emoționale de la general la specific.",
       "plutchik": "Explorați cum se combină emoțiile.",
-      "dimensional": "Plasați starea după plăcere/neplecere și intensitate."
+      "dimensional": "Plasați starea pe axele plăcere/neplăcere și intensitate."
     }
   },
   "bridges": {
@@ -142,7 +142,7 @@
     "tryWheel": "Încercați Roata Emoțiilor",
     "tryPlutchik": "Încercați Plutchik",
     "tryDimensional": "Încercați Spațiul Emoțional",
-    "dimensionalFromCognitive": "Cât de intens și plăcut/neplecent este?",
+    "dimensionalFromCognitive": "Cât de intens și cât de plăcut sau neplăcut este?",
     "somaticFromDimensional": "Unde simțiți aceasta în corpul vostru?",
     "dimensionalFromSomatic": "Cât de plăcută și intensă este această senzație?",
     "pleasantEmbodiment": "Unde simțiți acea căldură? Luați un moment pentru a observa."
@@ -159,7 +159,7 @@
     "title": "Este în regulă — iată două moduri de a începe",
     "bodyOption": "Începeți cu corpul",
     "bodyDesc": "Observați mai întâi senzațiile fizice",
-    "dimensionalOption": "Începeți cu plăcut/neplecent",
+    "dimensionalOption": "Începeți cu plăcut/neplăcut",
     "dimensionalDesc": "Localizați-vă starea pe o scară simplă",
     "close": "Închide"
   },
@@ -276,7 +276,7 @@
     "detail": "Toate datele voastre — selecțiile de emoții, istoricul sesiunilor, hărțile corporale și preferințele — sunt stocate local pe dispozitivul vostru folosind IndexedDB și localStorage. Nimic nu este trimis către niciun server. Nu există analize, conturi sau sincronizare în cloud. Puteți șterge toate datele oricând din Sesiuni anterioare."
   },
   "dimensional": {
-    "instructions": "Localizați-vă starea pe cele două axe: cât de plăcut/neplecent și cât de intens/calm vă simțiți"
+    "instructions": "Localizați-vă starea pe două axe: cât de plăcut sau neplăcut și cât de intens sau calm vă simțiți"
   },
   "wheelBreadcrumb": {
     "label": "Calea de navigare a emoțiilor",
