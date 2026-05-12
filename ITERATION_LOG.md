@@ -209,4 +209,14 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-12] Document default-off external AI links in README
+
+**Context:** Small maintenance pass after reviewing the privacy-facing UI copy.
+**What happened:** Updated `README.md` so the "Explore further" line now states that external AI links stay off by default, matching the consent-gated outbound behavior in the app.
+**Outcome:** Success. Documentation now reflects the opt-in privacy boundary more accurately.
+**Insight:** When a feature can send user-selected content outside the app, the README should call out the default-off state explicitly so the privacy story stays aligned with the UI.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->
