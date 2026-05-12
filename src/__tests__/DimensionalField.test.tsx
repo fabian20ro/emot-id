@@ -56,6 +56,30 @@ function renderField(overrides: Partial<React.ComponentProps<typeof DimensionalF
   }
 }
 
+function setMobileMatchMedia(matches: boolean) {
+  const original = window.matchMedia
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: (query: string) => ({
+      matches: matches && query.includes('max-width: 639px'),
+      media: query,
+      onchange: null,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => false,
+    }),
+  })
+
+  return () => {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: original,
+    })
+  }
+}
+
 describe('DimensionalField', () => {
   it('renders an SVG with the field', () => {
     renderField()
@@ -92,6 +116,38 @@ describe('DimensionalField', () => {
     expect(screen.getByText('Unpleasant')).toBeInTheDocument()
     expect(screen.getByText('Intense')).toBeInTheDocument()
     expect(screen.getByText('Calm')).toBeInTheDocument()
+  })
+
+  it('hides axis labels on mobile after the first interaction', () => {
+    const restoreMatchMedia = setMobileMatchMedia(true)
+    try {
+      renderField()
+      const svg = document.querySelector('svg') as SVGSVGElement
+
+      expect(screen.getByText('Pleasant')).toBeInTheDocument()
+      expect(screen.getByText('Unpleasant')).toBeInTheDocument()
+
+      vi.spyOn(svg, 'getBoundingClientRect').mockReturnValue({
+        x: 0,
+        y: 0,
+        width: 300,
+        height: 300,
+        top: 0,
+        left: 0,
+        right: 300,
+        bottom: 300,
+        toJSON: () => ({}),
+      } as DOMRect)
+
+      fireEvent.click(svg, { clientX: 120, clientY: 200 })
+
+      expect(screen.queryByText('Pleasant')).not.toBeInTheDocument()
+      expect(screen.queryByText('Unpleasant')).not.toBeInTheDocument()
+      expect(screen.queryByText('Intense')).not.toBeInTheDocument()
+      expect(screen.queryByText('Calm')).not.toBeInTheDocument()
+    } finally {
+      restoreMatchMedia()
+    }
   })
 
   it('renders emotion labels as text', () => {
