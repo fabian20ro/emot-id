@@ -219,4 +219,17 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-12] Hide DimensionalField axis labels after first mobile interaction
+
+**Context:** Follow-up polish from the UX action plan. The dimensional view keeps axis labels visible even after the user has already interacted, which can keep priming the user on mobile.
+**What happened:**
+- Added mobile detection in `DimensionalField` with a `hasInteracted` gate.
+- Hid the axis labels after the first field, dot, or suggestion interaction on mobile only; desktop stays unchanged.
+- Added a focused regression test that mocks `matchMedia` and proves the labels disappear after the first mobile interaction.
+**Outcome:** Success. Mobile-only guidance is less persistent, and the existing desktop behavior remains intact.
+**Insight:** For small UX gates, make the trigger explicit and keep the desktop path stable; a focused viewport-specific regression test is enough to lock the boundary.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->
