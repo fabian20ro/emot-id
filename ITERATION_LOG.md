@@ -258,4 +258,18 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-13] Announce timed micro-intervention phases for assistive tech
+
+**Context:** Small accessibility pass on the timed micro-intervention flow. The breathing and savoring prompts change text over time, but the changing phase text was not explicitly exposed as a live region.
+**What happened:**
+- Added `role="status"`, `aria-live="polite"`, and `aria-atomic="true"` to the breathing phase text in `src/components/MicroIntervention.tsx`.
+- Added the same live-region attributes to the savoring step text so both timed prompts announce updates consistently.
+- Added focused tests that render each timed prompt and assert the live-region contract.
+- Verified with `npm exec vitest -- run src/__tests__/MicroIntervention.test.tsx` and `npm run build`.
+**Outcome:** Success. The timed intervention prompts are now more screen-reader friendly without changing visible behavior.
+**Insight:** Any prompt that updates on a timer should expose the changing instruction as a status region, otherwise assistive tech can miss the phase transitions entirely.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

@@ -14,6 +14,42 @@ const t = {
 }
 
 describe('MicroIntervention', () => {
+  it('announces breathing phases to assistive tech', () => {
+    vi.useFakeTimers()
+    const { unmount } = render(
+      <MicroIntervention
+        type="breathing"
+        t={t}
+        onDismiss={vi.fn()}
+      />
+    )
+
+    const status = screen.getByRole('status')
+    expect(status).toHaveTextContent('Breathe in...')
+    expect(status).toHaveAttribute('aria-live', 'polite')
+
+    unmount()
+    vi.useRealTimers()
+  })
+
+  it('announces savoring steps to assistive tech', () => {
+    vi.useFakeTimers()
+    const { unmount } = render(
+      <MicroIntervention
+        type="savoring"
+        t={t}
+        onDismiss={vi.fn()}
+      />
+    )
+
+    const status = screen.getByRole('status')
+    expect(status).toHaveTextContent('Close your eyes for a moment.')
+    expect(status).toHaveAttribute('aria-live', 'polite')
+
+    unmount()
+    vi.useRealTimers()
+  })
+
   it('emits better response and dismisses for curiosity flow', async () => {
     const user = userEvent.setup()
     const onDismiss = vi.fn()

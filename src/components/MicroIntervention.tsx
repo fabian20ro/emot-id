@@ -59,7 +59,14 @@ function BreathingExercise({ t, onComplete }: { t: Record<string, string>; onCom
       >
         <span className="text-2xl">🫁</span>
       </motion.div>
-      <p className="text-gray-200 text-sm">{phaseText[phase]}</p>
+      <p
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="text-gray-200 text-sm"
+      >
+        {phaseText[phase]}
+      </p>
       <p className="text-gray-500 text-xs">{Math.min(cycle + 1, MAX_CYCLES)} / {MAX_CYCLES}</p>
     </div>
   )
@@ -98,6 +105,9 @@ function SavoringExercise({ t, onComplete }: { t: Record<string, string>; onComp
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
           className="text-gray-200 text-sm text-center px-4"
         >
           {steps[step]}
