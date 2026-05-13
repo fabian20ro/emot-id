@@ -232,4 +232,17 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-13] Align crisis temporal note copy
+
+**Context:** Small maintenance pass on the crisis banner temporal-note copy.
+**What happened:**
+- Fixed the Romanian `crisis.temporalNote` typo in `src/i18n/ro.json`.
+- Aligned the English `crisis.temporalNote` copy in `src/i18n/en.json` and the CrisisBanner fallback string in `src/components/CrisisBanner.tsx` so the runtime default matches the locale text.
+- Verified with the focused i18n completeness test and a production build.
+**Outcome:** Success. User-facing copy is clearer and the fallback stays in sync.
+**Insight:** When a locale string is also used as a runtime fallback, update the component default together with the translation files to avoid drift.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->
