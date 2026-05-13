@@ -272,4 +272,16 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-13] Retitle stale IMPROVEMENT_PLAN reference in analysis doc
+
+**Context:** Small docs cleanup during autopilot. `ANALYSIS.md` still referred to a nonexistent `TODOS.md` section even though the repo now tracks future work in `IMPROVEMENT_PLAN.md`.
+**What happened:**
+- Retitled the `ANALYSIS.md` section from `TODOS.md Disposition` to `Improvement Plan Disposition`.
+- Replaced the remaining `TODOS.md: Implements ...` references in that section with `IMPROVEMENT_PLAN.md: Implements ...`.
+**Outcome:** Success. The analysis doc now points at the real planning artifact instead of a dead filename.
+**Insight:** When a repo’s follow-up work has moved from ad hoc TODOs into a named plan file, update the narrative docs to match the live artifact so future agents do not chase a file that does not exist.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->
