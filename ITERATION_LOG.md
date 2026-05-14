@@ -310,4 +310,17 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-14] Cover external AI consent copy in SettingsMenu
+
+**Context:** Small privacy-copy maintenance pass. The settings drawer already exposes the external AI consent toggle, but the section had no focused regression coverage for the label and hint copy in both locales.
+**What happened:**
+- Added `SettingsMenu` assertions for the external AI consent label and hint in English.
+- Added matching Romanian assertions to protect the localized privacy copy.
+- Verified the focused `SettingsMenu` test file after the change.
+**Outcome:** Success. The privacy-facing settings copy now has direct regression coverage in both languages.
+**Insight:** Consent-gated features deserve explicit copy assertions, especially when the wording explains where user content is sent.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

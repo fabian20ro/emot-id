@@ -66,6 +66,30 @@ describe('SettingsMenu', () => {
     expect(screen.getByText('Daily reminder')).toBeInTheDocument()
   })
 
+  it('renders external AI consent copy from i18n (English)', () => {
+    renderMenu()
+    expect(screen.getByText('External AI links')).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        /When enabled, opening AI links sends your selected emotions to an external search engine\./
+      )
+    ).toBeInTheDocument()
+  })
+
+  it('renders external AI consent copy from i18n (Romanian)', () => {
+    vi.spyOn(storage, 'get').mockImplementation((key) => {
+      if (key === 'language') return 'ro'
+      return null
+    })
+    renderMenu()
+    expect(screen.getByText('Linkuri AI externe')).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        /Când este activată, deschiderea linkurilor AI trimite emoțiile selectate către un motor extern de căutare\./
+      )
+    ).toBeInTheDocument()
+  })
+
   it('renders sound section label from i18n (English)', () => {
     renderMenu()
     expect(screen.getByText('Sound')).toBeInTheDocument()
