@@ -284,4 +284,16 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-14] Refresh test-count doc to match live Vitest inventory
+
+**Context:** Small docs sync during autopilot. The analysis doc still reported the previous Vitest inventory after the suite grew by two tests.
+**What happened:**
+- Re-checked the live Vitest inventory with `npm exec vitest -- list --json` and confirmed 402 tests across 52 files.
+- Updated `ANALYSIS.md` to reflect the current count.
+**Outcome:** Success. Documentation now matches the observed test inventory.
+**Insight:** When a count is used as a health signal in docs, verify it with the cheapest live inventory probe before editing and keep the number exact.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

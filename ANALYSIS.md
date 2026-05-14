@@ -163,7 +163,7 @@ This is appropriate for the current complexity level. The app has no cross-cutti
 
 ### 2.1 Code Quality
 
-**Test coverage:** 400 tests across 52 test files, all passing. Test types:
+**Test coverage:** 402 tests across 52 test files, all passing. Test types:
 - Unit tests for all model scoring algorithms, synthesis, distress detection, temporal crisis, vocabulary, somatic patterns, valence ratio
 - Component tests with Testing Library for all major UI components
 - Integration tests for the full select → analyze → result flow
