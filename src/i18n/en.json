@@ -98,7 +98,7 @@
   },
   "settings": {
     "title": "Settings",
-    "soundLabel": "Sound effects",
+    "soundLabel": "Sound",
     "soundOn": "On",
     "soundOff": "Off",
     "saveSessionsLabel": "Save sessions",

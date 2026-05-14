@@ -20,7 +20,7 @@ Interactive PWA for identifying and exploring emotions through multiple classifi
 - Cross-model bridges — suggestions to explore with a different model
 - 4-step onboarding for first-time users (can be skipped)
 - Session history with local-only analytics and export (JSON + therapist-friendly text)
-- Sound feedback on selection (mutable)
+- Sound feedback on selection (can be muted)
 - Responsive — works on mobile and desktop
 - Installable PWA — works offline after first load
 

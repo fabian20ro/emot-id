@@ -296,4 +296,18 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-14] Clarify sound setting copy in EN/RO and README
+
+**Context:** Small copy maintenance pass. The settings section still used the vague label "Sound effects", and the README had a typo in the sound-feedback bullet.
+**What happened:**
+- Renamed `settings.soundLabel` to `Sound` in `src/i18n/en.json` and `Sunet` in `src/i18n/ro.json`.
+- Added focused `SettingsMenu` coverage for the sound section label in both English and Romanian.
+- Reworded the README bullet to say the sound feedback "can be muted" instead of "mutable".
+- Verified with focused Vitest runs for `SettingsMenu` and i18n completeness.
+**Outcome:** Success. The settings copy is clearer and the docs now match the actual mute toggle.
+**Insight:** Short, concrete labels work better for toggle sections; if a control is binary, the label should name the thing, not the effect.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

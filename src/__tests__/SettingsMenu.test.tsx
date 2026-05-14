@@ -66,6 +66,20 @@ describe('SettingsMenu', () => {
     expect(screen.getByText('Daily reminder')).toBeInTheDocument()
   })
 
+  it('renders sound section label from i18n (English)', () => {
+    renderMenu()
+    expect(screen.getByText('Sound')).toBeInTheDocument()
+  })
+
+  it('renders sound section label from i18n (Romanian)', () => {
+    vi.spyOn(storage, 'get').mockImplementation((key) => {
+      if (key === 'language') return 'ro'
+      return null
+    })
+    renderMenu()
+    expect(screen.getByText('Sunet')).toBeInTheDocument()
+  })
+
   it('renders into document.body portal (bottom sheet)', () => {
     renderMenu()
     // The dialog should be in document.body, not inside the test container
