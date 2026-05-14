@@ -336,4 +336,18 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-14] Polish crisis-adjacent copy in EN/RO
+
+**Context:** Small copy-maintenance pass. The numbness guidance line had an awkward English phrasing and a Romanian grammar error, which made the safety-adjacent guidance read less cleanly than the surrounding copy.
+**What happened:**
+- Reworded `somatic.numbnessFlooding` in `src/i18n/en.json` to say the body may be "trying to protect you".
+- Fixed the matching Romanian string in `src/i18n/ro.json` so it now reads naturally.
+- Tightened the Romanian crisis helpline detail to use `România`.
+- Verified the locale files with the focused i18n completeness Vitest.
+**Outcome:** Success. The support copy reads more naturally in both locales without changing behavior.
+**Insight:** Safety-oriented guidance should stay calm and grammatically clean; tiny copy fixes matter there because users read them under stress.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

@@ -10,7 +10,7 @@
     "model": "Model",
     "language": "Limbă",
     "crisisSupport": "Aveți nevoie de sprijin?",
-    "crisisDetail": "Sunați la 116 123 (Romania, gratuit, 24/7) sau vizitați findahelpline.com"
+    "crisisDetail": "Sunați la 116 123 (România, gratuit, 24/7) sau vizitați findahelpline.com"
   },
   "selectionBar": {
     "title": "Selecțiile tale",
@@ -184,7 +184,7 @@
     "freeMode": "Selectare liberă",
     "guidedPause": "Ați observat {sensation} intens în {region}. Luați o respirație înainte de a continua.",
     "guidedPauseContinue": "Sunteți gata să continuați",
-    "numbnessFlooding": "Corpul vostru s-ar putea să vă protejează acum. Ați dori să încercați un exercițiu de ancorare înainte de a continua?",
+    "numbnessFlooding": "Corpul vostru s-ar putea să încerce să vă protejeze acum. Doriți să încercați un exercițiu de ancorare înainte de a continua?",
     "numbnessGrounding": "Încercați ancorarea",
     "numbnessContinue": "Continuați scanarea"
   },
