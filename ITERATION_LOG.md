@@ -323,4 +323,17 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-14] Harden breathing exercise regression coverage
+
+**Context:** Small accessibility-oriented maintenance pass. The breathing micro-intervention already exposes a live status region, but its full inhale → hold → exhale → check-in cycle had no focused regression test.
+**What happened:**
+- Expanded `src/__tests__/MicroIntervention.test.tsx` with a fake-timer test that steps through the full breathing cycle and verifies the follow-up check-in appears at completion.
+- Kept the existing assistive-tech announcement assertions in place for the initial breathing and savoring prompts.
+- Verified with focused Vitest on the MicroIntervention test file.
+**Outcome:** Success. The timed breathing flow now has direct regression coverage.
+**Insight:** Timer-driven support flows are easiest to keep stable when the test exercises the whole cycle, not just the initial render state.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

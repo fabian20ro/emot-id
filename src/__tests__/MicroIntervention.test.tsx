@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MicroIntervention } from '../components/MicroIntervention'
 
@@ -29,6 +29,36 @@ describe('MicroIntervention', () => {
     expect(status).toHaveAttribute('aria-live', 'polite')
 
     unmount()
+    vi.useRealTimers()
+  })
+
+  it('advances breathing cues and shows check-in when complete', () => {
+    vi.useFakeTimers()
+    render(
+      <MicroIntervention
+        type="breathing"
+        t={t}
+        onDismiss={vi.fn()}
+      />
+    )
+
+    expect(screen.getByRole('status')).toHaveTextContent('Breathe in...')
+
+    act(() => { vi.advanceTimersByTime(4000) })
+    expect(screen.getByRole('status')).toHaveTextContent('Hold...')
+
+    act(() => { vi.advanceTimersByTime(2000) })
+    expect(screen.getByRole('status')).toHaveTextContent('Breathe out...')
+
+    act(() => { vi.advanceTimersByTime(6000) })
+    act(() => { vi.advanceTimersByTime(4000) })
+    act(() => { vi.advanceTimersByTime(2000) })
+    act(() => { vi.advanceTimersByTime(6000) })
+    act(() => { vi.advanceTimersByTime(4000) })
+    act(() => { vi.advanceTimersByTime(2000) })
+    act(() => { vi.advanceTimersByTime(6000) })
+
+    expect(screen.getByText('How do you feel now?')).toBeInTheDocument()
     vi.useRealTimers()
   })
 
