@@ -56,6 +56,22 @@ describe('SettingsMenu', () => {
     expect(screen.getByText('Language')).toBeInTheDocument()
   })
 
+  it('renders localized language buttons from i18n (English)', () => {
+    renderMenu()
+    expect(screen.getByRole('button', { name: 'Romanian' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'English' })).toBeInTheDocument()
+  })
+
+  it('renders localized language buttons from i18n (Romanian)', () => {
+    vi.spyOn(storage, 'get').mockImplementation((key) => {
+      if (key === 'language') return 'ro'
+      return null
+    })
+    renderMenu()
+    expect(screen.getByRole('button', { name: 'Română' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Engleză' })).toBeInTheDocument()
+  })
+
   it('renders model header from i18n', () => {
     renderMenu()
     expect(screen.getByText('Model')).toBeInTheDocument()

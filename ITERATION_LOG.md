@@ -372,4 +372,18 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-15] Localize settings language buttons
+
+**Context:** Small copy polish pass. The settings drawer had a hardcoded Romanian label without diacritics, and the language switch buttons were not covered by locale-specific regression tests.
+**What happened:**
+- Added `menu.languageRo` and `menu.languageEn` to `src/i18n/en.json` and `src/i18n/ro.json`.
+- Swapped the hardcoded `Romana` / `English` button text in `src/components/SettingsMenu.tsx` for the localized menu strings, with readable fallbacks.
+- Added focused `SettingsMenu` assertions for the localized language buttons in both English and Romanian.
+- Verified with focused Vitest runs for `SettingsMenu` and i18n completeness.
+**Outcome:** Success. The language controls now read cleanly in both locales and have direct regression coverage.
+**Insight:** Even tiny hardcoded labels in a settings drawer are worth routing through i18n when the rest of the menu already is.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

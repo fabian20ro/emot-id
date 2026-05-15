@@ -9,8 +9,9 @@
   "menu": {
     "model": "Model",
     "language": "Limbă",
-    "crisisSupport": "Aveți nevoie de sprijin?",
-    "crisisDetail": "Sunați la 116 123 (România, gratuit, 24/7) sau vizitați findahelpline.com"
+    "languageRo": "Română",
+    "languageEn": "Engleză",
+    "disclaimer": "Declinarea responsabilității"
   },
   "selectionBar": {
     "title": "Selecțiile tale",

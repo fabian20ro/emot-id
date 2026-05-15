@@ -122,13 +122,13 @@ export function SettingsMenu({
                   onClick={() => { setLanguage('ro'); onClose() }}
                   className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(language === 'ro')}`}
                 >
-                  Romana
+                  {menuT.languageRo ?? 'Română'}
                 </button>
                 <button
                   onClick={() => { setLanguage('en'); onClose() }}
                   className={`flex-1 px-3 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors ${toggleClass(language === 'en')}`}
                 >
-                  English
+                  {menuT.languageEn ?? 'English'}
                 </button>
               </div>
 
