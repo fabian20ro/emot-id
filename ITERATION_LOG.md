@@ -361,4 +361,15 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-15] Surface simple language and reminder controls in README
+
+**Context:** Small docs-discoverability pass. The app already exposes simple language mode and daily reminders in Settings, but the README's feature list did not mention them.
+**What happened:**
+- Added a README feature bullet calling out simple language mode and daily reminders as accessibility/pacing controls.
+**Outcome:** Success. The public-facing docs now surface a couple of existing user controls that were previously easy to miss.
+**Insight:** When a feature lives behind Settings but materially changes the user experience, mention it in the top-level README so discoverability matches the app.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->
