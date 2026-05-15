@@ -10,7 +10,7 @@ Interactive PWA for identifying and exploring emotions through multiple classifi
 - **Select emotions** — Tap bubbles, body regions, or scatter plot dots that resonate with your current state
 - **Discover patterns** — The app detects dyads, somatic patterns, and emotional complexity
 - **Safety-aware** — 4-tier crisis detection with graduated access (contextualizes without gatekeeping) and grounding techniques
-- **Explore further** — One-tap Google query generation from your selected emotions; optional external AI links stay off by default
+- **Explore further** — One-tap Google query generation from your selected emotions; optional external AI links stay off by default and require explicit opt-in in Settings
 
 ## Features
 

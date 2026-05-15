@@ -350,4 +350,15 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-15] Clarify external AI opt-in wording in README
+
+**Context:** Small docs maintenance pass. The README mentioned that external AI links stay off by default, but it did not say the switch lives in Settings.
+**What happened:**
+- Reworded the README "Explore further" bullet to say external AI links stay off by default and require explicit opt-in in Settings.
+**Outcome:** Success. The privacy boundary is a little clearer for first-time readers.
+**Insight:** When a feature is privacy-sensitive, naming the place where the opt-in lives reduces guesswork and keeps docs aligned with the UI.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->
