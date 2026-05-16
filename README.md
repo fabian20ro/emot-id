@@ -11,6 +11,7 @@ Interactive PWA for identifying and exploring emotions through multiple classifi
 - **Discover patterns** — The app detects dyads, somatic patterns, and emotional complexity
 - **Safety-aware** — 4-tier crisis detection with graduated access (contextualizes without gatekeeping) and grounding techniques
 - **Explore further** — One-tap Google query generation from your selected emotions; optional external AI links stay off by default and require explicit opt-in in Settings
+- **Emotional vocabulary** — Past Sessions tracks your most-identified emotions, model spread, and milestone progress over time
 
 ## Features
 

@@ -386,4 +386,15 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-16] Surface emotional vocabulary tracking in README
+
+**Context:** Small docs-discoverability pass. The app already shows a Past Sessions vocabulary panel with top identified emotions and milestone counts, but the README feature list did not mention it.
+**What happened:**
+- Added a README feature bullet calling out emotional vocabulary tracking in Past Sessions.
+**Outcome:** Success. The top-level docs now surface another existing user-facing insight panel that was easy to miss.
+**Insight:** If the UI already summarizes a meaningful persisted view of the user's behavior, the README should name it explicitly so readers know it exists before they open the app.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->
