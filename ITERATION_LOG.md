@@ -411,3 +411,14 @@ Each entry should follow this structure:
 ---
 
 <!-- New entries go above this line, most recent first -->
+
+### [2026-05-16] Restore settings crisis copy keys
+
+**Context:** `npm run build` failed in `src/components/SettingsMenu.tsx` because the `menu` i18n section no longer exposed `crisisSupport` and `crisisDetail`, while the component still referenced them.
+**What happened:**
+- Restored `menu.crisisSupport` and `menu.crisisDetail` in `src/i18n/en.json`.
+- Restored the same keys in `src/i18n/ro.json`.
+- Re-ran `npm run build` and confirmed the TypeScript/Vite pipeline completes.
+**Outcome:** Success. The settings drawer crisis support block type-checks again.
+**Insight:** When a component already owns fallback-safe copy usage, the fastest recovery is usually to restore the missing locale keys rather than reshaping the component.
+**Promoted to Lessons Learned:** No
