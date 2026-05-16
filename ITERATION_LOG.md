@@ -177,4 +177,237 @@ Each entry should follow this structure:
 **Insight:** One shared modal primitive with internal portalization gives low-change, high-leverage compliance across all overlays and keeps behavior consistent.
 **Promoted to Lessons Learned:** No
 
+### [2026-05-07] Tighten temporal crisis escalation coverage
+
+**Context:** Hourly maintenance pass. Temporal crisis logic is safety-critical and already has deterministic boundary tests; a missing escalation case was a low-risk, useful regression guard.
+**What happened:**
+- Added a regression test proving `escalateCrisisTier('tier2', ...)` advances to `tier3` when the temporal high-distress threshold is met.
+- Verified the focused temporal crisis test file after installing dependencies with `npm ci`.
+**Outcome:** Success. Behavior unchanged; coverage slightly stronger.
+**Insight:** Tier-by-tier escalation deserves explicit coverage, especially in crisis-gating code where auditable behavior matters.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-11] Repo sweep: keep tests green during branch audit
+
+**Context:** Ran a one-by-one test sweep across the repos under `/workspace/git` on the current branch.
+**What happened:** Verified `npm test` in `emot-id` failed, traced it to Romanian translation keys missing from the completeness check, added the missing `groundingTitle`, `groundingBody`, and `bridges.cognitiveFromDimensional` entries in `src/i18n/ro.json`, and re-ran the suite successfully.
+**Outcome:** Success — `npm test` passes and the repo is left with only the intended tracked edit.
+**Insight:** Translation completeness tests are easiest to satisfy by restoring the missing source-of-truth keys instead of weakening the check.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-11] Polish dimensional copy in EN/RO
+
+**Context:** Small maintenance pass on the locale strings for the dimensional model.
+**What happened:** Corrected Romanian typos in the dimensional prompts and aligned both locales around clearer pleasantness/intensity wording in `src/i18n/en.json` and `src/i18n/ro.json`.
+**Outcome:** Success. Copy is cleaner, and the i18n completeness test still passes.
+**Insight:** Locale text drifts are easiest to catch when the paired EN/RO strings stay semantically parallel instead of only matching key sets.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-12] Document default-off external AI links in README
+
+**Context:** Small maintenance pass after reviewing the privacy-facing UI copy.
+**What happened:** Updated `README.md` so the "Explore further" line now states that external AI links stay off by default, matching the consent-gated outbound behavior in the app.
+**Outcome:** Success. Documentation now reflects the opt-in privacy boundary more accurately.
+**Insight:** When a feature can send user-selected content outside the app, the README should call out the default-off state explicitly so the privacy story stays aligned with the UI.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-12] Hide DimensionalField axis labels after first mobile interaction
+
+**Context:** Follow-up polish from the UX action plan. The dimensional view keeps axis labels visible even after the user has already interacted, which can keep priming the user on mobile.
+**What happened:**
+- Added mobile detection in `DimensionalField` with a `hasInteracted` gate.
+- Hid the axis labels after the first field, dot, or suggestion interaction on mobile only; desktop stays unchanged.
+- Added a focused regression test that mocks `matchMedia` and proves the labels disappear after the first mobile interaction.
+**Outcome:** Success. Mobile-only guidance is less persistent, and the existing desktop behavior remains intact.
+**Insight:** For small UX gates, make the trigger explicit and keep the desktop path stable; a focused viewport-specific regression test is enough to lock the boundary.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-13] Align crisis temporal note copy
+
+**Context:** Small maintenance pass on the crisis banner temporal-note copy.
+**What happened:**
+- Fixed the Romanian `crisis.temporalNote` typo in `src/i18n/ro.json`.
+- Aligned the English `crisis.temporalNote` copy in `src/i18n/en.json` and the CrisisBanner fallback string in `src/components/CrisisBanner.tsx` so the runtime default matches the locale text.
+- Verified with the focused i18n completeness test and a production build.
+**Outcome:** Success. User-facing copy is clearer and the fallback stays in sync.
+**Insight:** When a locale string is also used as a runtime fallback, update the component default together with the translation files to avoid drift.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-13] Refresh test-count doc and fix ResultModal temporal-note assertion
+
+**Context:** Small maintenance pass during autopilot. The repo docs still mentioned an older test count, and one ResultModal regression test no longer matched the actual crisis-banner fallback copy.
+**What happened:**
+- Updated `ANALYSIS.md` to report the current Vitest inventory: 400 tests across 52 files.
+- Adjusted `src/__tests__/ResultModal.test.tsx` to assert the current temporal-note copy (`pattern appearing more often lately`).
+- Verified with `npm test` after the change.
+**Outcome:** Success. Documentation is current and the full suite passes again.
+**Insight:** When a runtime copy string drifts, fix the assertion to the live contract unless the product text itself is the thing that needs changing.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-13] Announce timed micro-intervention phases for assistive tech
+
+**Context:** Small accessibility pass on the timed micro-intervention flow. The breathing and savoring prompts change text over time, but the changing phase text was not explicitly exposed as a live region.
+**What happened:**
+- Added `role="status"`, `aria-live="polite"`, and `aria-atomic="true"` to the breathing phase text in `src/components/MicroIntervention.tsx`.
+- Added the same live-region attributes to the savoring step text so both timed prompts announce updates consistently.
+- Added focused tests that render each timed prompt and assert the live-region contract.
+- Verified with `npm exec vitest -- run src/__tests__/MicroIntervention.test.tsx` and `npm run build`.
+**Outcome:** Success. The timed intervention prompts are now more screen-reader friendly without changing visible behavior.
+**Insight:** Any prompt that updates on a timer should expose the changing instruction as a status region, otherwise assistive tech can miss the phase transitions entirely.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-13] Retitle stale IMPROVEMENT_PLAN reference in analysis doc
+
+**Context:** Small docs cleanup during autopilot. `ANALYSIS.md` still referred to a nonexistent `TODOS.md` section even though the repo now tracks future work in `IMPROVEMENT_PLAN.md`.
+**What happened:**
+- Retitled the `ANALYSIS.md` section from `TODOS.md Disposition` to `Improvement Plan Disposition`.
+- Replaced the remaining `TODOS.md: Implements ...` references in that section with `IMPROVEMENT_PLAN.md: Implements ...`.
+**Outcome:** Success. The analysis doc now points at the real planning artifact instead of a dead filename.
+**Insight:** When a repo’s follow-up work has moved from ad hoc TODOs into a named plan file, update the narrative docs to match the live artifact so future agents do not chase a file that does not exist.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-14] Refresh test-count doc to match live Vitest inventory
+
+**Context:** Small docs sync during autopilot. The analysis doc still reported the previous Vitest inventory after the suite grew by two tests.
+**What happened:**
+- Re-checked the live Vitest inventory with `npm exec vitest -- list --json` and confirmed 402 tests across 52 files.
+- Updated `ANALYSIS.md` to reflect the current count.
+**Outcome:** Success. Documentation now matches the observed test inventory.
+**Insight:** When a count is used as a health signal in docs, verify it with the cheapest live inventory probe before editing and keep the number exact.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-14] Clarify sound setting copy in EN/RO and README
+
+**Context:** Small copy maintenance pass. The settings section still used the vague label "Sound effects", and the README had a typo in the sound-feedback bullet.
+**What happened:**
+- Renamed `settings.soundLabel` to `Sound` in `src/i18n/en.json` and `Sunet` in `src/i18n/ro.json`.
+- Added focused `SettingsMenu` coverage for the sound section label in both English and Romanian.
+- Reworded the README bullet to say the sound feedback "can be muted" instead of "mutable".
+- Verified with focused Vitest runs for `SettingsMenu` and i18n completeness.
+**Outcome:** Success. The settings copy is clearer and the docs now match the actual mute toggle.
+**Insight:** Short, concrete labels work better for toggle sections; if a control is binary, the label should name the thing, not the effect.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-14] Cover external AI consent copy in SettingsMenu
+
+**Context:** Small privacy-copy maintenance pass. The settings drawer already exposes the external AI consent toggle, but the section had no focused regression coverage for the label and hint copy in both locales.
+**What happened:**
+- Added `SettingsMenu` assertions for the external AI consent label and hint in English.
+- Added matching Romanian assertions to protect the localized privacy copy.
+- Verified the focused `SettingsMenu` test file after the change.
+**Outcome:** Success. The privacy-facing settings copy now has direct regression coverage in both languages.
+**Insight:** Consent-gated features deserve explicit copy assertions, especially when the wording explains where user content is sent.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-14] Harden breathing exercise regression coverage
+
+**Context:** Small accessibility-oriented maintenance pass. The breathing micro-intervention already exposes a live status region, but its full inhale → hold → exhale → check-in cycle had no focused regression test.
+**What happened:**
+- Expanded `src/__tests__/MicroIntervention.test.tsx` with a fake-timer test that steps through the full breathing cycle and verifies the follow-up check-in appears at completion.
+- Kept the existing assistive-tech announcement assertions in place for the initial breathing and savoring prompts.
+- Verified with focused Vitest on the MicroIntervention test file.
+**Outcome:** Success. The timed breathing flow now has direct regression coverage.
+**Insight:** Timer-driven support flows are easiest to keep stable when the test exercises the whole cycle, not just the initial render state.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-14] Polish crisis-adjacent copy in EN/RO
+
+**Context:** Small copy-maintenance pass. The numbness guidance line had an awkward English phrasing and a Romanian grammar error, which made the safety-adjacent guidance read less cleanly than the surrounding copy.
+**What happened:**
+- Reworded `somatic.numbnessFlooding` in `src/i18n/en.json` to say the body may be "trying to protect you".
+- Fixed the matching Romanian string in `src/i18n/ro.json` so it now reads naturally.
+- Tightened the Romanian crisis helpline detail to use `România`.
+- Verified the locale files with the focused i18n completeness Vitest.
+**Outcome:** Success. The support copy reads more naturally in both locales without changing behavior.
+**Insight:** Safety-oriented guidance should stay calm and grammatically clean; tiny copy fixes matter there because users read them under stress.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-15] Clarify external AI opt-in wording in README
+
+**Context:** Small docs maintenance pass. The README mentioned that external AI links stay off by default, but it did not say the switch lives in Settings.
+**What happened:**
+- Reworded the README "Explore further" bullet to say external AI links stay off by default and require explicit opt-in in Settings.
+**Outcome:** Success. The privacy boundary is a little clearer for first-time readers.
+**Insight:** When a feature is privacy-sensitive, naming the place where the opt-in lives reduces guesswork and keeps docs aligned with the UI.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-15] Surface simple language and reminder controls in README
+
+**Context:** Small docs-discoverability pass. The app already exposes simple language mode and daily reminders in Settings, but the README's feature list did not mention them.
+**What happened:**
+- Added a README feature bullet calling out simple language mode and daily reminders as accessibility/pacing controls.
+**Outcome:** Success. The public-facing docs now surface a couple of existing user controls that were previously easy to miss.
+**Insight:** When a feature lives behind Settings but materially changes the user experience, mention it in the top-level README so discoverability matches the app.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-15] Localize settings language buttons
+
+**Context:** Small copy polish pass. The settings drawer had a hardcoded Romanian label without diacritics, and the language switch buttons were not covered by locale-specific regression tests.
+**What happened:**
+- Added `menu.languageRo` and `menu.languageEn` to `src/i18n/en.json` and `src/i18n/ro.json`.
+- Swapped the hardcoded `Romana` / `English` button text in `src/components/SettingsMenu.tsx` for the localized menu strings, with readable fallbacks.
+- Added focused `SettingsMenu` assertions for the localized language buttons in both English and Romanian.
+- Verified with focused Vitest runs for `SettingsMenu` and i18n completeness.
+**Outcome:** Success. The language controls now read cleanly in both locales and have direct regression coverage.
+**Insight:** Even tiny hardcoded labels in a settings drawer are worth routing through i18n when the rest of the menu already is.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-16] Surface emotional vocabulary tracking in README
+
+**Context:** Small docs-discoverability pass. The app already shows a Past Sessions vocabulary panel with top identified emotions and milestone counts, but the README feature list did not mention it.
+**What happened:**
+- Added a README feature bullet calling out emotional vocabulary tracking in Past Sessions.
+**Outcome:** Success. The top-level docs now surface another existing user-facing insight panel that was easy to miss.
+**Insight:** If the UI already summarizes a meaningful persisted view of the user's behavior, the README should name it explicitly so readers know it exists before they open the app.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-16] Clarify external AI hint as Google Search
+
+**Context:** Small copy-maintenance pass. The settings drawer already exposed the external AI consent toggle, but the hint still described it generically as an external search engine.
+**What happened:**
+- Updated `settings.allowExternalAIHint` in `src/i18n/en.json` and `src/i18n/ro.json` to name Google Search explicitly.
+- Synced the `SettingsMenu` fallback hint and focused `SettingsMenu` test assertions to the new wording.
+- Verified the targeted `SettingsMenu` Vitest file after the copy change.
+**Outcome:** Success. The privacy-facing copy is more precise and still passes focused regression coverage.
+**Insight:** When a consent-gated link really resolves to one specific public service, naming it explicitly is clearer than using a generic "external search engine" placeholder.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

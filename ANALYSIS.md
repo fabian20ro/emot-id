@@ -22,7 +22,7 @@
   - [9.1 Consensus Themes](#91-consensus-themes)
   - [9.2 Conflict Resolution](#92-conflict-resolution)
   - [9.3 Prioritized Action Plan](#93-prioritized-action-plan)
-  - [9.4 TODOS.md Disposition](#94-todosmd-disposition)
+  - [9.4 Improvement Plan Disposition](#94-improvement-plan-disposition)
   - [9.5 Success Metrics](#95-success-metrics)
 - **Part IV: Appendices**
   - [A. Pixel 9a Layout Specifications](#appendix-a-pixel-9a-layout-specifications)
@@ -163,7 +163,7 @@ This is appropriate for the current complexity level. The app has no cross-cutti
 
 ### 2.1 Code Quality
 
-**Test coverage:** ~295 tests across 40+ test files, all passing. Test types:
+**Test coverage:** 402 tests across 52 test files, all passing. Test types:
 - Unit tests for all model scoring algorithms, synthesis, distress detection, temporal crisis, vocabulary, somatic patterns, valence ratio
 - Component tests with Testing Library for all major UI components
 - Integration tests for the full select → analyze → result flow
@@ -502,7 +502,7 @@ In SessionHistory, after 3+ sessions with a single model, show a dismissible sug
 Files to modify: `src/components/SessionHistory.tsx`
 i18n: Requires new keys `history.suggestNext`, `history.suggestSomatic`, etc. (already partially defined in `en.json:192-196`)
 Estimate: ~3 hours
-TODOS.md: Implements E.2
+IMPROVEMENT_PLAN.md: Implements E.2
 
 **R5.2 (P2) — Add emotional granularity training mode.**
 Create a focused mode where the app presents 2-3 similar emotions (e.g., irritation, frustration, anger) and asks the user to differentiate: "Which of these best describes what you feel?" This trains discrimination, not just recognition. Could be offered as an optional "practice mode" in the SettingsMenu.
@@ -510,7 +510,7 @@ Create a focused mode where the app presents 2-3 similar emotions (e.g., irritat
 Files to create: new component, new data file for emotion triads
 i18n: New section
 Estimate: ~8 hours
-TODOS.md: Implements E.3
+IMPROVEMENT_PLAN.md: Implements E.3
 
 **R5.3 (P2) — Add interoception development guidance.**
 For users who frequently skip in GuidedScan (tracked via `skipCount`), offer gentle interoception development tips: "Body awareness is like a muscle — it develops with practice. Try placing your hand on your stomach and just noticing the temperature." This converts a skip pattern from failure into a learning opportunity.
@@ -681,7 +681,7 @@ Files to create: New component `QuickCheckIn.tsx`, new data file for curated emo
 Files to modify: `src/App.tsx`, `src/models/distress.ts` (ensure crisis detection works with quick-mode selections)
 i18n: New section `quickCheckIn`
 Estimate: ~8 hours
-TODOS.md: Implements E.1
+IMPROVEMENT_PLAN.md: Implements E.1
 
 **R7.3 (P2) — Add weekly trend to valence ratio.**
 Extend `computeValenceRatio()` to return 4 weeks of data instead of 1. Display as a simple sparkline or 4 stacked bars in SessionHistory. This enables users to see whether their emotional landscape is shifting.
@@ -875,7 +875,7 @@ Health psychology (C7.1) and clinical (C4.5) both flag the absence of interventi
 | 3.3 | Model selection on first launch | R8.4 | 4h | `Onboarding.tsx`, `App.tsx` |
 | 3.4 | Optional check-in reminders | R7.4 | 6h | New notification service |
 
-## 9.4 TODOS.md Disposition
+## 9.4 Improvement Plan Disposition
 
 ### Phase E Items
 

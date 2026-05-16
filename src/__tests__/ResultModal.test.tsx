@@ -189,7 +189,7 @@ describe('ResultModal', () => {
   it('shows temporal escalation note when escalation flag is true', () => {
     const results = [makeResult('despair')]
     renderModal({ results, selections: [makeEmotion('despair')], escalateCrisis: true })
-    expect(screen.getByText(/pattern showing up more often recently/i)).toBeInTheDocument()
+    expect(screen.getByText(/pattern appearing more often lately/i)).toBeInTheDocument()
   })
 
   it('does not show crisis resources for non-distress results', () => {

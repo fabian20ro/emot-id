@@ -42,7 +42,7 @@ export function CrisisBanner({
       </p>
       {showTemporalNote && (
         <p className={`text-xs mt-2 leading-relaxed ${isTier4 ? 'text-red-200/85' : 'text-amber-200/80'}`}>
-          {crisisT.temporalNote ?? "We noticed this pattern showing up more often recently. That's okay — it's information, not a judgment."}
+          {crisisT.temporalNote ?? "We noticed this pattern appearing more often lately. That's okay — it's information, not a judgment."}
         </p>
       )}
 

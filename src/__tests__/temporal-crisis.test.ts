@@ -82,6 +82,15 @@ describe('escalateCrisisTier', () => {
     expect(escalateCrisisTier('tier1', sessions, 1_000_000)).toBe('tier2')
   })
 
+  it('escalates tier2 to tier3', () => {
+    const sessions = [
+      makeSession({ crisisTier: 'tier4' }),
+      makeSession({ crisisTier: 'tier2' }),
+      makeSession({ crisisTier: 'tier3' }),
+    ]
+    expect(escalateCrisisTier('tier2', sessions, 1_000_000)).toBe('tier3')
+  })
+
   it('caps at tier3', () => {
     const sessions = [
       makeSession({ crisisTier: 'tier3' }),

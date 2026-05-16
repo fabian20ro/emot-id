@@ -9,8 +9,9 @@
   "menu": {
     "model": "Model",
     "language": "Language",
-    "crisisSupport": "Need support?",
-    "crisisDetail": "Call 116 123 (Romania, free, 24/7) or visit findahelpline.com"
+    "languageRo": "Romanian",
+    "languageEn": "English",
+    "disclaimer": "Disclaimer"
   },
   "selectionBar": {
     "title": "Your selections",
@@ -63,7 +64,7 @@
     "tier3": "What you're describing sounds very painful. You deserve support right now — please consider reaching out.",
     "tier4": "If you are thinking about ending your life, please reach out now. You deserve help.",
     "tier4Acknowledge": "I understand — show my results",
-    "temporalNote": "We noticed this pattern showing up more often recently. That's okay — it's information, not a judgment.",
+    "temporalNote": "We noticed this pattern appearing more often lately. That's okay — it's information, not a judgment.",
     "roLine": "Romania: 116 123 (free, 24/7)",
     "intLine": "International: findahelpline.com",
     "disclaimer": "If you are in immediate danger, please call emergency services.",
@@ -98,7 +99,7 @@
   },
   "settings": {
     "title": "Settings",
-    "soundLabel": "Sound effects",
+    "soundLabel": "Sound",
     "soundOn": "On",
     "soundOff": "Off",
     "saveSessionsLabel": "Save sessions",
@@ -108,7 +109,7 @@
     "allowExternalAI": "External AI links",
     "allowExternalAIOn": "On",
     "allowExternalAIOff": "Off",
-    "allowExternalAIHint": "When enabled, opening AI links sends your selected emotions to an external search engine."
+    "allowExternalAIHint": "When enabled, opening AI links sends your selected emotions to Google Search."
   },
   "reminders": {
     "label": "Daily reminder",
@@ -131,7 +132,7 @@
       "somatic": "Notice body sensations first.",
       "wheel": "Pick feeling words from broad to specific.",
       "plutchik": "Explore how emotions mix together.",
-      "dimensional": "Place your state by pleasantness and intensity."
+      "dimensional": "Place your state on the pleasantness and intensity axes."
     }
   },
   "bridges": {
@@ -142,7 +143,7 @@
     "tryWheel": "Try the Emotion Wheel",
     "tryPlutchik": "Try Plutchik's Wheel",
     "tryDimensional": "Try the Emotional Space",
-    "dimensionalFromCognitive": "How intense and pleasant/unpleasant is this?",
+    "dimensionalFromCognitive": "How intense and how pleasant or unpleasant is this?",
     "somaticFromDimensional": "Where do you feel this in your body?",
     "dimensionalFromSomatic": "How pleasant and intense is this sensation?",
     "pleasantEmbodiment": "Where do you feel that warmth? Take a moment to notice."
@@ -159,7 +160,7 @@
     "title": "That's okay — here are two ways to start",
     "bodyOption": "Start with your body",
     "bodyDesc": "Notice physical sensations first",
-    "dimensionalOption": "Start with pleasant/unpleasant",
+    "dimensionalOption": "Start with pleasantness",
     "dimensionalDesc": "Locate your state on a simple scale",
     "close": "Close"
   },
@@ -184,7 +185,7 @@
     "freeMode": "Free selection",
     "guidedPause": "You noticed strong {sensation} in your {region}. Take a breath before continuing.",
     "guidedPauseContinue": "Ready to continue",
-    "numbnessFlooding": "Your body may be protecting you right now. Would you like to try a grounding exercise before continuing?",
+    "numbnessFlooding": "Your body may be trying to protect you right now. Would you like to try a grounding exercise before continuing?",
     "numbnessGrounding": "Try grounding",
     "numbnessContinue": "Continue scanning"
   },
@@ -276,7 +277,7 @@
     "detail": "All your data — emotion selections, session history, body maps, and preferences — is stored locally on your device using IndexedDB and localStorage. Nothing is sent to any server. There are no analytics, no accounts, and no cloud sync. You can delete all data anytime from Past Sessions."
   },
   "dimensional": {
-    "instructions": "Locate your state on two axes: how pleasant/unpleasant and how intense/calm you feel"
+    "instructions": "Locate your state on two axes: how pleasant or unpleasant and how intense or calm you feel"
   },
   "wheelBreadcrumb": {
     "label": "Emotion navigation path",

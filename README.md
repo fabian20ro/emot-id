@@ -10,7 +10,8 @@ Interactive PWA for identifying and exploring emotions through multiple classifi
 - **Select emotions** — Tap bubbles, body regions, or scatter plot dots that resonate with your current state
 - **Discover patterns** — The app detects dyads, somatic patterns, and emotional complexity
 - **Safety-aware** — 4-tier crisis detection with graduated access (contextualizes without gatekeeping) and grounding techniques
-- **Explore further** — One-tap Google query generation from your selected emotions
+- **Explore further** — One-tap Google query generation from your selected emotions; optional external AI links stay off by default and require explicit opt-in in Settings
+- **Emotional vocabulary** — Past Sessions tracks your most-identified emotions, model spread, and milestone progress over time
 
 ## Features
 
@@ -20,7 +21,8 @@ Interactive PWA for identifying and exploring emotions through multiple classifi
 - Cross-model bridges — suggestions to explore with a different model
 - 4-step onboarding for first-time users (can be skipped)
 - Session history with local-only analytics and export (JSON + therapist-friendly text)
-- Sound feedback on selection (mutable)
+- Sound feedback on selection (can be muted)
+- Accessibility and pacing — simple language mode plus daily reminders for lighter, more consistent check-ins
 - Responsive — works on mobile and desktop
 - Installable PWA — works offline after first load
 

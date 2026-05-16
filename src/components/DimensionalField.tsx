@@ -17,6 +17,8 @@ function toPixel(value: number): number {
 function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] }: VisualizationProps) {
   const { language, section } = useLanguage()
   const dimensionalT = section('dimensional')
+  const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 639px)').matches
+  const [hasInteracted, setHasInteracted] = useState(false)
   const dimEmotions = useMemo(
     () => emotions as DimensionalEmotion[],
     [emotions]
@@ -31,6 +33,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
     () => new Set(selections.map((s) => s.id)),
     [selections]
   )
+  const showAxisLabels = !isMobile || !hasInteracted
 
   // Compute label y-offsets with collision avoidance
   const labelOffsets = useMemo(() => {
@@ -69,6 +72,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
       const svg = svgRef.current
       if (!svg) return
 
+      setHasInteracted(true)
       const rect = svg.getBoundingClientRect()
       const scaleX = FIELD_SIZE / rect.width
       const scaleY = FIELD_SIZE / rect.height
@@ -86,6 +90,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
 
   const handleSuggestionClick = useCallback(
     (emotion: DimensionalEmotion) => {
+      setHasInteracted(true)
       if (selectedIds.has(emotion.id)) {
         onDeselect(emotion)
       } else {
@@ -100,6 +105,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
   const handleEmotionDotClick = useCallback(
     (emotion: DimensionalEmotion, e: React.MouseEvent) => {
       e.stopPropagation()
+      setHasInteracted(true)
       if (selectedIds.has(emotion.id)) {
         onDeselect(emotion)
       } else {
@@ -146,18 +152,22 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
           />
 
           {/* Axis labels */}
-          <text x={PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="start">
-            {language === 'ro' ? 'Neplacut' : 'Unpleasant'}
-          </text>
-          <text x={FIELD_SIZE - PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="end">
-            {language === 'ro' ? 'Placut' : 'Pleasant'}
-          </text>
-          <text x={FIELD_SIZE / 2} y={PADDING - 8} fill="#9CA3AF" fontSize={13} textAnchor="middle">
-            {language === 'ro' ? 'Intens' : 'Intense'}
-          </text>
-          <text x={FIELD_SIZE / 2} y={FIELD_SIZE - PADDING + 18} fill="#9CA3AF" fontSize={13} textAnchor="middle">
-            {language === 'ro' ? 'Calm' : 'Calm'}
-          </text>
+          {showAxisLabels && (
+            <>
+              <text x={PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="start">
+                {language === 'ro' ? 'Neplacut' : 'Unpleasant'}
+              </text>
+              <text x={FIELD_SIZE - PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="end">
+                {language === 'ro' ? 'Placut' : 'Pleasant'}
+              </text>
+              <text x={FIELD_SIZE / 2} y={PADDING - 8} fill="#9CA3AF" fontSize={13} textAnchor="middle">
+                {language === 'ro' ? 'Intens' : 'Intense'}
+              </text>
+              <text x={FIELD_SIZE / 2} y={FIELD_SIZE - PADDING + 18} fill="#9CA3AF" fontSize={13} textAnchor="middle">
+                {language === 'ro' ? 'Calm' : 'Calm'}
+              </text>
+            </>
+          )}
 
           {/* Reference emotion dots and labels */}
           {dimEmotions.map((emotion) => {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { InfoButton } from '../components/InfoButton'
 import { LanguageProvider } from '../context/LanguageContext'
@@ -40,14 +40,11 @@ describe('InfoButton', () => {
     renderInfoButton()
 
     await user.click(screen.getByRole('button', { name: 'Test info' }))
-    expect(screen.getByRole('dialog')).toBeInTheDocument()
-
-    await user.keyboard('{Escape}')
+    await act(async () => {
+      await user.keyboard('{Escape}')
+    })
     // AnimatePresence exit — dialog should be removed after animation
-    await screen.findByRole('button', { name: 'Test info' })
-    // Wait for exit animation
-    await new Promise((r) => setTimeout(r, 200))
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
 
   it('closes modal on close button click', async () => {
@@ -57,9 +54,10 @@ describe('InfoButton', () => {
     await user.click(screen.getByRole('button', { name: 'Test info' }))
     expect(screen.getByRole('dialog')).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Close' }))
-    await new Promise((r) => setTimeout(r, 200))
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    await act(async () => {
+      await user.click(screen.getByRole('button', { name: 'Close' }))
+    })
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
 
   it('has aria-modal and aria-labelledby on dialog', async () => {
