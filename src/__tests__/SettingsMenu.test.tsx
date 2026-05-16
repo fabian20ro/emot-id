@@ -87,7 +87,7 @@ describe('SettingsMenu', () => {
     expect(screen.getByText('External AI links')).toBeInTheDocument()
     expect(
       screen.getByText(
-        /When enabled, opening AI links sends your selected emotions to an external search engine\./
+        /When enabled, opening AI links sends your selected emotions to Google Search\./
       )
     ).toBeInTheDocument()
   })
@@ -101,7 +101,7 @@ describe('SettingsMenu', () => {
     expect(screen.getByText('Linkuri AI externe')).toBeInTheDocument()
     expect(
       screen.getByText(
-        /Când este activată, deschiderea linkurilor AI trimite emoțiile selectate către un motor extern de căutare\./
+        /Când este activată, deschiderea linkurilor AI trimite emoțiile selectate către Căutarea Google\./
       )
     ).toBeInTheDocument()
   })

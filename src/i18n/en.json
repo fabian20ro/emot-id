@@ -109,7 +109,7 @@
     "allowExternalAI": "External AI links",
     "allowExternalAIOn": "On",
     "allowExternalAIOff": "Off",
-    "allowExternalAIHint": "When enabled, opening AI links sends your selected emotions to an external search engine."
+    "allowExternalAIHint": "When enabled, opening AI links sends your selected emotions to Google Search."
   },
   "reminders": {
     "label": "Daily reminder",

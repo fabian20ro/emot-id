@@ -217,7 +217,7 @@ export function SettingsMenu({
               />
               <div className="px-3 pb-2">
                 <p className="text-xs text-gray-500">
-                  {settingsT.allowExternalAIHint ?? 'When enabled, opening AI links sends your selected emotions to an external search engine.'}
+                  {settingsT.allowExternalAIHint ?? 'When enabled, opening AI links sends your selected emotions to Google Search.'}
                 </p>
               </div>
 

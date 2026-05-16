@@ -397,4 +397,17 @@ Each entry should follow this structure:
 
 ---
 
+### [2026-05-16] Clarify external AI hint as Google Search
+
+**Context:** Small copy-maintenance pass. The settings drawer already exposed the external AI consent toggle, but the hint still described it generically as an external search engine.
+**What happened:**
+- Updated `settings.allowExternalAIHint` in `src/i18n/en.json` and `src/i18n/ro.json` to name Google Search explicitly.
+- Synced the `SettingsMenu` fallback hint and focused `SettingsMenu` test assertions to the new wording.
+- Verified the targeted `SettingsMenu` Vitest file after the copy change.
+**Outcome:** Success. The privacy-facing copy is more precise and still passes focused regression coverage.
+**Insight:** When a consent-gated link really resolves to one specific public service, naming it explicitly is clearer than using a generic "external search engine" placeholder.
+**Promoted to Lessons Learned:** No
+
+---
+
 <!-- New entries go above this line, most recent first -->

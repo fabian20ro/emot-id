@@ -109,7 +109,7 @@
     "allowExternalAI": "Linkuri AI externe",
     "allowExternalAIOn": "Pornește",
     "allowExternalAIOff": "Oprește",
-    "allowExternalAIHint": "Când este activată, deschiderea linkurilor AI trimite emoțiile selectate către un motor extern de căutare."
+    "allowExternalAIHint": "Când este activată, deschiderea linkurilor AI trimite emoțiile selectate către Căutarea Google."
   },
   "reminders": {
     "label": "Memento zilnic",
