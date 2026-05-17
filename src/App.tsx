@@ -15,6 +15,7 @@ import { ChainAnalysis } from './components/ChainAnalysis'
 import { VisualizationErrorBoundary } from './components/VisualizationErrorBoundary'
 import { FirstInteractionHint } from './components/FirstInteractionHint'
 import { WheelBreadcrumb } from './components/WheelBreadcrumb'
+import { ModelVisualization } from './components/ModelVisualization'
 import { useSound } from './hooks/useSound'
 import { useEmotionModel } from './hooks/useEmotionModel'
 import { useModelSelection } from './hooks/useModelSelection'
@@ -23,7 +24,6 @@ import { useSessionHistory } from './hooks/useSessionHistory'
 import { useChainAnalysis } from './hooks/useChainAnalysis'
 import { useReminders } from './hooks/useReminders'
 import { useLanguage } from './context/LanguageContext'
-import { getVisualization } from './models/registry'
 import { MODEL_IDS } from './models/constants'
 import { storage } from './data/storage'
 import { getCrisisTier } from './models/distress'
@@ -61,8 +61,6 @@ export default function App() {
     restore,
     analyze,
   } = useEmotionModel(modelId)
-
-  const Visualization = getVisualization(modelId)
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showQuickCheckIn, setShowQuickCheckIn] = useState(false)
@@ -324,7 +322,7 @@ export default function App() {
             )}
           </AnimatePresence>
 
-          {Visualization && (
+          {modelId && (
             <Suspense
               fallback={
                 <div className="h-full w-full flex items-center justify-center text-sm text-gray-500">
@@ -332,7 +330,8 @@ export default function App() {
                 </div>
               }
             >
-              <Visualization
+              <ModelVisualization
+                modelId={modelId}
                 emotions={visibleEmotions}
                 onSelect={handleSelect}
                 onDeselect={handleDeselect}
