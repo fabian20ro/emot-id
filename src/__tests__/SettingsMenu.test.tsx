@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { SettingsMenu } from '../components/SettingsMenu'
 import { LanguageProvider } from '../context/LanguageContext'
@@ -137,6 +137,27 @@ describe('SettingsMenu', () => {
   it('does not render when closed', () => {
     renderMenu({ isOpen: false })
     expect(screen.queryByText('Language')).not.toBeInTheDocument()
+  })
+
+  it('renders daily reminder toggle', async () => {
+    const user = userEvent.setup()
+    const onDailyReminderChange = vi.fn()
+    const { container } = renderMenu({ onDailyReminderChange })
+    
+    // Find the label text first
+    const label = screen.getByText(/Daily reminder/i)
+    expect(label).toBeInTheDocument()
+
+    // The toggle buttons are in the next div sibling of the label's parent div
+    const containerDiv = label.closest('div')!
+    const nextSibling = containerDiv.nextElementSibling
+    const toggleButtons = within(nextSibling!).getAllByRole('button', { name: /On|Off/i })
+    const toggleButton = toggleButtons[0]
+    
+    expect(toggleButton).toBeInTheDocument()
+    
+    await user.click(toggleButton)
+    expect(onDailyReminderChange).toHaveBeenCalledWith(true)
   })
 
   it('renders disclaimer section with InfoButton', () => {
