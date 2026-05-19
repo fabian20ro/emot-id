@@ -42,15 +42,19 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
   const currentRegionId = SCAN_ORDER[currentIndex]
   const currentRegion = currentRegionId ? regions.get(currentRegionId) : undefined
   const currentGroupId = getGroupForIndex(currentIndex)
-  const randomizedCurrentSensations = useMemo(() => {
-    if (!currentRegion) return []
+  const [randomizedCurrentSensations, setRandomizedCurrentSensations] = useState<SensationType[]>([])
+  useEffect(() => {
+    if (!currentRegion) {
+      setRandomizedCurrentSensations([])
+      return
+    }
     const shuffled = [...currentRegion.commonSensations]
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
       ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
     }
-    return shuffled
-  }, [currentRegionId, currentRegion])
+    setRandomizedCurrentSensations(shuffled)
+  }, [currentRegion])
 
   // Breathing cycle: alternate in/out every half-cycle
   useEffect(() => {

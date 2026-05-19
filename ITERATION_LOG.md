@@ -422,3 +422,16 @@ Each entry should follow this structure:
 **Outcome:** Success. The settings drawer crisis support block type-checks again.
 **Insight:** When a component already owns fallback-safe copy usage, the fastest recovery is usually to restore the missing locale keys rather than reshaping the component.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-05-17] Tighten AnalyzeButton coverage
+
+**Context:** Compound Autopilot small-scope run on clean `agent/compound/emot-id`; selected a test-only improvement around existing analyze button contracts.
+**What happened:**
+- Added focused tests for dimensional and somatic disabled guidance.
+- Added focused test for enabled selection-count label.
+- Kept implementation unchanged.
+**Outcome:** Success. Focused AnalyzeButton tests and TypeScript build passed.
+**Insight:** No new reusable project lesson; this was straightforward characterization coverage.
+**Promoted to Lessons Learned:** No

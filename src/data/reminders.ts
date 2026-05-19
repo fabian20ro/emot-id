@@ -64,7 +64,6 @@ async function showNotification(title: string, body: string): Promise<void> {
     }
   }
 
-  // eslint-disable-next-line no-new
   new Notification(title, { body, tag: REMINDER_TAG })
 }
 

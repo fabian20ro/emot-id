@@ -8,16 +8,16 @@ vi.mock('framer-motion', async () => {
   const React = await import('react')
   return {
     AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-    motion: {
-      div: React.forwardRef((props: Record<string, unknown>, ref: React.Ref<HTMLDivElement>) => {
-        const { initial: _i, animate: _a, exit: _e, transition: _t, whileHover: _wh, whileTap: _wt, layout: _l, ...rest } = props
-        return React.createElement('div', { ...rest, ref })
-      }),
-      p: React.forwardRef((props: Record<string, unknown>, ref: React.Ref<HTMLParagraphElement>) => {
-        const { initial: _i, animate: _a, exit: _e, transition: _t, ...rest } = props
-        return React.createElement('p', { ...rest, ref })
-      }),
-    },
+      motion: {
+        div: React.forwardRef((props: Record<string, unknown>, ref: React.Ref<HTMLDivElement>) => {
+          const { ...rest } = props
+          return React.createElement('div', { ...rest, ref })
+        }),
+        p: React.forwardRef((props: Record<string, unknown>, ref: React.Ref<HTMLParagraphElement>) => {
+          const { ...rest } = props
+          return React.createElement('p', { ...rest, ref })
+        }),
+      },
   }
 })
 
