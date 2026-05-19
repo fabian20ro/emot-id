@@ -142,7 +142,7 @@ describe('SettingsMenu', () => {
   it('renders daily reminder toggle', async () => {
     const user = userEvent.setup()
     const onDailyReminderChange = vi.fn()
-    const { container } = renderMenu({ onDailyReminderChange })
+    renderMenu({ onDailyReminderChange })
     
     // Find the label text first
     const label = screen.getByText(/Daily reminder/i)
@@ -151,7 +151,8 @@ describe('SettingsMenu', () => {
     // The toggle buttons are in the next div sibling of the label's parent div
     const containerDiv = label.closest('div')!
     const nextSibling = containerDiv.nextElementSibling
-    const toggleButtons = within(nextSibling!).getAllByRole('button', { name: /On|Off/i })
+    expect(nextSibling).toBeInstanceOf(HTMLElement)
+    const toggleButtons = within(nextSibling as HTMLElement).getAllByRole('button', { name: /On|Off/i })
     const toggleButton = toggleButtons[0]
     
     expect(toggleButton).toBeInTheDocument()
