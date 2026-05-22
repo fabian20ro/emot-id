@@ -37,8 +37,8 @@ const OPPOSITE_ACTIONS: OppositeAction[] = [
   {
     emotionPattern: ['guilt', 'regret', 'remorse'],
     suggestion: {
-      en: 'First pause and ask whether the guilt fits the facts. If it does, repair what you can. If it does not, choose a self-respecting action instead of self-punishment.',
-      ro: 'Mai intai opreste-te si intreaba-te daca vina se potriveste faptelor. Daca da, repara ce poti. Daca nu, alege o actiune cu respect de sine in locul autopedepsirii.',
+      en: 'This suggestion works differently depending on whether the guilt feels justified or not. First pause and ask whether the guilt fits the facts. If it does, repair what you can. If it does not, choose a self-respecting action instead of self-punishment.',
+      ro: 'Aceasta sugestie functioneaza diferit in functie de faptul daca vina pare justificata sau nu. Mai intai opreste-te si intreaba-te daca vina se potriveste faptelor. Daca da, repara ce poti. Daca nu, alege o actiune cu respect de sine in locul autopedepsirii.',
     },
   },
   {
