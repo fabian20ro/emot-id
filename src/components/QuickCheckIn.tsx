@@ -50,6 +50,7 @@ export function QuickCheckIn({ isOpen, onClose, onComplete }: QuickCheckInProps)
         return prev.filter((id) => id !== emotionId)
       }
       if (prev.length >= 3) {
+        navigator.vibrate?.(50)
         return prev
       }
       return [...prev, emotionId]
