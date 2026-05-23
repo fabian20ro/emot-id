@@ -21,6 +21,7 @@ Interactive PWA for identifying and exploring emotions through multiple classifi
 - Cross-model bridges — suggestions to explore with a different model
 - 4-step onboarding for first-time users (can be skipped)
 - Session history with local-only analytics and export (JSON + therapist-friendly text)
+- Privacy-first — all session data stays strictly in your browser; no server-side storage or tracking
 - Sound feedback on selection (can be muted)
 - Accessibility and pacing — simple language mode plus daily reminders for lighter, more consistent check-ins
 - Responsive — works on mobile and desktop
