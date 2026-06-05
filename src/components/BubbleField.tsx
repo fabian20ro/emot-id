@@ -49,54 +49,57 @@ function BubbleFieldBase({
   // Update positions when emotions change or container resizes
   useEffect(() => {
     if (containerSize.width === 0 || containerSize.height === 0) return
-
     // On mobile, recompute all positions deterministically on every change
     if (containerSize.width < MOBILE_BREAKPOINT) {
-      setPositions(
-        calculateDeterministicPositions(emotions, containerSize.width, containerSize.height, sizes, topInset)
-      )
+      setTimeout(() => {
+        setPositions(
+          calculateDeterministicPositions(emotions, containerSize.width, containerSize.height, sizes, topInset)
+        )
+      }, 0)
       return
     }
 
     // On desktop, use incremental random scatter
-    setPositions(prevPositions => {
-      const sizeMap = getSizePixels(containerSize.width)
-      const currentIds = new Set(emotions.map(e => e.id))
-      const newEmotions = emotions.filter(e => !prevPositions.has(e.id))
+    setTimeout(() => {
+      setPositions(prevPositions => {
+        const sizeMap = getSizePixels(containerSize.width)
+        const currentIds = new Set(emotions.map(e => e.id))
+        const newEmotions = emotions.filter(e => !prevPositions.has(e.id))
 
-      // Clamp existing positions to current container bounds
-      const clamped = new Map<string, { x: number; y: number }>()
-      for (const [id, pos] of prevPositions) {
-        if (!currentIds.has(id)) continue
-        const size = sizes.get(id) || 'medium'
-        const w = sizeMap[size]
-        clamped.set(id, {
-          x: Math.max(16, Math.min(pos.x, containerSize.width - w - 16)),
-          y: Math.max(16, Math.min(pos.y, containerSize.height - bubbleHeight - 16)),
-        })
-      }
-
-      // Build existing rects for collision detection
-      const existingRects: { x: number; y: number; w: number; h: number }[] = []
-      for (const emotion of emotions) {
-        const pos = clamped.get(emotion.id)
-        if (pos) {
-          const size = sizes.get(emotion.id) || 'medium'
-          existingRects.push({ x: pos.x, y: pos.y, w: sizeMap[size], h: bubbleHeight })
+        // Clamp existing positions to current container bounds
+        const clamped = new Map<string, { x: number; y: number }>()
+        for (const [id, pos] of prevPositions) {
+          if (!currentIds.has(id)) continue
+          const size = sizes.get(id) || 'medium'
+          const w = sizeMap[size]
+          clamped.set(id, {
+            x: Math.max(16, Math.min(pos.x, containerSize.width - w - 16)),
+            y: Math.max(16, Math.min(pos.y, containerSize.height - bubbleHeight - 16)),
+          })
         }
-      }
 
-      // Calculate positions for new emotions
-      const newPositions = calculateRandomPositions(
-        newEmotions, containerSize.width, containerSize.height, sizes, existingRects, topInset
-      )
+        // Build existing rects for collision detection
+        const existingRects: { x: number; y: number; w: number; h: number }[] = []
+        for (const emotion of emotions) {
+          const pos = clamped.get(emotion.id)
+          if (pos) {
+            const size = sizes.get(emotion.id) || 'medium'
+            existingRects.push({ x: pos.x, y: pos.y, w: sizeMap[size], h: bubbleHeight })
+          }
+        }
 
-      // Merge clamped existing + new
-      for (const [id, pos] of newPositions) {
-        clamped.set(id, pos)
-      }
-      return clamped
-    })
+        // Calculate positions for new emotions
+        const newPositions = calculateRandomPositions(
+          newEmotions, containerSize.width, containerSize.height, sizes, existingRects, topInset
+        )
+
+        // Merge clamped existing + new
+        for (const [id, pos] of newPositions) {
+          clamped.set(id, pos)
+        }
+        return clamped
+      })
+    }, 0)
   }, [emotions, sizes, containerSize.width, containerSize.height, topInset])
 
   return (

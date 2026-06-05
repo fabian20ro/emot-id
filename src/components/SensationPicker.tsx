@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import { useFocusTrap } from '../hooks/useFocusTrap'
@@ -55,13 +55,18 @@ export function SensationPicker({
   }
 
   const somaticT = section('somatic')
-  const randomizedSensations = useMemo(() => {
-    const shuffled = [...availableSensations]
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
-    }
-    return shuffled
+  const [randomizedSensations, setRandomizedSensations] = useState<SensationType[]>(availableSensations)
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const shuffled = [...availableSensations]
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+      }
+      setRandomizedSensations(shuffled)
+    }, 0)
+    return () => clearTimeout(timeoutId)
   }, [availableSensations])
 
   return (

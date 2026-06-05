@@ -11,9 +11,9 @@
     "language": "Language",
     "languageRo": "Romanian",
     "languageEn": "English",
-    "disclaimer": "Disclaimer",
     "crisisSupport": "Need support?",
-    "crisisDetail": "Call 116 123 (Romania, free, 24/7) or visit findahelpline.com"
+    "crisisDetail": "Call 116 123 (Romania, free, 24/7) or visit findahelpline.com",
+    "disclaimer": "Disclaimer"
   },
   "selectionBar": {
     "title": "Your selections",

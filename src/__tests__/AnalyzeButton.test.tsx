@@ -24,6 +24,21 @@ describe('AnalyzeButton', () => {
     expect(screen.getByText(/Select an emotion that resonates/)).toBeInTheDocument()
   })
 
+  it('shows dimensional disabled guidance for the dimensional model', () => {
+    renderButton({ disabled: true, modelId: 'dimensional' })
+    expect(screen.getByText(/Tap the square where your state fits/)).toBeInTheDocument()
+  })
+
+  it('shows somatic disabled guidance for the somatic model', () => {
+    renderButton({ disabled: true, modelId: 'somatic' })
+    expect(screen.getByText(/Tap a body area where you notice a sensation/)).toBeInTheDocument()
+  })
+
+  it('includes the selection count when enabled and selections exist', () => {
+    renderButton({ disabled: false, selectionCount: 3 })
+    expect(screen.getByRole('button', { name: 'Analyze (3)' })).toBeInTheDocument()
+  })
+
   it('calls onClick when enabled and clicked', async () => {
     const onClick = vi.fn()
     renderButton({ disabled: false, onClick })
