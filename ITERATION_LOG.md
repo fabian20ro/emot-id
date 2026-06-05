@@ -46,7 +46,7 @@ Each entry should follow this structure:
 - Cross-file consistency: zero overlap between AGENTS.md and LESSONS_LEARNED.md. Sub-agents table matches `.claude/agents/` directory. All file references valid.
 **Outcome:** Success. Config files leaner, aligned with guide template. No content lost.
 **Insight:** The 100-line limit for sub-agents is a guideline, not a hard rule — domain-specific advisory agents (psychologist, ux-expert) carry knowledge that isn't model-native or codebase-discoverable. Trimming would lose curated value.
-**Promoted to Lessons Learned:** No
+**Promoted to Lessons Learned:** Yes
 
 ---
 
@@ -435,3 +435,16 @@ Each entry should follow this structure:
 **Outcome:** Success. Focused AnalyzeButton tests and TypeScript build passed.
 **Insight:** No new reusable project lesson; this was straightforward characterization coverage.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-06-06] Fix latest GitHub Pages deploy JSON failure
+
+**Context:** Latest GitHub Pages deploy run 27015785171 failed on `main@54a8308be0a6089fb255a0bf24fff04077051747` during `npm ci`.
+**What happened:**
+- Fetched remote refs after local `origin/main` proved stale.
+- Fixed invalid `package.json` syntax by adding the missing comma between `check` and `check-translations` scripts.
+- Verified with `npm ci`, `npm test`, and `npm run build`.
+**Outcome:** Success. The CI-blocking JSON parse error is fixed locally on `codex/fix-latest-deploy-json`.
+**Insight:** When Actions says latest and local refs disagree, fetch before drawing conclusions from local `origin/main`.
+**Promoted to Lessons Learned:** Yes
