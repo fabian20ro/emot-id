@@ -41,17 +41,19 @@ npm install
 npm run dev
 ```
 
-Open: `http://localhost:5173/emot-id/`
+## Testing
 
-| Command | Action |
-|---------|--------|
-| `npm run dev` | Vite dev server |
-| `npm run build` | TypeScript check + Vite build |
-| `npm test` | Run all unit tests |
-| `npm run test:e2e` | Run Playwright E2E tests |
-| `npm run test:watch` | Watch mode |
-| `npm run lint` | ESLint |
-| `npm run preview` | Preview production build |
+Run all unit tests using:
+
+```bash
+npm test
+```
+
+For end-to-end testing with Playwright:
+
+```bash
+npm run test:e2e
+```
 
 ## Credits
 
