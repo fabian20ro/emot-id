@@ -1,10 +1,12 @@
 export interface BaseEmotion {
-  id: string
-  label: { ro: string; en: string }
-  description?: { ro: string; en: string }
-  needs?: { ro: string; en: string }
-  color: string
-  intensity?: number
+  id: string;
+  label: { ro: string; en: string };
+  description?: { ro: string; en: string };
+  needs?: { ro: string; en: string };
+  color: string;
+  intensity?: number;
+  parent?: string;
+  parents?: string[];
 }
 
 export interface AnalysisResult {
