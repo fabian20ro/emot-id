@@ -2,7 +2,7 @@ import { test, expect } from 'vitest';
 import en from './en.json';
 import ro from './ro.json';
 
-function getKeys(obj, prefix = '') {
+function getKeys(obj: Record<string, any>, prefix = '') {
   const keys = new Set();
   for (const key in obj) {
     const newKey = prefix ? `${prefix}.${key}` : key;
@@ -14,7 +14,7 @@ function getKeys(obj, prefix = '') {
   return keys;
 }
 
-function validateValues(obj, prefix = '') {
+function validateValues(obj: Record<string, any>, prefix = '') {
   for (const key in obj) {
     const newKey = prefix ? `${prefix}.${key}` : key;
     const val = obj[key];
