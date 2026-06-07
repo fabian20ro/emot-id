@@ -56,4 +56,29 @@ describe('computeValenceRatio', () => {
     const historicalTotal = result.weeks.reduce((sum, week) => sum + week.total, 0)
     expect(historicalTotal).toBe(1)
   })
+
+  it('handles boundary conditions around 0.1 and -0.1', () => {
+    const sessions = [
+      makeSession({
+        results: [
+          { id: 'val-0.1', label: { ro: 'val', en: 'val' }, color: '#fff', valence: 0.1 },
+          { id: 'val-neg-0.1', label: { ro: 'val', en: 'val' }, color: '#fff', valence: -0.1 },
+          { id: 'val-pos-0.11', label: { ro: 'val', en: 'val' }, color: '#fff', valence: 0.11 },
+          { id: 'val-neg-0.11', label: { ro: 'val', en: 'val' }, color: '#fff', valence: -0.11 },
+          { id: 'val-0', label: { ro: 'val', en: 'val' }, color: '#fff', valence: 0 },
+        ],
+      }),
+    ]
+    const result = computeValenceRatio(sessions)
+    // 0.1 -> neutral
+    // -0.1 -> neutral
+    // 0.11 -> pleasant
+    // -0.11 -> unpleasant
+    // 0 -> neutral
+    expect(result.pleasant).toBe(1)
+    expect(result.unpleasant).toBe(1)
+    expect(result.neutral).toBe(3)
+    expect(result.total).toBe(5)
+  })
+
 })
