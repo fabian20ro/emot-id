@@ -92,6 +92,7 @@ export const wheelModel: EmotionModel<WheelEmotion> = {
         visibleEmotionIds: new Map(CENTER_IDS.map((id) => [id, 0])),
         currentGeneration: 0,
       },
+      newSelections: [...selections, emotion],
     }
   },
 
