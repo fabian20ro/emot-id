@@ -41,6 +41,18 @@ describe('Wheel navigation', () => {
     expect(visibleIds).toEqual(CENTER_IDS)
   })
 
+  it('selecting a leaf node updates newSelections correctly', () => {
+    const state = wheelModel.initialState
+    const leaf = e['aroused'] // a leaf node
+    const effect1 = wheelModel.onSelect(leaf, state, [])
+    
+    // Select excited (branch)
+    const effect2 = wheelModel.onSelect(e['excited'], effect1.newState, [leaf])
+    
+    expect(effect2.newSelections).toBeDefined()
+    expect(effect2.newSelections?.map(e => e.id)).toContain(leaf.id)
+  })
+
   it('deselecting resets to root without wiping other selections', () => {
     const state = { visibleEmotionIds: getCenterMap(), currentGeneration: 0 }
     const effect = wheelModel.onDeselect(e['aroused'], state)
