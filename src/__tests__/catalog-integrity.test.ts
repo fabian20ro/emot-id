@@ -10,6 +10,16 @@ describe('Catalog integrity', () => {
     }
   })
 
+  it('every parent ID in the catalog exists', () => {
+    for (const [id, e] of Object.entries(emotionCatalog)) {
+      if (e.parents) {
+        e.parents.forEach(parentId => {
+          expect(emotionCatalog[parentId], `Emotion '${id}' has invalid parent '${parentId}'`).toBeDefined()
+        })
+      }
+    }
+  })
+
   it('every entry has bilingual label', () => {
     for (const [id, e] of Object.entries(emotionCatalog)) {
       expect(e.label.en, `${id} missing en label`).toBeTruthy()
