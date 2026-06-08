@@ -21,6 +21,11 @@ describe('i18n integrity', () => {
       it('should have the required aiPromptMultiple key in analyze', () => {
         expect(data.analyze).toHaveProperty('aiPromptMultiple');
       });
+
+      it('should contain the {region} placeholder for somatic prompts', () => {
+        expect(data.somatic.guidedPrompt).toContain('{region}');
+        expect(data.somatic.guidedPause).toContain('{region}');
+      });
     });
   });
 });
