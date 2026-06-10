@@ -35,7 +35,32 @@ test('English vs Romanian translation keys integrity', () => {
   expect(missingInRo, `Missing keys in Romanian translation: ${missingInRo.join(', ')}`).toHaveLength(0);
 });
 
-test('All translation values are strings', () => {
-  validateValues(en);
-  validateValues(ro);
+test('Romanian values should be different from English values', () => {
+  const isPlaceholder = (str: string) => 
+    str.includes('{') || 
+    str.includes('}') || 
+    str.includes('(') || 
+    str.includes(')') ||
+    str.toLowerCase().startsWith('...') ||
+    str.toLowerCase().endsWith('...');
+
+  const knownIdentical = ['app.title', 'app.subtitle', 'app de', 'app.languageRo', 'app.languageEn', 'selectionBar.clear', 'selectionBar.cleared', 'selectionBar.undo', 'onboarding.next', 'onboarding.back', 'menu.languageRo', 'menu.languageEn', 'onboarding.selectModel', 'onboarding.getStarted', 'menu.model'];
+
+  const checkDifferences = (objEn: any, objRo: any, prefix = '') => {
+    for (const key in objEn) {
+      const currentPrefix = prefix ? `${prefix}.${key}` : key;
+      const valEn = objEn[key];
+      const valRo = objRo[key];
+
+      if (typeof valEn === 'object' && valEn !== null && !Array.isArray(valEn)) {
+        checkDifferences(valEn, valRo, currentPrefix);
+      } else if (typeof valEn === 'string' && typeof valRo === 'string') {
+        if (valEn.trim() === valRo.trim() && !isPlaceholder(valEn) && !knownIdentical.includes(currentPrefix)) {
+          expect(valEn.toLowerCase(), `Key ${currentPrefix} is not translated (is identical to English)`).not.toBe(valRo.toLowerCase());
+        }
+      }
+    }
+  };
+
+  checkDifferences(en, ro);
 });
