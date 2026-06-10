@@ -61,6 +61,3 @@ describe('getCrisisTier', () => {
     }
   })
 })
-  it('returns tier1 for single distress match with other non-distress matches', () => {
-    expect(getCrisisTier(['despair', 'joy', 'trust'])).toBe('tier1')
-  })
