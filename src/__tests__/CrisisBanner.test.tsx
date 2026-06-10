@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { CrisisBanner } from '../components/CrisisBanner'
-import { CrisisTier } from '../models/distress'
 
 const mockCrisisT = {
   tier1: 'Tier 1 message',
