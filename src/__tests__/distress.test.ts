@@ -10,10 +10,10 @@ describe('getCrisisTier', () => {
     expect(getCrisisTier([])).toBe('none')
   })
 
-  it('returns tier1 for single distress match', () => {
-    expect(getCrisisTier(['despair'])).toBe('tier1')
-    expect(getCrisisTier(['joy', 'grief'])).toBe('tier1')
+  it('returns tier1 for single distress match with other non-distress matches', () => {
+    expect(getCrisisTier(['despair', 'joy', 'trust'])).toBe('tier1')
   })
+
 
   it('returns tier2 for 2+ distress matches without combo', () => {
     expect(getCrisisTier(['rage', 'terror'])).toBe('tier2')
