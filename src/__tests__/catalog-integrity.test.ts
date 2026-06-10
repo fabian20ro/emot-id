@@ -27,6 +27,20 @@ describe('Catalog integrity', () => {
     }
   })
 
+  it('every entry has bilingual description', () => {
+    for (const [id, e] of Object.entries(emotionCatalog)) {
+      expect(e.description.en, `${id} missing en description`).toBeTruthy()
+      expect(e.description.ro, `${id} missing ro description`).toBeTruthy()
+    }
+  })
+
+  it('every entry has bilingual needs', () => {
+    for (const [id, e] of Object.entries(emotionCatalog)) {
+      expect(e.needs.en, `${id} missing en needs`).toBeTruthy()
+      expect(e.needs.ro, `${id} missing ro needs`).toBeTruthy()
+    }
+  })
+
   it('every entry has a color', () => {
     for (const [id, e] of Object.entries(emotionCatalog)) {
       expect(e.color, `${id} missing color`).toBeTruthy()
