@@ -11,7 +11,7 @@ describe('Wheel Overlay Integrity', () => {
     
     // First pass: collect all emotion IDs from all overlays
     for (const file of files) {
-      const content = JSON.parse(fs.readFileSync(path.join(overlaysDir, file), 'utf-8')) as Record<string, any>
+      const content = JSON.parse(fs.readFileSync(path.join(overlaysDir, file), 'utf-8')) as Record<string, Record<string, unknown>>
       for (const id of Object.keys(content)) {
         allEmotionIds.add(id)
       }
@@ -19,11 +19,11 @@ describe('Wheel Overlay Integrity', () => {
 
     // Second pass: check children
     for (const file of files) {
-      const content = JSON.parse(fs.readFileSync(path.join(overlaysDir, file), 'utf-8')) as Record<string, any>
+      const content = JSON.parse(fs.readFileSync(path.join(overlaysDir, file), 'utf-8')) as Record<string, Record<string, unknown>>
       for (const [, data] of Object.entries(content)) {
-        if (data && data.children) {
+        if (data && typeof data === 'object' && 'children' in data && Array.isArray(data.children)) {
           for (const childId of data.children) {
-            expect(allEmotionIds.has(childId)).toBe(true)
+            expect(allEmotionIds.has(childId as string)).toBe(true)
           }
         }
       }
