@@ -34,14 +34,14 @@ test('Romanian values should be different from English values', () => {
 
   const knownIdentical = ['app.title', 'app.subtitle', 'app de', 'app.languageRo', 'app.languageEn', 'selectionBar.clear', 'selectionBar.cleared', 'selectionBar.undo', 'onboarding.next', 'onboarding.back', 'menu.languageRo', 'menu.languageEn', 'onboarding.selectModel', 'onboarding.getStarted', 'menu.model'];
 
-  const checkDifferences = (objEn: any, objRo: any, prefix = '') => {
+  const checkDifferences = (objEn: Record<string, unknown>, objRo: Record<string, unknown>, prefix = '') => {
     for (const key in objEn) {
       const currentPrefix = prefix ? `${prefix}.${key}` : key;
       const valEn = objEn[key];
       const valRo = objRo[key];
 
       if (typeof valEn === 'object' && valEn !== null && !Array.isArray(valEn)) {
-        checkDifferences(valEn, valRo, currentPrefix);
+        checkDifferences(valEn as Record<string, unknown>, valRo as Record<string, unknown>, currentPrefix);
       } else if (typeof valEn === 'string' && typeof valRo === 'string') {
         if (valEn.trim() === valRo.trim() && !isPlaceholder(valEn) && !knownIdentical.includes(currentPrefix)) {
           expect(valEn.toLowerCase(), `Key ${currentPrefix} is not translated (is identical to English)`).not.toBe(valRo.toLowerCase());
