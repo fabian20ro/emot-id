@@ -15,18 +15,6 @@ function getKeys(obj: Record<string, unknown>, prefix = '') {
   return keys;
 }
 
-function validateValues(obj: Record<string, unknown>, prefix = '') {
-  for (const key in obj) {
-    const newKey = prefix ? `${prefix}.${key}` : key;
-    const val = obj[key];
-    if (typeof val === 'object' && val !== null && !Array.isArray(val)) {
-      validateValues(val as Record<string, unknown>, newKey);
-    } else {
-      expect(typeof val, `Value at ${newKey} is not a string`).toBe('string');
-    }
-  }
-}
-
 test('English vs Romanian translation keys integrity', () => {
   const enKeys = getKeys(en);
   const roKeys = getKeys(ro);
