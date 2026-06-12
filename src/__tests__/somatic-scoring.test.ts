@@ -162,4 +162,43 @@ describe('scoreSomaticSelections', () => {
     const weak = results.find(r => r.id === 'calm')
     expect(weak?.matchStrength.en).toBe('worth exploring')
   })
+
+  it('applies the absolute score floor to match strength', () => {
+    const signal = makeSignal({ emotionId: 'joy', sensationType: 'lightness', weight: 1.0 })
+    const selection = makeSelection('chest', 'lightness', 3, [signal])
+    const results = scoreSomaticSelections([selection])
+
+    // maxScore = 1.0 * 3 = 3.0. ratio = 1.0. score = 3.0.
+    // ratio >= 0.7 && score >= 1.0 -> 'clear signal'
+    expect(results[0].matchStrength.en).toBe('clear signal')
+  })
+
+  it('downgrades match strength if score is below the threshold despite high ratio', () => {
+    const signal = makeSignal({ emotionId: 'joy', sensationType: 'lightness', weight: 0.1 })
+    const selection = makeSelection('chest', 'lightness', 3, [signal])
+    const results = scoreSomaticSelections([selection])
+
+    // maxScore = 0.1 * 3 = 0.3. ratio = 1.0. score = 0.3.
+    // ratio >= 0.7 but score < 1.0 -> false
+    // ratio >= 0.4 and score < 0.6 -> false
+    // returns 'worth exploring'
+    expect(results).toHaveLength(0)
+  })
+
+  it('handles the "possible connection" threshold correctly', () => {
+    const signal = makeSignal({ emotionId: 'joy', sensationType: 'lightness', weight: 0.5 })
+    const selection = makeSelection('chest', 'lightness', 2, [signal])
+    const results = scoreSomaticSelections([selection])
+
+    // maxScore = 0.5 * 2 = 1.0. ratio = 1.0. score = 1.0.
+    // ratio >= 0.7 && score >= 1.0 -> 'clear signal'
+    expect(results[0].matchStrength.en).toBe('clear signal')
+
+    // Try score=0.8, maxScore=1.0 -> ratio=0.8, score=0.8
+    // ratio >= 0.4 and score >= 0.6 -> 'possible connection'
+    const signal2 = makeSignal({ emotionId: 'joy', sensationType: 'lightness', weight: 0.4 })
+    const selection2 = makeSelection('chest', 'lightness', 2, [signal2])
+    const results2 = scoreSomaticSelections([selection2])
+    expect(results2[0].matchStrength.en).toBe('possible connection')
+  })
 })
