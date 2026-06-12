@@ -42,26 +42,29 @@ export const somaticModel: EmotionModel<SomaticRegion> = {
   },
 
   onSelect(
-    _emotion: SomaticRegion,
-    _state: ModelState,
+    emotion: SomaticRegion,
+    state: ModelState,
     _selections: SomaticRegion[]
   ): SelectionEffect {
-    // All regions stay visible. The BodyMap component handles sensation picking
-    // and calls onSelect with the enriched SomaticSelection.
-    // Return undefined for newSelections so the hook adds the emotion normally.
+    const nextVisible = new Map(state.visibleEmotionIds);
+    nextVisible.set(emotion.id, (nextVisible.get(emotion.id) ?? 0) + 1);
+    
     return {
       newState: {
-        visibleEmotionIds: makeVisibleMap(),
-        currentGeneration: 0,
+        visibleEmotionIds: nextVisible,
+        currentGeneration: state.currentGeneration + 1,
       },
     }
   },
 
-  onDeselect(_emotion: SomaticRegion, _state: ModelState): SelectionEffect {
+  onDeselect(_emotion: SomaticRegion, state: ModelState): SelectionEffect {
+    const nextVisible = new Map(state.visibleEmotionIds);
+    nextVisible.delete(_emotion.id);
+    
     return {
       newState: {
-        visibleEmotionIds: makeVisibleMap(),
-        currentGeneration: 0,
+        visibleEmotionIds: nextVisible,
+        currentGeneration: state.currentGeneration + 1,
       },
     }
   },
