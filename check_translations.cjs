@@ -22,6 +22,10 @@ try {
                 console.log(`[${file}] Missing 'ro' translation in label for: ${key}`);
                 missingCount++;
             }
+            if (entry.needs && entry.needs.en && !entry.needs.ro) {
+                console.log(`[${file}] Missing 'ro' translation in needs for: ${key}`);
+                missingCount++;
+            }
         }
     });
 
