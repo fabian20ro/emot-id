@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import fs from 'fs'
 import path from 'path'
 
-function getKeyPaths(obj: Record<string, unknown>, prefix = '') {
+function getKeyPaths(obj: Record<string, any>, prefix = '') {
   const paths: string[] = []
   for (const key of Object.keys(obj)) {
     const fullKey = prefix ? `${prefix}.${key}` : key
@@ -43,7 +43,7 @@ describe('catalog i18n completeness', () => {
       it('has non-empty translation values', () => {
         for (const key of allKeys) {
           const parts = key.split('.')
-          let value: unknown = data
+          let value: any = data
           for (const p of parts) {
              if (value && typeof value === 'object' && p in value) {
                value = value[p]
