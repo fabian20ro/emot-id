@@ -26,6 +26,26 @@ describe('i18n integrity', () => {
         expect(data.somatic.guidedPrompt).toContain('{region}');
         expect(data.somatic.guidedPause).toContain('{region}');
       });
+
+      it('should have identical keys for all nested objects (en vs ro)', () => {
+        const checkKeys = (obj1: any, obj2: any, path = '') => {
+          Object.keys(obj1).forEach(key => {
+            const currentPath = path ? `${path}.${key}` : key;
+            if (typeof obj1[key] === 'object' && obj1[key] !== null && !Array.isArray(obj1[key])) {
+              if (typeof obj2[key] === 'object' && obj2[key] !== null && !Array.isArray(obj2[key])) {
+                checkKeys(obj1[key], obj2[key], currentPath);
+              } else {
+                throw new Error(`Key ${currentPath} is an object in en.json but not in ro.json`);
+              }
+            } else {
+              if (key in obj2 === false) {
+                throw new Error(`Key ${currentPath} is missing in ro.json`);
+              }
+            }
+          });
+        };
+        checkKeys(en, ro);
+      });
     });
   });
 });
