@@ -28,7 +28,7 @@ describe('i18n integrity', () => {
       });
 
       it('should have identical keys for all nested objects (en vs ro)', () => {
-        const checkKeys = (obj1: any, obj2: any, path = '') => {
+        const checkKeys = (obj1: any, obj2: any, path = '') => { // eslint-disable-line @typescript-eslint/no-explicit-any
           Object.keys(obj1).forEach(key => {
             const currentPath = path ? `${path}.${key}` : key;
             if (typeof obj1[key] === 'object' && obj1[key] !== null && !Array.isArray(obj1[key])) {
