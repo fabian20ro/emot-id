@@ -1,9 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { scoreSomaticSelections } from './scoring'
 
-// Mocking some data to use in tests
-const mockEmotionId = 'anger'
-
 describe('scoreSomaticSelections', () => {
   it('should return an empty array if no selections are provided', () => {
     const results = scoreSomaticSelections([])
@@ -31,7 +28,6 @@ describe('scoreSomaticSelections', () => {
     const results = scoreSomaticSelections(selections)
     expect(results).toHaveLength(1)
     expect(results[0].id).toBe('anger')
-    // score = 1.0 * 2 (intensity) * 1.0 (weight) = 2.0
     expect(results[0].score).toBe(2.0)
   })
 
@@ -65,7 +61,6 @@ describe('scoreSomaticSelections', () => {
 
     const results = scoreSomaticSelections(selections)
     expect(results).toHaveLength(1)
-    // score = (1.0 * 2 + 1.0 * 2) * 1.2 (bonus for 2 groups) = 4 * 1.2 = 4.8
     expect(results[0].score).toBeCloseTo(4.8)
   })
 
@@ -99,7 +94,6 @@ describe('scoreSomaticSelections', () => {
 
     const results = scoreSomaticSelections(selections)
     expect(results).toHaveLength(1)
-    // score = (2.0 + 2.0) * 1 = 4.0
     expect(results[0].score).toBe(4.0)
   })
 })
