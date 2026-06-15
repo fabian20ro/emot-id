@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { scoreSomaticSelections } from './scoring'
+import type { SomaticSelection } from './types'
 
 describe('scoreSomaticSelections', () => {
   it('should return an empty array if no selections are provided', () => {
@@ -8,7 +9,7 @@ describe('scoreSomaticSelections', () => {
   })
 
   it('should correctly calculate score for a single selection', () => {
-    const selections: any[] = [{
+    const selections = [{
       group: 'head',
       selectedSensation: 'pressure',
       selectedIntensity: 2,
@@ -23,7 +24,7 @@ describe('scoreSomaticSelections', () => {
           contextNeeds: { ro: 'needs', en: 'needs' }
         }
       ]
-    }]
+    }] as unknown as SomaticSelection[]
 
     const results = scoreSomaticSelections(selections)
     expect(results).toHaveLength(1)
@@ -32,7 +33,7 @@ describe('scoreSomaticSelections', () => {
   })
 
   it('should apply coherence bonus when multiple body groups are selected', () => {
-    const selections: any[] = [
+    const selections = [
       {
         group: 'head',
         selectedSensation: 'pressure',
@@ -57,7 +58,7 @@ describe('scoreSomaticSelections', () => {
           source: 'clinical'
         }]
       }
-    ]
+    ] as unknown as SomaticSelection[]
 
     const results = scoreSomaticSelections(selections)
     expect(results).toHaveLength(1)
@@ -65,7 +66,7 @@ describe('scoreSomaticSelections', () => {
   })
 
   it('should not apply bonus if all selections are from the same body group', () => {
-    const selections: any[] = [
+    const selections = [
       {
         group: 'head',
         selectedSensation: 'pressure',
@@ -90,7 +91,7 @@ describe('scoreSomaticSelections', () => {
           source: 'clinical'
         }]
       }
-    ]
+    ] as unknown as SomaticSelection[]
 
     const results = scoreSomaticSelections(selections)
     expect(results).toHaveLength(1)
