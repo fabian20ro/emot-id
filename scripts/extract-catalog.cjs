@@ -13,6 +13,7 @@ const CATALOG_DIR = path.join(ROOT, 'src/models/catalog')
 // --- Read all model data ---
 
 function readJsonDir(dir) {
+  if (!fs.existsSync(dir)) return {};
   const result = {}
   for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) {
     const data = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'))
@@ -21,9 +22,9 @@ function readJsonDir(dir) {
   return result
 }
 
-const plutchik = readJsonDir(path.join(ROOT, 'src/models/plutchik/data'))
-const wheel = readJsonDir(path.join(ROOT, 'src/models/wheel/data'))
-const dimensional = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/models/dimensional/data.json'), 'utf8'))
+const plutchik = readJsonDir(path.join(ROOT, 'src/models/plutchik/overlays'))
+const wheel = readJsonDir(path.join(ROOT, 'src/models/wheel/overlays'))
+const dimensional = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/models/dimensional/overlay.json'), 'utf8'))
 
 // Extract somatic emotion signals
 const somaticSignals = new Map()
@@ -56,7 +57,7 @@ const WATCH_DISTRESS = new Set(['self_blaming', 'unworthy', 'self_loathing'])
 function makeCanonical(id, source, distressTier) {
   const entry = {
     id,
-    label: source.label,
+    label: source.label || { ro: id, en: id },
     description: source.description || { ro: '', en: '' },
     needs: source.needs || { ro: '', en: '' },
     color: source.color,
