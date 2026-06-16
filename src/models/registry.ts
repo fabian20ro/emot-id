@@ -23,7 +23,7 @@ const MODEL_META: Record<ModelId, ModelMeta> = {
     name: { ro: 'Roata emotiilor Plutchik', en: "Plutchik's Wheel of Emotions" },
     shortName: { ro: 'Plutchik', en: 'Plutchik' },
     description: {
-      ro: '8 emotii primare care se combina in diade (bazat pe Plutchik, 1980) — selecteaza doua emotii primare pentru a descoperci combinatia lor',
+      ro: '8 emotii primare care se combina in diade (bazat pe Plutchik, 1980) — selecteaza doua emotii primare pentru a descoperisci combinatia lor',
       en: '8 primary emotions that combine into dyads (based on Plutchik, 1980) — select two primary emotions to discover their combination',
     },
   },
@@ -50,7 +50,7 @@ const MODEL_META: Record<ModelId, ModelMeta> = {
     name: { ro: 'Spatiul emotional', en: 'Emotional Space' },
     shortName: { ro: 'Spatiu', en: 'Space' },
     description: {
-      ro: 'Camp bidimensional (bazat pe Russell, 1980) — plaseaza-ti experienta pe axele placut/neplacun si calm/intens',
+      ro: 'Camp bidimensional (bazat pe Russell, 1980) — plaseaza-ti experienta pe axele placut/neplacut si calm/intens',
       en: '2D emotional field (based on Russell, 1980) — place your experience on the pleasant/unpleasant and calm/intense axes',
     },
   },

@@ -101,16 +101,24 @@ describe('scoreSomaticSelections', () => {
     expect(results[0].score).toBeCloseTo((0.6 * 2 + 0.4 * 3) * 1.2)
   })
 
-  it('returns multiple emotions sorted by score descending', () => {
-    const anxietySignal = makeSignal({ emotionId: 'anxiety', sensationType: 'tension', weight: 0.5 })
-    const angerSignal = makeSignal({ emotionId: 'anger', sensationType: 'tension', weight: 0.9 })
+  it('returns correct match strength for different ratios and scores', () => {
+    // Test case 1: Strong signal (ratio >= 0.7 and score >= 1.0)
+    const signal1 = makeSignal({ emotionId: 'anxiety', sensationType: 'tension', weight: 2.0 })
+    const selection1 = makeSelection('chest', 'tension', 2, [signal1])
+    const results1 = scoreSomaticSelections([selection1])
+    expect(results1[0].matchStrength).toEqual({ ro: 'semnal clar', en: 'clear signal' })
 
-    const selection = makeSelection('chest', 'tension', 3, [anxietySignal, angerSignal])
-    const results = scoreSomaticSelections([selection])
+    // Test case 2: Possible connection (ratio >= 0.4 and score >= 0.6)
+    const signal2 = makeSignal({ emotionId: 'anxiety', sensationType: 'tension', weight: 0.4 })
+    const selection2 = makeSelection('chest', 'tension', 2, [signal2])
+    const results2 = scoreSomaticSelections([selection2])
+    expect(results2[0].matchStrength).toEqual({ ro: 'conexiune posibilă', en: 'possible connection' })
 
-    expect(results.length).toBeGreaterThanOrEqual(2)
-    expect(results[0].id).toBe('anger')
-    expect(results[1].id).toBe('anxiety')
+    // Test case 3: Worth exploring (else)
+    const signal3 = makeSignal({ emotionId: 'anxiety', sensationType: 'tension', weight: 0.55 })
+    const selection3 = makeSelection('chest', 'tension', 1, [signal3])
+    const results3 = scoreSomaticSelections([selection3])
+    expect(results3[0].matchStrength).toEqual({ ro: 'merită explorat', en: 'worth exploring' })
   })
 
   it('limits results to at most 4', () => {
@@ -161,5 +169,44 @@ describe('scoreSomaticSelections', () => {
 
     const weak = results.find(r => r.id === 'calm')
     expect(weak?.matchStrength.en).toBe('worth exploring')
+  })
+
+  it('applies the absolute score floor to match strength', () => {
+    const signal = makeSignal({ emotionId: 'joy', sensationType: 'lightness', weight: 1.0 })
+    const selection = makeSelection('chest', 'lightness', 3, [signal])
+    const results = scoreSomaticSelections([selection])
+
+    // maxScore = 1.0 * 3 = 3.0. ratio = 1.0. score = 3.0.
+    // ratio >= 0.7 && score >= 1.0 -> 'clear signal'
+    expect(results[0].matchStrength.en).toBe('clear signal')
+  })
+
+  it('downgrades match strength if score is below the threshold despite high ratio', () => {
+    const signal = makeSignal({ emotionId: 'joy', sensationType: 'lightness', weight: 0.1 })
+    const selection = makeSelection('chest', 'lightness', 3, [signal])
+    const results = scoreSomaticSelections([selection])
+
+    // maxScore = 0.1 * 3 = 0.3. ratio = 1.0. score = 0.3.
+    // ratio >= 0.7 but score < 1.0 -> false
+    // ratio >= 0.4 and score < 0.6 -> false
+    // returns 'worth exploring'
+    expect(results).toHaveLength(0)
+  })
+
+  it('handles the "possible connection" threshold correctly', () => {
+    const signal = makeSignal({ emotionId: 'joy', sensationType: 'lightness', weight: 0.5 })
+    const selection = makeSelection('chest', 'lightness', 2, [signal])
+    const results = scoreSomaticSelections([selection])
+
+    // maxScore = 0.5 * 2 = 1.0. ratio = 1.0. score = 1.0.
+    // ratio >= 0.7 && score >= 1.0 -> 'clear signal'
+    expect(results[0].matchStrength.en).toBe('clear signal')
+
+    // Try score=0.8, maxScore=1.0 -> ratio=0.8, score=0.8
+    // ratio >= 0.4 and score >= 0.6 -> 'possible connection'
+    const signal2 = makeSignal({ emotionId: 'joy', sensationType: 'lightness', weight: 0.4 })
+    const selection2 = makeSelection('chest', 'lightness', 2, [signal2])
+    const results2 = scoreSomaticSelections([selection2])
+    expect(results2[0].matchStrength.en).toBe('possible connection')
   })
 })
