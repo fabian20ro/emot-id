@@ -102,12 +102,12 @@
       "en": "contemplative"
     },
     "description": {
-      "ro": "",
-      "en": ""
+      "ro": "Stare de gândire profundă, calmă.",
+      "en": "A state of calm, deep thought."
     },
     "needs": {
-      "ro": "",
-      "en": ""
+      "ro": "Liniște și reflexie.",
+      "en": "Quiet and reflection."
     },
     "color": "#7986CB"
   }

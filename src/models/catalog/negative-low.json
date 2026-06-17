@@ -55,12 +55,12 @@
       "en": "melancholic"
     },
     "description": {
-      "ro": "",
-      "en": ""
+      "ro": "Tristețe profundă și fără speranță.",
+      "en": "Deep sadness and hopelessness."
     },
     "needs": {
-      "ro": "",
-      "en": ""
+      "ro": "Sprijin emoțional sau înțelegere.",
+      "en": "Emotional support or understanding."
     },
     "color": "#B0C8E4"
   },
@@ -71,12 +71,12 @@
       "en": "apathetic"
     },
     "description": {
-      "ro": "",
-      "en": ""
+      "ro": "Lipsa interesului sau a motivației.",
+      "en": "A lack of interest or motivation."
     },
     "needs": {
-      "ro": "",
-      "en": ""
+      "ro": "Nevoie de stimulare sau scop.",
+      "en": "Need for stimulation or purpose."
     },
     "color": "#D0D8E0",
     "distressTier": "high"
@@ -137,12 +137,12 @@
       "en": "resigned"
     },
     "description": {
-      "ro": "",
-      "en": ""
+      "ro": "Acceptarea unei situații fără a încerca să o schimbi.",
+      "en": "Acceptance of a situation without attempting to change it."
     },
     "needs": {
-      "ro": "",
-      "en": ""
+      "ro": "Acceptare sau schimbare.",
+      "en": "Acceptance or change."
     },
     "color": "#9575CD"
   },
@@ -185,12 +185,12 @@
       "en": "pensive"
     },
     "description": {
-      "ro": "",
-      "en": ""
+      "ro": "Stare de gândire profundă, adesea melancolică.",
+      "en": "A state of deep, often melancholic, thought."
     },
     "needs": {
-      "ro": "",
-      "en": ""
+      "ro": "Reflecție sau liniște.",
+      "en": "Reflection or quietude."
     },
     "color": "#9FA8DA"
   }
