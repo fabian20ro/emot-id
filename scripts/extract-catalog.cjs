@@ -22,6 +22,11 @@ function readJsonDir(dir) {
   return result
 }
 
+// Generated catalogs are also the curated source for translated labels,
+// descriptions, and needs. Model overlays mostly contain topology and colors;
+// regenerating from overlays alone must not erase curated copy.
+const existingCatalog = readJsonDir(CATALOG_DIR)
+
 const plutchik = readJsonDir(path.join(ROOT, 'src/models/plutchik/overlays'))
 const wheel = readJsonDir(path.join(ROOT, 'src/models/wheel/overlays'))
 const dimensional = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/models/dimensional/overlay.json'), 'utf8'))
@@ -34,8 +39,8 @@ for (const f of fs.readdirSync(somaticDir).filter(f => f.endsWith('.json'))) {
   for (const region of Object.values(data)) {
     if (region.emotionSignals) {
       for (const signal of region.emotionSignals) {
-        if (!somaticSignals.has(signal.emotionId) && signal.emotionDescription) {
-          somaticSignals.set(signal.emotionId, signal)
+        if (!somaticSignals.has(signal.emotionId) && (signal.contextDescription || signal.emotionDescription)) {
+          somaticSignals.set(signal.emotionId, { ...signal, regionColor: region.color })
         }
       }
     }
@@ -54,12 +59,20 @@ const WATCH_DISTRESS = new Set(['self_blaming', 'unworthy', 'self_loathing'])
 
 // --- Build canonical entries ---
 
+function localized(existing, source, fallback = '') {
+  return {
+    ro: existing?.ro?.trim() ? existing.ro : (source?.ro ?? fallback),
+    en: existing?.en?.trim() ? existing.en : (source?.en ?? fallback),
+  }
+}
+
 function makeCanonical(id, source, distressTier) {
+  const existing = existingCatalog[id]
   const entry = {
     id,
-    label: source.label || { ro: id, en: id },
-    description: source.description || { ro: '', en: '' },
-    needs: source.needs || { ro: '', en: '' },
+    label: localized(existing?.label, source.label, id),
+    description: localized(existing?.description, source.description),
+    needs: localized(existing?.needs, source.needs),
     color: source.color,
   }
   if (distressTier) entry.distressTier = distressTier
@@ -123,13 +136,13 @@ for (const [id, e] of Object.entries(dimensional)) {
 // 4. Somatic-only emotions (not in other models)
 for (const [id, signal] of somaticSignals) {
   if (!catalog[id]) {
-    catalog[id] = {
-      id,
-      label: signal.emotionLabel,
-      description: signal.emotionDescription || { ro: '', en: '' },
-      needs: signal.emotionNeeds || { ro: '', en: '' },
-      color: signal.emotionColor,
-    }
+    const existing = existingCatalog[id]
+    catalog[id] = makeCanonical(id, {
+      label: signal.emotionLabel || existing?.label,
+      description: signal.contextDescription || signal.emotionDescription,
+      needs: signal.contextNeeds || signal.emotionNeeds,
+      color: signal.emotionColor || existing?.color || signal.regionColor,
+    })
     const tier = distressTierFor(id)
     if (tier) catalog[id].distressTier = tier
   }

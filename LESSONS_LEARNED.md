@@ -26,6 +26,8 @@
 
 **[2026-02-07]** Long `node -e` commands are brittle and expensive to debug — Quoting/syntax breakage in large inline commands causes repeated iterations. Move complex logic into script files. Reserve `node -e` for short commands only.
 
+**[2026-06-19]** Catalog regeneration must preserve curated copy — Model overlays primarily own topology and colors; they are not complete translation sources. `scripts/extract-catalog.cjs` must merge existing non-empty labels, descriptions, and needs, and support the current somatic `contextDescription`/`contextNeeds` schema before rewriting catalog JSON.
+
 ## Testing & Quality
 
 **[2026-02-07]** Preference tests become flaky when bypassing storage facade — Direct `localStorage` writes did not align with app read path. Mock/assert through `storage.get()` for behavior tests. Keep direct `localStorage` assertions for storage-layer tests only.
