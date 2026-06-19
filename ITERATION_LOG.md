@@ -448,3 +448,17 @@ Each entry should follow this structure:
 **Outcome:** Success. The CI-blocking JSON parse error is fixed locally on `codex/fix-latest-deploy-json`.
 **Insight:** When Actions says latest and local refs disagree, fetch before drawing conclusions from local `origin/main`.
 **Promoted to Lessons Learned:** Yes
+
+---
+
+### [2026-06-19] Restore generated emotion catalog integrity
+
+**Context:** Container-local green gate reported 19 failures after catalog extraction erased curated bilingual fields and omitted somatic-only emotions.
+**What happened:**
+- Changed the extractor to preserve existing non-empty localized catalog copy.
+- Updated somatic extraction for `contextDescription` and `contextNeeds`.
+- Regenerated 288 canonical emotions, restoring 12 somatic-only entries.
+- Verified focused catalog/model tests and the complete local green gate.
+**Outcome:** Success. All 476 tests, translation checks, lint, and production build pass.
+**Insight:** Generated catalogs combine overlay structure with curated copy; either source alone is incomplete.
+**Promoted to Lessons Learned:** Yes

@@ -2140,6 +2140,54 @@
     },
     "color": "#B0C8E4"
   },
+  "embarrassed": {
+    "id": "embarrassed",
+    "label": {
+      "ro": "Jenat",
+      "en": "Embarrassed"
+    },
+    "description": {
+      "ro": "Jena in contextul tristetii este o rusine blanda amestecata cu vulnerabilitate — te simti expus intr-un mod care te face sa vrei sa te ascunzi. Este sentimentul de a fi vazut intr-un moment de slabiciune sau de a fi facut ceva stangaci. Jena este tranzitorie si de obicei disproportionata fata de situatie — altii o observa mult mai putin decat crezi.",
+      "en": "Embarrassment in the context of sadness is a mild shame mixed with vulnerability — you feel exposed in a way that makes you want to hide. It is the feeling of being seen in a moment of weakness or having done something clumsy. Embarrassment is transient and usually disproportionate to the situation — others notice it far less than you think."
+    },
+    "needs": {
+      "ro": "reasigurare si perspectiva",
+      "en": "reassurance and perspective"
+    },
+    "color": "#B0C8E4"
+  },
+  "inferior": {
+    "id": "inferior",
+    "label": {
+      "ro": "Inferior",
+      "en": "Inferior"
+    },
+    "description": {
+      "ro": "Sentimentul de inferioritate in contextul tristetii este durerea tacuta a comparatiei — te vezi constant mai putin decat ceilalti si aceasta convingere iti coloreaza toata experienta. Nu este furie, ci resemnare trista. Este ecoul vocilor critice care ti-au spus ca nu esti destul. Vindecarea incepe cu recunoasterea ca valoarea ta nu se masoara prin comparatie.",
+      "en": "The feeling of inferiority in the context of sadness is the quiet pain of comparison — you constantly see yourself as less than others and this conviction colors all your experience. It's not anger, but sad resignation. It is the echo of critical voices that told you you're not enough. Healing begins with recognizing that your value is not measured by comparison."
+    },
+    "needs": {
+      "ro": "afirmarea valorii inerente",
+      "en": "affirmation of inherent worth"
+    },
+    "color": "#B0C8E4"
+  },
+  "humbled": {
+    "id": "humbled",
+    "label": {
+      "ro": "Smerit",
+      "en": "Humbled"
+    },
+    "description": {
+      "ro": "Smerenia este deflarea demna a egoului in fata realitatii — nu umilire, ci recunoasterea calma ca ai supraestimat ceva in tine sau in situatie. Este o tristete lina amestecata cu claritate — vezi lucrurile asa cum sunt, nu cum ai vrut sa fie. Smerenia doare, dar este curata — nu te distruge, ci te aseaza pe un fundament mai solid. Este emotia care inlocuieste mandria cu autenticitate si care te deschide catre invatare si crestere reala.",
+      "en": "Being humbled is the dignified deflation of the ego in the face of reality — not humiliation, but the calm recognition that you overestimated something in yourself or in the situation. It is a gentle sadness mixed with clarity — you see things as they are, not as you wanted them to be. Being humbled hurts, but it is clean — it doesn't destroy you, but places you on a more solid foundation. It is the emotion that replaces pride with authenticity and opens you to learning and real growth."
+    },
+    "needs": {
+      "ro": "acceptare si fundament nou",
+      "en": "acceptance and new foundation"
+    },
+    "color": "#B0C8E4"
+  },
   "shocked": {
     "id": "shocked",
     "label": {
@@ -2363,53 +2411,5 @@
       "en": "expression and immediate action"
     },
     "color": "#C8E8CC"
-  },
-  "embarrassed": {
-    "id": "embarrassed",
-    "label": {
-      "ro": "Jenat",
-      "en": "Embarrassed"
-    },
-    "description": {
-      "ro": "Jena in contextul tristetii este o rusine blanda amestecata cu vulnerabilitate — te simti expus intr-un mod care te face sa vrei sa te ascunzi. Este sentimentul de a fi vazut intr-un moment de slabiciune sau de a fi facut ceva stangaci. Jena este tranzitorie si de obicei disproportionata fata de situatie — altii o observa mult mai putin decat crezi.",
-      "en": "Embarrassment in the context of sadness is a mild shame mixed with vulnerability — you feel exposed in a way that makes you want to hide. It is the feeling of being seen in a moment of weakness or having done something clumsy. Embarrassment is transient and usually disproportionate to the situation — others notice it far less than you think."
-    },
-    "needs": {
-      "ro": "reasigurare si perspectiva",
-      "en": "reassurance and perspective"
-    },
-    "color": "#B0C8E4"
-  },
-  "inferior": {
-    "id": "inferior",
-    "label": {
-      "ro": "Inferior",
-      "en": "Inferior"
-    },
-    "description": {
-      "ro": "Sentimentul de inferioritate in contextul tristetii este durerea tacuta a comparatiei — te vezi constant mai putin decat ceilalti si aceasta convingere iti coloreaza toata experienta. Nu este furie, ci resemnare trista. Este ecoul vocilor critice care ti-au spus ca nu esti destul. Vindecarea incepe cu recunoasterea ca valoarea ta nu se masoara prin comparatie.",
-      "en": "The feeling of inferiority in the context of sadness is the quiet pain of comparison — you constantly see yourself as less than others and this conviction colors all your experience. It's not anger, but sad resignation. It is the echo of critical voices that told you you're not enough. Healing begins with recognizing that your value is not measured by comparison."
-    },
-    "needs": {
-      "ro": "afirmarea valorii inerente",
-      "en": "affirmation of inherent worth"
-    },
-    "color": "#B0C8E4"
-  },
-  "humbled": {
-    "id": "humbled",
-    "label": {
-      "ro": "Smerit",
-      "en": "Humbled"
-    },
-    "description": {
-      "ro": "Smerenia este deflarea demna a egoului in fata realitatii — nu umilire, ci recunoasterea calma ca ai supraestimat ceva in tine sau in situatie. Este o tristete lina amestecata cu claritate — vezi lucrurile asa cum sunt, nu cum ai vrut sa fie. Smerenia doare, dar este curata — nu te distruge, ci te aseaza pe un fundament mai solid. Este emotia care inlocuieste mandria cu autenticitate si care te deschide catre invatare si crestere reala.",
-      "en": "Being humbled is the dignified deflation of the ego in the face of reality — not humiliation, but the calm recognition that you overestimated something in yourself or in the situation. It is a gentle sadness mixed with clarity — you see things as they are, not as you wanted them to be. Being humbled hurts, but it is clean — it doesn't destroy you, but places you on a more solid foundation. It is the emotion that replaces pride with authenticity and opens you to learning and real growth."
-    },
-    "needs": {
-      "ro": "acceptare si fundament nou",
-      "en": "acceptance and new foundation"
-    },
-    "color": "#B0C8E4"
   }
 }
