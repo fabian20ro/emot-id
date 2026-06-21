@@ -23,7 +23,7 @@
     "check-keys": "node ./check_i18n_keys.cjs",
     "check-translations": "node ./check_translations.cjs",
     "check-untranslated": "node ./check_i18n_untranslated.cjs",
-    "i18n-audit": "npm run check-translations && npm run check-untranslated",
+    "i18n-audit": "npm run check-keys && npm run check-translations && npm run check-untranslated",
     "check": "npm run lint && npm run type-check && npm run test && npm run i18n-audit && npm run build"
 },
   "dependencies": {
