@@ -20,6 +20,7 @@
     "lint:fix": "eslint . --fix",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "check-keys": "node ./check_i18n_keys.cjs",
     "check-translations": "node ./check_translations.cjs",
     "check-untranslated": "node ./check_i18n_untranslated.cjs",
     "i18n-audit": "npm run check-translations && npm run check-untranslated",
