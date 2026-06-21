@@ -139,10 +139,11 @@ export default function App() {
 
   const handleDeselect = useCallback(
     (emotion: BaseEmotion) => {
+      if (showHint) dismissHint()
       playSound('deselect')
       modelDeselect(emotion)
     },
-    [playSound, modelDeselect],
+    [playSound, modelDeselect, showHint, dismissHint],
   )
 
   const handleClear = useCallback(() => {
