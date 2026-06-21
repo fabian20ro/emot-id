@@ -12,6 +12,7 @@
     "type-check": "tsc -b",
     "build": "npm run clean && tsc -b && vite build",
     "lint": "eslint . --max-warnings 0",
+    "lint:all": "npm run lint && npm run type-check",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
