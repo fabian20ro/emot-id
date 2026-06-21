@@ -2,6 +2,9 @@
   "name": "emot-id",
   "private": true,
   "version": "0.1.0",
+  "engines": {
+    "node": ">=18.2.0"
+  },
   "type": "module",
   "scripts": {
     "clean": "rm -rf dist",
