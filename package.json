@@ -13,7 +13,7 @@
     "prebuild": "npm run clean",
     "dev": "vite --host --open",
     "type-check": "tsc -b",
-    "typecheck:watch": "tsc -b -w",
+    "type-check:watch": "tsc -b -w",
     "build": "npm run type-check && vite build",
     "lint": "eslint . --max-warnings 0",
     "lint:all": "npm run lint && npm run type-check",
