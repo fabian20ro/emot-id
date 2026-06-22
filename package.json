@@ -26,7 +26,7 @@
     "check-translations": "node ./check_translations.cjs",
     "check-untranslated": "node ./check_i18n_untranslated.cjs",
     "i18n-audit": "npm run check-keys && npm run check-translations && npm run check-untranslated",
-    "check": "npm run lint:all && npm run test && npm run i18n-audit && npm run build"
+    "check": "npm run lint && npm run test && npm run i18n-audit && npm run build"
   },
   "dependencies": {
     "framer-motion": "^12.29.2",
