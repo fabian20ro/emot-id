@@ -12,6 +12,7 @@
     "clean": "rm -rf dist",
     "dev": "vite --host",
     "type-check": "tsc -b",
+    "typecheck:watch": "tsc -b -w",
     "build": "npm run clean && npm run type-check && vite build",
     "lint": "eslint . --max-warnings 0",
     "lint:all": "npm run lint && npm run type-check",
