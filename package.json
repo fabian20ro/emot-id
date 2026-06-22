@@ -10,7 +10,7 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf dist",
-    "dev": "vite",
+    "dev": "vite --host",
     "type-check": "tsc -b",
     "build": "npm run clean && npm run type-check && vite build",
     "lint": "eslint . --max-warnings 0",
