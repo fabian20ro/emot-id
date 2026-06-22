@@ -12,7 +12,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "prebuild": "npm run clean",
-    "dev": "vite --host --open",
+    "dev": "vite --host",
     "type-check": "tsc -b",
     "type-check:watch": "tsc -b -w",
     "build": "npm run type-check && vite build",
