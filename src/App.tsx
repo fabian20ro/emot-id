@@ -353,13 +353,15 @@ export default function App() {
           modelId={modelId}
           selectionCount={selections.length}
         />
-        <button
-          type="button"
-          onClick={() => setShowQuickCheckIn(true)}
-          className="mt-2 w-full min-h-[44px] px-4 py-2 rounded-xl border border-indigo-500/50 text-indigo-200 hover:bg-indigo-600/20 transition-colors text-sm font-medium"
-        >
-          {section('quickCheckIn').title ?? 'Quick check-in'}
-        </button>
+          {selections.length === 0 && (
+            <button
+              type="button"
+              onClick={() => setShowQuickCheckIn(true)}
+              className="mt-2 w-full min-h-[44px] px-4 py-2 rounded-xl border border-indigo-500/50 text-indigo-200 hover:bg-indigo-600/20 transition-colors text-sm font-medium"
+            >
+              {section('quickCheckIn').title ?? 'Quick check-in'}
+            </button>
+          )}
         {/* "I don't know" — compact text link, hidden on somatic and while hint visible */}
         {selections.length === 0 && !showHint && modelId !== MODEL_IDS.SOMATIC && (
           <button
