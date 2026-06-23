@@ -353,17 +353,21 @@ export default function App() {
           modelId={modelId}
           selectionCount={selections.length}
         />
-        <button
-          onClick={() => setShowQuickCheckIn(true)}
-          className="mt-2 w-full min-h-[44px] px-4 py-2 rounded-xl border border-indigo-500/50 text-indigo-200 hover:bg-indigo-600/20 transition-colors text-sm font-medium"
-        >
-          {section('quickCheckIn').title ?? 'Quick check-in'}
-        </button>
+          {selections.length === 0 && (
+            <button
+              type="button"
+              onClick={() => setShowQuickCheckIn(true)}
+              className="mt-2 w-full min-h-[44px] px-4 py-2 rounded-xl border border-indigo-500/50 text-indigo-200 hover:bg-indigo-600/20 transition-colors text-sm font-medium"
+            >
+              {section('quickCheckIn').title ?? 'Quick check-in'}
+            </button>
+          )}
         {/* "I don't know" — compact text link, hidden on somatic and while hint visible */}
         {selections.length === 0 && !showHint && modelId !== MODEL_IDS.SOMATIC && (
           <button
+            type="button"
             onClick={() => setShowDontKnow(true)}
-            className="block mx-auto mt-1 px-4 py-1 text-xs text-gray-500 hover:text-gray-300 transition-colors"
+            className="block mx-auto mt-1 px-4 py-2 text-xs text-gray-500 hover:text-gray-300 transition-colors"
           >
             {dontKnowT.link ?? "I don't know what I'm feeling"}
           </button>
@@ -423,7 +427,7 @@ export default function App() {
       {/* Accessible live region for screen readers */}
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {selections.length > 0
-          ? `${selections.length} ${selections.length === 1 ? 'emotion' : 'emotions'} selected`
+          ? `${selections.length} ${selections.length === 1 ? 'emotion' : 'emotions'} selected: ${selections.map(s => s.label[language]).join(', ')}`
           : ''}
       </div>
 
