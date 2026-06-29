@@ -35,6 +35,6 @@ describe('AnalyzeButton model-aware text', () => {
 
   it('shows Analyze regardless of modelId when enabled', () => {
     renderButton({ disabled: false, modelId: 'somatic' })
-    expect(screen.getByText('Analyze')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Analyze' })).toBeInTheDocument()
   })
 })
