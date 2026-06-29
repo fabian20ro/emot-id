@@ -21,7 +21,7 @@ describe('AnalyzeButton', () => {
 
   it('shows default disabled text when disabled with non-somatic model', () => {
     renderButton({ disabled: true, modelId: 'plutchik' })
-    expect(screen.getByText(/Select an emotion that resonates/)).toBeInTheDocument()
+    expect(screen.getByText('Select an emotion that resonates with you')).toBeInTheDocument()
   })
 
   it('shows dimensional disabled guidance for the dimensional model', () => {
