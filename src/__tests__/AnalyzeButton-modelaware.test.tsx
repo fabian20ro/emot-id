@@ -20,17 +20,17 @@ describe('AnalyzeButton model-aware text', () => {
 
   it('shows default text when disabled with plutchik model', () => {
     renderButton({ disabled: true, modelId: 'plutchik' })
-    expect(screen.getByText(/Select an emotion that resonates/)).toBeInTheDocument()
+    expect(screen.getByText('Select an emotion that resonates with you')).toBeInTheDocument()
   })
 
   it('shows default text when disabled with wheel model', () => {
     renderButton({ disabled: true, modelId: 'wheel' })
-    expect(screen.getByText(/Select an emotion that resonates/)).toBeInTheDocument()
+    expect(screen.getByText('Select an emotion that resonates with you')).toBeInTheDocument()
   })
 
   it('shows dimensional-specific text when disabled with dimensional model', () => {
     renderButton({ disabled: true, modelId: 'dimensional' })
-    expect(screen.getByText(/Tap the square where your state fits/)).toBeInTheDocument()
+    expect(screen.getByText('Tap the square where your state fits on the two axes')).toBeInTheDocument()
   })
 
   it('shows Analyze regardless of modelId when enabled', () => {
