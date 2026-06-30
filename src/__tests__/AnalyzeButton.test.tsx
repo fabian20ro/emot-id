@@ -31,7 +31,7 @@ describe('AnalyzeButton', () => {
 
   it('shows somatic disabled guidance for the somatic model', () => {
     renderButton({ disabled: true, modelId: 'somatic' })
-    expect(screen.getByText(/Tap a body area where you notice a sensation/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Tap a body area where you notice a sensation' })).toBeInTheDocument()
   })
 
   it('includes the selection count when enabled and selections exist', () => {
