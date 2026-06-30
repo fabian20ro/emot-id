@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { calculateDeterministicPositions } from '../components/bubble-layout'
+import { calculateDeterministicPositions, bubbleHeight, getSizePixels } from '../components/bubble-layout'
 import type { BaseEmotion } from '../models/types'
 
 function makeEmotions(count: number): BaseEmotion[] {
@@ -18,11 +18,10 @@ function makeSizes(emotions: BaseEmotion[], pattern: ('small' | 'medium' | 'larg
   return sizes
 }
 
-const bubbleHeight = 48
+
 
 function hasOverlap(positions: Map<string, { x: number; y: number }>, sizes: Map<string, 'small' | 'medium' | 'large'>, containerWidth: number): boolean {
-  const mobileSizePixels = { small: 78, medium: 96, large: 110 }
-  const sizeMap = containerWidth < 480 ? mobileSizePixels : { small: 80, medium: 100, large: 120 }
+  const sizeMap = getSizePixels(containerWidth)
 
   const rects = Array.from(positions.entries()).map(([id, pos]) => ({
     id,
