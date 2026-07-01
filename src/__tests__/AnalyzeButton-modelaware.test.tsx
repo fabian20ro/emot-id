@@ -15,7 +15,7 @@ function renderButton(props: Partial<React.ComponentProps<typeof AnalyzeButton>>
 describe('AnalyzeButton model-aware text', () => {
   it('shows somatic-specific text when disabled with somatic model', () => {
     renderButton({ disabled: true, modelId: 'somatic' })
-    expect(screen.getByText('Tap a body area where you notice a sensation')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Tap a body area where you notice a sensation/i })).toBeInTheDocument()
   })
 
   it('shows default text when disabled with plutchik model', () => {
