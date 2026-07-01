@@ -72,4 +72,15 @@ describe('AnalyzeButton', () => {
     const button = screen.getByRole('button') as HTMLButtonElement
     expect(button.textContent).not.toContain('(selected)')
   })
+
+  it('sets aria-label to undefined when no selections', () => {
+    renderButton({ disabled: false, selectionCount: 0 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.getAttribute('aria-label')).toBeNull()
+  })
+
+  it('includes selection count in aria-label when enabled with selections', () => {
+    renderButton({ disabled: false, selectionCount: 4 })
+    expect(screen.getByRole('button', { name: 'Analyze (4)' })).toBeInTheDocument()
+  })
 })
