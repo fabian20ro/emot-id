@@ -1,11 +1,12 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { MODEL_IDS } from '../models/constants'
 import { AnalyzeButton } from '../components/AnalyzeButton'
 import { LanguageProvider } from '../context/LanguageContext'
 
 function renderButton(props: Partial<React.ComponentProps<typeof AnalyzeButton>> = {}) {
-  const defaults = { disabled: false, onClick: () => {}, modelId: 'plutchik', ...props }
+  const defaults = { disabled: false, onClick: () => {}, modelId: MODEL_IDS.PLUTCHIK, ...props }
   return render(
     <LanguageProvider>
       <AnalyzeButton {...defaults} />
