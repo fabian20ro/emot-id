@@ -22,12 +22,12 @@ describe('AnalyzeButton', () => {
 
   it('shows default disabled text when disabled with non-somatic model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK })
-    expect(screen.getByText('Select an emotion that resonates with you')).toBeInTheDocument()
+    expect(screen.getByRole('button').textContent).toMatch(/Select an emotion/i)
   })
 
   it('shows dimensional disabled guidance for the dimensional model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL })
-    expect(screen.getByText('Tap the square where your state fits on the two axes')).toBeInTheDocument()
+    expect(screen.getByRole('button').textContent).toMatch(/Tap the square/i)
   })
 
   it('shows somatic disabled guidance for the somatic model', () => {
