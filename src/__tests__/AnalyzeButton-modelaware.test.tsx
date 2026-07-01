@@ -15,27 +15,27 @@ function renderButton(props: Partial<React.ComponentProps<typeof AnalyzeButton>>
 
 describe('AnalyzeButton model-aware text', () => {
   it('shows somatic-specific text when disabled with somatic model', () => {
-    renderButton({ disabled: true, modelId: 'somatic' })
+    renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC })
     expect(screen.getByRole('button', { name: /Tap a body area where you notice a sensation/i })).toBeInTheDocument()
   })
 
   it('shows default text when disabled with plutchik model', () => {
-    renderButton({ disabled: true, modelId: 'plutchik' })
+    renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK })
     expect(screen.getByText('Select an emotion that resonates with you')).toBeInTheDocument()
   })
 
   it('shows default text when disabled with wheel model', () => {
-    renderButton({ disabled: true, modelId: 'wheel' })
+    renderButton({ disabled: true, modelId: MODEL_IDS.WHEEL })
     expect(screen.getByText('Select an emotion that resonates with you')).toBeInTheDocument()
   })
 
   it('shows dimensional-specific text when disabled with dimensional model', () => {
-    renderButton({ disabled: true, modelId: 'dimensional' })
+    renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL })
     expect(screen.getByText('Tap the square where your state fits on the two axes')).toBeInTheDocument()
   })
 
   it('shows Analyze regardless of modelId when enabled', () => {
-    renderButton({ disabled: false, modelId: 'somatic' })
+    renderButton({ disabled: false, modelId: MODEL_IDS.SOMATIC })
     expect(screen.getByRole('button', { name: 'Analyze' })).toBeInTheDocument()
   })
 })
