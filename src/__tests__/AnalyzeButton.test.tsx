@@ -36,6 +36,7 @@ describe('AnalyzeButton', () => {
 
   it('includes the selection count when enabled and selections exist', () => {
     renderButton({ disabled: false, selectionCount: 3 })
+    expect(screen.getByText('Analyze (3)')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Analyze (3)' })).toBeInTheDocument()
   })
 
