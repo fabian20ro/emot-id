@@ -50,4 +50,11 @@ describe('AnalyzeButton', () => {
     renderButton({ disabled: true })
     expect(screen.getByRole('button')).toBeDisabled()
   })
+
+  it('does not fire onClick on a disabled button', async () => {
+    const onClick = vi.fn()
+    renderButton({ disabled: true, onClick })
+    await userEvent.click(screen.getByRole('button'))
+    expect(onClick).not.toHaveBeenCalled()
+  })
 })
