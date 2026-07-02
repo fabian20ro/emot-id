@@ -31,8 +31,9 @@ describe('AnalyzeButton model-aware text', () => {
 
   it('shows dimensional-specific text when disabled with dimensional model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL })
-    const button = screen.getByRole('button') as HTMLButtonElement
-    expect(button.textContent).toBe('Tap the square where your state fits on the two axes')
+    expect(screen.getByRole('button')).toHaveTextContent(
+      'Tap the square where your state fits on the two axes'
+    )
   })
 
   it('shows Analyze regardless of modelId when enabled', () => {
