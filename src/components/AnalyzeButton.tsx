@@ -37,10 +37,12 @@ export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0 }
 
   const buttonClasses = disabled
     ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-    : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 cursor-pointer'
+    : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 cursor-pointer focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none'
 
   return (
     <motion.button
+      animate={disabled ? {} : { scale: [1, 1.03, 1] }}
+      transition={disabled ? {} : { duration: 0.4, times: [0, 0.5, 1], repeat: 0 }}
       whileHover={disabled ? {} : { scale: 1.02 }}
       whileTap={disabled ? {} : { scale: 0.98 }}
       onClick={onClick}

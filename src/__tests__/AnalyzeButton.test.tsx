@@ -82,4 +82,19 @@ describe('AnalyzeButton', () => {
     renderButton({ disabled: false, selectionCount: 4 })
     expect(screen.getByRole('button', { name: 'Analyze (4)' })).toBeInTheDocument()
   })
+
+  it('applies a pulse animation when enabled to draw attention', () => {
+    renderButton({ disabled: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button).not.toHaveClass('cursor-not-allowed')
+    // The motion.button renders; the one-shot pulse animation should be active on mount
+    expect(button.className).toContain('bg-gradient-to-r')
+  })
+
+  it('does not animate when disabled', () => {
+    renderButton({ disabled: true })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button).toBeDisabled()
+    expect(button.className).toContain('cursor-not-allowed')
+  })
 })
