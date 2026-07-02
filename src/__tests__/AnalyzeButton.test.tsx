@@ -89,12 +89,15 @@ describe('AnalyzeButton', () => {
     expect(button.getAttribute('aria-label')).toBeNull()
   })
 
-  it('applies a pulse animation when enabled to draw attention', () => {
+  it('applies a pulse animation when enabled to draw attention', async () => {
     renderButton({ disabled: false })
-    const button = screen.getByRole('button') as HTMLButtonElement
+    const button = await screen.findByRole('button') as HTMLButtonElement
     expect(button).not.toHaveClass('cursor-not-allowed')
     // The motion.button renders; the one-shot pulse animation should be active on mount
-    expect(button.className).toContain('bg-gradient-to-r')
+    const classes = button.className.split(/\s+/)
+    expect(classes).toEqual(
+      expect.arrayContaining(['bg-gradient-to-r', 'from-purple-500', 'to-pink-500'])
+    )
   })
 
   it('does not animate when disabled', () => {
