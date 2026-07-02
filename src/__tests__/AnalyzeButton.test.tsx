@@ -27,7 +27,8 @@ describe('AnalyzeButton', () => {
 
   it('shows dimensional disabled guidance for the dimensional model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL })
-    expect(screen.getByRole('button').textContent).toMatch(/Tap the square/i)
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Tap the square where your state fits on the two axes')
   })
 
   it('shows somatic disabled guidance for the somatic model', () => {
