@@ -94,9 +94,9 @@ describe('AnalyzeButton', () => {
     expect(button.getAttribute('aria-label')).toBeNull()
   })
 
-  it('applies a pulse animation when enabled to draw attention', async () => {
+  it('applies a pulse animation when enabled to draw attention', () => {
     renderButton({ disabled: false })
-    const button = await screen.findByRole('button') as HTMLButtonElement
+    const button = screen.getByRole('button') as HTMLButtonElement
     expect(button).not.toHaveClass('cursor-not-allowed')
     // The motion.button renders; the one-shot pulse animation should be active on mount
     const classes = button.className.split(/\s+/)
