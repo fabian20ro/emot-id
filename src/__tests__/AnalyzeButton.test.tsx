@@ -83,6 +83,12 @@ describe('AnalyzeButton', () => {
     expect(screen.getByRole('button', { name: 'Analyze (4)' })).toBeInTheDocument()
   })
 
+  it('does not set aria-label when disabled even with selections', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 3 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.getAttribute('aria-label')).toBeNull()
+  })
+
   it('applies a pulse animation when enabled to draw attention', () => {
     renderButton({ disabled: false })
     const button = screen.getByRole('button') as HTMLButtonElement
