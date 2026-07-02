@@ -22,7 +22,7 @@ describe('AnalyzeButton', () => {
 
   it('shows default disabled text when disabled with non-somatic model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK })
-    expect(screen.getByRole('button').textContent).toMatch(/Select an emotion/i)
+    expect(screen.getByRole('button').textContent).toBe('Select an emotion that resonates with you')
   })
 
   it('shows dimensional disabled guidance for the dimensional model', () => {
