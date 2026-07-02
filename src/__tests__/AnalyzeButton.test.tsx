@@ -78,6 +78,11 @@ describe('AnalyzeButton', () => {
     expect(button.getAttribute('aria-label')).toBeNull()
   })
 
+  it('includes selection count=1 in aria-label when enabled', () => {
+    renderButton({ disabled: false, selectionCount: 1 })
+    expect(screen.getByRole('button', { name: 'Analyze (1)' })).toBeInTheDocument()
+  })
+
   it('includes selection count in aria-label when enabled with selections', () => {
     renderButton({ disabled: false, selectionCount: 4 })
     expect(screen.getByRole('button', { name: 'Analyze (4)' })).toBeInTheDocument()
