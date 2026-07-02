@@ -127,6 +127,27 @@ describe('AnalyzeButton', () => {
     expect(button.textContent).not.toContain('(selected)')
   })
 
+  it('applies loading-state gradient and is disabled when modelReady=false', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 0, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button).toBeDisabled()
+    expect(button.textContent).toBe('Analyzing...')
+    expect(button.getAttribute('aria-label')).toBe('Analyzing...')
+    // Loading state uses the purple-to-pink gradient, not the gray disabled palette
+    const classes = button.className.split(/\s+/)
+    expect(classes).toEqual(
+      expect.arrayContaining(['bg-gradient-to-r', 'from-purple-500', 'to-pink-500'])
+    )
+  })
+
+  it('is interactive when enabled and modelReady is true by default', () => {
+    renderButton({ disabled: false, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 2 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button).not.toBeDisabled()
+    expect(button.textContent).toBe('Analyze (2)')
+    expect(button.getAttribute('aria-label')).toBe('Analyze (2)')
+  })
+
   it('shows Analyze text when enabled and modelReady defaults to true', () => {
     renderButton({ disabled: false, modelReady: undefined })
     const button = screen.getByRole('button') as HTMLButtonElement
