@@ -7,10 +7,25 @@ interface AnalyzeButtonProps {
   onClick: () => void
   modelId: string
   selectionCount?: number
+  /** When true, model is loaded and ready to analyze. Defaults to true when omitted. */
+  modelReady?: boolean
 }
 
-export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0 }: AnalyzeButtonProps) {
+export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0, modelReady = true }: AnalyzeButtonProps) {
   const { t } = useLanguage()
+
+  // While a new model is loading, show neutral feedback — users should not see static guidance text here
+  if (!modelReady) {
+    return (
+      <button
+        type="button"
+        disabled={disabled}
+        aria-label="Analyzing..."
+        className="w-full py-2.5 px-6 rounded-xl font-semibold text-base shadow-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white cursor-not-allowed">
+        Analyzing...
+      </button>
+    )
+  }
 
   let disabledText: string | null = null
   if (modelId === MODEL_IDS.SOMATIC) {

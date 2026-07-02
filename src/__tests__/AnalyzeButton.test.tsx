@@ -112,4 +112,24 @@ describe('AnalyzeButton', () => {
     expect(button).toBeDisabled()
     expect(button.className).toContain('cursor-not-allowed')
   })
+
+  it('shows Analyzing... text when modelReady is false', () => {
+    renderButton({ disabled: true, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Analyzing...')
+    expect(button.getAttribute('aria-label')).toBe('Analyzing...')
+  })
+
+  it('does not show disabled text when modelReady is false', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 0, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Analyzing...')
+    expect(button.textContent).not.toContain('(selected)')
+  })
+
+  it('shows Analyze text when enabled and modelReady defaults to true', () => {
+    renderButton({ disabled: false, modelReady: undefined })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Analyze')
+  })
 })
