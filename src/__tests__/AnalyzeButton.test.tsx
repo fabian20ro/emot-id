@@ -60,11 +60,10 @@ describe('AnalyzeButton', () => {
     expect(onClick).not.toHaveBeenCalled()
   })
 
-  it('shows selection count alongside hint text when disabled with existing selections', () => {
+  it('shows exact disabled text with selection count when disabled and selections exist', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 2 })
     const button = screen.getByRole('button') as HTMLButtonElement
-    expect(button.textContent).toContain('(2 selected)')
-    expect(button.textContent).toMatch(/Select an emotion/i)
+    expect(button.textContent).toBe('Select an emotion that resonates with you\n(2 selected)')
   })
 
   it('does not show count suffix when disabled with no selections', () => {
