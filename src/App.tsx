@@ -352,6 +352,7 @@ export default function App() {
           onClick={analyzeEmotions}
           modelId={modelId}
           selectionCount={selections.length}
+          modelReady={modelReady}
         />
           {selections.length === 0 && (
             <button

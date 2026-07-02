@@ -22,12 +22,13 @@ describe('AnalyzeButton', () => {
 
   it('shows default disabled text when disabled with non-somatic model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK })
-    expect(screen.getByText('Select an emotion that resonates with you')).toBeInTheDocument()
+    expect(screen.getByRole('button').textContent).toBe('Select an emotion that resonates with you')
   })
 
   it('shows dimensional disabled guidance for the dimensional model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL })
-    expect(screen.getByText('Tap the square where your state fits on the two axes')).toBeInTheDocument()
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Tap the square where your state fits on the two axes')
   })
 
   it('shows somatic disabled guidance for the somatic model', () => {
@@ -60,11 +61,10 @@ describe('AnalyzeButton', () => {
     expect(onClick).not.toHaveBeenCalled()
   })
 
-  it('shows selection count alongside hint text when disabled with existing selections', () => {
+  it('shows exact disabled text with selection count when disabled and selections exist', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 2 })
     const button = screen.getByRole('button') as HTMLButtonElement
-    expect(button.textContent).toContain('(2 selected)')
-    expect(button.textContent).toMatch(/Select an emotion/i)
+    expect(button.textContent).toBe('Select an emotion that resonates with you\n(2 selected)')
   })
 
   it('does not show count suffix when disabled with no selections', () => {
@@ -79,8 +79,57 @@ describe('AnalyzeButton', () => {
     expect(button.getAttribute('aria-label')).toBeNull()
   })
 
+  it('includes selection count=1 in aria-label when enabled', () => {
+    renderButton({ disabled: false, selectionCount: 1 })
+    expect(screen.getByRole('button', { name: 'Analyze (1)' })).toBeInTheDocument()
+  })
+
   it('includes selection count in aria-label when enabled with selections', () => {
     renderButton({ disabled: false, selectionCount: 4 })
     expect(screen.getByRole('button', { name: 'Analyze (4)' })).toBeInTheDocument()
+  })
+
+  it('does not set aria-label when disabled even with selections', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 3 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.getAttribute('aria-label')).toBeNull()
+  })
+
+  it('applies a pulse animation when enabled to draw attention', () => {
+    renderButton({ disabled: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button).not.toHaveClass('cursor-not-allowed')
+    // The motion.button renders; the one-shot pulse animation should be active on mount
+    const classes = button.className.split(/\s+/)
+    expect(classes).toEqual(
+      expect.arrayContaining(['bg-gradient-to-r', 'from-purple-500', 'to-pink-500'])
+    )
+  })
+
+  it('does not animate when disabled', () => {
+    renderButton({ disabled: true })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button).toBeDisabled()
+    expect(button.className).toContain('cursor-not-allowed')
+  })
+
+  it('shows Analyzing... text when modelReady is false', () => {
+    renderButton({ disabled: true, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Analyzing...')
+    expect(button.getAttribute('aria-label')).toBe('Analyzing...')
+  })
+
+  it('does not show disabled text when modelReady is false', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 0, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Analyzing...')
+    expect(button.textContent).not.toContain('(selected)')
+  })
+
+  it('shows Analyze text when enabled and modelReady defaults to true', () => {
+    renderButton({ disabled: false, modelReady: undefined })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Analyze')
   })
 })
