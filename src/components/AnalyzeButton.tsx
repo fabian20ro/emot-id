@@ -14,16 +14,19 @@ interface AnalyzeButtonProps {
 export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0, modelReady = true }: AnalyzeButtonProps) {
   const { t } = useLanguage()
 
-  // While a new model is loading, show neutral feedback — users should not see static guidance text here
+  // While a new model is loading, show neutral feedback — users should not see static guidance text here.
+  // Pulse animation signals activity so the user does not wonder if something happened.
   if (!modelReady) {
     return (
-      <button
+      <motion.button
         type="button"
-        disabled={disabled}
+        disabled={!modelReady || disabled}
         aria-label="Analyzing..."
+        animate={{ scale: [1, 1.05, 1] }}
+        transition={{ duration: 1, repeat: Infinity }}
         className="w-full py-2.5 px-6 rounded-xl font-semibold text-base shadow-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white cursor-not-allowed">
         Analyzing...
-      </button>
+      </motion.button>
     )
   }
 
@@ -56,6 +59,7 @@ export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0, 
 
   return (
     <motion.button
+      type="button"
       animate={disabled ? {} : { scale: [1, 1.03, 1] }}
       transition={disabled ? {} : { duration: 0.4, times: [0, 0.5, 1], repeat: 0 }}
       whileHover={disabled ? {} : { scale: 1.02 }}
