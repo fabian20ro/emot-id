@@ -215,4 +215,40 @@ describe('AnalyzeButton', () => {
     await userEvent.click(button)
     expect(onClick).not.toHaveBeenCalled()
   })
+
+  it('renders the main path with type="button" to avoid accidental form submission', () => {
+    renderButton({ disabled: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // The component renders inside potential <form> contexts; without type="button",
+    // browsers default interactive buttons become submit triggers. This matches the
+    // loading-state branch which explicitly sets type="button" (line 21 of source).
+    expect(button.type).toBe('button')
+    expect(button.getAttribute('type')).toBe('button')
+  })
+
+  it('renders the disabled path with type="button" to avoid accidental form submission', () => {
+    renderButton({ disabled: true })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.type).toBe('button')
+    expect(button.getAttribute('type')).toBe('button')
+  })
+
+  it('renders the loading path with type="button" to avoid accidental form submission', () => {
+    renderButton({ disabled: true, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.type).toBe('button')
+    expect(button.getAttribute('type')).toBe('button')
+  })
+
+  it('renders the dimensional disabled path with type="button"', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.type).toBe('button')
+  })
+
+  it('renders the somatic disabled path with type="button"', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.type).toBe('button')
+  })
 })

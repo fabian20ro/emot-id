@@ -56,6 +56,7 @@ export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0, 
 
   return (
     <motion.button
+      type="button"
       animate={disabled ? {} : { scale: [1, 1.03, 1] }}
       transition={disabled ? {} : { duration: 0.4, times: [0, 0.5, 1], repeat: 0 }}
       whileHover={disabled ? {} : { scale: 1.02 }}
