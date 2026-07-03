@@ -267,4 +267,19 @@ describe('AnalyzeButton', () => {
     const button = screen.getByRole('button') as HTMLButtonElement
     expect(button.type).toBe('button')
   })
+
+  it('applies hover and focus-visible utilities when enabled to signal interactivity', () => {
+    renderButton({ disabled: false, modelId: MODEL_IDS.PLUTCHIK })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button).not.toBeDisabled()
+    // Hover ring lets users see the button is interactive; focus-visible gives keyboard users a clear target.
+    // Missing hover utilities would silently degrade mouse interactivity feedback — this test catches that regression.
+    const classes = new Set(button.className.split(/\s+/))
+    expect(classes.has('hover:from-purple-600')).toBe(true)
+    expect(classes.has('hover:to-pink-600')).toBe(true)
+    expect(classes.has('cursor-pointer')).toBe(true)
+    expect(classes.has('focus-visible:ring-2')).toBe(true)
+    expect(classes.has('focus-visible:ring-purple-400')).toBe(true)
+    expect(classes.has('focus-visible:outline-none')).toBe(true)
+  })
 })
