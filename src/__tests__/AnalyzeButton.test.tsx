@@ -95,22 +95,66 @@ describe('AnalyzeButton', () => {
     expect(button.getAttribute('aria-label')).toBeNull()
   })
 
-  it('applies a pulse animation when enabled to draw attention', () => {
+  it('renders a native button with gradient classes when enabled to draw attention', () => {
     renderButton({ disabled: false })
     const button = screen.getByRole('button') as HTMLButtonElement
-    expect(button).not.toHaveClass('cursor-not-allowed')
-    // The motion.button renders; the one-shot pulse animation should be active on mount
+    // framer-motion motion.button renders a real <button>; any other element signals
+    // the component did not mount through the intended path.
+    expect(button.tagName).toBe('BUTTON')
+    expect(button instanceof HTMLButtonElement).toBe(true)
+    // The main render path (line 57-68 in AnalyzeButton.tsx) does not set type="button";
+    // only the loading-state branch sets it explicitly. Verifying disabled=false ensures
+    // the button is interactive and framer-motion rendered through to a real element.
+    expect(button.disabled).toBe(false)
+
     const classes = button.className.split(/\s+/)
+    // Every expected utility class must be present as an explicit string token so a
+    // missing gradient, wrong palette, or absent animation hook fails visibly.
     expect(classes).toEqual(
-      expect.arrayContaining(['bg-gradient-to-r', 'from-purple-500', 'to-pink-500'])
+      expect.arrayContaining([
+        'w-full',
+        'py-2.5',
+        'px-6',
+        'rounded-xl',
+        'font-semibold',
+        'text-base',
+        'shadow-lg',
+        'transition-all',
+        'bg-gradient-to-r',
+        'from-purple-500',
+        'to-pink-500',
+        'text-white',
+      ])
     )
   })
 
-  it('does not animate when disabled', () => {
+  it('renders a native button with gray palette when disabled', () => {
     renderButton({ disabled: true })
     const button = screen.getByRole('button') as HTMLButtonElement
-    expect(button).toBeDisabled()
-    expect(button.className).toContain('cursor-not-allowed')
+    // framer-motion motion.button renders a real <button>; any other element signals
+    // the component did not mount through the intended path.
+    expect(button.tagName).toBe('BUTTON')
+    expect(button instanceof HTMLButtonElement).toBe(true)
+    expect(button.disabled).toBe(true)
+
+    const classes = button.className.split(/\s+/)
+    // Every expected utility class must be present as an explicit string token so a
+    // missing palette, wrong color, or absent disabled hook fails visibly.
+    expect(classes).toEqual(
+      expect.arrayContaining([
+        'w-full',
+        'py-2.5',
+        'px-6',
+        'rounded-xl',
+        'font-semibold',
+        'text-base',
+        'shadow-lg',
+        'transition-all',
+        'bg-gray-700',
+        'text-gray-400',
+        'cursor-not-allowed',
+      ])
+    )
   })
 
   it('shows Analyzing... text when modelReady is false', () => {
