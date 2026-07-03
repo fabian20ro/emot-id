@@ -162,4 +162,13 @@ describe('AnalyzeButton', () => {
     const button = screen.getByRole('button') as HTMLButtonElement
     expect(button.textContent).toBe('Analyze')
   })
+
+  it('forces the loading button to be disabled even when parent passes disabled=false', async () => {
+    const onClick = vi.fn()
+    renderButton({ disabled: false, modelReady: false, onClick })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button).toBeDisabled()
+    await userEvent.click(button)
+    expect(onClick).not.toHaveBeenCalled()
+  })
 })

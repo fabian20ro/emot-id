@@ -19,7 +19,7 @@ export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0, 
     return (
       <button
         type="button"
-        disabled={disabled}
+        disabled={!modelReady || disabled}
         aria-label="Analyzing..."
         className="w-full py-2.5 px-6 rounded-xl font-semibold text-base shadow-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white cursor-not-allowed">
         Analyzing...
