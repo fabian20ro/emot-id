@@ -34,10 +34,12 @@ describe('AnalyzeButton', () => {
   it('shows somatic disabled guidance for the somatic model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC })
     const button = screen.getByRole('button') as HTMLButtonElement
-    // Somatic text contains keywords that may vary between i18n languages; matching
-    // tokens keeps the assertion deterministic without pinning to a single wording.
-    expect(button.textContent).toMatch(/body area/i)
-    expect(button.textContent).toMatch(/sensation/i)
+    // Single deterministic assertion: exact substring check catches missing or wrong
+    // body-area/sensation text; negative guard against accidentally showing generic
+    // default text ("Select an emotion...") which would signal the branch is broken.
+    expect(button.textContent).toContain('body area')
+    expect(button.textContent).toContain('sensation')
+    expect(button.textContent).not.toContain('Select an emotion')
   })
 
   it('includes the selection count when enabled and selections exist', () => {
