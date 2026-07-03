@@ -127,6 +127,15 @@ describe('AnalyzeButton', () => {
     expect(button.textContent).not.toContain('(selected)')
   })
 
+  it('shows Analyzing text regardless of selection count when modelReady is false', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 3, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Analyzing...')
+    // Loading state must not leak the disabled guidance or selection count into visible text
+    expect(button.textContent).not.toContain('(selected)')
+    expect(button.textContent).not.toContain('Select an emotion')
+  })
+
   it('applies loading-state gradient and is disabled when modelReady=false', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 0, modelReady: false })
     const button = screen.getByRole('button') as HTMLButtonElement
