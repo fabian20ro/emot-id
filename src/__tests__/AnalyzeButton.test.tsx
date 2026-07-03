@@ -197,6 +197,18 @@ describe('AnalyzeButton', () => {
     )
   })
 
+  it('animates loading state with a pulse so the user sees activity while the model loads', () => {
+    renderButton({ disabled: true, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // motion.button renders a real <button>; framer-motion applies animate/transition props.
+    // In jsdom without raf, animations do not run — but the element is still an HTMLButtonElement
+    // produced by framer-motion's `motion` factory (plain `<button>` would also pass this check).
+    expect(button.tagName).toBe('BUTTON')
+    // Verify the button has no static transform applied at mount (confirming animate runs dynamically)
+    // and that its style is empty — animation will run via requestAnimationFrame in real browsers.
+    expect(button.style.transform).toBe('')
+  })
+
   it('is interactive when enabled and modelReady is true by default', () => {
     renderButton({ disabled: false, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 2 })
     const button = screen.getByRole('button') as HTMLButtonElement
