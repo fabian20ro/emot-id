@@ -34,11 +34,9 @@ describe('AnalyzeButton', () => {
   it('shows somatic disabled guidance for the somatic model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC })
     const button = screen.getByRole('button') as HTMLButtonElement
-    // Single deterministic assertion: exact substring check catches missing or wrong
-    // body-area/sensation text; negative guard against accidentally showing generic
-    // default text ("Select an emotion...") which would signal the branch is broken.
-    expect(button.textContent).toContain('body area')
-    expect(button.textContent).toContain('sensation')
+    // Exact match against i18n value — partial/drifted text fails visibly, not silently.
+    const expectedSomatic = 'Tap a body area where you notice a sensation'
+    expect(button.textContent).toBe(expectedSomatic)
     expect(button.textContent).not.toContain('Select an emotion')
   })
 
