@@ -306,4 +306,34 @@ describe('AnalyzeButton', () => {
     // is driven dynamically (not pre-applied as CSS), matching the pulse contract.
     expect(button.style.transform).toBe('')
   })
+
+  it('falls through to default disabled text for unknown modelId', () => {
+    renderButton({ disabled: true, modelId: 'unknown-model-id' })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // Unknown modelIds must fall back to the default disabled hint so users still see guidance.
+    // A missing fallback would silently drop text, leaving an empty or broken button label.
+    expect(button.textContent).toBe('Select an emotion that resonates with you')
+  })
+
+  it('does not append selection count when enabled and no selections exist', () => {
+    renderButton({ disabled: false, selectionCount: 0 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // With zero selections the visible text must be bare "Analyze" — no "(0)" suffix.
+    // A regression here would leak count math into user-visible copy.
+    expect(button.textContent).toBe('Analyze')
+  })
+
+  it('renders type="button" for every code path including loading and disabled', () => {
+    renderButton({ disabled: false, selectionCount: 0, modelReady: true })
+    const enabledButtons = screen.getAllByRole('button') as HTMLButtonElement[]
+    expect(enabledButtons[enabledButtons.length - 1].getAttribute('type')).toBe('button')
+
+    renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC, selectionCount: 2 })
+    const disabledBtns = screen.getAllByRole('button') as HTMLButtonElement[]
+    expect(disabledBtns[disabledBtns.length - 1].getAttribute('type')).toBe('button')
+
+    renderButton({ disabled: true, modelReady: false })
+    const loadingBtns = screen.getAllByRole('button') as HTMLButtonElement[]
+    expect(loadingBtns[loadingBtns.length - 1].getAttribute('type')).toBe('button')
+  })
 })
