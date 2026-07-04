@@ -428,7 +428,7 @@ export default function App() {
       {/* Accessible live region for screen readers */}
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {selections.length > 0
-          ? `${selections.length} ${selections.length === 1 ? 'emotion' : 'emotions'} selected: ${selections.map(s => s.label[language]).join(', ')}`
+          ? `${selections.length} ${selections.length === 1 ? 'emotion' : 'emotions'} selected: ${selections.map(s => language === 'ro' ? s.label.ro : s.label.en).join(', ')}`
           : ''}
       </div>
 
