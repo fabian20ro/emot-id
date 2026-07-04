@@ -18,8 +18,8 @@ describe('AnalyzeButton model-aware text', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC })
     const button = screen.getByRole('button') as HTMLButtonElement
     // The disabled-text branch is silent (null → empty text) if any translation key
-    // returns undefined — this assertion makes that regression deterministic and visible.
-    expect(button.textContent).toBeTruthy()
+    // returns undefined — exact match makes that regression deterministic and visible.
+    expect(button.textContent).toBe('Tap a body area where you notice a sensation')
     expect(screen.getByRole('button', { name: /Tap a body area where you notice a sensation/i })).toBeInTheDocument()
   })
 
