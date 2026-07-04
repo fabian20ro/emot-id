@@ -74,7 +74,8 @@ describe('AnalyzeButton', () => {
   it('does not show count suffix when disabled with no selections', () => {
     renderButton({ disabled: true, selectionCount: 0 })
     const button = screen.getByRole('button') as HTMLButtonElement
-    expect(button.textContent).not.toContain('(selected)')
+    // Exact match — if the disabled guidance text drifts or returns undefined the failure is visible.
+    expect(button.textContent).toBe('Select an emotion that resonates with you')
   })
 
   it('sets aria-label to undefined when no selections', () => {
