@@ -113,24 +113,30 @@ describe('AnalyzeButton', () => {
     expect(button.disabled).toBe(false)
 
     const classes = button.className.split(/\s+/)
-    // Every expected utility class must be present as an explicit string token so a
-    // missing gradient, wrong palette, or absent animation hook fails visibly.
-    expect(classes).toEqual(
-      expect.arrayContaining([
-        'w-full',
-        'py-2.5',
-        'px-6',
-        'rounded-xl',
-        'font-semibold',
-        'text-base',
-        'shadow-lg',
-        'transition-all',
-        'bg-gradient-to-r',
-        'from-purple-500',
-        'to-pink-500',
-        'text-white',
-      ])
-    )
+    // Exact set equality — every class token must match the component's fixed output.
+    // arrayContaining would let extras (class additions) or missing items pass silently;
+    // exact match catches both, so any regression in the enabled gradient path is visible.
+    const expected = new Set([
+      'w-full',
+      'py-2.5',
+      'px-6',
+      'rounded-xl',
+      'font-semibold',
+      'text-base',
+      'shadow-lg',
+      'transition-all',
+      'bg-gradient-to-r',
+      'from-purple-500',
+      'to-pink-500',
+      'text-white',
+      'hover:from-purple-600',
+      'hover:to-pink-600',
+      'cursor-pointer',
+      'focus-visible:ring-2',
+      'focus-visible:ring-purple-400',
+      'focus-visible:outline-none',
+    ])
+    expect(new Set(classes)).toEqual(expected)
   })
 
   it('renders a native button with gray palette when disabled', () => {
