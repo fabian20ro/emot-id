@@ -66,9 +66,9 @@ function BubbleBase({ emotion, onClick, size = 'medium', index = 0, position }: 
         boxShadow: `0 4px 15px ${emotion.color}40, 0 2px 4px rgba(0,0,0,0.1)`,
         color: getContrastColor(emotion.color),
       }}
-      aria-label={emotion.label[language]}
+      aria-label={emotion.label[language] ?? emotion.label.en ?? emotion.id}
     >
-      {emotion.label[language]}
+      {emotion.label[language] ?? emotion.label.en ?? emotion.id}
     </motion.button>
   )
 }

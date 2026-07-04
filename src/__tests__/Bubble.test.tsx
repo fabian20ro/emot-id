@@ -53,4 +53,28 @@ describe('Bubble', () => {
     const button = screen.getByRole('button', { name: /joy/i })
     expect(button.className).toContain('text-sm')
   })
+
+  it('falls back to English label when primary language missing', () => {
+    const onClick = vi.fn()
+    renderWithProviders(
+      <Bubble
+        emotion={{ ...mockEmotion, label: { en: 'joy' } }}
+        onClick={onClick}
+      />
+    )
+
+    expect(screen.getByRole('button', { name: /joy/i })).toBeInTheDocument()
+  })
+
+  it('falls back to id when no language labels available', () => {
+    const onClick = vi.fn()
+    renderWithProviders(
+      <Bubble
+        emotion={{ ...mockEmotion, label: {} }}
+        onClick={onClick}
+      />
+    )
+
+    expect(screen.getByRole('button', { name: /joy/i })).toBeInTheDocument()
+  })
 })
