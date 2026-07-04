@@ -16,6 +16,10 @@ function renderButton(props: Partial<React.ComponentProps<typeof AnalyzeButton>>
 describe('AnalyzeButton model-aware text', () => {
   it('shows somatic-specific text when disabled with somatic model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // The disabled-text branch is silent (null → empty text) if any translation key
+    // returns undefined — this assertion makes that regression deterministic and visible.
+    expect(button.textContent).toBeTruthy()
     expect(screen.getByRole('button', { name: /Tap a body area where you notice a sensation/i })).toBeInTheDocument()
   })
 
