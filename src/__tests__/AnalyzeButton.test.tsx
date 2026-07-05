@@ -337,6 +337,14 @@ describe('AnalyzeButton', () => {
     expect(button.textContent).toBe('Select an emotion that resonates with you')
   })
 
+  it('appends selection count to unknown modelId disabled guidance', () => {
+    renderButton({ disabled: true, modelId: 'unknown-model-id', selectionCount: 3 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // The default-fallback path (line 38-40) must still concatenate "(N selected)" for non-zero selections —
+    // otherwise a regression in the concatenation logic would silently drop count context from users.
+    expect(button.textContent).toBe('Select an emotion that resonates with you\n(3 selected)')
+  })
+
   it('does not append selection count when enabled and no selections exist', () => {
     renderButton({ disabled: false, selectionCount: 0 })
     const button = screen.getByRole('button') as HTMLButtonElement
