@@ -78,6 +78,21 @@ describe('AnalyzeButton', () => {
     expect(button.textContent).toBe('Select an emotion that resonates with you')
   })
 
+  it('appends selection count to dimensional disabled guidance', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL, selectionCount: 5 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // The source (line 47-50) concatenates disabledText with "\\n(N selected)" for non-zero selections.
+    // Without this test, a regression in the dimensional path would go undetected — only the default model is covered above.
+    expect(button.textContent).toBe('Tap the square where your state fits on the two axes\n(5 selected)')
+  })
+
+  it('appends selection count to somatic disabled guidance', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC, selectionCount: 4 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // Same concatenation path (line 47-50) must hold for the somatic model too.
+    expect(button.textContent).toBe('Tap a body area where you notice a sensation\n(4 selected)')
+  })
+
   it('sets aria-label to undefined when no selections', () => {
     renderButton({ disabled: false, selectionCount: 0 })
     const button = screen.getByRole('button') as HTMLButtonElement
