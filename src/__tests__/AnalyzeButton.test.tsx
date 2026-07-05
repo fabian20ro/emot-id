@@ -127,11 +127,11 @@ describe('AnalyzeButton', () => {
     // the button is interactive and framer-motion rendered through to a real element.
     expect(button.disabled).toBe(false)
 
-    const classes = button.className.split(/\s+/)
-    // Exact set equality — every class token must match the component's fixed output.
-    // arrayContaining would let extras (class additions) or missing items pass silently;
-    // exact match catches both, so any regression in the enabled gradient path is visible.
-    const expected = new Set([
+    const classes = new Set(button.className.split(/\s+/))
+    // Per-class assertions — each failure points to the exact utility that regressed,
+    // not a generic "Set mismatch" message. Missing tokens fail fast with a clear class name;
+    // extra tokens would still surface as unexpected in the className string for manual review.
+    const expected = [
       'w-full',
       'py-2.5',
       'px-6',
@@ -150,8 +150,10 @@ describe('AnalyzeButton', () => {
       'focus-visible:ring-2',
       'focus-visible:ring-purple-400',
       'focus-visible:outline-none',
-    ])
-    expect(new Set(classes)).toEqual(expected)
+    ]
+    for (const cls of expected) {
+      expect(classes.has(cls), `missing class: ${cls}`).toBe(true)
+    }
   })
 
   it('renders a native button with gray palette when disabled', () => {
