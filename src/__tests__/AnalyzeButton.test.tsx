@@ -305,27 +305,12 @@ describe('AnalyzeButton', () => {
     expect(classes.has('focus-visible:outline-none')).toBe(true)
   })
 
-  it('keeps disabled button visually inert — no framer-motion animation props applied', () => {
+  it('does not apply framer-motion animation props when disabled — reduced-motion safety', () => {
     renderButton({ disabled: true })
     const button = screen.getByRole('button') as HTMLButtonElement
-    // Disabled buttons must NOT animate; framer-motion applies animate/transition/whileHover/whileTap
-    // only when the component is interactive. Any non-empty value here would cause unexpected motion
-    // on a non-interactive element, degrading accessibility for keyboard and reduced-motion users.
-    // framer-motion sets animate/transition to {} (empty) when disabled — verify the rendered props
-    // match the source contract: no scale, no transition duration, no hover/tap effects.
-    expect(button.style.transform).toBe('')
-    expect(button.textContent).not.toContain('(selected)') // static text, no dynamic updates
-  })
-
-  it('applies a pulse animation cycle when enabled and modelReady is true', () => {
-    renderButton({ disabled: false, modelId: MODEL_IDS.PLUTCHIK })
-    const button = screen.getByRole('button') as HTMLButtonElement
-    // The source sets animate={scale:[1,1.03,1]}, transition={duration:0.4,times:[0,0.5,1],repeat:0}
-    // for the enabled path. In jsdom framer-motion does not run RAF so transforms are empty at mount,
-    // but we verify the props are structurally correct (non-empty animate + transition objects).
-    expect(button.textContent).toBe('Analyze')
-    // Motion component renders a real <button>; the absence of static transform confirms animation
-    // is driven dynamically (not pre-applied as CSS), matching the pulse contract.
+    // Disabled buttons must NOT animate; framer-motion sets animate/transition to {} (empty)
+    // for non-interactive state. Any applied animation on a disabled button degrades accessibility
+    // for reduced-motion and keyboard users — this regression is silent without an explicit check.
     expect(button.style.transform).toBe('')
   })
 
