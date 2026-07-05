@@ -192,6 +192,15 @@ describe('AnalyzeButton', () => {
     expect(button.getAttribute('aria-label')).toBe('Analyzing...')
   })
 
+  it('marks the loading-state SVG spinner as aria-hidden so screen readers skip decorative markup', () => {
+    renderButton({ disabled: true, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // The SVG inside the loading state is purely decorative; if aria-hidden is removed
+    // during refactors it would leak raw SVG markup to assistive technology users — a real a11y regression.
+    const svg = button.querySelector('svg[aria-hidden="true"]')
+    expect(svg).not.toBeNull()
+  })
+
   it('does not show disabled text when modelReady is false', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 0, modelReady: false })
     const button = screen.getByRole('button') as HTMLButtonElement
