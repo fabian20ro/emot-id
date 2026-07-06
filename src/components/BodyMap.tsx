@@ -115,9 +115,11 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
   return (
     <div data-testid="bodymap-root" className="h-full min-h-0 w-full flex flex-col items-center p-1 sm:p-4">
       {/* Mode toggle */}
-      <div className="flex items-center gap-2 mb-1">
+      <div className="flex items-center gap-2 mb-1" role="radiogroup" aria-label="Body map mode">
         <button
           onClick={() => { setIsGuidedMode(false); setGuidedActive(false) }}
+          role="radio"
+          aria-checked={!isGuidedMode}
           className={`min-h-[44px] text-sm px-4 py-2 rounded-full transition-colors ${
             !isGuidedMode
               ? 'bg-indigo-600 text-white'
@@ -128,6 +130,8 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
         </button>
         <button
           onClick={() => { setIsGuidedMode(true); startGuidedScan() }}
+          role="radio"
+          aria-checked={isGuidedMode}
           className={`min-h-[44px] text-sm px-4 py-2 rounded-full transition-colors ${
             isGuidedMode
               ? 'bg-indigo-600 text-white'
