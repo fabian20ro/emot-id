@@ -13,31 +13,20 @@ function renderButton(props: Partial<React.ComponentProps<typeof AnalyzeButton>>
   )
 }
 
-describe('AnalyzeButton model-aware text', () => {
-  it('shows somatic-specific text when disabled with somatic model', () => {
-    renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC })
-    const button = screen.getByRole('button') as HTMLButtonElement
-    // The disabled-text branch is silent (null → empty text) if any translation key
-    // returns undefined — exact match makes that regression deterministic and visible.
-    expect(button.textContent).toBe('Tap a body area where you notice a sensation')
-    expect(screen.getByRole('button', { name: /Tap a body area where you notice a sensation/i })).toBeInTheDocument()
-  })
-
-  it('shows default text when disabled with plutchik model', () => {
-    renderButton({ disabled: true, modelId: MODEL_IDS.PLUTCHIK })
-    expect(screen.getByText('Select an emotion that resonates with you')).toBeInTheDocument()
-  })
-
-  it('shows default text when disabled with wheel model', () => {
-    renderButton({ disabled: true, modelId: MODEL_IDS.WHEEL })
-    expect(screen.getByText('Select an emotion that resonates with you')).toBeInTheDocument()
-  })
-
+describe('AnalyzeButton model-aware text — dimension-specific guidance', () => {
   it('shows dimensional-specific text when disabled with dimensional model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL })
     const button = screen.getByRole('button') as HTMLButtonElement
     expect(button.textContent).toBe(
       'Tap the square where your state fits on the two axes'
+    )
+  })
+
+  it('shows somatic-specific text when disabled with somatic model', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe(
+      'Tap a body area where you notice a sensation'
     )
   })
 

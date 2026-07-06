@@ -173,24 +173,27 @@ describe('AnalyzeButton', () => {
     expect(button instanceof HTMLButtonElement).toBe(true)
     expect(button.disabled).toBe(true)
 
-    const classes = button.className.split(/\s+/)
-    // Every expected utility class must be present as an explicit string token so a
-    // missing palette, wrong color, or absent disabled hook fails visibly.
-    expect(classes).toEqual(
-      expect.arrayContaining([
-        'w-full',
-        'py-2.5',
-        'px-6',
-        'rounded-xl',
-        'font-semibold',
-        'text-base',
-        'shadow-lg',
-        'transition-all',
-        'bg-gray-700',
-        'text-gray-400',
-        'cursor-not-allowed',
-      ])
-    )
+    const classes = new Set(button.className.split(/\s+/))
+    // Every expected utility class must be present and no unexpected ones may appear.
+    // Using exact set-match (not arrayContaining) makes any silent regression — extra
+    // framer-motion wrapper classes, accidental CSS additions, or refactoring drift —
+    // fail visibly with the offending class name in the error output rather than passing
+    // silently when only a subset matches. framer-motion's <motion.button> renders a real
+    // <button>; no extra classes are injected when animate/transition props are empty {}.
+    const expected = new Set([
+      'w-full',
+      'py-2.5',
+      'px-6',
+      'rounded-xl',
+      'font-semibold',
+      'text-base',
+      'shadow-lg',
+      'transition-all',
+      'bg-gray-700',
+      'text-gray-400',
+      'cursor-not-allowed',
+    ])
+    expect(classes).toEqual(expected)
   })
 
   it('shows Analyzing... text when modelReady is false', () => {
@@ -248,6 +251,16 @@ describe('AnalyzeButton', () => {
     // Verify the button has no static transform applied at mount (confirming animate runs dynamically)
     // and that its style is empty — animation will run via requestAnimationFrame in real browsers.
     expect(button.style.transform).toBe('')
+  })
+
+  it('applies cursor-not-allowed to loading-state button so mouse users see non-interactivity', () => {
+    renderButton({ disabled: true, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // The loading-state className (line 35 of AnalyzeButton.tsx) includes cursor-not-allowed.
+    // If someone drops it thinking the disabled attr is sufficient, mouse users lose the
+    // visual "not interactive" signal — this test catches that silent regression explicitly.
+    const classes = new Set(button.className.split(/\s+/))
+    expect(classes.has('cursor-not-allowed')).toBe(true)
   })
 
   it('is interactive when enabled and modelReady is true by default', () => {
@@ -357,18 +370,17 @@ describe('AnalyzeButton', () => {
     expect(button.textContent).toBe('Analyze')
   })
 
-  it('renders type="button" for every code path including loading and disabled', () => {
-    renderButton({ disabled: false, selectionCount: 0, modelReady: true })
-    const enabledButtons = screen.getAllByRole('button') as HTMLButtonElement[]
-    expect(enabledButtons[enabledButtons.length - 1].getAttribute('type')).toBe('button')
-
-    renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC, selectionCount: 2 })
-    const disabledBtns = screen.getAllByRole('button') as HTMLButtonElement[]
-    expect(disabledBtns[disabledBtns.length - 1].getAttribute('type')).toBe('button')
-
-    renderButton({ disabled: true, modelReady: false })
-    const loadingBtns = screen.getAllByRole('button') as HTMLButtonElement[]
-    expect(loadingBtns[loadingBtns.length - 1].getAttribute('type')).toBe('button')
+  it.each([
+    { desc: 'enabled', props: {} },
+    { desc: 'disabled (plutchik)', props: { disabled: true, modelId: MODEL_IDS.PLUTCHIK } },
+    { desc: 'loading-state', props: { disabled: true, modelReady: false } },
+    { desc: 'disabled (dimensional)', props: { disabled: true, modelId: MODEL_IDS.DIMENSIONAL } },
+    { desc: 'disabled (somatic)', props: { disabled: true, modelId: MODEL_IDS.SOMATIC } },
+  ])('renders type="button" (%s)', ({ props }) => {
+    renderButton(props)
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.type).toBe('button')
+    expect(button.getAttribute('type')).toBe('button')
   })
 
   it.each([
