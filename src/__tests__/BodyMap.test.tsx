@@ -188,4 +188,31 @@ describe('BodyMap', () => {
     // Guided scan starts with centering phase
     expect(screen.getByText('Take a breath. Notice your body.')).toBeInTheDocument()
   })
+
+  it('wraps mode toggle in radiogroup for screen readers', () => {
+    renderBodyMap()
+    const container = document.querySelector('[role="radiogroup"]')
+    expect(container).not.toBeNull()
+    expect(container!.getAttribute('aria-label')).toBe('Body map mode')
+  })
+
+  it('renders mode toggle buttons as radios with correct aria-checked in free mode', () => {
+    renderBodyMap()
+    const [freeBtn, guidedBtn] = document.querySelectorAll('[role="radio"]') as NodeListOf<HTMLButtonElement>
+    expect(freeBtn).toBeInTheDocument()
+    expect(guidedBtn).toBeInTheDocument()
+    expect(freeBtn.getAttribute('aria-checked')).toBe('true')
+    expect(guidedBtn.getAttribute('aria-checked')).toBe('false')
+  })
+
+  it('toggles aria-checked when switching to guided mode', async () => {
+    const user = userEvent.setup()
+    renderBodyMap()
+    const [freeBtn, guidedBtn] = document.querySelectorAll('[role="radio"]') as NodeListOf<HTMLButtonElement>
+
+    await user.click(guidedBtn)
+
+    expect(freeBtn.getAttribute('aria-checked')).toBe('false')
+    expect(guidedBtn.getAttribute('aria-checked')).toBe('true')
+  })
 })

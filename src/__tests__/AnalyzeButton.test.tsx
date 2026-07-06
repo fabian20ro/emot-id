@@ -28,16 +28,24 @@ describe('AnalyzeButton', () => {
   it('shows dimensional disabled guidance for the dimensional model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL })
     const button = screen.getByRole('button') as HTMLButtonElement
-    expect(button.textContent).toBe('Tap the square where your state fits on the two axes')
+    // Explicit nullish+empty guard — if translation returns "" instead of undefined
+    // the ?? fallback silently drops to default text, leaving a blank button label.
+    // Verifying non-empty and not-the-default-text makes that regression deterministic.
+    expect(button.textContent).not.toBeNull()
+    expect(button.textContent).not.toBe('')
+    expect(button.textContent).not.toContain('Select an emotion')
+    expect(button.textContent).toBe(
+      'Tap the square where your state fits on the two axes'
+    )
   })
 
   it('shows somatic disabled guidance for the somatic model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC })
     const button = screen.getByRole('button') as HTMLButtonElement
-    // Somatic text contains keywords that may vary between i18n languages; matching
-    // tokens keeps the assertion deterministic without pinning to a single wording.
-    expect(button.textContent).toMatch(/body area/i)
-    expect(button.textContent).toMatch(/sensation/i)
+    // Exact match against i18n value — partial/drifted text fails visibly, not silently.
+    const expectedSomatic = 'Tap a body area where you notice a sensation'
+    expect(button.textContent).toBe(expectedSomatic)
+    expect(button.textContent).not.toContain('Select an emotion')
   })
 
   it('includes the selection count when enabled and selections exist', () => {
@@ -74,7 +82,23 @@ describe('AnalyzeButton', () => {
   it('does not show count suffix when disabled with no selections', () => {
     renderButton({ disabled: true, selectionCount: 0 })
     const button = screen.getByRole('button') as HTMLButtonElement
-    expect(button.textContent).not.toContain('(selected)')
+    // Exact match — if the disabled guidance text drifts or returns undefined the failure is visible.
+    expect(button.textContent).toBe('Select an emotion that resonates with you')
+  })
+
+  it('appends selection count to dimensional disabled guidance', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL, selectionCount: 5 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // The source (line 47-50) concatenates disabledText with "\\n(N selected)" for non-zero selections.
+    // Without this test, a regression in the dimensional path would go undetected — only the default model is covered above.
+    expect(button.textContent).toBe('Tap the square where your state fits on the two axes\n(5 selected)')
+  })
+
+  it('appends selection count to somatic disabled guidance', () => {
+    renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC, selectionCount: 4 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // Same concatenation path (line 47-50) must hold for the somatic model too.
+    expect(button.textContent).toBe('Tap a body area where you notice a sensation\n(4 selected)')
   })
 
   it('sets aria-label to undefined when no selections', () => {
@@ -111,25 +135,33 @@ describe('AnalyzeButton', () => {
     // the button is interactive and framer-motion rendered through to a real element.
     expect(button.disabled).toBe(false)
 
-    const classes = button.className.split(/\s+/)
-    // Every expected utility class must be present as an explicit string token so a
-    // missing gradient, wrong palette, or absent animation hook fails visibly.
-    expect(classes).toEqual(
-      expect.arrayContaining([
-        'w-full',
-        'py-2.5',
-        'px-6',
-        'rounded-xl',
-        'font-semibold',
-        'text-base',
-        'shadow-lg',
-        'transition-all',
-        'bg-gradient-to-r',
-        'from-purple-500',
-        'to-pink-500',
-        'text-white',
-      ])
-    )
+    const classes = new Set(button.className.split(/\s+/))
+    // Per-class assertions — each failure points to the exact utility that regressed,
+    // not a generic "Set mismatch" message. Missing tokens fail fast with a clear class name;
+    // extra tokens would still surface as unexpected in the className string for manual review.
+    const expected = [
+      'w-full',
+      'py-2.5',
+      'px-6',
+      'rounded-xl',
+      'font-semibold',
+      'text-base',
+      'shadow-lg',
+      'transition-all',
+      'bg-gradient-to-r',
+      'from-purple-500',
+      'to-pink-500',
+      'text-white',
+      'hover:from-purple-600',
+      'hover:to-pink-600',
+      'cursor-pointer',
+      'focus-visible:ring-2',
+      'focus-visible:ring-purple-400',
+      'focus-visible:outline-none',
+    ]
+    for (const cls of expected) {
+      expect(classes.has(cls), `missing class: ${cls}`).toBe(true)
+    }
   })
 
   it('renders a native button with gray palette when disabled', () => {
@@ -166,6 +198,15 @@ describe('AnalyzeButton', () => {
     const button = screen.getByRole('button') as HTMLButtonElement
     expect(button.textContent).toBe('Analyzing...')
     expect(button.getAttribute('aria-label')).toBe('Analyzing...')
+  })
+
+  it('marks the loading-state SVG spinner as aria-hidden so screen readers skip decorative markup', () => {
+    renderButton({ disabled: true, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // The SVG inside the loading state is purely decorative; if aria-hidden is removed
+    // during refactors it would leak raw SVG markup to assistive technology users — a real a11y regression.
+    const svg = button.querySelector('svg[aria-hidden="true"]')
+    expect(svg).not.toBeNull()
   })
 
   it('does not show disabled text when modelReady is false', () => {
@@ -281,5 +322,68 @@ describe('AnalyzeButton', () => {
     expect(classes.has('focus-visible:ring-2')).toBe(true)
     expect(classes.has('focus-visible:ring-purple-400')).toBe(true)
     expect(classes.has('focus-visible:outline-none')).toBe(true)
+  })
+
+  it('does not apply framer-motion animation props when disabled — reduced-motion safety', () => {
+    renderButton({ disabled: true })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // Disabled buttons must NOT animate; framer-motion sets animate/transition to {} (empty)
+    // for non-interactive state. Any applied animation on a disabled button degrades accessibility
+    // for reduced-motion and keyboard users — this regression is silent without an explicit check.
+    expect(button.style.transform).toBe('')
+  })
+
+  it('falls through to default disabled text for unknown modelId', () => {
+    renderButton({ disabled: true, modelId: 'unknown-model-id' })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // Unknown modelIds must fall back to the default disabled hint so users still see guidance.
+    // A missing fallback would silently drop text, leaving an empty or broken button label.
+    expect(button.textContent).toBe('Select an emotion that resonates with you')
+  })
+
+  it('appends selection count to unknown modelId disabled guidance', () => {
+    renderButton({ disabled: true, modelId: 'unknown-model-id', selectionCount: 3 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // The default-fallback path (line 38-40) must still concatenate "(N selected)" for non-zero selections —
+    // otherwise a regression in the concatenation logic would silently drop count context from users.
+    expect(button.textContent).toBe('Select an emotion that resonates with you\n(3 selected)')
+  })
+
+  it('does not append selection count when enabled and no selections exist', () => {
+    renderButton({ disabled: false, selectionCount: 0 })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // With zero selections the visible text must be bare "Analyze" — no "(0)" suffix.
+    // A regression here would leak count math into user-visible copy.
+    expect(button.textContent).toBe('Analyze')
+  })
+
+  it('renders type="button" for every code path including loading and disabled', () => {
+    renderButton({ disabled: false, selectionCount: 0, modelReady: true })
+    const enabledButtons = screen.getAllByRole('button') as HTMLButtonElement[]
+    expect(enabledButtons[enabledButtons.length - 1].getAttribute('type')).toBe('button')
+
+    renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC, selectionCount: 2 })
+    const disabledBtns = screen.getAllByRole('button') as HTMLButtonElement[]
+    expect(disabledBtns[disabledBtns.length - 1].getAttribute('type')).toBe('button')
+
+    renderButton({ disabled: true, modelReady: false })
+    const loadingBtns = screen.getAllByRole('button') as HTMLButtonElement[]
+    expect(loadingBtns[loadingBtns.length - 1].getAttribute('type')).toBe('button')
+  })
+
+  it.each([
+    { desc: 'enabled, default model', disabled: false, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 0 },
+    { desc: 'disabled, somatic model with selections', disabled: true, modelId: MODEL_IDS.SOMATIC, selectionCount: 5 },
+    { desc: 'enabled, dimensional model no selections', disabled: false, modelId: MODEL_IDS.DIMENSIONAL, selectionCount: 0 },
+    { desc: 'disabled, unknown model with selections', disabled: true, modelId: 'custom-model', selectionCount: 3 },
+  ])('loading state wins across input combos: %s', ({ disabled, modelId, selectionCount }) => {
+    renderButton({ disabled, modelId, selectionCount, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Analyzing...')
+    expect(button).toBeDisabled()
+    expect(button.getAttribute('aria-label')).toBe('Analyzing...')
+    // Loading state must suppress disabled guidance text and selection counts uniformly.
+    expect(button.textContent).not.toContain('(selected)')
+    expect(button.textContent).not.toContain('Select an emotion')
   })
 })

@@ -178,11 +178,12 @@ describe('BubbleField deterministic layout', () => {
           const mobileSizePixels = { small: 78, medium: 96, large: 110 }
 
           for (const [id, pos] of positions) {
+            expect(sizes.get(id)).toBeDefined() // Validate size key exists
             const w = mobileSizePixels[sizes.get(id) || 'medium']
             expect(pos.x).toBeGreaterThanOrEqual(0)
             expect(pos.y).toBeGreaterThanOrEqual(0)
             expect(pos.x + w).toBeLessThanOrEqual(width)
-            expect(pos.y + bubbleHeight).toBeLessThanOrEqual(height + 10) // Allow jitter tolerance
+            expect(pos.y + bubbleHeight).toBeLessThanOrEqual(height + 6) // Tighter tolerance (jitter max ~5px)
           }
         }
       }
@@ -197,9 +198,12 @@ describe('BubbleField deterministic layout', () => {
 
       const ys = Array.from(positions.values()).map((p) => p.y)
       const minY = Math.min(...ys)
+      const maxY = Math.max(...ys)
 
       // Desktop should still pack from top (padding=16, so minY near 16)
       expect(minY).toBeLessThan(30)
+      // Verify all positions fit vertically within container
+      expect(maxY + bubbleHeight).toBeLessThanOrEqual(height + 2)
     })
   })
 })

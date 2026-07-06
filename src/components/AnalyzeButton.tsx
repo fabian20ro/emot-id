@@ -16,6 +16,14 @@ export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0, 
 
   // While a new model is loading, show neutral feedback — users should not see static guidance text here.
   // Pulse animation signals activity so the user does not wonder if something happened.
+  // A static spinner provides redundant encoding for users with reduced-motion preferences.
+  const LOADING_SPINNER = (
+    <svg className="inline-block w-5 h-5 mr-2 -ml-0.5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" opacity="0.25"/>
+      <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" opacity="0.75"/>
+    </svg>
+  )
+
   if (!modelReady) {
     return (
       <motion.button
@@ -25,7 +33,7 @@ export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0, 
         animate={{ scale: [1, 1.05, 1] }}
         transition={{ duration: 1, repeat: Infinity }}
         className="w-full py-2.5 px-6 rounded-xl font-semibold text-base shadow-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white cursor-not-allowed">
-        Analyzing...
+        {LOADING_SPINNER}Analyzing...
       </motion.button>
     )
   }
