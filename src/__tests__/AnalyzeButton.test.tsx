@@ -28,7 +28,15 @@ describe('AnalyzeButton', () => {
   it('shows dimensional disabled guidance for the dimensional model', () => {
     renderButton({ disabled: true, modelId: MODEL_IDS.DIMENSIONAL })
     const button = screen.getByRole('button') as HTMLButtonElement
-    expect(button.textContent).toBe('Tap the square where your state fits on the two axes')
+    // Explicit nullish+empty guard — if translation returns "" instead of undefined
+    // the ?? fallback silently drops to default text, leaving a blank button label.
+    // Verifying non-empty and not-the-default-text makes that regression deterministic.
+    expect(button.textContent).not.toBeNull()
+    expect(button.textContent).not.toBe('')
+    expect(button.textContent).not.toContain('Select an emotion')
+    expect(button.textContent).toBe(
+      'Tap the square where your state fits on the two axes'
+    )
   })
 
   it('shows somatic disabled guidance for the somatic model', () => {
