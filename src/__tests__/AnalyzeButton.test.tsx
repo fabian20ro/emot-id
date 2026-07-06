@@ -362,4 +362,20 @@ describe('AnalyzeButton', () => {
     const loadingBtns = screen.getAllByRole('button') as HTMLButtonElement[]
     expect(loadingBtns[loadingBtns.length - 1].getAttribute('type')).toBe('button')
   })
+
+  it.each([
+    { desc: 'enabled, default model', disabled: false, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 0 },
+    { desc: 'disabled, somatic model with selections', disabled: true, modelId: MODEL_IDS.SOMATIC, selectionCount: 5 },
+    { desc: 'enabled, dimensional model no selections', disabled: false, modelId: MODEL_IDS.DIMENSIONAL, selectionCount: 0 },
+    { desc: 'disabled, unknown model with selections', disabled: true, modelId: 'custom-model', selectionCount: 3 },
+  ])('loading state wins across input combos: %s', ({ disabled, modelId, selectionCount }) => {
+    renderButton({ disabled, modelId, selectionCount, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Analyzing...')
+    expect(button).toBeDisabled()
+    expect(button.getAttribute('aria-label')).toBe('Analyzing...')
+    // Loading state must suppress disabled guidance text and selection counts uniformly.
+    expect(button.textContent).not.toContain('(selected)')
+    expect(button.textContent).not.toContain('Select an emotion')
+  })
 })
