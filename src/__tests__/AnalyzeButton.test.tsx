@@ -367,18 +367,17 @@ describe('AnalyzeButton', () => {
     expect(button.textContent).toBe('Analyze')
   })
 
-  it('renders type="button" for every code path including loading and disabled', () => {
-    renderButton({ disabled: false, selectionCount: 0, modelReady: true })
-    const enabledButtons = screen.getAllByRole('button') as HTMLButtonElement[]
-    expect(enabledButtons[enabledButtons.length - 1].getAttribute('type')).toBe('button')
-
-    renderButton({ disabled: true, modelId: MODEL_IDS.SOMATIC, selectionCount: 2 })
-    const disabledBtns = screen.getAllByRole('button') as HTMLButtonElement[]
-    expect(disabledBtns[disabledBtns.length - 1].getAttribute('type')).toBe('button')
-
-    renderButton({ disabled: true, modelReady: false })
-    const loadingBtns = screen.getAllByRole('button') as HTMLButtonElement[]
-    expect(loadingBtns[loadingBtns.length - 1].getAttribute('type')).toBe('button')
+  it.each([
+    { desc: 'enabled', props: {} },
+    { desc: 'disabled (plutchik)', props: { disabled: true, modelId: MODEL_IDS.PLUTCHIK } },
+    { desc: 'loading-state', props: { disabled: true, modelReady: false } },
+    { desc: 'disabled (dimensional)', props: { disabled: true, modelId: MODEL_IDS.DIMENSIONAL } },
+    { desc: 'disabled (somatic)', props: { disabled: true, modelId: MODEL_IDS.SOMATIC } },
+  ])('renders type="button" (%s)', ({ props }) => {
+    renderButton(props)
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.type).toBe('button')
+    expect(button.getAttribute('type')).toBe('button')
   })
 
   it.each([
