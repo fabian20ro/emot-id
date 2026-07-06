@@ -173,24 +173,27 @@ describe('AnalyzeButton', () => {
     expect(button instanceof HTMLButtonElement).toBe(true)
     expect(button.disabled).toBe(true)
 
-    const classes = button.className.split(/\s+/)
-    // Every expected utility class must be present as an explicit string token so a
-    // missing palette, wrong color, or absent disabled hook fails visibly.
-    expect(classes).toEqual(
-      expect.arrayContaining([
-        'w-full',
-        'py-2.5',
-        'px-6',
-        'rounded-xl',
-        'font-semibold',
-        'text-base',
-        'shadow-lg',
-        'transition-all',
-        'bg-gray-700',
-        'text-gray-400',
-        'cursor-not-allowed',
-      ])
-    )
+    const classes = new Set(button.className.split(/\s+/))
+    // Every expected utility class must be present and no unexpected ones may appear.
+    // Using exact set-match (not arrayContaining) makes any silent regression — extra
+    // framer-motion wrapper classes, accidental CSS additions, or refactoring drift —
+    // fail visibly with the offending class name in the error output rather than passing
+    // silently when only a subset matches. framer-motion's <motion.button> renders a real
+    // <button>; no extra classes are injected when animate/transition props are empty {}.
+    const expected = new Set([
+      'w-full',
+      'py-2.5',
+      'px-6',
+      'rounded-xl',
+      'font-semibold',
+      'text-base',
+      'shadow-lg',
+      'transition-all',
+      'bg-gray-700',
+      'text-gray-400',
+      'cursor-not-allowed',
+    ])
+    expect(classes).toEqual(expected)
   })
 
   it('shows Analyzing... text when modelReady is false', () => {
