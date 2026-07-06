@@ -250,6 +250,16 @@ describe('AnalyzeButton', () => {
     expect(button.style.transform).toBe('')
   })
 
+  it('applies cursor-not-allowed to loading-state button so mouse users see non-interactivity', () => {
+    renderButton({ disabled: true, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // The loading-state className (line 35 of AnalyzeButton.tsx) includes cursor-not-allowed.
+    // If someone drops it thinking the disabled attr is sufficient, mouse users lose the
+    // visual "not interactive" signal — this test catches that silent regression explicitly.
+    const classes = new Set(button.className.split(/\s+/))
+    expect(classes.has('cursor-not-allowed')).toBe(true)
+  })
+
   it('is interactive when enabled and modelReady is true by default', () => {
     renderButton({ disabled: false, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 2 })
     const button = screen.getByRole('button') as HTMLButtonElement
