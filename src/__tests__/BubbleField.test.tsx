@@ -64,6 +64,27 @@ describe('BubbleField', () => {
     expect(onSelect).toHaveBeenCalledWith(mockEmotions[0])
   })
 
+  it('fires onSelect with the emotion matching the clicked bubble label', async () => {
+    const user = userEvent.setup()
+    const onSelect = vi.fn()
+    renderWithProviders(
+      <BubbleField
+        emotions={mockEmotions}
+        onSelect={onSelect}
+        onDeselect={vi.fn()}
+        sizes={mockSizes}
+      />
+    )
+
+    // Click by rendered label text — independent of array order.
+    const joyButton = screen.getByRole('button', { name: /joy/i })
+    await user.click(joyButton)
+
+    expect(onSelect).toHaveBeenCalledTimes(1)
+    const calledEmotion = onSelect.mock.calls[0][0] as BaseEmotion
+    expect(calledEmotion.id).toBe('joy')
+  })
+
   it('renders no bubbles when emotions array is empty', () => {
     const onSelect = vi.fn()
     renderWithProviders(
