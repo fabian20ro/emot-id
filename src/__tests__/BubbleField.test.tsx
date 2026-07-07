@@ -63,4 +63,18 @@ describe('BubbleField', () => {
     expect(onSelect).toHaveBeenCalledTimes(1)
     expect(onSelect).toHaveBeenCalledWith(mockEmotions[0])
   })
+
+  it('renders no bubbles when emotions array is empty', () => {
+    const onSelect = vi.fn()
+    renderWithProviders(
+      <BubbleField
+        emotions={[]}
+        onSelect={onSelect}
+        onDeselect={vi.fn()}
+        sizes={new Map()}
+      />
+    )
+
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
+  })
 })
