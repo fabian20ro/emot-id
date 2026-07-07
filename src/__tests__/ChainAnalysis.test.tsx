@@ -65,6 +65,14 @@ describe('ChainAnalysis', () => {
     })
   })
 
+  it('renders nothing and does not fire callbacks when closed', () => {
+    const onClose = vi.fn()
+    renderChain({ isOpen: false, onClose })
+
+    expect(screen.queryByRole('heading', { name: /chain analysis/i })).not.toBeInTheDocument()
+    expect(onClose).not.toHaveBeenCalled()
+  })
+
   it('renders recent entries and clears them via clear-all action', async () => {
     const user = userEvent.setup()
     const onClearAll = vi.fn().mockResolvedValue(undefined)
