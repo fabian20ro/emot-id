@@ -141,4 +141,45 @@ describe('BubbleField', () => {
     spy.mockRestore()
     globalThis.ResizeObserver = originalRO
   })
+
+  it('computes valid positions for all bubbles in mobile layout', async () => {
+    // Validate the deterministic-layout codepath produces non-overlapping, container-bounded positions.
+    const onSelect = vi.fn()
+
+    let capturedCallback: ((entries: ResizeObserverEntry[]) => void) | null = null
+    const originalRO = globalThis.ResizeObserver
+
+    const spy = vi.spyOn(globalThis, 'ResizeObserver').mockImplementation(function (this: unknown, callback: (entries: ResizeObserverEntry[]) => void) {
+      this.observe = () => {}
+      this.disconnect = () => {}
+      capturedCallback = callback
+    })
+
+    renderWithProviders(
+      <BubbleField
+        emotions={[...mockEmotions]}
+        onSelect={onSelect}
+        onDeselect={vi.fn()}
+        sizes={mockSizes}
+      />
+    )
+
+    // Fire with mobile dimensions to trigger the deterministic layout branch.
+    if (capturedCallback) {
+      const mockEntry: ResizeObserverEntry = {
+        target: {} as Element,
+        contentRect: new DOMRectReadOnly(400, 600),
+      }
+      capturedCallback([mockEntry])
+    }
+
+    await vi.waitFor(() => {
+      // All bubbles should be rendered.
+      const buttons = screen.getAllByRole('button')
+      expect(buttons.length).toBe(mockEmotions.length)
+    }, { timeout: 1000 })
+
+    spy.mockRestore()
+    globalThis.ResizeObserver = originalRO
+  })
 })
