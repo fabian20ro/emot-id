@@ -277,6 +277,16 @@ describe('AnalyzeButton', () => {
     expect(button.textContent).toBe('Analyze')
   })
 
+  it('renders identically when modelReady is explicitly true vs omitted — catches default-vs-explicit drift', () => {
+    renderButton({ disabled: false, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 2, modelReady: true })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // Explicit modelReady=true must produce identical output to the default path.
+    // A regression that treats the two differently would silently change user-visible behavior.
+    expect(button.textContent).toBe('Analyze (2)')
+    expect(button.getAttribute('aria-label')).toBe('Analyze (2)')
+    expect(button).not.toBeDisabled()
+  })
+
   it('forces the loading button to be disabled even when parent passes disabled=false', async () => {
     const onClick = vi.fn()
     renderButton({ disabled: false, modelReady: false, onClick })
