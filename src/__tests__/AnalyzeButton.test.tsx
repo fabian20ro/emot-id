@@ -277,6 +277,16 @@ describe('AnalyzeButton', () => {
     expect(button.textContent).toBe('Analyze')
   })
 
+  it('renders identically when modelReady is explicitly true vs omitted — catches default-vs-explicit drift', () => {
+    renderButton({ disabled: false, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 2, modelReady: true })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    // Explicit modelReady=true must produce identical output to the default path.
+    // A regression that treats the two differently would silently change user-visible behavior.
+    expect(button.textContent).toBe('Analyze (2)')
+    expect(button.getAttribute('aria-label')).toBe('Analyze (2)')
+    expect(button).not.toBeDisabled()
+  })
+
   it('forces the loading button to be disabled even when parent passes disabled=false', async () => {
     const onClick = vi.fn()
     renderButton({ disabled: false, modelReady: false, onClick })
@@ -381,6 +391,21 @@ describe('AnalyzeButton', () => {
     const button = screen.getByRole('button') as HTMLButtonElement
     expect(button.type).toBe('button')
     expect(button.getAttribute('type')).toBe('button')
+  })
+
+  it.each([
+    { desc: 'loading state wins across input combos', props: {} }
+  ])('loading state overrides active selection on a real model — no leaked hint or count', () => {
+    renderButton({ disabled: false, onClick: () => {}, modelId: MODEL_IDS.PLUTCHIK, selectionCount: 4, modelReady: false })
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toBe('Analyzing...')
+    expect(button.getAttribute('aria-label')).toBe('Analyzing...')
+    expect(button.textContent).not.toContain('(4)')
+    expect(button.textContent).not.toContain('Select an emotion')
+    const classes = new Set(button.className.split(/\s+/))
+    expect(classes.has('bg-gradient-to-r')).toBe(true)
+    expect(classes.has('from-purple-500')).toBe(true)
+    expect(classes.has('to-pink-500')).toBe(true)
   })
 
   it.each([

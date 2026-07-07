@@ -427,9 +427,11 @@ export default function App() {
 
       {/* Accessible live region for screen readers */}
       <div aria-live="polite" aria-atomic="true" className="sr-only">
-        {selections.length > 0
-          ? `${selections.length} ${selections.length === 1 ? 'emotion' : 'emotions'} selected: ${selections.map(s => language === 'ro' ? s.label.ro : s.label.en).join(', ')}`
-          : ''}
+        {showUndoToast && selections.length === 0
+          ? (language === 'ro' ? 'Nicio emoție selectată.' : 'No emotions selected.')
+          : selections.length > 0
+            ? `${selections.length} ${selections.length === 1 ? 'emotion' : 'emotions'} selected: ${selections.map(s => language === 'ro' ? s.label.ro : s.label.en).join(', ')}`
+            : ''}
       </div>
 
       <SessionHistory
