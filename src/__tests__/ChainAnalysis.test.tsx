@@ -127,4 +127,29 @@ describe('ChainAnalysis', () => {
     const textarea = screen.getByDisplayValue('sleep') as HTMLTextAreaElement | null
     expect(textarea).not.toBeNull()
   })
+
+  it('shows success banner with Done button after saving', async () => {
+    const user = userEvent.setup()
+    renderChain()
+
+    const prompts = [
+      'What happened right before this started?',
+      'What made you more vulnerable today?',
+      'What was the exact prompting event?',
+      'What emotion did you feel most strongly?',
+      'What urge showed up?',
+      'What action did you take?',
+      'What happened after that action?',
+    ]
+
+    for (let i = 0; i < prompts.length; i++) {
+      await user.type(screen.getByRole('textbox'), `entry-${i}`)
+      await user.click(screen.getByRole('button', { name: i === prompts.length - 1 ? 'Save chain' : 'Next' }))
+    }
+
+    await waitFor(() => {
+      expect(screen.getByText(/chain saved/i)).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /done/i })).toBeVisible()
+    })
+  })
 })
