@@ -169,4 +169,9 @@ describe('ChainAnalysis', () => {
       expect(screen.getByRole('button', { name: /done/i })).toBeVisible()
     })
   })
+
+  it('does not render recent-chains section when no entries exist', () => {
+    renderChain({ entries: [] })
+    expect(screen.queryByText('Recent chains')).not.toBeInTheDocument()
+  })
 })
