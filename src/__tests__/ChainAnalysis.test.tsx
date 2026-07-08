@@ -99,4 +99,32 @@ describe('ChainAnalysis', () => {
     await user.click(screen.getByRole('button', { name: 'Clear all data' }))
     expect(onClearAll).toHaveBeenCalledTimes(1)
   })
+
+  it('navigates forward and backward preserving step content', async () => {
+    const user = userEvent.setup()
+    renderChain()
+
+    // Step 0 (triggeringEvent): type and advance
+    await user.type(screen.getByRole('textbox'), 'trigger')
+    expect(await screen.findByText(/1\/7/)).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Next' }))
+    expect(await screen.findByText(/2\/7/)).toBeInTheDocument()
+
+    // Step 1 (vulnerabilityFactors): type and advance to step 2
+    await user.type(screen.getByRole('textbox'), 'sleep')
+    await user.click(screen.getByRole('button', { name: 'Next' }))
+    expect(await screen.findByText(/3\/7/)).toBeInTheDocument()
+
+    // Step 2 (promptingEvent): type content, then go Back — should return to step 1 with preserved text
+    await user.type(screen.getByRole('textbox'), 'feedback')
+
+    const backBtn = screen.getByRole('button', { name: 'Back' })
+    expect(backBtn).not.toBeDisabled()
+    await user.click(backBtn)
+
+    // Back on step 2 returns to step 1; content should still be present
+    const textarea = screen.getByDisplayValue('sleep') as HTMLTextAreaElement | null
+    expect(textarea).not.toBeNull()
+  })
 })
