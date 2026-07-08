@@ -45,13 +45,18 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 })
 
+const store = new Map<string, string>()
+
 const localStorageMock = {
-  getItem: () => null,
-  setItem: () => {},
-  removeItem: () => {},
-  clear: () => {},
-  length: 0,
-  key: () => null,
+  getItem: (key: string) => store.get(key) ?? null,
+  setItem: (key: string, value: string) => { store.set(key, String(value)) },
+  removeItem: (key: string) => { store.delete(key) },
+  clear: () => { store.clear() },
+  get length(): number { return store.size },
+  key: (index: number): string | null => {
+    const keys = Array.from(store.keys())
+    return index < keys.length ? keys[index] : null
+  },
 }
 
 Object.defineProperty(window, 'localStorage', {
