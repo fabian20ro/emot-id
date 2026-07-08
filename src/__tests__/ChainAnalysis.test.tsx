@@ -128,6 +128,23 @@ describe('ChainAnalysis', () => {
     expect(textarea).not.toBeNull()
   })
 
+  it('disables the Back button at step 0 and re-enables it after advancing', async () => {
+    const user = userEvent.setup()
+    renderChain()
+
+    // Initial state: Back must be disabled — cannot go before the first step
+    const backBtn = screen.getByRole('button', { name: 'Back' })
+    expect(backBtn).toBeDisabled()
+
+    // Type content so Next is enabled; advance to step 1
+    await user.type(screen.getByRole('textbox'), 'trigger')
+    await user.click(screen.getByRole('button', { name: 'Next' }))
+
+    // After advancing, Back must be re-enabled
+    const updatedBackBtn = screen.getByRole('button', { name: 'Back' })
+    expect(updatedBackBtn).not.toBeDisabled()
+  })
+
   it('shows success banner with Done button after saving', async () => {
     const user = userEvent.setup()
     renderChain()
