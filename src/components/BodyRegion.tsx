@@ -63,7 +63,7 @@ function BodyRegionBase({
       tabIndex={0}
       aria-label={label ?? id}
       aria-pressed={isSelected}
-      style={{ cursor: 'pointer', outline: 'none' }}
+      className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-blue-500"
       onClick={() => onClick(id)}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(id) } }}
     >
