@@ -182,4 +182,18 @@ describe('BubbleField', () => {
     spy.mockRestore()
     globalThis.ResizeObserver = originalRO
   })
+
+  it('announces emotion list via aria-live region', async () => {
+    renderWithProviders(
+      <BubbleField
+        emotions={mockEmotions}
+        onSelect={vi.fn()}
+        onDeselect={vi.fn()}
+        sizes={mockSizes}
+      />
+    )
+
+    const announcer = document.querySelector('[aria-live="polite"]') as HTMLElement | null
+    expect(announcer).toBeInTheDocument()
+  })
 })

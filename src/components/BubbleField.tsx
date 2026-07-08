@@ -102,8 +102,15 @@ function BubbleFieldBase({
     }, 0)
   }, [emotions, sizes, containerSize.width, containerSize.height, topInset])
 
+  const emotionIds = emotions.map(e => e.label.en).join(', ')
+
   return (
-    <div className="h-full w-full min-h-0 flex flex-col items-center justify-start sm:justify-center p-2 sm:p-4">
+    <div className="h-full w-full min-h-0 flex flex-col items-center justify-start sm:justify-center p-2 sm:p-4" aria-describedby={emotions.length ? "bubble-field-desc" : undefined}>
+      {emotions.length > 0 && (
+        <span id="bubble-field-desc" className="sr-only" aria-live="polite">
+          {emotions.length} emotion{emotions.length !== 1 ? 's' : ''}: {emotionIds}
+        </span>
+      )}
       <div
         ref={containerRef}
         className="relative w-full max-w-2xl h-full min-h-[200px] overflow-hidden"
