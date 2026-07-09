@@ -218,9 +218,9 @@ export function GranularityTraining({ isOpen, onClose }: GranularityTrainingProp
               </button>
 
               {currentAnswer && (
-                <div className="rounded-xl border border-indigo-500/40 bg-indigo-500/10 p-3 text-sm text-indigo-100 space-y-2" role="status" aria-live="polite">
-                  <p>{feedbackLine1}</p>
-                  <p className="text-indigo-200/90">{feedbackLine2}</p>
+                <div className="rounded-xl border border-indigo-500/40 bg-indigo-500/10 p-3 text-sm space-y-2" role="status" aria-live="polite">
+                  <p className="font-medium text-indigo-100">{feedbackLine1}</p>
+                  <p className="text-xs text-indigo-200/70 leading-relaxed">{feedbackLine2}</p>
                 </div>
               )}
 
