@@ -35,13 +35,17 @@ describe('CrisisBanner', () => {
     expect(screen.getByText('Grounding title')).toBeInTheDocument()
   })
 
-  it('renders tier 4 with red styling, temporal note, and no grounding (per current impl)', () => {
+  it('renders tier 4 with red styling, temporal note, aria-live alert region (per current impl)', () => {
     render(<CrisisBanner tier="tier4" crisisT={mockCrisisT} showTemporalNote={true} />)
     expect(screen.getByText('Tier 4 message')).toBeInTheDocument()
     // Tier 4 still shows the temporal note when requested (safety-critical gating)
     expect(screen.getByText('Temporal note text')).toBeInTheDocument()
     // Note: tier 4 currently does not show grounding in the component logic
     expect(screen.queryByText('Grounding title')).not.toBeInTheDocument()
+    // Deterministic accessibility check: root must announce as alert region (safety-critical gating)
+    const container = document.querySelector('[role="alert"]')
+    expect(container).toBeInTheDocument()
+    expect(container?.getAttribute('aria-live')).toBe('polite')
   })
 
   it('does not render temporal note when showTemporalNote is false', () => {

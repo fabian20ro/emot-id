@@ -35,7 +35,7 @@ export function CrisisBanner({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} role="alert" aria-live="polite">
       <p className={styles.message}>{message}</p>
       <p className={styles.subtext}>
         {crisisT.roLine ?? 'Romania: 116 123 (free, 24/7)'}
