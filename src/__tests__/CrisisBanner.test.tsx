@@ -54,4 +54,9 @@ describe('CrisisBanner', () => {
     render(<CrisisBanner tier="tier1" crisisT={mockCrisisT} showTemporalNote={true} />)
     expect(screen.getByText('Temporal note text')).toBeInTheDocument()
   })
+
+  it('falls back to "Support is available." when all translation keys are missing', () => {
+    render(<CrisisBanner tier="tier3" crisisT={{}} />)
+    expect(screen.getByText('Support is available.')).toBeInTheDocument()
+  })
 })
