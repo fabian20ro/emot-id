@@ -60,12 +60,14 @@ export function ChainAnalysis({
   const [stepIndex, setStepIndex] = useState(0)
   const [fields, setFields] = useState<ChainFields>(EMPTY_FIELDS)
   const [saved, setSaved] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!isOpen) {
       setStepIndex(0)
       setFields(EMPTY_FIELDS)
       setSaved(false)
+      setError(null)
     }
   }, [isOpen])
 
@@ -81,8 +83,13 @@ export function ChainAnalysis({
       timestamp: Date.now(),
       ...fields,
     }
-    await onSave(entry)
-    setSaved(true)
+    try {
+      await onSave(entry)
+      setSaved(true)
+      setError(null)
+    } catch (e) {
+      setError((e as Error)?.message ?? 'Failed to save chain')
+    }
   }
 
   const handlePrimary = async () => {
@@ -91,6 +98,7 @@ export function ChainAnalysis({
       await saveEntry()
       return
     }
+    setError(null)
     setStepIndex((prev) => prev + 1)
   }
 
@@ -142,6 +150,10 @@ export function ChainAnalysis({
                 placeholder={stepPlaceholder ?? ''}
                 className="w-full min-h-[120px] rounded-xl border border-gray-700 bg-gray-900/60 px-3 py-2 text-sm text-gray-100 placeholder:text-gray-500 focus:outline-none focus:border-indigo-500"
               />
+
+              {error && (
+                <p className="mt-2 text-xs text-red-400">{error}</p>
+              )}
 
               <div className="mt-4 flex items-center gap-2">
                 <button
