@@ -78,6 +78,29 @@ describe('GranularityTraining', () => {
     expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled()
   })
 
+  it('tracks unsure choices in the completion summary', async () => {
+    const user = userEvent.setup()
+    renderTraining()
+
+    // Select some emotions and use "not-sure" for others
+    await user.click(screen.getByRole('button', { name: 'anxiety' }))
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+
+    await user.click(screen.getByText("I'm not sure — they all fit"))
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+
+    // Continue through remaining steps with selections
+    const remaining = ['sadness', 'guilt', 'interest']
+    for (const choice of remaining) {
+      await user.click(screen.getByRole('button', { name: choice }))
+      await user.click(screen.getByRole('button', { name: 'Continue' }))
+    }
+
+    expect(screen.getByText('Practice session completed')).toBeInTheDocument()
+    expect(screen.getByText('4 clear choices')).toBeInTheDocument()
+    expect(screen.getByText('1 unsure choices')).toBeInTheDocument()
+  })
+
   it('keeps modal accessibility semantics and close affordance', () => {
     renderTraining()
 
