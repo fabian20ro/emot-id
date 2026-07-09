@@ -236,8 +236,6 @@ describe('DimensionalField', () => {
     const mockOnSelect = vi.fn()
     const mockOnDeselect = vi.fn()
 
-    // Pre-select happy by calling onSelect directly to set selections state,
-    // then re-render with that selection. Simpler: simulate by passing selections prop.
     renderField({
       emotions: mockEmotions,
       onSelect: mockOnSelect,
@@ -246,9 +244,13 @@ describe('DimensionalField', () => {
       selections: [{ id: 'happy', label: { ro: 'fericit', en: 'happy' }, color: '#FFEB3B', valence: 0.7 }],
     })
 
-    const buttons = document.querySelectorAll('g[role="button"]')
+    const buttons = Array.from(document.querySelectorAll('g[role="button"]'))
     expect(buttons.length).toBeGreaterThan(0)
-    // Click the happy button (first in our mock) — it should deselect since already selected
+
+    // Verify the pre-selected dot renders with aria-pressed=true — confirms selections prop flows through.
+    expect(buttons[0]).toHaveAttribute('aria-pressed', 'true')
+
+    // Click the happy button — it should deselect since already selected.
     fireEvent.click(buttons[0])
     expect(mockOnDeselect).toHaveBeenCalledWith(expect.objectContaining({ id: 'happy' }))
     expect(mockOnSelect).not.toHaveBeenCalled()
