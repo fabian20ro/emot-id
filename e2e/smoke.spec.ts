@@ -51,8 +51,7 @@ test.describe('Model navigation', () => {
 
     for (let i = 0; i < count; i++) {
       await tabs.nth(i).click()
-      await page.waitForTimeout(500)
-      // Each model should show the selection bar
+      // Each model should show the selection bar — toBeVisible waits up to default timeout
       await expect(page.getByText('Your selections')).toBeVisible()
     }
   })
