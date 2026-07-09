@@ -222,4 +222,35 @@ describe('DimensionalField', () => {
       expect(chip.className).toContain('min-h-[48px]')
     }
   })
+
+  it('selects an unselected emotion dot via onSelect', () => {
+    const { onSelect, onDeselect } = renderField()
+    const buttons = document.querySelectorAll('g[role="button"]')
+    // Click the first button (happy)
+    fireEvent.click(buttons[0])
+    expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: 'happy' }))
+    expect(onDeselect).not.toHaveBeenCalled()
+  })
+
+  it('deselected a selected emotion dot via onDeselect', () => {
+    const mockOnSelect = vi.fn()
+    const mockOnDeselect = vi.fn()
+
+    // Pre-select happy by calling onSelect directly to set selections state,
+    // then re-render with that selection. Simpler: simulate by passing selections prop.
+    renderField({
+      emotions: mockEmotions,
+      onSelect: mockOnSelect,
+      onDeselect: mockOnDeselect,
+      sizes: defaultSizes,
+      selections: [{ id: 'happy', label: { ro: 'fericit', en: 'happy' }, color: '#FFEB3B', valence: 0.7 }],
+    })
+
+    const buttons = document.querySelectorAll('g[role="button"]')
+    expect(buttons.length).toBeGreaterThan(0)
+    // Click the happy button (first in our mock) — it should deselect since already selected
+    fireEvent.click(buttons[0])
+    expect(mockOnDeselect).toHaveBeenCalledWith(expect.objectContaining({ id: 'happy' }))
+    expect(mockOnSelect).not.toHaveBeenCalled()
+  })
 })
