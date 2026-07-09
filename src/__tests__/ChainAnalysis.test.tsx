@@ -170,6 +170,41 @@ describe('ChainAnalysis', () => {
     })
   })
 
+  it('shows inline error when onSave fails and keeps the modal open on reopen', async () => {
+    const user = userEvent.setup()
+    const saveError = new Error('network timeout')
+    const onSave = vi.fn().mockRejectedValue(saveError)
+    renderChain({ onSave })
+
+    const prompts = [
+      'What happened right before this started?',
+      'What made you more vulnerable today?',
+      'What was the exact prompting event?',
+      'What emotion did you feel most strongly?',
+      'What urge showed up?',
+      'What action did you take?',
+      'What happened after that action?',
+    ]
+
+    for (let i = 0; i < prompts.length; i++) {
+      await user.type(screen.getByRole('textbox'), `entry-${i}`)
+      await user.click(screen.getByRole('button', { name: i === prompts.length - 1 ? 'Save chain' : 'Next' }))
+    }
+
+    // Save should have been attempted and thrown
+    expect(onSave).toHaveBeenCalledTimes(1)
+
+    // Error message from the rejected promise must appear inline
+    await waitFor(() => {
+      const errorEl = screen.getByText('network timeout')
+      expect(errorEl).toBeInTheDocument()
+      expect(errorEl.className).toMatch(/red/)
+    })
+
+    // Modal stays open — success banner does NOT appear
+    expect(screen.queryByText(/chain saved/i)).not.toBeInTheDocument()
+  })
+
   it('does not render recent-chains section when no entries exist', () => {
     renderChain({ entries: [] })
     expect(screen.queryByText('Recent chains')).not.toBeInTheDocument()
