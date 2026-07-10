@@ -304,12 +304,10 @@ describe('DimensionalField', () => {
     const tray = screen.getByTestId('dimensional-suggestion-tray')
     expect(tray).toBeInTheDocument()
 
-    // Find and click the "sad" suggestion chip.
-    const sadChip = Array.from(tray.querySelectorAll('button')).find(
-      (b) => b.textContent?.includes('sad') && !b.textContent?.startsWith('✓')
-    ) as HTMLButtonElement | undefined
-    expect(sadChip).toBeDefined()
-    fireEvent.click(sadChip!)
+    // Find and click the "sad" suggestion chip via stable data-testid selector.
+    const sadChip = screen.getByTestId('dimensional-suggestion-chip-sad') as HTMLButtonElement
+    expect(sadChip).toBeInTheDocument()
+    fireEvent.click(sadChip)
 
     expect(mockOnSelect).toHaveBeenCalledWith(expect.objectContaining({ id: 'sad' }))
   })

@@ -7,6 +7,9 @@ import type roStrings from '../i18n/ro.json'
 
 type SomaticSection = (typeof roStrings)['somatic']
 type CrisisSection = (typeof roStrings)['crisis']
+// Thresholds for skip-count tiers in CompletionPhase
+export const SKIP_THRESHOLD_DETAIL = 6
+export const SKIP_THRESHOLD_BRIEF = 3
 
 // ---------------------------------------------------------------------------
 // CenteringPhase — breathing cycle intro
@@ -186,14 +189,14 @@ export function CompletionPhase({
       <p className="text-gray-200 text-lg mb-2">
         {somaticT.guidedDone ?? 'Body scan complete'}
       </p>
-      {skipCount >= 6 ? (
+      {skipCount >= SKIP_THRESHOLD_DETAIL ? (
         <div className="text-xs text-gray-400 mb-3 max-w-xs space-y-1.5 text-left">
           <p>{somaticT.interoceptionTip ?? 'Body awareness is like a muscle — it develops with practice. Try placing your hand on your stomach and just noticing the temperature.'}</p>
           <p>{somaticT.interoceptionTip2 ?? 'You can practice noticing sensations during everyday activities: the warmth of a cup, the weight of your feet on the floor.'}</p>
           <p>{somaticT.interoceptionTip3 ?? "If nothing comes up, that's okay. Sometimes the signal is 'neutral' — and noticing neutral is also body awareness."}</p>
         </div>
       ) : (
-        skipCount >= 3 && (
+        skipCount >= SKIP_THRESHOLD_BRIEF && (
           <p className="text-xs text-gray-400 mb-3 max-w-xs">
             {somaticT.guidedNothingNormal ?? 'Not noticing sensations is common. Body awareness develops with practice.'}
           </p>
