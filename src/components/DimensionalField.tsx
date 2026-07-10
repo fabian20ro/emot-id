@@ -257,6 +257,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
             {suggestions.map((s) => (
               <button
                 key={s.id}
+                data-testid={`dimensional-suggestion-chip-${s.id}`}
                 onClick={() => handleSuggestionClick(s)}
                 className="px-5 py-3 min-h-[48px] rounded-full text-sm font-medium transition-colors"
                 style={{
