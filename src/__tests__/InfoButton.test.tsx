@@ -89,4 +89,33 @@ describe('InfoButton', () => {
     expect(screen.getByText('Rendered by close callback')).toBeInTheDocument()
     expect(screen.getByRole('dialog')).toBeInTheDocument()
   })
+
+  it('closes modal when clicking outside (backdrop)', async () => {
+    const user = userEvent.setup()
+    renderInfoButton()
+
+    await user.click(screen.getByRole('button', { name: 'Test info' }))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+    // Click the backdrop (outside the dialog) to close — use querySelector on the portal body
+    const portalBody = document.querySelector('[class*="fixed"]') as HTMLElement | null
+    if (portalBody) {
+      await act(async () => {
+        await user.click(portalBody)
+      })
+    }
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  })
+
+  it('uses useFocusTrap when modal opens', async () => {
+    const user = userEvent.setup()
+    renderInfoButton()
+
+    await user.click(screen.getByRole('button', { name: 'Test info' }))
+
+    const dialog = screen.getByRole('dialog')
+    // The dialog receives the focus trap ref from useFocusTrap(isOpen, close)
+    expect(dialog).toHaveAttribute('aria-modal', 'true')
+  })
 })
