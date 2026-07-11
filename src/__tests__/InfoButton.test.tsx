@@ -73,4 +73,20 @@ describe('InfoButton', () => {
     const labelId = dialog.getAttribute('aria-labelledby')!
     expect(document.getElementById(labelId)?.textContent).toBe('Test Title')
   })
+
+  it('supports function-as-children render prop with close callback', async () => {
+    const user = userEvent.setup()
+    const onToggle = vi.fn((_close: () => void) => <p>Rendered by close callback</p>)
+    render(
+      <LanguageProvider>
+        <InfoButton title="Fn Title" ariaLabel="Fn info" children={onToggle} />
+      </LanguageProvider>
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Fn info' }))
+
+    expect(onToggle).toHaveBeenCalled()
+    expect(screen.getByText('Rendered by close callback')).toBeInTheDocument()
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+  })
 })
