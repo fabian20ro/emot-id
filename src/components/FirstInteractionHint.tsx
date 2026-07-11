@@ -9,6 +9,8 @@ export function FirstInteractionHint({ modelId }: { modelId: string }) {
 
   return (
     <motion.div
+      role="status"
+      aria-live="polite"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
