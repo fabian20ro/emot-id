@@ -120,4 +120,48 @@ describe('MicroIntervention', () => {
     expect(screen.getByText('Validation text')).toBeInTheDocument()
     expect(onDismiss).not.toHaveBeenCalled()
   })
+
+  it('dismisses after same response and does not show validation', async () => {
+    const user = userEvent.setup()
+    const onDismiss = vi.fn()
+    const onResponse = vi.fn()
+
+    render(
+      <MicroIntervention
+        type="curiosity"
+        t={t}
+        onDismiss={onDismiss}
+        onResponse={onResponse}
+      />
+    )
+
+    await user.click(screen.getByRole('button', { name: 'About the same' }))
+    expect(onResponse).toHaveBeenCalledWith('same')
+    expect(onDismiss).toHaveBeenCalledTimes(1)
+    expect(screen.queryByText('Validation text')).not.toBeInTheDocument()
+  })
+
+  it('emits worse response, shows validation, and waits for dismiss', async () => {
+    const user = userEvent.setup()
+    const onDismiss = vi.fn()
+    const onResponse = vi.fn()
+
+    render(
+      <MicroIntervention
+        type="curiosity"
+        t={t}
+        onDismiss={onDismiss}
+        onResponse={onResponse}
+      />
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Worse' }))
+    expect(onResponse).toHaveBeenCalledWith('worse')
+    expect(onDismiss).not.toHaveBeenCalled()
+    expect(screen.queryByText('Validation text')).toBeInTheDocument()
+
+    // Dismiss only via the Continue button inside validation panel
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+    expect(onDismiss).toHaveBeenCalledTimes(1)
+  })
 })
