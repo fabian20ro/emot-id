@@ -85,4 +85,30 @@ describe('SelectionBar', () => {
 
     expect(onClear).toHaveBeenCalledTimes(1)
   })
+
+  it('renders combo badges with translated labels when combos exist', () => {
+    const onDeselect = vi.fn()
+    const onClear = vi.fn()
+    const combos = [
+      { id: 'c1', label: { en: 'calm joy', ro: 'bucurie calmă' }, color: '#FF6B9D' },
+    ]
+    renderWithProviders(
+      <SelectionBar selections={[]} combos={combos} onDeselect={onDeselect} onClear={onClear} />
+    )
+
+    expect(screen.getByText('= calm joy')).toBeInTheDocument()
+  })
+
+  it('shows aria-label on clear button matching selectionBar.clear translation', () => {
+    const onDeselect = vi.fn()
+    const onClear = vi.fn()
+    renderWithProviders(
+      <SelectionBar selections={mockEmotions} combos={[]} onDeselect={onDeselect} onClear={onClear} />
+    )
+
+    const clearButton = screen.getByRole('button', { name: /clear all/i })
+    expect(clearButton).toBeInTheDocument()
+    // aria-label must be set from the translation key; verify it is non-empty
+    expect(clearButton.getAttribute('aria-label')).toBeTruthy()
+  })
 })

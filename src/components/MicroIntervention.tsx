@@ -233,11 +233,11 @@ export function getInterventionType(
   hasNegative: boolean,
   isMixed: boolean,
 ): InterventionType | null {
-  // High arousal → offer calming breathing
+  // Mixed valence → curiosity (highest priority — more informative than arousal alone)
+  if (isMixed) return 'curiosity'
+  // High arousal without mixed signal → offer calming breathing
   if (avgArousal !== undefined && avgArousal > 0.65) return 'breathing'
   // Pleasant emotions only → offer savoring
   if (hasPositive && !hasNegative && !isMixed) return 'savoring'
-  // Mixed valence → offer curiosity prompt
-  if (isMixed) return 'curiosity'
   return null
 }

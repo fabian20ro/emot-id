@@ -74,6 +74,9 @@ export function InfoButton({ title, ariaLabel, children, className = '' }: InfoB
                 <div className="text-sm text-gray-300 leading-relaxed">
                   {content}
                 </div>
+                <p className="mt-3 text-xs text-gray-500">
+                  {'Press Escape to close'}
+                </p>
               </motion.div>
             </motion.div>
           )}

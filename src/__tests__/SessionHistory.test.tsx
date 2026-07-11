@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { SessionHistory } from '../components/SessionHistory'
 import { LanguageProvider } from '../context/LanguageContext'
 import type { Session } from '../data/types'
@@ -16,16 +16,21 @@ function makeSession(overrides: Partial<Session> = {}): Session {
   }
 }
 
-function renderHistory(sessions: Session[]) {
+function renderHistory(
+  sessions: Session[],
+  onClose?: () => void,
+  onClearAll?: () => void,
+  onExportJSON?: () => Promise<string>,
+) {
   return render(
     <LanguageProvider>
       <SessionHistory
         isOpen
-        onClose={vi.fn()}
+        onClose={onClose ?? vi.fn()}
         sessions={sessions}
         loading={false}
-        onClearAll={vi.fn()}
-        onExportJSON={vi.fn().mockResolvedValue('[]')}
+        onClearAll={onClearAll ?? vi.fn()}
+        onExportJSON={onExportJSON ?? vi.fn().mockResolvedValue('[]')}
       />
     </LanguageProvider>
   )
@@ -62,5 +67,30 @@ describe('SessionHistory', () => {
     expect(screen.getByText('1 selected but not surfaced')).toBeInTheDocument()
     expect(screen.getAllByText('joy').length).toBeGreaterThan(0)
     expect(screen.getAllByText('anger').length).toBeGreaterThan(0)
+  })
+
+  describe('callback invocations', () => {
+    const sessions = [makeSession()]
+
+    it('invokes onClose when the close button is clicked', () => {
+      const onClose = vi.fn()
+      renderHistory(sessions, onClose)
+      fireEvent.click(screen.getByLabelText('Close history'))
+      expect(onClose).toHaveBeenCalledTimes(1)
+    })
+
+    it('invokes onClearAll when "Clear all data" button is clicked', () => {
+      const onClearAll = vi.fn()
+      renderHistory(sessions, undefined, onClearAll)
+      fireEvent.click(screen.getByText('Clear all data'))
+      expect(onClearAll).toHaveBeenCalledTimes(1)
+    })
+
+    it('invokes onExportJSON when "Export JSON" button is clicked', () => {
+      const onExportJSON = vi.fn().mockResolvedValue('[{"id":"s1"}]')
+      renderHistory(sessions, undefined, undefined, onExportJSON)
+      fireEvent.click(screen.getByText('Export JSON'))
+      expect(onExportJSON).toHaveBeenCalledTimes(1)
+    })
   })
 })

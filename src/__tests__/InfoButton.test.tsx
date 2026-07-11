@@ -90,6 +90,15 @@ describe('InfoButton', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument()
   })
 
+  it('shows hint text explaining how to close the modal', async () => {
+    const user = userEvent.setup()
+    renderInfoButton()
+
+    await user.click(screen.getByRole('button', { name: 'Test info' }))
+
+    expect(await screen.findByText('Press Escape to close')).toBeInTheDocument()
+  })
+
   it('closes modal when clicking outside (backdrop)', async () => {
     const user = userEvent.setup()
     renderInfoButton()

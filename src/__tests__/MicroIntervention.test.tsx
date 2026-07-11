@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MicroIntervention } from '../components/MicroIntervention'
+import { MicroIntervention, getInterventionType } from '../components/MicroIntervention'
 
 const t = {
   interventionTitle: 'A moment for you',
@@ -163,5 +163,34 @@ describe('MicroIntervention', () => {
     // Dismiss only via the Continue button inside validation panel
     await user.click(screen.getByRole('button', { name: 'Continue' }))
     expect(onDismiss).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('getInterventionType', () => {
+  it('returns curiosity for mixed valence regardless of arousal', () => {
+    // Mixed valence should trigger curiosity even when arousal is undefined (no high-arousal bias)
+    expect(getInterventionType(undefined, true, false, true)).toBe('curiosity')
+    expect(getInterventionType(undefined, false, true, true)).toBe('curiosity')
+  })
+
+  it('returns breathing for high arousal with only negative emotions', () => {
+    // High arousal + negative-only → calming intervention is appropriate
+    expect(getInterventionType(0.8, false, true, false)).toBe('breathing')
+  })
+
+  it('returns savoring for positive-only emotions without mixed signal', () => {
+    // Pleasant-only state should offer savoring to extend the positive experience
+    expect(getInterventionType(undefined, true, false, false)).toBe('savoring')
+    expect(getInterventionType(0.3, true, false, false)).toBe('savoring')
+  })
+
+  it('returns null when no intervention fits', () => {
+    // No positive/negative/mixed signal → nothing to intervene on
+    expect(getInterventionType(undefined, false, false, false)).toBeNull()
+  })
+
+  it('prefers curiosity over breathing when both signals are present', () => {
+    // Mixed valence is more informative than arousal alone — curiosity takes priority
+    expect(getInterventionType(0.8, true, false, true)).toBe('curiosity')
   })
 })
