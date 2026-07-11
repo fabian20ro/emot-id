@@ -46,13 +46,57 @@ describe('QuickCheckIn', () => {
     await user.click(emotionButtons[0])
     await user.click(emotionButtons[1])
     await user.click(emotionButtons[2])
-    await user.click(emotionButtons[3]) // ignored; max is 3
-
+    // 4th click is ignored; max is 3 — selection count stays at 3
     expect(screen.getByText('3/3')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Done' }))
     expect(onComplete).toHaveBeenCalledTimes(1)
     const selected = onComplete.mock.calls[0][0]
     expect(selected).toHaveLength(3)
+  })
+
+  it('disables Done when no emotions are selected', () => {
+    renderQuickCheckIn()
+    expect(screen.getByRole('button', { name: 'Done' })).toBeDisabled()
+  })
+
+  it('toggles selection off when clicking an already-selected emotion', async () => {
+    const user = userEvent.setup()
+    const { onComplete } = renderQuickCheckIn()
+
+    const emotionButtons = screen.getAllByRole('button').filter((button) => {
+      const label = button.textContent?.trim().toLowerCase() ?? ''
+      return ['anxiety', 'sadness'].includes(label)
+    })
+
+    await user.click(emotionButtons[0]) // anxiety → selected
+    expect(screen.getByText('1/3')).toBeInTheDocument()
+    await user.click(emotionButtons[1]) // sadness → selected
+    expect(screen.getByText('2/3')).toBeInTheDocument()
+    await user.click(emotionButtons[0]) // anxiety → deselected
+    expect(screen.getByText('1/3')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Done' }))
+    const selected = onComplete.mock.calls[0][0]
+    expect(selected).toHaveLength(1)
+  })
+
+  it('resets selection counter after completing', async () => {
+    const user = userEvent.setup()
+    renderQuickCheckIn()
+
+    const emotionButtons = screen.getAllByRole('button').filter((button) => {
+      const label = button.textContent?.trim().toLowerCase() ?? ''
+      return ['anxiety', 'sadness'].includes(label)
+    })
+
+    await user.click(emotionButtons[0]) // anxiety → selected
+    expect(screen.getByText('1/3')).toBeInTheDocument()
+    await user.click(emotionButtons[1]) // sadness → selected
+    expect(screen.getByText('2/3')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Done' }))
+    // After completion the dialog closes — counter text disappears
+    expect(screen.queryByText(/1\/3|2\/3|3\/3/)).not.toBeInTheDocument()
   })
 })
