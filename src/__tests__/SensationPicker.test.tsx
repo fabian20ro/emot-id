@@ -121,4 +121,26 @@ describe('SensationPicker', () => {
     // The tension icon '⫸' and label should be visible as header
     expect(screen.getByText(/Tension/)).toBeInTheDocument()
   })
+
+  it('calls onCancel when "Nothing here" clicked during intensity step', async () => {
+    const user = userEvent.setup()
+    const { onCancel } = renderPicker()
+
+    await user.click(screen.getByText('Warmth'))
+    expect(screen.getByText('Mild')).toBeInTheDocument()
+
+    await user.click(screen.getByText('Nothing here'))
+    expect(onCancel).toHaveBeenCalledTimes(1)
+  })
+
+  it('calls onCancel when × clicked during intensity step', async () => {
+    const user = userEvent.setup()
+    const { onCancel } = renderPicker()
+
+    await user.click(screen.getByText('Warmth'))
+    expect(screen.getByText('Mild')).toBeInTheDocument()
+
+    await user.click(screen.getByText('×'))
+    expect(onCancel).toHaveBeenCalledTimes(1)
+  })
 })
