@@ -74,4 +74,16 @@ describe('ResultCard', () => {
     renderCard({ result: distressResult, expanded: false })
     expect(screen.getByRole('button', { name: 'Would you like to read more about this?' })).toBeInTheDocument()
   })
+
+  it('uses needsLabel prop when provided (expanded)', () => {
+    renderCard({ expanded: true, needsLabel: 'This feeling often calls for' })
+    expect(screen.getByText(/This feeling often calls for/)).toBeInTheDocument()
+  })
+
+  it('renders default label fallback in collapsed state', async () => {
+    const user = userEvent.setup()
+    renderCard({ expanded: false })
+    await user.click(screen.getByRole('button', { name: 'Show description' }))
+    expect(await screen.findByText(/This emotion often needs/)).toBeInTheDocument()
+  })
 })
