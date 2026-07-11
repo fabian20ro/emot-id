@@ -108,14 +108,27 @@ describe('InfoButton', () => {
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
 
-  it('uses useFocusTrap when modal opens', async () => {
+  it('function-as-children close callback terminates modal via useFocusTrap (isOpen, close)', async () => {
     const user = userEvent.setup()
-    renderInfoButton()
+    let closeRef: (() => void) | undefined
 
-    await user.click(screen.getByRole('button', { name: 'Test info' }))
+    render(
+      <LanguageProvider>
+        <InfoButton title="Fn Title" ariaLabel="Fn info" children={(_close: () => void) => {
+          closeRef = _close
+          return <p>Rendered with close ref</p>
+        }} />
+      </LanguageProvider>
+    )
 
-    const dialog = screen.getByRole('dialog')
-    // The dialog receives the focus trap ref from useFocusTrap(isOpen, close)
-    expect(dialog).toHaveAttribute('aria-modal', 'true')
+    await user.click(screen.getByRole('button', { name: 'Fn info' }))
+    expect(closeRef).toBeDefined()
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+    // Invoke the close callback that originates from useFocusTrap(isOpen, setIsOpen)
+    await act(async () => {
+      closeRef!()
+    })
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
 })
