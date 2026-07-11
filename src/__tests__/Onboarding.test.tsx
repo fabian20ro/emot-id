@@ -78,6 +78,24 @@ describe('Onboarding', () => {
     expect(getStarted).toBeDisabled()
   })
 
+  it('blocks final next when no model is selected, even on click', async () => {
+    const user = userEvent.setup()
+    const { onComplete } = renderOnboarding()
+
+    // Advance to last screen but do not select any model
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+
+    const getStarted = screen.getByRole('button', { name: /get started/i })
+    expect(getStarted).toBeDisabled()
+
+    // Attempt to click despite being disabled (e.g. via keyboard or programmatic trigger)
+    await user.click(getStarted)
+
+    expect(onComplete).not.toHaveBeenCalled()
+  })
+
   it('does not render a skip button', () => {
     renderOnboarding()
     expect(screen.queryByRole('button', { name: /skip/i })).not.toBeInTheDocument()
