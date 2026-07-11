@@ -29,9 +29,10 @@ export function DontKnowModal({ onSelectModel, onClose }: { onSelectModel: (id: 
             {dontKnowT.title ?? "That's okay — here are two ways to start"}
           </h3>
           <button
+            id="dont-know-close-button"
             onClick={onClose}
             className="min-h-[44px] min-w-[44px] shrink-0 inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-100 hover:bg-gray-700/60 transition-colors"
-            aria-label={dontKnowT.close ?? 'Close'}
+            aria-label="Close"
           >
             ×
           </button>

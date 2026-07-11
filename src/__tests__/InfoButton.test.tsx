@@ -73,4 +73,62 @@ describe('InfoButton', () => {
     const labelId = dialog.getAttribute('aria-labelledby')!
     expect(document.getElementById(labelId)?.textContent).toBe('Test Title')
   })
+
+  it('supports function-as-children render prop with close callback', async () => {
+    const user = userEvent.setup()
+    const onToggle = vi.fn((_close: () => void) => <p>Rendered by close callback</p>)
+    render(
+      <LanguageProvider>
+        <InfoButton title="Fn Title" ariaLabel="Fn info" children={onToggle} />
+      </LanguageProvider>
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Fn info' }))
+
+    expect(onToggle).toHaveBeenCalled()
+    expect(screen.getByText('Rendered by close callback')).toBeInTheDocument()
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+  })
+
+  it('closes modal when clicking outside (backdrop)', async () => {
+    const user = userEvent.setup()
+    renderInfoButton()
+
+    await user.click(screen.getByRole('button', { name: 'Test info' }))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+    // The overlay is a fixed-position container inside the portal; find it reliably by its backdrop class.
+    const overlay = document.querySelector('[class*="bg-black"]') as HTMLElement | null
+    if (overlay) {
+      await act(async () => {
+        await user.click(overlay)
+      })
+    }
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  })
+
+  it('function-as-children close callback terminates modal via useFocusTrap (isOpen, close)', async () => {
+    const user = userEvent.setup()
+    let closeRef: (() => void) | undefined
+
+    render(
+      <LanguageProvider>
+        <InfoButton title="Fn Title" ariaLabel="Fn info" children={(_close: () => void) => {
+          closeRef = _close
+          return <p>Rendered with close ref</p>
+        }} />
+      </LanguageProvider>
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Fn info' }))
+    expect(closeRef).toBeDefined()
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+    // Invoke the close callback that originates from useFocusTrap(isOpen, setIsOpen)
+    await act(async () => {
+      closeRef!()
+    })
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  })
 })

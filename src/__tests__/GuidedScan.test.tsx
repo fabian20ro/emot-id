@@ -192,6 +192,15 @@ describe('GuidedScan', () => {
       expect(screen.getByText('Throat')).toBeInTheDocument()
     })
 
+    it('displays group label as "FirstRegion - LastRegion" on first region', () => {
+      renderGuidedScan()
+      skipCentering()
+
+      // Head group: head, jaw → label should be "Head / Face - Jaw"
+      const skipButton = screen.getByText(/Skip this area/)
+      expect(skipButton).toHaveAttribute('title', 'Head / Face - Jaw')
+    })
+
     it('shows progress bar', () => {
       renderGuidedScan()
       skipCentering()

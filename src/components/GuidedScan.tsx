@@ -249,7 +249,7 @@ export function GuidedScan({ regions, onRegionSelect, onComplete, onHighlight }:
                     <button
                       key={sensation}
                       onClick={() => handleSensationPick(sensation)}
-                      className="min-h-[44px] flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 text-sm text-gray-200 transition-colors"
+                      className="min-h-[44px] flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 active:bg-indigo-900/50 border border-gray-700 text-sm text-gray-200 transition-colors"
                     >
                       <span className="text-base">{config.icon}</span>
                       <span>{config.label[language]}</span>
