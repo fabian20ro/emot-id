@@ -36,11 +36,17 @@ export function IntensityPicker({
 }: IntensityPickerProps) {
   const { language } = useLanguage()
 
+  // Validate language code to prevent silent rendering failures
+  const safeLanguage = ['ro', 'en'].includes(language) ? language : 'en'
+  const safeSensationLabel = typeof sensationLabel === 'object' && sensationLabel !== null
+    ? (sensationLabel as { ro: string; en: string })[safeLanguage] || ''
+    : ''
+
   if (variant === 'detailed') {
     return (
       <div className="flex flex-col gap-2">
         <div className="text-sm text-gray-300 mb-1">
-          {sensationIcon} {sensationLabel[language]}
+          {sensationIcon} {safeSensationLabel}
         </div>
         {([1, 2, 3] as const).map((intensity) => (
           <motion.button
@@ -53,10 +59,10 @@ export function IntensityPicker({
             <IntensityDots level={intensity} />
             <div className="flex flex-col">
               <span className="text-sm text-gray-200">
-                {INTENSITY_LABELS[intensity][language]}
+                {INTENSITY_LABELS[intensity][safeLanguage]}
               </span>
               <span className="text-xs text-gray-500">
-                {INTENSITY_LABELS[intensity].anchor[language]}
+                {INTENSITY_LABELS[intensity].anchor[safeLanguage]}
               </span>
             </div>
           </motion.button>
@@ -68,7 +74,7 @@ export function IntensityPicker({
   return (
     <div className="mb-3">
       <div className="text-sm text-gray-400 mb-2">
-        {sensationIcon} {sensationLabel[language]}
+        {sensationIcon} {safeSensationLabel}
       </div>
       <div className="flex gap-2">
         {([1, 2, 3] as const).map((intensity) => (
@@ -79,7 +85,7 @@ export function IntensityPicker({
           >
             <IntensityDots level={intensity} />
             <span className="text-xs text-gray-400">
-              {INTENSITY_LABELS[intensity][language]}
+              {INTENSITY_LABELS[intensity][safeLanguage]}
             </span>
           </button>
         ))}
