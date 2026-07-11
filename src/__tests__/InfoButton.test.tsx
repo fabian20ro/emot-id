@@ -97,11 +97,11 @@ describe('InfoButton', () => {
     await user.click(screen.getByRole('button', { name: 'Test info' }))
     expect(screen.getByRole('dialog')).toBeInTheDocument()
 
-    // Click the backdrop (outside the dialog) to close — use querySelector on the portal body
-    const portalBody = document.querySelector('[class*="fixed"]') as HTMLElement | null
-    if (portalBody) {
+    // The overlay is a fixed-position container inside the portal; find it reliably by its backdrop class.
+    const overlay = document.querySelector('[class*="bg-black"]') as HTMLElement | null
+    if (overlay) {
       await act(async () => {
-        await user.click(portalBody)
+        await user.click(overlay)
       })
     }
 
