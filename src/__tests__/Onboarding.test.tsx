@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { Onboarding } from '../components/Onboarding'
 import { LanguageProvider } from '../context/LanguageContext'
 import { getAvailableModels } from '../models/registry'
+import { storage } from '../data/storage'
 
 function renderOnboarding(onComplete = vi.fn()) {
   return {
@@ -170,5 +171,19 @@ describe('Onboarding', () => {
 
     await user.click(screen.getByRole('button', { name: /back/i }))
     expect(screen.getByText(/not a test/i)).toBeInTheDocument()
+  })
+
+  it('renders simplified body text when simpleLanguage is true', () => {
+    vi.spyOn(storage, 'get').mockImplementation((key: string) => {
+      if (key === 'simpleLanguage') return 'true'
+      if (key === 'language') return 'en'
+      if (key === 'onboarded') return null
+      return null
+    })
+
+    renderOnboarding()
+
+    // Under simple language, the simplified body should be shown instead of regular.
+    expect(screen.getByText(/be curious/i)).toBeInTheDocument()
   })
 })
