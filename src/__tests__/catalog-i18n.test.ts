@@ -52,10 +52,20 @@ describe('catalog i18n completeness', () => {
                break
              }
           }
-          
+
           if (typeof value === 'string') {
             expect(value, `Value for "${key}" in ${file} should not be empty`).not.toBe('')
           }
+        }
+      })
+
+      it('has matching English translations for all Romanian entries', () => {
+        const enKeys = allKeys.filter(k => k.endsWith('.en'))
+        const roKeys = allKeys.filter(k => k.endsWith('.ro'))
+
+        for (const roKey of roKeys) {
+          const enKey = roKey.replace('.ro', '.en')
+          expect(enKeys, `Missing EN translation for ${roKey} in ${file}`).toContain(enKey)
         }
       })
     })
