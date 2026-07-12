@@ -144,6 +144,39 @@ describe('Onboarding', () => {
     expect(screen.queryByRole('button', { name: /skip/i })).not.toBeInTheDocument()
   })
 
+  it('selecting one model deselects any previously selected model on last screen', async () => {
+    const user = userEvent.setup()
+    renderOnboarding()
+
+    // Advance to the last screen where models are selectable.
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+
+    // Pick two distinct models from the registry.
+    const models = getAvailableModels()
+    expect(models.length).toBeGreaterThanOrEqual(2)
+    const firstModel = models[0]
+    const secondModel = models[1]
+
+    await user.click(screen.getByRole('button', { name: new RegExp(firstModel.name.en, 'i') }))
+
+    // Only one model button should carry the active indicator styling.
+    const firstButton = screen.getByRole('button', { name: new RegExp(firstModel.name.en, 'i') })
+    expect(firstButton.className).toMatch(/indigo/)
+    expect(screen.getByRole('button', { name: new RegExp(secondModel.name.en, 'i') }).className).not.toMatch(/indigo/)
+
+    await user.click(screen.getByRole('button', { name: new RegExp(secondModel.name.en, 'i') }))
+
+    // Now exactly one model button should carry the active styling — and it must be the second.
+    expect(firstButton.className).not.toMatch(/indigo/)
+    const selectedSecond = screen.getByRole('button', { name: new RegExp(secondModel.name.en, 'i') })
+    expect(selectedSecond.className).toMatch(/indigo/)
+
+    const getStarted = screen.getByRole('button', { name: /get started/i })
+    expect(getStarted).not.toBeDisabled()
+  })
+
   it('shows step indicators for 4 screens', () => {
     renderOnboarding()
     // 4 step dots (including disclaimer screen)
