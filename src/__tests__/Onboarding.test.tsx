@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Onboarding } from '../components/Onboarding'
 import { LanguageProvider } from '../context/LanguageContext'
+import { getAvailableModels } from '../models/registry'
 
 function renderOnboarding(onComplete = vi.fn()) {
   return {
@@ -76,6 +77,27 @@ describe('Onboarding', () => {
 
     const getStarted = screen.getByRole('button', { name: /get started/i })
     expect(getStarted).toBeDisabled()
+  })
+
+  it('onComplete receives the clicked model id, not a hardcoded value', async () => {
+    const user = userEvent.setup()
+    const { onComplete } = renderOnboarding()
+
+    // Advance to last screen where models are selectable.
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+
+    // Pick a real model id from the registry (not hardcoded).
+    const models = getAvailableModels()
+    expect(models.length).toBeGreaterThan(0)
+    const targetModel = models[models.length - 1] // last registered model
+
+    await user.click(screen.getByRole('button', { name: new RegExp(targetModel.name.en, 'i') }))
+    await user.click(screen.getByRole('button', { name: /get started/i }))
+
+    expect(onComplete).toHaveBeenCalledTimes(1)
+    expect(onComplete).toHaveBeenCalledWith(targetModel.id)
   })
 
   it('blocks final next when no model is selected, even on click', async () => {
