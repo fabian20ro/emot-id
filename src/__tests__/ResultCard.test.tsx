@@ -86,4 +86,21 @@ describe('ResultCard', () => {
     await user.click(screen.getByRole('button', { name: 'Show description' }))
     expect(await screen.findByText(/This emotion often needs/)).toBeInTheDocument()
   })
+
+  it('renders the description when InfoButton is clicked in collapsed state', async () => {
+    const user = userEvent.setup()
+    renderCard({ expanded: false })
+    await user.click(screen.getByRole('button', { name: 'Show description' }))
+    expect(screen.getByText('A feeling of great pleasure')).toBeInTheDocument()
+  })
+
+  it('shows readMore label for high-distress when collapsed (expanded prop=true)', async () => {
+    const distressResult: AnalysisResult = {
+      ...baseResult,
+      id: 'despair',
+    }
+    renderCard({ result: distressResult, expanded: true })
+    // When expanded=true but isHighDistress, shouldExpand=false → collapsed behavior
+    expect(screen.queryByRole('button', { name: /read more about this/ })).toBeInTheDocument()
+  })
 })
