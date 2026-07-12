@@ -10,7 +10,7 @@ interface HeaderProps {
 
 export function Header({ menuOpen, onMenuToggle, modelId, onModelChange }: HeaderProps) {
   return (
-    <header className="z-[var(--z-header)] bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-2 py-1 pt-[max(0.25rem,env(safe-area-inset-top))] flex items-center gap-1">
+    <header className="z-[var(--z-header)] bg-gray-800/80 backdrop-blur-sm border-b border-gray-700 px-2 py-1 pt-[max(0.25rem,env(safe-area-inset-top))] flex items-center gap-1" aria-label="Main navigation">
       <MenuButton
         isOpen={menuOpen}
         onClick={onMenuToggle}
