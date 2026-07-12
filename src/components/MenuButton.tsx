@@ -9,7 +9,7 @@ export function MenuButton({ isOpen, onClick }: MenuButtonProps) {
   return (
     <motion.button
       onClick={onClick}
-      className="p-2.5 rounded-lg hover:bg-gray-700 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+      className="p-2.5 rounded-lg hover:bg-gray-700 focus-visible:ring-2 focus-visible:ring-indigo-500 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
       whileTap={{ scale: 0.95 }}
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
     >
