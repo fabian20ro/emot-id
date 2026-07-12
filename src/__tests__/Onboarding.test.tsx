@@ -56,15 +56,21 @@ describe('Onboarding', () => {
     const user = userEvent.setup()
     const { onComplete } = renderOnboarding()
 
-    // Advance through all 4 screens
+    // Advance through all 4 screens.
     await user.click(screen.getByRole('button', { name: /next/i }))
     await user.click(screen.getByRole('button', { name: /next/i }))
     await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /body map/i }))
+
+    // Pick a real model id from the registry (not hardcoded).
+    const models = getAvailableModels()
+    expect(models.length).toBeGreaterThan(0)
+    const targetModel = models[0]
+
+    await user.click(screen.getByRole('button', { name: new RegExp(targetModel.name.en, 'i') }))
     await user.click(screen.getByRole('button', { name: /get started/i }))
 
     expect(onComplete).toHaveBeenCalledTimes(1)
-    expect(onComplete).toHaveBeenCalledWith('somatic')
+    expect(onComplete).toHaveBeenCalledWith(targetModel.id)
     expect(setItemSpy).toHaveBeenCalledWith('emot-id-onboarded', 'true')
   })
 
