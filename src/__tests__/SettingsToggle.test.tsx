@@ -84,4 +84,18 @@ describe('SettingsToggle', () => {
     expect(onButton.className).toContain('bg-gray-800')
     expect(onButton.className).toContain('text-gray-500')
   })
+
+  it('does not disable the "off" button when disabled prop is true', () => {
+    render(<SettingsToggle
+      value={true}
+      onLabel="On"
+      offLabel="Off"
+      onChange={() => {}}
+      onClose={() => {}}
+      disabled={true}
+    />)
+
+    const offButton = screen.getByRole('button', { name: /off/i })
+    expect(offButton).not.toBeDisabled()
+  })
 })
