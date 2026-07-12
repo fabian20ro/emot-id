@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Onboarding } from '../components/Onboarding'
 import { LanguageProvider } from '../context/LanguageContext'
+import { getAvailableModels } from '../models/registry'
+import { storage } from '../data/storage'
 
 function renderOnboarding(onComplete = vi.fn()) {
   return {
@@ -78,6 +80,27 @@ describe('Onboarding', () => {
     expect(getStarted).toBeDisabled()
   })
 
+  it('onComplete receives the clicked model id, not a hardcoded value', async () => {
+    const user = userEvent.setup()
+    const { onComplete } = renderOnboarding()
+
+    // Advance to last screen where models are selectable.
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+
+    // Pick a real model id from the registry (not hardcoded).
+    const models = getAvailableModels()
+    expect(models.length).toBeGreaterThan(0)
+    const targetModel = models[models.length - 1] // last registered model
+
+    await user.click(screen.getByRole('button', { name: new RegExp(targetModel.name.en, 'i') }))
+    await user.click(screen.getByRole('button', { name: /get started/i }))
+
+    expect(onComplete).toHaveBeenCalledTimes(1)
+    expect(onComplete).toHaveBeenCalledWith(targetModel.id)
+  })
+
   it('blocks final next when no model is selected, even on click', async () => {
     const user = userEvent.setup()
     const { onComplete } = renderOnboarding()
@@ -96,9 +119,62 @@ describe('Onboarding', () => {
     expect(onComplete).not.toHaveBeenCalled()
   })
 
+  it('enables Get Started after selecting any available model', async () => {
+    const user = userEvent.setup()
+    renderOnboarding()
+
+    // Advance to the last screen where models are selectable.
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+
+    const getStarted = screen.getByRole('button', { name: /get started/i })
+    expect(getStarted).toBeDisabled()
+
+    // Pick a real model id from the registry (not hardcoded).
+    const models = getAvailableModels()
+    expect(models.length).toBeGreaterThan(0)
+    await user.click(screen.getByRole('button', { name: new RegExp(models[0].name.en, 'i') }))
+
+    expect(getStarted).not.toBeDisabled()
+  })
+
   it('does not render a skip button', () => {
     renderOnboarding()
     expect(screen.queryByRole('button', { name: /skip/i })).not.toBeInTheDocument()
+  })
+
+  it('selecting one model deselects any previously selected model on last screen', async () => {
+    const user = userEvent.setup()
+    renderOnboarding()
+
+    // Advance to the last screen where models are selectable.
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+
+    // Pick two distinct models from the registry.
+    const models = getAvailableModels()
+    expect(models.length).toBeGreaterThanOrEqual(2)
+    const firstModel = models[0]
+    const secondModel = models[1]
+
+    await user.click(screen.getByRole('button', { name: new RegExp(firstModel.name.en, 'i') }))
+
+    // Only one model button should carry the active indicator styling.
+    const firstButton = screen.getByRole('button', { name: new RegExp(firstModel.name.en, 'i') })
+    expect(firstButton.className).toMatch(/indigo/)
+    expect(screen.getByRole('button', { name: new RegExp(secondModel.name.en, 'i') }).className).not.toMatch(/indigo/)
+
+    await user.click(screen.getByRole('button', { name: new RegExp(secondModel.name.en, 'i') }))
+
+    // Now exactly one model button should carry the active styling — and it must be the second.
+    expect(firstButton.className).not.toMatch(/indigo/)
+    const selectedSecond = screen.getByRole('button', { name: new RegExp(secondModel.name.en, 'i') })
+    expect(selectedSecond.className).toMatch(/indigo/)
+
+    const getStarted = screen.getByRole('button', { name: /get started/i })
+    expect(getStarted).not.toBeDisabled()
   })
 
   it('shows step indicators for 4 screens', () => {
@@ -128,5 +204,19 @@ describe('Onboarding', () => {
 
     await user.click(screen.getByRole('button', { name: /back/i }))
     expect(screen.getByText(/not a test/i)).toBeInTheDocument()
+  })
+
+  it('renders simplified body text when simpleLanguage is true', () => {
+    vi.spyOn(storage, 'get').mockImplementation((key: string) => {
+      if (key === 'simpleLanguage') return 'true'
+      if (key === 'language') return 'en'
+      if (key === 'onboarded') return null
+      return null
+    })
+
+    renderOnboarding()
+
+    // Under simple language, the simplified body should be shown instead of regular.
+    expect(screen.getByText(/be curious/i)).toBeInTheDocument()
   })
 })

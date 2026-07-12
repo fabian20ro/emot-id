@@ -121,4 +121,49 @@ describe('bodyRegionPaths', () => {
       expect(region.anchor.y, `${region.id} anchor y`).toBeLessThanOrEqual(430)
     }
   })
+
+  it('label positions stay outside the visible silhouette for each region', () => {
+    for (const region of bodyRegionPaths) {
+      const dBox = getBoundingBox(region.d)
+      const lx = region.labelAnchor.x
+      const ly = region.labelAnchor.y
+
+      if (region.labelSide === 'left') {
+        // Label must be to the left of the body geometry edge
+        expect(lx, `${region.id} label x`).toBeLessThanOrEqual(dBox.minX)
+      } else {
+        // Label must be to the right of the body geometry edge
+        expect(lx, `${region.id} label x`).toBeGreaterThanOrEqual(dBox.maxX)
+      }
+
+      // Labels should sit vertically within the region's range ± generous margin
+      const minY = Math.min(dBox.minY, 0)
+      const maxY = Math.max(dBox.maxY, 450)
+      expect(ly, `${region.id} label y`).toBeGreaterThanOrEqual(minY - 25)
+      expect(ly, `${region.id} label y`).toBeLessThanOrEqual(maxY + 25)
+    }
+  })
+
+  it('labelSide is consistent with anchor direction', () => {
+    for (const region of bodyRegionPaths) {
+      const dBox = getBoundingBox(region.d)
+      const anchorX = region.anchor.x
+      const labelX = region.labelAnchor.x
+
+      // If label is to the left of the geometry, side must be 'left'
+      if (labelX < dBox.minX) {
+        expect(region.labelSide, `${region.id} labelSide`).toBe('left')
+      } else {
+        // Label is to the right
+        expect(region.labelSide, `${region.id} labelSide`).toBe('right')
+      }
+
+      // Anchor should sit on or inside the geometry edge
+      if (region.labelSide === 'left') {
+        expect(anchorX, `${region.id} anchor x`).toBeLessThanOrEqual(dBox.maxX)
+      } else {
+        expect(anchorX, `${region.id} anchor x`).toBeGreaterThanOrEqual(dBox.minX)
+      }
+    }
+  })
 })

@@ -161,6 +161,18 @@ describe('SettingsMenu', () => {
     expect(onDailyReminderChange).toHaveBeenCalledWith(true)
   })
 
+  it('shows permission-denied warning when notifications are blocked', () => {
+    renderMenu({ reminderPermission: 'denied' })
+    expect(
+      screen.getByText(/Notifications are blocked\. Enable them in browser settings\./)
+    ).toBeInTheDocument()
+  })
+
+  it('does not show permission-denied warning when notifications are granted', () => {
+    renderMenu({ reminderPermission: 'granted' })
+    expect(screen.queryByText(/Notifications are blocked/)).not.toBeInTheDocument()
+  })
+
   it('renders disclaimer section with InfoButton', () => {
     renderMenu()
     expect(screen.getByText('Disclaimer')).toBeInTheDocument()

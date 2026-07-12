@@ -32,6 +32,21 @@ export function ModalShell({
   panelProps,
   children,
 }: ModalShellProps) {
+  // Validate ARIA reference targets exist in the DOM.
+  // Missing labelledBy/describedBy elements break dialog semantics —
+  // `console.warn` logs issues without failing tests by default.
+  if (typeof document !== 'undefined') {
+    const labelledTarget = labelledBy ? document.getElementById(labelledBy) : null
+    if (labelledBy && !labelledTarget) {
+      console.warn('[ModalShell] labelledBy target not found:', labelledBy)
+    }
+    if (describedBy) {
+      const describedTargets = document.querySelectorAll(`#${describedBy}`)
+      if (!describedTargets.length) {
+        console.warn('[ModalShell] describedBy target not found:', describedBy)
+      }
+    }
+  }
   const content = (
     <>
       <motion.div

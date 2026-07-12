@@ -28,6 +28,7 @@ function ModelBarBase({ modelId, onModelChange, inline }: ModelBarProps) {
           <button
             key={m.id}
             onClick={() => onModelChange(m.id)}
+            aria-selected={isActive}
             className={`relative ${inline ? 'flex-1' : ''} px-3 py-1 min-h-[44px] flex items-center justify-center rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
               isActive
                 ? 'text-white'
