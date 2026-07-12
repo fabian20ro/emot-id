@@ -9,7 +9,10 @@ interface ModelVisualizationProps extends VisualizationProps {
 export function ModelVisualization({ modelId, ...props }: ModelVisualizationProps) {
   const Visualizer = useMemo(() => getVisualization(modelId), [modelId])
 
-  if (!Visualizer) return null
+  if (!Visualizer) {
+    console.warn(`emot-id: no visualization registered for modelId "${modelId}". Known models are derived from registry entries.`)
+    return null
+  }
 
   return React.createElement(Visualizer, props)
 }
