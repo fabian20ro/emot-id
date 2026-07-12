@@ -51,8 +51,26 @@ describe('QuickCheckIn', () => {
 
     await user.click(screen.getByRole('button', { name: 'Done' }))
     expect(onComplete).toHaveBeenCalledTimes(1)
-    const selected = onComplete.mock.calls[0][0]
+    const [selected, results] = onComplete.mock.calls[0] as [unknown, unknown]
     expect(selected).toHaveLength(3)
+    expect(results).toHaveLength(3)
+    for (const result of results) {
+      expect(result).toHaveProperty('id')
+      expect(result).toHaveProperty('label')
+      expect(typeof (result as Record<string, unknown>).id).toBe('string')
+      expect((result as { label: unknown }).label).toEqual(
+        expect.objectContaining({ ro: expect.any(String), en: expect.any(String) })
+      )
+    }
+  })
+
+  it('calls onClose when close button is clicked', async () => {
+    const user = userEvent.setup()
+    const onClose = vi.fn()
+    renderQuickCheckIn({ isOpen: true, onClose })
+
+    await user.click(screen.getByRole('button', { name: 'Close' }))
+    expect(onClose).toHaveBeenCalledTimes(1)
   })
 
   it('disables Done when no emotions are selected', () => {
