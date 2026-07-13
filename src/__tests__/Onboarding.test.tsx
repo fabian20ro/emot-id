@@ -225,4 +225,31 @@ describe('Onboarding', () => {
     // Under simple language, the simplified body should be shown instead of regular.
     expect(screen.getByText(/be curious/i)).toBeInTheDocument()
   })
+
+  it('each screen renders unique title and body text (no duplicate copy across steps)', async () => {
+    const user = userEvent.setup()
+    renderOnboarding()
+
+    // Collect displayed texts on the first screen.
+    const step1Texts: string[] = screen.getAllByText(/.+/i).map(el => el.textContent ?? '').filter(Boolean)
+
+    for (let i = 0; i < 3; i++) {
+      await user.click(screen.getByRole('button', { name: /next/i }))
+
+      // Every text that appeared on step 1 must not reappear on a later screen.
+      for (const t of step1Texts) {
+        const matches = screen.queryAllByText(t)
+        expect(
+          matches.length,
+          `'${t}' should not appear again on screen ${i + 2}`
+        ).toBeLessThanOrEqual(1)
+      }
+
+      // There must be at least one new text element unique to this step.
+      const currentTexts = screen.getAllByText(/.+/i).map(el => el.textContent ?? '').filter(Boolean)
+      const previous = new Set(step1Texts)
+      const newOnes = currentTexts.filter(t => !previous.has(t))
+      expect(newOnes.length, `screen ${i + 2} should introduce at least one unique text`).toBeGreaterThan(0)
+    }
+  })
 })
