@@ -72,7 +72,30 @@ describe('Onboarding', () => {
 
     expect(onComplete).toHaveBeenCalledTimes(1)
     expect(onComplete).toHaveBeenCalledWith(targetModel.id)
-    expect(setItemSpy).toHaveBeenCalledWith('emot-id-onboarded', 'true')
+    expect(setItemSpy).toHaveBeenCalledWith(storage.KEYS.onboarded, 'true')
+  })
+
+  it('persists onboarded flag via storage.get after completion', async () => {
+    vi.spyOn(storage, 'get').mockImplementation((key: string) => {
+      if (key === storage.KEYS.onboarded) return 'true'
+      if (key === 'simpleLanguage') return null
+      if (key === 'language') return 'en'
+      return null
+    })
+
+    const user = userEvent.setup()
+    renderOnboarding()
+
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+
+    const models = getAvailableModels()
+    expect(models.length).toBeGreaterThan(0)
+    await user.click(screen.getByRole('button', { name: new RegExp(models[0].name.en, 'i') }))
+    await user.click(screen.getByRole('button', { name: /get started/i }))
+
+    expect(storage.get(storage.KEYS.onboarded)).toBe('true')
   })
 
   it('keeps get started disabled until a model is selected on last screen', async () => {
