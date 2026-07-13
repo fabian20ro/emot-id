@@ -21,6 +21,7 @@ let setItemSpy: ReturnType<typeof vi.spyOn>
 
 beforeEach(() => {
   setItemSpy = vi.spyOn(window.localStorage, 'setItem')
+  setItemSpy.mockClear()
 })
 
 afterEach(() => {
