@@ -456,4 +456,17 @@ describe('ResultModal', () => {
     await user.click(await screen.findByRole('button', { name: 'Somewhat' }))
     expect(screen.queryByText(/Where do you notice this in your body/)).not.toBeInTheDocument()
   })
+
+  it('calls onClose when Escape is pressed while modal is open', async () => {
+    const results = [makeResult('joy')]
+    let closed = false
+    renderModal({ results, selections: [makeEmotion('joy')], onClose: () => { closed = true } })
+
+    expect(closed).toBe(false)
+
+    // Trigger a keyboard Escape event. userEvent.keyboard dispatches globally.
+    await userEvent.keyboard('{Escape}')
+
+    expect(closed).toBe(true)
+  })
 })
