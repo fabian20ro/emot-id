@@ -462,3 +462,16 @@ Each entry should follow this structure:
 **Outcome:** Success. All 476 tests, translation checks, lint, and production build pass.
 **Insight:** Generated catalogs combine overlay structure with curated copy; either source alone is incomplete.
 **Promoted to Lessons Learned:** Yes
+
+---
+
+### [2026-07-13] Validate modal ARIA references after portal commit
+
+**Context:** `ModalShell` checked child IDs during render, before portaled children existed in the document, producing false missing-target warnings.
+**What happened:**
+- Moved label/description target validation into a post-commit effect.
+- Added regression coverage for valid child references and a genuinely missing label.
+- Verified 599 tests, ESLint, TypeScript, and production build.
+**Outcome:** Success — valid modal contracts stay quiet; genuine missing references still warn.
+**Insight:** DOM-reference validation for portal children must run after commit, not during render.
+**Promoted to Lessons Learned:** No

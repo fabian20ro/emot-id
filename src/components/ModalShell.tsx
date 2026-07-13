@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode, RefObject } from 'react'
+import { useEffect, type ComponentProps, type ReactNode, type RefObject } from 'react'
 import { motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
@@ -32,21 +32,15 @@ export function ModalShell({
   panelProps,
   children,
 }: ModalShellProps) {
-  // Validate ARIA reference targets exist in the DOM.
-  // Missing labelledBy/describedBy elements break dialog semantics —
-  // `console.warn` logs issues without failing tests by default.
-  if (typeof document !== 'undefined') {
-    const labelledTarget = labelledBy ? document.getElementById(labelledBy) : null
-    if (labelledBy && !labelledTarget) {
+  // Validate after the portal children commit; render-time checks report valid child targets as missing.
+  useEffect(() => {
+    if (labelledBy && !document.getElementById(labelledBy)) {
       console.warn('[ModalShell] labelledBy target not found:', labelledBy)
     }
-    if (describedBy) {
-      const describedTargets = document.querySelectorAll(`#${describedBy}`)
-      if (!describedTargets.length) {
-        console.warn('[ModalShell] describedBy target not found:', describedBy)
-      }
+    if (describedBy && !document.getElementById(describedBy)) {
+      console.warn('[ModalShell] describedBy target not found:', describedBy)
     }
-  }
+  }, [labelledBy, describedBy])
   const content = (
     <>
       <motion.div
