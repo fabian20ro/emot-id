@@ -108,6 +108,28 @@ describe('Onboarding', () => {
     expect(onComplete).toHaveBeenCalledWith(targetModel.id)
   })
 
+  it('writes "emot-id-onboarded" with prefix when completing onboarding', async () => {
+    const user = userEvent.setup()
+    renderOnboarding()
+
+    // Advance through all screens.
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+
+    const models = getAvailableModels()
+    expect(models.length).toBeGreaterThan(0)
+    await user.click(screen.getByRole('button', { name: new RegExp(models[0].name.en, 'i') }))
+    await user.click(screen.getByRole('button', { name: /get started/i }))
+
+    // Verify the storage key includes the emot-id- prefix.
+    const calls = setItemSpy.mock.calls
+    const onboardedCall = calls.find(
+      call => call[0] === 'emot-id-onboarded' && call[1] === 'true',
+    )
+    expect(onboardedCall).toBeDefined()
+  })
+
   it('blocks final next when no model is selected, even on click', async () => {
     const user = userEvent.setup()
     const { onComplete } = renderOnboarding()

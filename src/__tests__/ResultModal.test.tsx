@@ -399,4 +399,61 @@ describe('ResultModal', () => {
     const dialog = screen.getByRole('dialog')
     expect(dialog).toBeInTheDocument()
   })
+
+  it('escalateCrisis flag affects temporal escalation note', () => {
+    renderModal({ results: [makeResult('despair')], selections: [makeEmotion('despair')], escalateCrisis: true })
+    // When escalateCrisis is true and the result triggers a crisis tier,
+    // the component shows the temporal escalation note from ResultsView.
+    expect(screen.getByText(/pattern appearing more often lately/i)).toBeInTheDocument()
+  })
+
+  it('does not show escalation note when escalateCrisis is false', () => {
+    renderModal({ results: [makeResult('despair')], selections: [makeEmotion('despair')] })
+    expect(screen.queryByText(/pattern appearing more often lately/i)).not.toBeInTheDocument()
+  })
+
+  it('calls onSessionComplete with correct data when closing via button', async () => {
+    const user = userEvent.setup()
+    let sessionData: Record<string, unknown> | null = null
+    const results = [makeResult('joy')]
+    renderModal({
+      results,
+      selections: [makeEmotion('joy')],
+      onSessionComplete: (data) => { sessionData = data },
+    })
+
+    // Click the close (×) button in the header.
+    await user.click(screen.getByRole('button', { name: 'Close' }))
+    expect(sessionData).toEqual({ reflectionAnswer: null, interventionResponse: null })
+  })
+
+  it('hides opposite action suggestion when tier4 pre-acknowledge required', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('despair'), makeResult('worthless'), makeResult('empty')]
+    renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('worthless'), makeEmotion('empty')] })
+
+    // Pre-acknowledgement: "Show my results" button present (tier4 gate active).
+    expect(screen.getByRole('button', { name: /show my results/i })).toBeInTheDocument()
+    // No opposite action or context panel available before ack.
+    expect(screen.queryByText(/get active/)).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /show my results/i }))
+    // After acknowledgement, opposite action should be visible in info panel.
+    await user.click(screen.getByRole('button', { name: 'Show more context' }))
+    expect(screen.getByText(/get active/i)).toBeInTheDocument()
+  })
+
+  it('does not show model bridge when currentModelId is absent', async () => {
+    const user = userEvent.setup()
+    const results = [makeResult('anger')]
+    renderModal({
+      results,
+      selections: [makeEmotion('anger')],
+      // No currentModelId — should produce no bridge suggestion in follow-up.
+    })
+
+    await user.click(screen.getByRole('button', { name: 'Does this resonate with your experience?' }))
+    await user.click(await screen.findByRole('button', { name: 'Somewhat' }))
+    expect(screen.queryByText(/Where do you notice this in your body/)).not.toBeInTheDocument()
+  })
 })
