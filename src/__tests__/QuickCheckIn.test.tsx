@@ -117,4 +117,25 @@ describe('QuickCheckIn', () => {
     // After completion the dialog closes — counter text disappears
     expect(screen.queryByText(/1\/3|2\/3|3\/3/)).not.toBeInTheDocument()
   })
+
+  it('visually signals when selection is at max', async () => {
+    const user = userEvent.setup()
+    renderQuickCheckIn()
+
+    // 0/3 starts without indigo color override
+    expect(screen.getByText('0/3').style.color).not.toBe('rgb(129, 140, 248)')
+
+    const emotionButtons = screen.getAllByRole('button').filter((button) => {
+      const label = button.textContent?.trim().toLowerCase() ?? ''
+      return ['anxiety', 'sadness', 'anger'].includes(label)
+    })
+
+    await user.click(emotionButtons[0]) // 1/3
+    expect(screen.getByText('1/3').style.color).not.toBe('rgb(129, 140, 248)')
+    await user.click(emotionButtons[1]) // 2/3
+    expect(screen.getByText('2/3').style.color).not.toBe('rgb(129, 140, 248)')
+    await user.click(emotionButtons[2]) // 3/3 — should turn indigo to signal saturation
+    const maxCounter = screen.getByText('3/3')
+    expect(maxCounter.style.color).toBe('rgb(129, 140, 248)')
+  })
 })
