@@ -101,7 +101,7 @@ export function QuickCheckIn({ isOpen, onClose, onComplete }: QuickCheckInProps)
           <p className="text-sm text-gray-300 mb-3">
             {quickT.prompt ?? 'What describes how you feel right now?'}
           </p>
-          <p className="text-xs text-gray-500 mb-4">
+          <p className={`text-xs mb-4 ${selectedCount >= 2 ? 'font-medium' : ''}`} style={{ color: selectedCount === 3 ? 'rgb(129 140 248)' : undefined }}>
             {selectedCount}/3
           </p>
 

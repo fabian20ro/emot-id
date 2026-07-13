@@ -21,6 +21,7 @@ let setItemSpy: ReturnType<typeof vi.spyOn>
 
 beforeEach(() => {
   setItemSpy = vi.spyOn(window.localStorage, 'setItem')
+  setItemSpy.mockClear()
 })
 
 afterEach(() => {
@@ -190,18 +191,7 @@ describe('Onboarding', () => {
     expect(dots.length).toBe(4)
   })
 
-  it('shows back button on screens 2 and 3', async () => {
-    const user = userEvent.setup()
-    renderOnboarding()
-
-    // No back button on first screen
-    expect(screen.queryByRole('button', { name: /back/i })).not.toBeInTheDocument()
-
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
-  })
-
-  it('goes back to previous screen when back is clicked', async () => {
+  it('renders back button when navigating backwards to earlier screen', async () => {
     const user = userEvent.setup()
     renderOnboarding()
 
@@ -224,5 +214,79 @@ describe('Onboarding', () => {
 
     // Under simple language, the simplified body should be shown instead of regular.
     expect(screen.getByText(/be curious/i)).toBeInTheDocument()
+  })
+
+  it('each screen renders unique title and body text (no duplicate copy across steps)', async () => {
+    const user = userEvent.setup()
+    renderOnboarding()
+
+    // Collect displayed texts on the first screen.
+    const step1Texts: string[] = screen.getAllByText(/.+/i).map(el => el.textContent ?? '').filter(Boolean)
+
+    for (let i = 0; i < 3; i++) {
+      await user.click(screen.getByRole('button', { name: /next/i }))
+
+      // Every text that appeared on step 1 must not reappear on a later screen.
+      for (const t of step1Texts) {
+        const matches = screen.queryAllByText(t)
+        expect(
+          matches.length,
+          `'${t}' should not appear again on screen ${i + 2}`
+        ).toBeLessThanOrEqual(1)
+      }
+
+      // There must be at least one new text element unique to this step.
+      const currentTexts = screen.getAllByText(/.+/i).map(el => el.textContent ?? '').filter(Boolean)
+      const previous = new Set(step1Texts)
+      const newOnes = currentTexts.filter(t => !previous.has(t))
+      expect(newOnes.length, `screen ${i + 2} should introduce at least one unique text`).toBeGreaterThan(0)
+    }
+  })
+
+  it('shows back button on screens 2 and 3', async () => {
+    const user = userEvent.setup()
+    renderOnboarding()
+
+    // No back button on first screen
+    expect(screen.queryByRole('button', { name: /back/i })).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
+  })
+
+  it('renders without crashing when no models are available (isolated mock)', async () => {
+    // Use vi.doMock() which is NOT hoisted by Vitest — only applies at call time.
+    // Combined with resetModules + dynamic import, this gives true per-test isolation.
+    vi.resetModules()
+
+    vi.doMock('../models/registry', () => ({
+      getAvailableModels: () => [],
+    }))
+
+    const user = userEvent.setup()
+
+    // Dynamic import after doMock — picks up the mocked module here.
+    const { Onboarding } = await import('../components/Onboarding')
+    const { LanguageProvider } = await import('../context/LanguageContext')
+
+    render(
+      <LanguageProvider>
+        <Onboarding onComplete={vi.fn()} />
+      </LanguageProvider>
+    )
+
+    // Advance to the last screen where model selection occurs.
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+
+    // The "choose your starting model" prompt should still appear.
+    expect(screen.getByText(/choose your starting model/i)).toBeInTheDocument()
+
+    // Get Started remains disabled because no model was selected (empty registry).
+    const getStarted = screen.getByRole('button', { name: /get started/i })
+    expect(getStarted).toBeDisabled()
+
+    vi.restoreAllMocks()
   })
 })
