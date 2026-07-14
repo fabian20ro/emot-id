@@ -76,4 +76,51 @@ describe('findNearest', () => {
     const nearest = findNearest(-0.8, -0.6, allEmotions, 1)
     expect(nearest[0].quadrant).toBe('unpleasant-calm')
   })
+
+  it('classifies emotions in all four quadrants correctly', () => {
+    // Pleasant-intense: high valence, high arousal (top-right)
+    const pi = findNearest(0.8, 0.7, allEmotions, 1)[0]
+    expect(pi.quadrant).toBe('pleasant-intense')
+
+    // Unpleasant-intense: low valence, high arousal (top-left)
+    const ui = findNearest(-0.8, 0.7, allEmotions, 1)[0]
+    expect(ui.quadrant).toBe('unpleasant-intense')
+
+    // Pleasant-calm: high valence, low arousal (bottom-right)
+    const pc = findNearest(0.8, -0.7, allEmotions, 1)[0]
+    expect(pc.quadrant).toBe('pleasant-calm')
+
+    // Unpleasant-calm: low valence, low arousal (bottom-left)
+    const uc = findNearest(-0.8, -0.7, allEmotions, 1)[0]
+    expect(uc.quadrant).toBe('unpleasant-calm')
+  })
+
+  it('handles count=0 correctly', () => {
+    const nearest = findNearest(0, 0, allEmotions, 0)
+    expect(nearest.length).toBe(0)
+  })
+
+  it('returns emotions sorted by distance ascending', () => {
+    const nearest = findNearest(0.5, 0.3, allEmotions, 5)
+    for (let i = 0; i < nearest.length - 1; i++) {
+      const distA = Math.sqrt((nearest[i].valence - 0.5) ** 2 + (nearest[i].arousal - 0.3) ** 2)
+      const distB = Math.sqrt((nearest[i + 1].valence - 0.5) ** 2 + (nearest[i + 1].arousal - 0.3) ** 2)
+      expect(distA).toBeLessThanOrEqual(distB)
+    }
+  })
+
+  it('returns emotions with unique IDs', () => {
+    const nearest = findNearest(0, 0, allEmotions, 10)
+    const ids = new Set(nearest.map((e) => e.id))
+    expect(ids.size).toBe(nearest.length)
+  })
+
+  it('works with emotions at exact coordinates', () => {
+    // Find emotion closest to (-0.5, 0.2)
+    const nearest = findNearest(-0.5, 0.2, allEmotions, 1)[0]
+    expect(nearest).toBeDefined()
+    expect(typeof nearest.id).toBe('string')
+    expect(typeof nearest.valence).toBe('number')
+    expect(typeof nearest.arousal).toBe('number')
+  })
 })
