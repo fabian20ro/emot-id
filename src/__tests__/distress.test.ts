@@ -40,6 +40,26 @@ describe('getCrisisTier', () => {
     expect(getCrisisTier(['joy', 'despair', 'helpless', 'trust'])).toBe('tier3')
   })
 
+  it('returns none for a single non-distress ID', () => {
+    expect(getCrisisTier(['joy'])).toBe('none')
+    expect(getCrisisTier(['trust'])).toBe('none')
+    expect(getCrisisTier(['sadness'])).toBe('none')
+  })
+
+  it('combo match is order-independent for tier3', () => {
+    expect(getCrisisTier(['worthless', 'despair'])).toBe('tier3')
+    expect(getCrisisTier(['helpless', 'rage'])).toBe('tier3')
+  })
+
+  it('combo match is order-independent for tier4', () => {
+    expect(getCrisisTier(['numb', 'helpless', 'abandoned'])).toBe('tier4')
+    expect(getCrisisTier(['worthless', 'despair', 'empty'])).toBe('tier4')
+  })
+
+  it('duplicates do not inflate tier beyond single-ID behavior', () => {
+    expect(getCrisisTier(['despair', 'despair'])).toBe('tier2')
+  })
+
   it('includes expanded distress IDs', () => {
     for (const id of ['empty', 'powerless', 'abandoned', 'victimized', 'numb', 'violated', 'depressed', 'distressed']) {
       expect(HIGH_DISTRESS_IDS.has(id)).toBe(true)

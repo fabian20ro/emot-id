@@ -54,4 +54,35 @@ describe('new dimensional emotions (Phase 3.3)', () => {
     expect(e.valence).toBeGreaterThan(-0.2)
     expect(e.valence).toBeLessThan(0.3)
   })
+
+  it('all new emotions produce valid analysis results through the model pipeline', () => {
+    for (const id of NEW_EMOTION_IDS) {
+      const emotion = dimensionalModel.allEmotions[id]
+      const result = dimensionalModel.analyze([emotion])
+      expect(result).toHaveLength(1)
+      const r = result[0]
+      expect(r.id).toBe(id)
+      expect(r.label.en).toBeTruthy()
+      expect(r.label.ro).toBeTruthy()
+      // needs is the actionable guidance shown to users — must not be empty
+      expect(r.needs).toBeDefined()
+      if (r.needs && typeof r.needs === 'object') {
+        const en = (r.needs as { en?: string }).en
+        const ro = (r.needs as { ro?: string }).ro
+        expect(en, `${id} needs.en must not be empty`).toBeTruthy()
+        expect(ro, `${id} needs.ro must not be empty`).toBeTruthy()
+      }
+    }
+  })
+
+  it('all new emotions have a valid quadrant from the dimensional taxonomy', () => {
+    const validQuadrants = [
+      'pleasant-calm', 'pleasant-active',
+      'unpleasant-calm', 'unpleasant-active',
+    ] as const
+    for (const id of NEW_EMOTION_IDS) {
+      const emotion = dimensionalModel.allEmotions[id]
+      expect(validQuadrants).toContain(emotion.quadrant)
+    }
+  })
 })
