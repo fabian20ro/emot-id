@@ -103,4 +103,14 @@ describe('ResultCard', () => {
     // When expanded=true but isHighDistress, shouldExpand=false → collapsed behavior
     expect(screen.queryByRole('button', { name: /read more about this/ })).toBeInTheDocument()
   })
+
+  it('shows affordance text in collapsed state when description present', () => {
+    renderCard({ expanded: false })
+    expect(screen.getByText(/Click to learn more/)).toBeInTheDocument()
+  })
+
+  it('uses Romanian affordance text in ro language', () => {
+    renderCard({ expanded: false, language: 'ro' })
+    expect(screen.getByText(/Apasă pentru detalii/)).toBeInTheDocument()
+  })
 })
