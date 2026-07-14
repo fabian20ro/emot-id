@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { dimensionalModel } from '../models/dimensional'
+import { dimensionalModel, findNearest } from '../models/dimensional'
 import type { DimensionalEmotion } from '../models/dimensional/types'
 
 const emotions = Object.values(dimensionalModel.allEmotions) as DimensionalEmotion[]
@@ -82,5 +82,115 @@ describe('dimensional data', () => {
   it('all emotions have unique IDs', () => {
     const ids = emotions.map((e) => e.id)
     expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  describe('findNearest', () => {
+    it('returns exactly count results', () => {
+      const result = findNearest(0.5, 0.3, dimensionalModel.allEmotions as Record<string, DimensionalEmotion>, 5)
+      expect(result).toHaveLength(5)
+    })
+
+    it('results are sorted by distance ascending', () => {
+      const result = findNearest(0, 0, dimensionalModel.allEmotions as Record<string, DimensionalEmotion>, 10)
+      for (let i = 1; i < result.length; i++) {
+        const prevDist = Math.sqrt((result[i - 1].valence) ** 2 + (result[i - 1].arousal) ** 2)
+        const currDist = Math.sqrt((result[i].valence) ** 2 + (result[i].arousal) ** 2)
+        expect(currDist).toBeGreaterThanOrEqual(prevDist)
+      }
+    })
+
+    it('returns empty array for count zero', () => {
+      const result = findNearest(0.5, -0.5, dimensionalModel.allEmotions as Record<string, DimensionalEmotion>, 0)
+      expect(result).toHaveLength(0)
+    })
+
+    it('findNearest(1, 1) returns an emotion with high positive valence and arousal', () => {
+      const result = findNearest(1, 1, dimensionalModel.allEmotions as Record<string, DimensionalEmotion>, 1)
+      // The returned emotion should be close to (1,1) — at minimum both axes positive
+      expect(result[0].valence).toBeGreaterThan(0.5)
+      expect(result[0].arousal).toBeGreaterThan(0.5)
+    })
+
+    it('returns emotions from the full set', () => {
+      const result = findNearest(0.5, -0.3, dimensionalModel.allEmotions as Record<string, DimensionalEmotion>, 28)
+      expect(result.length).toBeLessThanOrEqual(emotions.length)
+      for (const e of result) {
+        expect(e.valence).toBeGreaterThanOrEqual(-1)
+        expect(e.valence).toBeLessThanOrEqual(1)
+        expect(e.arousal).toBeGreaterThanOrEqual(-1)
+        expect(e.arousal).toBeLessThanOrEqual(1)
+      }
+    })
+  })
+
+  describe('model lifecycle', () => {
+    it('initialState has visibleEmotionIds for every emotion at 0', () => {
+      const state = dimensionalModel.initialState
+      expect(state.visibleEmotionIds.size).toBe(emotions.length)
+      for (const [, count] of state.visibleEmotionIds.entries()) {
+        expect(count).toBe(0)
+      }
+    })
+
+    it('onClear resets to initial state', () => {
+      const cleared = dimensionalModel.onClear()
+      const initial = dimensionalModel.initialState
+      expect(cleared.visibleEmotionIds.size).toBe(initial.visibleEmotionIds.size)
+      for (const [, count] of cleared.visibleEmotionIds.entries()) {
+        expect(count).toBe(0)
+      }
+    })
+
+    it('analyze returns one result per selection with required shape', () => {
+      const sample = emotions.slice(0, 3) as DimensionalEmotion[]
+      const results = dimensionalModel.analyze(sample)
+      expect(results).toHaveLength(3)
+      for (const r of results) {
+        expect(r.id).toBeTruthy()
+        expect(r.label?.en).toBeTruthy()
+        expect(r.color).toMatch(/^#[0-9A-Fa-f]{6}$/)
+        expect(typeof r.valence).toBe('number')
+        expect(typeof r.arousal).toBe('number')
+      }
+    })
+
+    it('onSelect and onDeselect preserve state unchanged', () => {
+      const state = dimensionalModel.initialState
+      const sampleEmotion = emotions[0] as DimensionalEmotion
+      const selResult = dimensionalModel.onSelect(sampleEmotion, state)
+      expect(selResult.newState.visibleEmotionIds).toBe(state.visibleEmotionIds)
+      const deselResult = dimensionalModel.onDeselect(sampleEmotion, state)
+      expect(deselResult.newState.visibleEmotionIds).toBe(state.visibleEmotionIds)
+    })
+
+    it('getEmotionSize returns a valid size for any emotion', () => {
+      for (const e of emotions.slice(0, 5) as DimensionalEmotion[]) {
+        const size = dimensionalModel.getEmotionSize(e.id, dimensionalModel.initialState)
+        expect(['small', 'medium', 'large']).toContain(size)
+      }
+    })
+  })
+
+  describe('edge cases', () => {
+    it('emotions at valence=0 are in pleasant or unpleasant quadrant by arousal sign', () => {
+      const zeroValence = emotions.filter((e) => e.valence === 0)
+      for (const e of zeroValence) {
+        if (e.arousal >= 0) {
+          expect(e.quadrant).toBe('pleasant-intense')
+        } else {
+          expect(e.quadrant).toBe('unpleasant-calm')
+        }
+      }
+    })
+
+    it('emotions with coordinates exactly at boundary ±1 still have valid quadrants', () => {
+      for (const e of emotions) {
+        if (Math.abs(e.valence) === 1 || Math.abs(e.arousal) === 1) {
+          expect(['pleasant-intense', 'pleasant-calm', 'unpleasant-intense', 'unpleasant-calm']).toContain(
+            e.quadrant
+          )
+        }
+      }
+    })
   })
 })
