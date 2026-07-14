@@ -469,4 +469,39 @@ describe('ResultModal', () => {
 
     expect(closed).toBe(true)
   })
+
+  it('shows accessible description varying by crisis tier', () => {
+    const results = [makeResult('joy')]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+    expect(screen.getByText('Results from your selection analysis.')).toBeInTheDocument()
+  })
+
+  it('shows urgent support description for tier4 pre-ack', () => {
+    const results = [makeResult('despair'), makeResult('worthless'), makeResult('empty')]
+    renderModal({ results, selections: [makeEmotion('despair'), makeEmotion('worthless'), makeEmotion('empty')] })
+    expect(screen.getByText(/Results with crisis resources/)).toBeInTheDocument()
+  })
+
+  it('passes aria-describedby to the dialog', () => {
+    const results = [makeResult('joy')]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+    const dialog = document.querySelector('[role="dialog"]')
+    expect(dialog).toHaveAttribute('aria-describedby', 'result-modal-description')
+  })
+
+  it('does not show description when modal is closed', () => {
+    renderModal({ isOpen: false, results: [makeResult('joy')], selections: [makeEmotion('joy')] })
+    // sr-only content still renders in DOM but dialog should not be present.
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('uses Romanian description when language is ro', () => {
+    vi.spyOn(storage, 'get').mockImplementation((key) => {
+      if (key === 'language') return 'ro'
+      return null
+    })
+    const results = [makeResult('joy')]
+    renderModal({ results, selections: [makeEmotion('joy')] })
+    expect(screen.getByText('Rezultate din analiza selecțiilor tale.')).toBeInTheDocument()
+  })
 })
