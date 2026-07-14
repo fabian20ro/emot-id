@@ -83,6 +83,9 @@ export function ResultCard({ result, language, expanded, showDescriptionLabel, r
               <p>{result.description[language]}</p>
               <NeedsBadge needs={result.needs} language={language} label={needsText} className="mt-3 italic text-gray-400" />
             </InfoButton>
+            <span className="text-xs text-gray-500 mt-1">
+              {language === 'ro' ? 'Apasă pentru detalii' : 'Click to learn more'}
+            </span>
           </div>
         )
       )}
