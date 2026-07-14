@@ -109,4 +109,24 @@ describe('emotions.json graph integrity', () => {
 
     expect(invalidIntensities).toEqual([])
   })
+
+  it('opposites are symmetric for all emotions with opposites', () => {
+    const asymmetricOpposites: string[] = []
+
+    for (const id of emotionIds) {
+      const emotion = emotions[id]
+      if (emotion.opposite && !emotions[emotion.opposite]) {
+        // already caught by structural test above, skip
+        continue
+      }
+      if (emotion.opposite) {
+        const counterpart = emotions[emotion.opposite]
+        if (!counterpart || !counterpart.opposite || counterpart.opposite !== id) {
+          asymmetricOpposites.push(`${id} -> ${counterpart?.opposite ?? 'missing'} (expected back to ${id})`)
+        }
+      }
+    }
+
+    expect(asymmetricOpposites).toEqual([])
+  })
 })
