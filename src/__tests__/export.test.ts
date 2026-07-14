@@ -45,4 +45,68 @@ describe('exportSessionsText', () => {
     const text = exportSessionsText([], 'en')
     expect(text).toContain('Total sessions: 0')
   })
+
+  it('omits emotion lines when session has no results', () => {
+    const sessions = [makeSession({ results: [] })]
+    const text = exportSessionsText(sessions, 'en')
+    expect(text).not.toContain('happy')
+    // Should still include header and model id.
+    expect(text).toContain('wheel')
+  })
+
+  it('includes match strength in localized output', () => {
+    const sessions = [makeSession({
+      results: [{ id: 'sad', label: { ro: 'trist', en: 'sad' }, matchStrength: { ro: 'slab', en: 'weak' } }],
+    })]
+    const textEn = exportSessionsText(sessions, 'en')
+    expect(textEn).toContain('sad (weak)')
+    const textRo = exportSessionsText(sessions, 'ro')
+    expect(textRo).toContain('trist (slab)')
+  })
+
+  it('exports multiple sessions with distinct headers', () => {
+    const sessions = [
+      makeSession({ modelId: 'model-a' }),
+      makeSession({ modelId: 'model-b', results: [{ id: 'calm', label: { en: 'calm' }, color: '#000' }] }),
+    ]
+    const text = exportSessionsText(sessions, 'en')
+    expect(text).toContain('--- ')
+    // Two sessions means two separator lines with model ids.
+    const matches = [...text.matchAll(/--- .+ \(model-[ab]\) ---/g)]
+    expect(matches.length).toBe(2)
+    expect(text.split('\n').filter(l => l.includes('happy') || l.includes('calm')).length).toBe(2)
+  })
+
+  it('skips crisis tier line when tier is none', () => {
+    const sessions = [makeSession({ crisisTier: 'none' })]
+    const text = exportSessionsText(sessions, 'en')
+    expect(text).not.toContain('Crisis level:')
+  })
+
+  it('skips reflection line when no answer', () => {
+    const sessions = [makeSession({ reflectionAnswer: undefined })]
+    const text = exportSessionsText(sessions, 'en')
+    expect(text).not.toContain('Reflection:')
+  })
+
+  it('returns true from copyToClipboard on success', async () => {
+    const { copyToClipboard } = await import('../data/export')
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText: vi.fn().mockResolvedValue(undefined) }, configurable: true })
+    const result = await copyToClipboard('test')
+    expect(result).toBe(true)
+  })
+
+  it('returns false from copyToClipboard on failure', async () => {
+    const { copyToClipboard } = await import('../data/export')
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText: vi.fn().mockRejectedValue(new Error('denied')) }, configurable: true })
+    const result = await copyToClipboard('test')
+    expect(result).toBe(false)
+  })
+
+  it('generates download file via anchor element', async () => {
+    const { downloadAsText } = await import('../data/export')
+    const spy = vi.spyOn(document, 'createElement').mockReturnValueOnce({ href: '', download: '', click: vi.fn() } as unknown as HTMLAnchorElement)
+    downloadAsText('hello', 'test.txt')
+    expect(spy).toHaveBeenCalledWith('a')
+  })
 })
