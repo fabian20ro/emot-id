@@ -20,13 +20,16 @@ test('Catalog integrity: all emotions have valid structure and translations', ()
     expect(emotion.needs.en, `Missing en needs for: ${id}`).toBeDefined();
     expect(emotion.needs.ro, `Missing ro needs for: ${id}`).toBeDefined();
     
-    // 4. Non-empty translations
+    // 4. Non-empty translations (catch whitespace-only strings)
     expect(emotion.label.en.trim(), `Empty en label for: ${id}`).not.toBe('');
     expect(emotion.label.ro.trim(), `Empty ro label for: ${id}`).not.toBe('');
     expect(emotion.description.en.trim(), `Empty en description for: ${id}`).not.toBe('');
     expect(emotion.description.ro.trim(), `Empty ro description for: ${id}`).not.toBe('');
     expect(emotion.needs.en.trim(), `Empty en needs for: ${id}`).not.toBe('');
     expect(emotion.needs.ro.trim(), `Empty ro needs for: ${id}`).not.toBe('');
+
+    // 5. Color is a valid hex string (#RRGGBB or #RGB)
+    expect(emotion.color, `Invalid color format for: ${id}`).toMatch(/^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$/);
   }
 });
 
