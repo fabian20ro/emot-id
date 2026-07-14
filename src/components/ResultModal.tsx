@@ -155,6 +155,13 @@ export function ResultModal({
     || interventionType
   )
 
+  // Accessible description varies by crisis tier — tells screen readers what kind of results are shown.
+  const modalDescription = useMemo(() => {
+    if (crisisTier === 'tier4') return language === 'ro' ? 'Rezultate cu resurse de criză și suport de urgență.' : 'Results with crisis resources and urgent support information.'
+    if (hasCrisis) return language === 'ro' ? 'Rezultate cu suport emoțional și resurse disponibile.' : 'Results with emotional support and available resources.'
+    return language === 'ro' ? 'Rezultate din analiza selecțiilor tale.' : 'Results from your selection analysis.'
+  }, [crisisTier, hasCrisis, language])
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -162,6 +169,7 @@ export function ResultModal({
           onClose={handleClose}
           focusTrapRef={focusTrapRef}
           labelledBy="result-modal-title"
+          describedBy={isOpen ? "result-modal-description" : undefined}
           backdropClassName="fixed inset-0 z-[var(--z-backdrop)] bg-black/50 backdrop-blur-sm"
           viewportClassName="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))]"
           panelClassName="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6 max-h-[80vh] sm:max-h-[80vh] max-sm:max-h-[90vh] flex flex-col"
@@ -169,6 +177,11 @@ export function ResultModal({
             <h2 id="result-modal-title" className="sr-only">
               {modalA11yTitle}
             </h2>
+            {isOpen && (
+              <p id="result-modal-description" className="sr-only" aria-hidden={!isOpen}>
+                {modalDescription}
+              </p>
+            )}
 
             <div className="flex justify-between items-start gap-3 mb-4">
               <div className="flex flex-wrap items-center gap-1.5 max-h-[4.5rem] overflow-y-auto pr-1">
