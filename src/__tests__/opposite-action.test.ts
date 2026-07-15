@@ -33,4 +33,10 @@ describe('getOppositeAction', () => {
     const result = getOppositeAction(['shame', 'anger'], 'en')
     expect(result).toContain('approach')
   })
+
+  it('returns a jealousy/envy suggestion mentioning gratitude', () => {
+    const result = getOppositeAction(['envy'], 'en')
+    expect(result).toBeTruthy()
+    expect(result).toContain('gratitude')
+  })
 })
