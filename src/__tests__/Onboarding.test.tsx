@@ -297,13 +297,21 @@ describe('Onboarding', () => {
     }
   })
 
-  it('shows back button on screens 2 and 3', async () => {
+  it('shows back button on screens 2 and 3 (not on screen 1 or last)', async () => {
     const user = userEvent.setup()
     renderOnboarding()
 
     // No back button on first screen
     expect(screen.queryByRole('button', { name: /back/i })).not.toBeInTheDocument()
 
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
+
+    // Screen 3 must also have a back button.
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
+
+    // Last screen still has the back button (navigation never removes it once shown).
     await user.click(screen.getByRole('button', { name: /next/i }))
     expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
   })
