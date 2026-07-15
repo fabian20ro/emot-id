@@ -35,4 +35,13 @@ describe('model registry', () => {
     expect(getVisualization(MODEL_IDS.SOMATIC)).toBeDefined()
     expect(getVisualization(MODEL_IDS.DIMENSIONAL)).toBeDefined()
   })
+
+  it('loadModel returns undefined for invalid model ids', async () => {
+    const result = await loadModel('nonexistent-model')
+    expect(result).toBeUndefined()
+  })
+
+  it('getModel returns undefined when called with an unknown id', () => {
+    expect(getModel('nonexistent-model')).toBeUndefined()
+  })
 })
