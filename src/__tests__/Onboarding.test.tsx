@@ -168,6 +168,11 @@ describe('Onboarding', () => {
     // Attempt to click despite being disabled (e.g. via keyboard or programmatic trigger)
     await user.click(getStarted)
 
+    // Step must remain at the last screen — gating is deterministic, not just spy-dependent.
+    const dots = document.querySelectorAll('[data-step]')
+    expect(dots[3]).toHaveClass('bg-indigo-400')
+
+    // No completion callback fires when model is unselected and Get Started is clicked.
     expect(onComplete).not.toHaveBeenCalled()
   })
 
