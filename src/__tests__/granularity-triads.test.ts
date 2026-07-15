@@ -43,6 +43,28 @@ describe('granularity triads', () => {
     expect(getGranularityLabel('fear', 'ro')).toBe('frică')
   })
 
+  it('falls back to normalized id when label source is missing', () => {
+    const value = getGranularityLabel('some-missing-id', 'en')
+    expect(value).toBe('some missing id')
+
+    const valueRo = getGranularityLabel('some-other-id', 'ro')
+    expect(valueRo).toBe('some other id')
+
+    expect(getGranularityLabel('no-label-here', 'ro')).toBe('no label here')
+  })
+
+  it('every set uses a valid distinction field', () => {
+    const allowed = new Set<GranularityDistinction>([
+      'intensity',
+      'duration',
+      'focus',
+      'time',
+    ])
+    for (const set of GRANULARITY_SETS) {
+      expect(allowed.has(set.distinction), `Unexpected distinction: ${set.distinction}`).toBe(true)
+    }
+  })
+
   it('filters out invalid sets in fail-safe mode', () => {
     const invalidSet: GranularitySet = {
       id: 'invalid',

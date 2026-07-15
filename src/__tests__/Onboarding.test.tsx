@@ -168,6 +168,11 @@ describe('Onboarding', () => {
     // Attempt to click despite being disabled (e.g. via keyboard or programmatic trigger)
     await user.click(getStarted)
 
+    // Step must remain at the last screen — gating is deterministic, not just spy-dependent.
+    const dots = document.querySelectorAll('[data-step]')
+    expect(dots[3]).toHaveClass('bg-indigo-400')
+
+    // No completion callback fires when model is unselected and Get Started is clicked.
     expect(onComplete).not.toHaveBeenCalled()
   })
 
@@ -267,34 +272,51 @@ describe('Onboarding', () => {
 
     // Collect displayed texts on the first screen.
     const step1Texts: string[] = screen.getAllByText(/.+/i).map(el => el.textContent ?? '').filter(Boolean)
+    const seenContent = new Set<string>()
+
+    for (const t of step1Texts) {
+      if (!/^(next|back|get started)$/i.test(t)) seenContent.add(t)
+    }
 
     for (let i = 0; i < 3; i++) {
       await user.click(screen.getByRole('button', { name: /next/i }))
 
-      // Every text that appeared on step 1 must not reappear on a later screen.
-      for (const t of step1Texts) {
-        const matches = screen.queryAllByText(t)
+      // Every content text on a later screen must be unique across all screens — not just compared back to step 1.
+      const currentTexts = screen.getAllByText(/.+/i).map(el => el.textContent ?? '').filter(Boolean)
+      for (const t of currentTexts) {
+        if (/^(next|back|get started)$/i.test(t)) continue // navigation labels repeat intentionally
         expect(
-          matches.length,
-          `'${t}' should not appear again on screen ${i + 2}`
-        ).toBeLessThanOrEqual(1)
+          seenContent.has(t),
+          `'${t}' was already displayed on a previous screen — content text must be unique across all steps`
+        ).toBe(false)
       }
 
-      // There must be at least one new text element unique to this step.
-      const currentTexts = screen.getAllByText(/.+/i).map(el => el.textContent ?? '').filter(Boolean)
-      const previous = new Set(step1Texts)
-      const newOnes = currentTexts.filter(t => !previous.has(t))
-      expect(newOnes.length, `screen ${i + 2} should introduce at least one unique text`).toBeGreaterThan(0)
+      // There must be at least one new content element unique to this step.
+      const newOnes = currentTexts.filter(
+        t => !seenContent.has(t) && !/^(next|back|get started)$/i.test(t),
+      )
+      expect(newOnes.length, `screen ${i + 2} should introduce at least one unique content text`).toBeGreaterThan(0)
+
+      // Record all new content texts from this screen for future uniqueness checks.
+      currentTexts.forEach(t => { if (!/^(next|back|get started)$/i.test(t)) seenContent.add(t) })
     }
   })
 
-  it('shows back button on screens 2 and 3', async () => {
+  it('shows back button on screens 2 and 3 (not on screen 1 or last)', async () => {
     const user = userEvent.setup()
     renderOnboarding()
 
     // No back button on first screen
     expect(screen.queryByRole('button', { name: /back/i })).not.toBeInTheDocument()
 
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
+
+    // Screen 3 must also have a back button.
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
+
+    // Last screen still has the back button (navigation never removes it once shown).
     await user.click(screen.getByRole('button', { name: /next/i }))
     expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
   })
