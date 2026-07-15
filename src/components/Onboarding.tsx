@@ -113,7 +113,12 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                           : 'border-gray-700 bg-gray-800/60 text-gray-200 hover:bg-gray-700'
                       }`}
                     >
-                      {model.name[language]}
+                      <span className="font-medium">{model.name[language]}</span>
+                      {model.description && (
+                        <span className="block mt-1 text-[10px] leading-tight text-gray-400">
+                          {model.description[language]}
+                        </span>
+                      )}
                     </button>
                   )
                 })}
