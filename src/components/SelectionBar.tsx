@@ -72,7 +72,9 @@ export function SelectionBar({ selections, combos, onDeselect, onClear }: Select
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
-              className="flex-none inline-flex items-center gap-1 px-2.5 py-1 min-h-[44px] rounded-full text-sm font-medium"
+              whileHover={{ scale: 1.05, y: -2 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              className="flex-none inline-flex items-center gap-1 px-2.5 py-1 min-h-[44px] rounded-full text-sm font-medium cursor-pointer"
               style={{
                 backgroundColor: `${combo.color}30`,
                 color: combo.color,
