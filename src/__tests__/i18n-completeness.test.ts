@@ -53,4 +53,29 @@ describe('i18n completeness', () => {
       expect(value, `EN key "${key}" should not be empty`).not.toBe('')
     }
   })
+
+  it('placeholder variables match between English and Romanian', () => {
+    const placeholderRegex = /\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g
+
+    for (const key of roKeys) {
+      if (!enKeys.includes(key)) continue
+
+      const enValue = en[key] as string | undefined
+      const roValue = ro[key] as string | undefined
+
+      if (typeof enValue !== 'string' || typeof roValue !== 'string') continue
+
+      const enPlaceholders = new Set(
+        Array.from(enValue.matchAll(placeholderRegex), m => m[1])
+      )
+      const roPlaceholders = new Set(
+        Array.from(roValue.matchAll(placeholderRegex), m => m[1])
+      )
+
+      expect(enPlaceholders, `EN placeholders for "${key}"`).toEqual(
+        roPlaceholders,
+        `Placeholder mismatch in "${key}": EN=${Array.from(enPlaceholders)}, RO=${Array.from(roPlaceholders)}`
+      )
+    }
+  })
 })
