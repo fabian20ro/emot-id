@@ -266,6 +266,23 @@ describe('Onboarding', () => {
     expect(screen.getByText(/be curious/i)).toBeInTheDocument()
   })
 
+  it('renders model descriptions on the last screen', async () => {
+    const user = userEvent.setup()
+    renderOnboarding()
+
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+
+    // A model description should be visible on the last screen.
+    const models = getAvailableModels()
+    expect(models.length).toBeGreaterThan(0)
+
+    // Verify at least one model's description text appears in the rendered output.
+    const firstModelDesc = models[0].description.en
+    expect(document.body.textContent).toContain(firstModelDesc)
+  })
+
   it('each screen renders unique title and body text (no duplicate copy across steps)', async () => {
     const user = userEvent.setup()
     renderOnboarding()
