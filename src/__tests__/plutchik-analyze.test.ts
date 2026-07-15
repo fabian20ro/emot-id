@@ -36,10 +36,17 @@ describe('plutchikModel.analyze', () => {
     const ids = results.map((r) => r.id)
     expect(ids).toContain('love')
     expect(ids).toContain('ecstasy')
-    expect(results.length).toBeGreaterThan(1)
+    // exactly 2 results: love (dyad consuming joy+trust) + ecstasy standalone
+    expect(results).toHaveLength(2)
     // ecstasy should appear without componentLabels
     const ecstasyResult = results.find((r) => r.id === 'ecstasy')
     expect(ecstasyResult?.componentLabels).toBeUndefined()
+  })
+
+  it('propagates needs from the dyad emotion, not components', () => {
+    const loveEmotion = e['love']
+    const results = analyze(['joy', 'trust'])
+    expect(results[0].needs).toEqual(loveEmotion.needs)
   })
 
   it('does not duplicate consumed primaries as standalone results', () => {
