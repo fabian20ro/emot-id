@@ -111,4 +111,24 @@ describe('SelectionBar', () => {
     // aria-label must be set from the translation key; verify it is non-empty
     expect(clearButton.getAttribute('aria-label')).toBeTruthy()
   })
+
+  it('renders somatic icon and intensity for SomaticSelection pills', () => {
+    const onDeselect = vi.fn()
+    const onClear = vi.fn()
+    const somaticEmotion: BaseEmotion & { selectedSensation: string; selectedIntensity: number } = {
+      id: 'somatic-1',
+      label: { en: 'chest tension', ro: 'tensiune piept' },
+      color: '#FFE66D',
+      intensity: 0.5,
+      selectedSensation: 'tension',
+      selectedIntensity: 2,
+    }
+    renderWithProviders(
+      <SelectionBar selections={[somaticEmotion]} combos={[]} onDeselect={onDeselect} onClear={onClear} />
+    )
+
+    const pill = screen.getByRole('button', { name: /chest tension/i })
+    // The somatic icon + intensity text should appear inside the pill
+    expect(pill.textContent).toMatch(/2/)
+  })
 })
