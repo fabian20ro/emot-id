@@ -72,4 +72,23 @@ describe('scaled coherence bonus', () => {
     // 3 groups get 1.3x bonus vs 2 groups' 1.2x, plus extra signal weight
     expect(anxietyThree!.score).toBeGreaterThan(anxietyTwo!.score)
   })
+
+  it('higher intensity within the same region produces higher emotion scores', () => {
+    // Single-region single-group: chest tension at low vs high intensity
+    const lowIntensity = scoreSomaticSelections([
+      makeSomaticSelection('chest', 'tension', 1),
+    ])
+
+    const highIntensity = scoreSomaticSelections([
+      makeSomaticSelection('chest', 'tension', 3),
+    ])
+
+    const anxietyLow = lowIntensity.find((r) => r.id === 'anxiety')
+    const anxietyHigh = highIntensity.find((r) => r.id === 'anxiety')
+
+    expect(anxietyLow).toBeDefined()
+    expect(anxietyHigh).toBeDefined()
+    // Intensity is a multiplier on signal weight; higher intensity → stronger score
+    expect(anxietyHigh!.score).toBeGreaterThan(anxietyLow!.score)
+  })
 })
