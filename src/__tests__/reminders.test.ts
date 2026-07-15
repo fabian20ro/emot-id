@@ -96,4 +96,50 @@ describe('reminders', () => {
     expect(constructorSpy).toHaveBeenCalledTimes(1)
     expect(setSpy).toHaveBeenCalledWith('dailyReminderLastSentAt', expect.any(String))
   })
+
+  it('allows reminder at exactly the 24h boundary', async () => {
+    const { constructorSpy } = mockNotification('granted')
+
+    const baseTime = Date.now()
+    const lastSentAt = baseTime - (24 * 60 * 60 * 1000)
+
+    vi.setSystemTime(new Date(baseTime))
+    vi.spyOn(storage, 'get').mockImplementation((key) => {
+      if (key === 'dailyReminderEnabled') return 'true'
+      if (key === 'dailyReminderLastSentAt') return String(lastSentAt)
+      return null
+    })
+
+    const result = await maybeSendDailyReminder({
+      title: 'Check in',
+      body: 'Take a breath',
+    })
+
+    expect(result).toBe(true)
+    expect(constructorSpy).toHaveBeenCalledTimes(1)
+    vi.setSystemTime()
+  })
+
+  it('blocks reminder just under the 24h boundary', async () => {
+    const { constructorSpy } = mockNotification('granted')
+
+    const baseTime = Date.now()
+    const lastSentAt = baseTime - (24 * 60 * 60 * 1000) + 1000 // 23h59m59s ago
+
+    vi.setSystemTime(new Date(baseTime))
+    vi.spyOn(storage, 'get').mockImplementation((key) => {
+      if (key === 'dailyReminderEnabled') return 'true'
+      if (key === 'dailyReminderLastSentAt') return String(lastSentAt)
+      return null
+    })
+
+    const result = await maybeSendDailyReminder({
+      title: 'Check in',
+      body: 'Take a breath',
+    })
+
+    expect(result).toBe(false)
+    expect(constructorSpy).not.toHaveBeenCalled()
+    vi.setSystemTime()
+  })
 })
