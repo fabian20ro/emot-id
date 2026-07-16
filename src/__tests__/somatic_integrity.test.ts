@@ -50,6 +50,28 @@ test.each(bodyParts)('%s: signals have valid emotionIds and sensationTypes', (pa
   })
 })
 
-test('all somatic data files are valid JSON', () => {
-  // Smoke test
+test('all somatic data files are valid JSON and contain emotion signals', () => {
+  const dataDir = join(process.cwd(), 'src/models/somatic/data')
+  for (const part of bodyParts) {
+    const filePath = join(dataDir, `${part}.json`)
+    let parsed: Record<string, SomaticPart>
+    try {
+      parsed = JSON.parse(readFileSync(filePath, 'utf-8')) as Record<string, SomaticPart>
+    } catch (e) {
+      throw new Error(`Failed to parse ${part}.json as valid JSON: ${String(e)}`)
+    }
+    const parts = Object.values(parsed)
+    expect(parts.length).toBeGreaterThan(0)
+    for (const partData of parts) {
+      expect(partData.emotionSignals).toBeDefined()
+      expect(Array.isArray(partData.emotionSignals)).toBe(true)
+      if (partData.emotionSignals.length > 0) {
+        const sig = partData.emotionSignals[0]
+        expect(typeof sig.emotionId).toBe('string')
+        expect(typeof sig.sensationType).toBe('string')
+        expect(typeof sig.minIntensity).toBe('number')
+        expect(typeof sig.weight).toBe('number')
+      }
+    }
+  }
 })

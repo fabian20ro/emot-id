@@ -135,8 +135,9 @@ export function SensationPicker({
                 <motion.button
                   key={sensation}
                   whileTap={{ scale: 0.95 }}
+                  whileHover={{ border: '1px solid var(--indigo-400)', background: '#374151' }}
                   onClick={() => handleSensationPick(sensation)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-500 text-gray-200 transition-colors min-h-[44px]"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-200 transition-colors min-h-[44px]"
                 >
                   <span className="text-lg">{config.icon}</span>
                   <span className="text-xs leading-tight">{config.label[language]}</span>

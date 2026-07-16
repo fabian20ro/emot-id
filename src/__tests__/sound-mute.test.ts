@@ -44,4 +44,11 @@ describe('useSound mute toggle', () => {
     expect(() => result.current.playSound('select')).not.toThrow()
     expect(() => result.current.playSound('deselect')).not.toThrow()
   })
+
+  it('reads initial muted state from localStorage on mount', () => {
+    vi.spyOn(window.localStorage, 'getItem').mockReturnValue('true')
+
+    const { result } = renderHook(() => useSound())
+    expect(result.current.muted).toBe(true)
+  })
 })

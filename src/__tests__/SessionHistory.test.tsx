@@ -69,6 +69,56 @@ describe('SessionHistory', () => {
     expect(screen.getAllByText('anger').length).toBeGreaterThan(0)
   })
 
+  describe('progression nudge', () => {
+    it('does not render when fewer than 3 sessions exist', () => {
+      const sessions = [makeSession()]
+      renderHistory(sessions)
+      expect(screen.queryByRole('button', { name: /dismiss suggestion/i })).not.toBeInTheDocument()
+    })
+
+    it('renders the correct suggestion text when 3+ sessions use the wheel model', () => {
+      const sessions = [
+        makeSession({ modelId: 'wheel' }),
+        makeSession({ modelId: 'wheel' }),
+        makeSession({ modelId: 'wheel' }),
+      ]
+      renderHistory(sessions)
+      expect(screen.getByText("You've been naming emotions. The Body Map can show you where they live in your body.")).toBeInTheDocument()
+    })
+
+    it('renders somatic suggestion when 3+ sessions use the somatic model', () => {
+      const sessions = [
+        makeSession({ modelId: 'somatic' }),
+        makeSession({ modelId: 'somatic' }),
+        makeSession({ modelId: 'somatic' }),
+      ]
+      renderHistory(sessions)
+      expect(screen.getByText("You've been exploring body sensations. The Emotion Wheel can help you put names to what you've noticed.")).toBeInTheDocument()
+    })
+
+    it('hides the nudge after dismiss button is clicked', () => {
+      const sessions = [
+        makeSession({ modelId: 'wheel' }),
+        makeSession({ modelId: 'wheel' }),
+        makeSession({ modelId: 'wheel' }),
+      ]
+      renderHistory(sessions)
+      expect(screen.getByText("You've been naming emotions. The Body Map can show you where they live in your body.")).toBeInTheDocument()
+      fireEvent.click(screen.getByRole('button', { name: /dismiss/i }))
+      expect(screen.queryByText("You've been naming emotions. The Body Map can show you where they live in your body.")).not.toBeInTheDocument()
+    })
+
+    it('does not render when sessions span multiple models (no single model ≥3)', () => {
+      const sessions = [
+        makeSession({ modelId: 'wheel' }),
+        makeSession({ modelId: 'somatic' }),
+        makeSession({ modelId: 'plutchik' }),
+      ]
+      renderHistory(sessions)
+      expect(screen.queryByRole('button', { name: /dismiss suggestion/i })).not.toBeInTheDocument()
+    })
+  })
+
   describe('callback invocations', () => {
     const sessions = [makeSession()]
 
