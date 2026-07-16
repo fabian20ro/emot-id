@@ -100,6 +100,15 @@ describe('escalateCrisisTier', () => {
     expect(escalateCrisisTier('tier3', sessions, 1_000_000)).toBe('tier3')
   })
 
+  it('preserves unrecognized tiers instead of coercing them', () => {
+    const sessions = [
+      makeSession({ crisisTier: 'tier2' }),
+      makeSession({ crisisTier: 'tier2' }),
+      makeSession({ crisisTier: 'tier2' }),
+    ]
+    expect(escalateCrisisTier('unknown' as unknown as CrisisTier, sessions, 1_000_000)).toBe('unknown')
+  })
+
   it('preserves tier4 when already at highest tier', () => {
     const sessions = [
       makeSession({ crisisTier: 'tier4' }),

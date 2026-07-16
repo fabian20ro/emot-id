@@ -80,4 +80,18 @@ describe('storage', () => {
       expect(() => storage.dismissHint('test-model')).not.toThrow()
     })
   })
+
+  describe('KEYS contract', () => {
+    it('all keys use the emot-id- prefix', () => {
+      const values = Object.values(storage.KEYS) as string[]
+      for (const key of values) {
+        expect(key.startsWith('emot-id-')).toBe(true)
+      }
+    })
+
+    it('no two keys resolve to the same storage value', () => {
+      const values = Object.values(storage.KEYS) as string[]
+      expect(new Set(values).size).toBe(values.length)
+    })
+  })
 })
