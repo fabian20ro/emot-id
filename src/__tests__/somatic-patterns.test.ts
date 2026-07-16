@@ -97,4 +97,42 @@ describe('computeSomaticPatterns', () => {
     expect(result.regionFrequencies[0].regionId).toBe('b')
     expect(result.regionFrequencies[1].regionId).toBe('a')
   })
+
+  it('counts somatic sessions with empty selections toward total', () => {
+    const sessions = [
+      makeSession({ modelId: 'somatic', selections: [] }),
+      makeSession({
+        modelId: 'somatic',
+        selections: [{ emotionId: 'joy', label: { ro: 'Bucurie', en: 'Joy' } }],
+      }),
+    ]
+
+    const result = computeSomaticPatterns(sessions)
+
+    expect(result.totalSomaticSessions).toBe(2)
+    expect(result.regionFrequencies).toHaveLength(1)
+    expect(result.regionFrequencies[0].regionId).toBe('joy')
+    expect(result.regionFrequencies[0].count).toBe(1)
+    expect(result.regionFrequencies[0].sensations).toEqual({})
+  })
+
+  it('treats undefined extras and missing sensationType as no-sensation', () => {
+    const sessions = [
+      makeSession({
+        modelId: 'somatic',
+        selections: [
+          { emotionId: 'calm', label: { ro: 'Calm', en: 'Calm' }, extras: {} },
+          { emotionId: 'calm', label: { ro: 'Calm', en: 'Calm' } },
+          { emotionId: 'calm', label: { ro: 'Calm', en: 'Calm' }, extras: { sensationType: 'heavy' } },
+        ],
+      }),
+    ]
+
+    const result = computeSomaticPatterns(sessions)
+
+    expect(result.regionFrequencies).toHaveLength(1)
+    const calmData = result.regionFrequencies[0]
+    expect(calmData.count).toBe(3)
+    expect(calmData.sensations).toEqual({ heavy: 1 })
+  })
 })
