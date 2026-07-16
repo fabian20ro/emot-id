@@ -23,8 +23,12 @@ export function escalateCrisisTier(
     return currentTier
   }
 
-  if (currentTier === 'none') return 'tier1'
-  if (currentTier === 'tier1') return 'tier2'
-  if (currentTier === 'tier4') return 'tier4'
-  return 'tier3'
+  switch (currentTier) {
+    case 'none': return 'tier1'
+    case 'tier1': return 'tier2'
+    case 'tier2': return 'tier3'
+    case 'tier3': return 'tier3'
+    case 'tier4': return 'tier4'
+    default: return currentTier
+  }
 }
