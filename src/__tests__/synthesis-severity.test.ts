@@ -50,4 +50,33 @@ describe('synthesis severity-aware tone', () => {
     const text = synthesize(results, 'en')
     expect(text).not.toContain('sounds painful')
   })
+
+  it('returns empty string for no input', () => {
+    const text = synthesize([], 'en')
+    expect(text).toBe('')
+  })
+
+  it('uses mixed-valence template when positive and negative coexist', () => {
+    const results = [
+      makeResult('joy', 0.8, -0.3),
+      makeResult('sadness', -0.5, 0.1),
+    ]
+    const text = synthesize(results, 'en')
+    expect(text).toContain('holding both')
+    expect(text).toContain('complexity')
+  })
+
+  it('uses high-intensity template for a single strong arousal result (en)', () => {
+    const results = [makeResult('anxiety', -0.4, 0.9)]
+    const text = synthesize(results, 'en')
+    expect(text).toContain('strong intensity')
+    expect(text).not.toContain('sounds painful')
+  })
+
+  it('uses high-intensity template for a single strong arousal result (ro)', () => {
+    const results = [makeResult('anxietate', -0.4, 0.9)]
+    const text = synthesize(results, 'ro')
+    expect(text).toContain('intensitate puternica')
+    expect(text).not.toContain('dureros')
+  })
 })
