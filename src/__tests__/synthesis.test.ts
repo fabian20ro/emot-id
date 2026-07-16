@@ -210,4 +210,32 @@ describe('synthesize', () => {
     // Should not attribute causes
     expect(lower).not.toMatch(/because you|the reason you/)
   })
+
+  it('uses the specific pleasant combo narrative for joy+serenity', () => {
+    const result = synthesize(
+      [
+        makeResult({ id: 'joy', label: { ro: '', en: 'joy' }, valence: 0.5 }),
+        makeResult({ id: 'serenity', label: { ro: '', en: 'serenity' }, valence: 0.4 }),
+      ],
+      'en'
+    )
+
+    // The combo template for joy+serenity contains distinctive phrasing
+    expect(result).toContain('settling into serenity')
+    // Should not fall through to generic concordantPleasant text
+    expect(result).not.toContain('harmonious blend of pleasant feelings')
+  })
+
+  it('uses concordantUnpleasantSevere when two high-distress emotions co-occur', () => {
+    const result = synthesize(
+      [
+        makeResult({ id: 'rage', label: { ro: '', en: 'rage' }, valence: -0.9 }),
+        makeResult({ id: 'terror', label: { ro: '', en: 'terror' }, valence: -0.95 }),
+      ],
+      'en'
+    )
+
+    expect(result).toContain('sounds painful')
+    expect(result).toContain('deserve support')
+  })
 })
