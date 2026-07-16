@@ -71,6 +71,7 @@ export function WarmCloseView({ message, closeLabel, onClose }: WarmCloseViewPro
       </p>
       <button
         onClick={onClose}
+        aria-label="Close"
         className="mt-6 min-h-[44px] px-4 text-sm text-gray-500 hover:text-gray-400 transition-colors"
       >
         {closeLabel}
