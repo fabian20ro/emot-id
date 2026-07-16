@@ -47,10 +47,20 @@ describe('somatic scoring validation against Nummenmaa-derived patterns', () => 
       expect(selections.length).toBeGreaterThan(0)
 
       const results = scoreSomaticSelections(selections)
+      expect(results.length).toBeGreaterThan(0)
+
       const rank = results.findIndex((result) => result.id === emotionId)
 
       expect(rank).toBeGreaterThanOrEqual(0)
       expect(rank).toBeLessThan(3)
+    })
+
+    it(`ranks "${emotionId}" first when its own Nummenmaa-derived pattern is selected`, () => {
+      const selections = buildPatternSelections(emotionId)
+      expect(selections.length).toBeGreaterThan(0)
+
+      const results = scoreSomaticSelections(selections)
+      expect(results[0]?.id).toBe(emotionId)
     })
   }
 })
