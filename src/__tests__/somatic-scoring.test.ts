@@ -181,6 +181,52 @@ describe('scoreSomaticSelections', () => {
     expect(results[0].matchStrength.en).toBe('clear signal')
   })
 
+  it('uses context-specific description and needs when signal provides them', () => {
+    const signal = makeSignal({
+      emotionId: 'anxiety',
+      sensationType: 'tension',
+      weight: 1.0,
+      contextDescription: { ro: 'descriere locală', en: 'local description' },
+      contextNeeds: { ro: 'nevoie locală', en: 'local need' },
+    })
+    const selection = makeSelection('chest', 'tension', 2, [signal])
+
+    const results = scoreSomaticSelections([selection])
+
+    expect(results[0].description).toEqual({ ro: 'descriere locală', en: 'local description' })
+    expect(results[0].needs).toEqual({ ro: 'nevoie locală', en: 'local need' })
+  })
+
+  it('uses canonical catalog description when signal has no context override', () => {
+    const signal = makeSignal({ emotionId: 'anxiety', sensationType: 'tension', weight: 1.0 })
+    const selection = makeSelection('chest', 'tension', 2, [signal])
+
+    const results = scoreSomaticSelections([selection])
+
+    // When context overrides are absent, canonical catalog data is used (rich description)
+    expect(results[0].description).toBeDefined()
+    expect(typeof results[0].description!.ro).toBe('string')
+    expect(results[0].description!.ro.length).toBeGreaterThan(10)
+    expect(results[0].needs).toBeDefined()
+  })
+
+  it('prefers context overrides over canonical catalog data', () => {
+    const signal = makeSignal({
+      emotionId: 'anxiety',
+      sensationType: 'tension',
+      weight: 1.0,
+      contextDescription: { ro: 'scurtă descriere', en: 'short desc' },
+      contextNeeds: { ro: 'scurtă nevoie', en: 'short need' },
+    })
+    const selection = makeSelection('chest', 'tension', 2, [signal])
+
+    const results = scoreSomaticSelections([selection])
+
+    // Context overrides must win over catalog data
+    expect(results[0].description!.ro).toBe('scurtă descriere')
+    expect(results[0].needs!.ro).toBe('scurtă nevoie')
+  })
+
   it('downgrades match strength if score is below the threshold despite high ratio', () => {
     const signal = makeSignal({ emotionId: 'joy', sensationType: 'lightness', weight: 0.1 })
     const selection = makeSelection('chest', 'lightness', 3, [signal])
