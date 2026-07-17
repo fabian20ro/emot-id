@@ -4,8 +4,12 @@ import { storage } from '../data/storage'
 
 export function useModelSelection() {
   const [modelId, setModelId] = useState(() => {
-    const saved = storage.get('model')
-    return saved && getVisualization(saved) ? saved : defaultModelId
+    try {
+      const saved = storage.get('model')
+      return saved && getVisualization(saved) ? saved : defaultModelId
+    } catch {
+      return defaultModelId
+    }
   })
 
   useEffect(() => {

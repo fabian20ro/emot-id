@@ -95,6 +95,24 @@ describe('useEmotionModel', () => {
     expect(result.current.combos[0].componentLabels).toBeDefined()
   })
 
+  it('handleDeselect removes only the targeted emotion when multiple are selected simultaneously', () => {
+    const { result } = renderHook(() => useEmotionModel('plutchik'))
+    const joy = result.current.visibleEmotions.find((e) => e.id === 'joy')!
+    const trust = result.current.visibleEmotions.find((e) => e.id === 'trust')!
+
+    act(() => {
+      result.current.handleSelect(joy)
+      result.current.handleSelect(trust)
+    })
+    expect(result.current.selections).toHaveLength(2)
+
+    act(() => {
+      result.current.handleDeselect(joy)
+    })
+    expect(result.current.selections).toHaveLength(1)
+    expect(result.current.selections[0].id).toBe('trust')
+  })
+
   it('analyze returns results based on current selections', () => {
     const { result } = renderHook(() => useEmotionModel('plutchik'))
     const firstEmotion = result.current.visibleEmotions[0]

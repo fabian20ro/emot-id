@@ -50,6 +50,13 @@ export function SessionHistory({
   const historyT = section('history')
   const focusTrapRef = useFocusTrap(isOpen, onClose)
   const [nudgeDismissed, setNudgeDismissed] = useState(false)
+  const [copyFeedback, setCopyFeedback] = useState<string | null>(null)
+  useEffect(() => {
+    if (copyFeedback) {
+      const t = setTimeout(() => setCopyFeedback(null), 2000)
+      return () => clearTimeout(t)
+    }
+  }, [copyFeedback])
 
   const vocab = useMemo(() => computeVocabulary(sessions), [sessions])
   const somaticPatterns = useMemo(() => computeSomaticPatterns(sessions), [sessions])
@@ -99,6 +106,7 @@ export function SessionHistory({
     const text = exportSessionsText(sessions, language)
     copyToClipboard(text)
     downloadAsText(text, `emot-id-summary-${Date.now()}.txt`)
+    setCopyFeedback(language === 'ro' ? 'Succes!' : 'Copied!')
   }, [sessions, language])
 
   return (
@@ -200,6 +208,11 @@ export function SessionHistory({
                   {historyT.export ?? 'Export JSON'}
                 </button>
               </div>
+              {copyFeedback && (
+                <p className="text-xs text-indigo-300 animate-fade-in">
+                  {copyFeedback}
+                </p>
+              )}
             </div>
         </ModalShell>
       )}

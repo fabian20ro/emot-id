@@ -48,6 +48,20 @@ describe('useModelSelection', () => {
     expect(storage.set).toHaveBeenCalledWith('model', defaultModelId)
   })
 
+  it('falls back to defaultModelId when storage throws synchronously on init', () => {
+    vi.mocked(storage.get).mockImplementation(() => {
+      throw new Error('QuotaExceededError')
+    })
+
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    const { result } = renderHook(() => useModelSelection())
+
+    expect(result.current.modelId).toBe(defaultModelId)
+
+    spy.mockRestore()
+  })
+
   it('updates modelId and syncs to storage when switchModel is called', () => {
     vi.mocked(storage.get).mockReturnValue(null)
 

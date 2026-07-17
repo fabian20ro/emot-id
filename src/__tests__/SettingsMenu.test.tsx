@@ -234,4 +234,33 @@ describe('SettingsMenu', () => {
       expect(hasMinHeight || hasExplicit44 || hasExplicitSize).toBe(true)
     }
   })
+
+  it('calls onModelChange and onClose when a model button is clicked', async () => {
+    const user = userEvent.setup()
+    const onModelChange = vi.fn()
+    const onClose = vi.fn()
+    renderMenu({ onModelChange, onClose, modelId: 'dimensional' })
+
+    // Plutchik's Wheel of Emotions is the 4th option (last) in MODEL_DISPLAY_ORDER
+    const plutchikBtn = screen.getByRole('button', { name: /Plutchik/i })
+    expect(plutchikBtn).toBeInTheDocument()
+
+    await user.click(plutchikBtn)
+    expect(onModelChange).toHaveBeenCalledWith('plutchik')
+    expect(onClose).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not show Past sessions when saveSessions is false', () => {
+    renderMenu({ saveSessions: false, onOpenHistory: vi.fn() })
+    expect(
+      screen.queryByRole('button', { name: /Past sessions|Istoric sesiuni/i })
+    ).not.toBeInTheDocument()
+  })
+
+  it('does not show Past sessions when onOpenHistory is not provided', () => {
+    renderMenu({ saveSessions: true, onOpenHistory: undefined })
+    expect(
+      screen.queryByRole('button', { name: /Past sessions|Istoric sesiuni/i })
+    ).not.toBeInTheDocument()
+  })
 })
