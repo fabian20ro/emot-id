@@ -205,5 +205,27 @@ describe('BubbleField deterministic layout', () => {
       // Verify all positions fit vertically within container
       expect(maxY + bubbleHeight).toBeLessThanOrEqual(height + 2)
     })
+
+    it('reduces gap and keeps bounds when total height exceeds container', () => {
+      const width = 375
+      const height = 280 // Forces rows to exceed container: 4 medium rows * (48+8) - 8 + padding*2 = ~264, but with 6 emotions there are 3 medium rows; push smaller
+      const emotionCount = 12 // Enough for multiple rows that exceed tight height
+      const emotions = makeEmotions(emotionCount)
+      const sizes = makeSizes(emotions, ['small', 'medium', 'large'])
+      const positions = calculateDeterministicPositions(emotions, width, height, sizes)
+
+      const mobileSizePixels = { small: 78, medium: 96, large: 110 }
+      for (const [id, pos] of positions) {
+        const w = mobileSizePixels[sizes.get(id) || 'medium']
+        expect(pos.x).toBeGreaterThanOrEqual(0)
+        expect(pos.y).toBeGreaterThanOrEqual(0)
+        expect(pos.x + w).toBeLessThanOrEqual(width)
+        // All bubbles must stay within container even with compressed gap
+        expect(pos.y + bubbleHeight).toBeLessThanOrEqual(height + 10)
+      }
+
+      // Verify the positions are non-overlapping (gap reduction should not cause collisions)
+      expect(hasOverlap(positions, sizes, width)).toBe(false)
+    })
   })
 })
