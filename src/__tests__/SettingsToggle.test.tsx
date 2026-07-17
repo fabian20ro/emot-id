@@ -85,6 +85,23 @@ describe('SettingsToggle', () => {
     expect(onButton.className).toContain('text-gray-500')
   })
 
+  it('does not fire onChange when "on" button is clicked while disabled', () => {
+    const onChange = vi.fn()
+    const onClose = vi.fn()
+    render(<SettingsToggle
+      value={false}
+      onLabel="On"
+      offLabel="Off"
+      onChange={onChange}
+      onClose={onClose}
+      disabled={true}
+    />)
+
+    fireEvent.click(screen.getByText('On'))
+    expect(onChange).not.toHaveBeenCalled()
+    expect(onClose).not.toHaveBeenCalled()
+  })
+
   it('does not disable the "off" button when disabled prop is true', () => {
     render(<SettingsToggle
       value={true}
