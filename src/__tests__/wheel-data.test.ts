@@ -97,3 +97,63 @@ describe('Wheel data integrity', () => {
     }
   })
 })
+
+describe('Wheel model behavior', () => {
+  it('onSelect on a branch (center) returns children, increments generation, keeps selections empty', () => {
+    // Pick any center emotion — they all have children by construction
+    const centerId = Object.keys(allEmotions).find((id) => id === 'happy')!
+    const emotion = allEmotions[centerId]
+
+    const result = wheelModel.onSelect(emotion, wheelModel.initialState, [])
+
+    expect(result.newState.visibleEmotionIds.size).toBeGreaterThan(0)
+    // All visible keys should be children of the picked center
+    for (const childId of emotion.children ?? []) {
+      expect(result.newState.visibleEmotionIds.get(childId)).toBe(1)
+    }
+    // Selections must stay empty — branch nodes are not selected
+    expect(result.newSelections).toEqual([])
+  })
+
+  it('onSelect on a leaf returns selections extended, resets generation and visible set to centers', () => {
+    // Pick any level-2 (leaf) emotion — they have no children by construction
+    const leafId = Object.keys(allEmotions).find((id) => allEmotions[id].level === 2)!
+    const emotion = allEmotions[leafId]
+
+    const result = wheelModel.onSelect(emotion, wheelModel.initialState, [])
+
+    expect(result.newSelections ?? []).toHaveLength(1)
+    expect(result.newSelections?.[0]).toBe(emotion)
+    // Generation reset to 0
+    expect(result.newState.currentGeneration).toBe(0)
+    // Visible set reverts to all centers (7 root emotions)
+    expect(result.newState.visibleEmotionIds.size).toBeGreaterThan(0)
+  })
+
+  it('analyze() returns hierarchy path from root to leaf', () => {
+    // Pick a level-2 leaf and call analyze
+    const leafId = Object.keys(allEmotions).find((id) => allEmotions[id].level === 2)!
+    const emotion = allEmotions[leafId]
+
+    const results = wheelModel.analyze([emotion])
+    expect(results).toHaveLength(1)
+
+    const path = results[0].hierarchyPath
+    // Hierarchy path should contain at least the root and leaf label
+    expect(path).toBeDefined()
+    expect(path!.length).toBeGreaterThanOrEqual(2)
+    // Root (level 0) is first; leaf (level 2) is last
+    expect(path![0].ro).toBe(allEmotions[Object.keys(allEmotions).find((id) => allEmotions[id].level === 0)!].label.ro)
+    expect(path![path!.length - 1].ro).toBe(emotion.label.ro)
+  })
+
+  it('analyze() returns no hierarchyPath for root emotions', () => {
+    const centerId = Object.keys(allEmotions).find((id) => id === 'happy')!
+    const emotion = allEmotions[centerId]
+
+    const results = wheelModel.analyze([emotion])
+    expect(results).toHaveLength(1)
+    // Root has no parent — path is single-element so hierarchyPath is undefined
+    expect(results[0].hierarchyPath).toBeUndefined()
+  })
+})
