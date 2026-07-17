@@ -139,6 +139,27 @@ describe('Wheel analyze with hierarchy path', () => {
     expect(results[0].hierarchyPath).toBeUndefined()
   })
 
+  it('returns empty array for analyze with no selections', () => {
+    const results = wheelModel.analyze([])
+    expect(results).toEqual([])
+  })
+
+  it('drills into root emotions with children and preserves previous selections', () => {
+    const state1 = wheelModel.initialState
+    // Select a leaf first: happy → playful → aroused (leaf)
+    const effect1 = wheelModel.onSelect(e['happy'], state1, [])
+    const effect2 = wheelModel.onSelect(e['playful'], effect1.newState, [])
+    const effect3 = wheelModel.onSelect(e['aroused'], effect2.newState, [])
+
+    // Now select a root emotion (sad) — it has children: model drills down.
+    // Pass the previous selections to show they survive drill-down into a branch node.
+    const effect4 = wheelModel.onSelect(e['sad'], effect3.newState, effect3.newSelections || [])
+
+    expect(effect4.newState.currentGeneration).toBe(1)
+    expect(effect4.newSelections).toBeDefined()
+    expect(effect4.newSelections?.map((s) => s.id)).toContain('aroused')
+  })
+
   it('builds paths for multiple selections from different branches', () => {
     const results = wheelModel.analyze([e['aroused'], e['anxious']])
     expect(results).toHaveLength(2)
