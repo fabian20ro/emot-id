@@ -246,6 +246,11 @@ describe('SettingsMenu', () => {
     expect(buttons[0].disabled).toBe(true)
   })
 
+  it('shows version badge in disclaimer section', () => {
+    renderMenu()
+    expect(screen.getByText('v0.1.0')).toBeInTheDocument()
+  })
+
   it('does not call onDailyReminderChange with true when clicking the disabled reminder On button', async () => {
     const user = userEvent.setup()
     const onDailyReminderChange = vi.fn()

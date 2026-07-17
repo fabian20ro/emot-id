@@ -52,3 +52,36 @@ test('Romanian values should be different from English values', () => {
 
   checkDifferences(en, ro);
 });
+
+test('Critical sections (crisis, disclaimer) must have distinct Romanian translations', () => {
+  const criticalSections = ['crisis', 'disclaimer', 'privacy'] as const;
+
+  for (const section of criticalSections) {
+    const enSection = en[section] as Record<string, string>;
+    const roSection = ro[section] as Record<string, string> | undefined;
+
+    if (!roSection) {
+      throw new Error(`Critical section "${section}" is missing entirely from Romanian translations`);
+    }
+
+    for (const key of Object.keys(enSection)) {
+      const enVal = enSection[key];
+      const roVal = roSection[key];
+
+      expect(roVal, `Key ${section}.${key} has no Romanian value`).toBeDefined();
+
+      if (typeof roVal === 'string' && typeof enVal === 'string') {
+        const enNorm = enVal.trim().toLowerCase();
+        const roNorm = roVal.trim().toLowerCase();
+        expect(
+          roNorm,
+          `Critical key ${section}.${key} is identical to English — likely a copy-paste error`
+        ).not.toEqual(enNorm);
+
+        if (roVal.trim() === '') {
+          throw new Error(`Critical key ${section}.${key} has an empty Romanian translation`);
+        }
+      }
+    }
+  }
+});

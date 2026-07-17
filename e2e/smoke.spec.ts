@@ -170,13 +170,12 @@ test.describe('Plutchik model', () => {
     const bubbles = page.locator('button[tabindex="0"]').filter({ hasText: /.+/ })
 
     await bubbles.nth(0).click({ force: true })
-    await page.waitForTimeout(400)
-    await bubbles.nth(1).click({ force: true })
-    await page.waitForTimeout(400)
-
-    // Analyze button should be enabled (text may vary by language)
     const analyzeBtn = page.getByRole('button', { name: /analyze/i })
     await expect(analyzeBtn).toBeEnabled()
+    await bubbles.nth(1).click({ force: true })
+    await expect(analyzeBtn).toBeEnabled()
+
+    // Analyze button should be enabled (text may vary by language)
   })
 })
 
