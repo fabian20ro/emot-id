@@ -235,6 +235,41 @@ describe('SettingsMenu', () => {
     }
   })
 
+  it('disables the daily reminder On button when notifications are unsupported', () => {
+    renderMenu({ reminderSupported: false, reminderPermission: 'unsupported' })
+
+    const label = screen.getByText(/Daily reminder/i)
+    const containerDiv = label.closest('div')!
+    const nextSibling = containerDiv.nextElementSibling
+    const buttons = within(nextSibling as HTMLElement).getAllByRole('button', { name: /On|Off/i })
+    // The On button is disabled when unsupported; the Off button remains enabled (SettingsToggle only disables first)
+    expect(buttons[0].disabled).toBe(true)
+  })
+
+  it('does not call onDailyReminderChange with true when clicking the disabled reminder On button', async () => {
+    const user = userEvent.setup()
+    const onDailyReminderChange = vi.fn()
+    renderMenu({
+      reminderSupported: false,
+      reminderPermission: 'unsupported',
+      onDailyReminderChange,
+    })
+
+    const label = screen.getByText(/Daily reminder/i)
+    const containerDiv = label.closest('div')!
+    const nextSibling = containerDiv.nextElementSibling
+    const buttons = within(nextSibling as HTMLElement).getAllByRole('button', { name: /On|Off/i })
+    await user.click(buttons[0]) // the On/true button (disabled)
+    expect(onDailyReminderChange).not.toHaveBeenCalledWith(true)
+  })
+
+  it('renders unsupported warning when reminders are not supported', () => {
+    renderMenu({ reminderSupported: false, reminderPermission: 'unsupported' })
+    expect(
+      screen.getByText(/Notifications are not supported on this device/)
+    ).toBeInTheDocument()
+  })
+
   it('calls onModelChange and onClose when a model button is clicked', async () => {
     const user = userEvent.setup()
     const onModelChange = vi.fn()
