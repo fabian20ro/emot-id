@@ -318,6 +318,7 @@ export function SettingsMenu({
 
               {/* Disclaimer */}
               <div className="px-2 pb-2 pt-1 border-t border-gray-700">
+                <span className="block text-right text-[10px] text-gray-600 -mb-1">v0.1.0</span>
                 <div className="flex items-start justify-between px-3 py-1 min-h-[44px]">
                   <span className="text-xs text-gray-500 pt-2">
                     {disclaimerT.label ?? 'Disclaimer'}
