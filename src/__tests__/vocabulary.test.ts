@@ -97,4 +97,61 @@ describe('computeVocabulary', () => {
     const result = computeVocabulary(sessions)
     expect(result.milestone).toEqual({ type: 'emotions', count: 5 })
   })
+
+  it('breaks ties in topActiveEmotions by English label using localeCompare', () => {
+    const sessions = [
+      makeSession({ results: [{ id: 'zebra', label: { ro: 'z', en: 'zebra' }, color: '#fff' }] }),
+      makeSession({ results: [{ id: 'apple', label: { ro: 'a', en: 'apple' }, color: '#fff' }] }),
+      makeSession({ results: [{ id: 'banana', label: { ro: 'b', en: 'banana' }, color: '#fff' }] }),
+    ]
+
+    const result = computeVocabulary(sessions)
+
+    expect(result.topActiveEmotions.map((e) => e.id)).toEqual(['apple', 'banana', 'zebra'])
+  })
+
+  it('prefers model milestone when emotion count is below threshold 10', () => {
+    // 4 sessions from 2 models, only 3 unique active emotions (below 5-threshold milestone)
+    const sessions = [
+      makeSession({ modelId: 'wheel', results: [{ id: 'a', label: { ro: 'A', en: 'A' }, color: '#fff' }] }),
+      makeSession({ modelId: 'wheel', results: [{ id: 'b', label: { ro: 'B', en: 'B' }, color: '#fff' }] }),
+      makeSession({ modelId: 'somatic', results: [{ id: 'c', label: { ro: 'C', en: 'C' }, color: '#aaa' }] }),
+      makeSession({ modelId: 'somatic', results: [] }),
+    ]
+
+    const result = computeVocabulary(sessions)
+
+    // 2 models -> milestone at count=2; emotion count is 3 which is below 5 (first EMOTION_MILESTONE)
+    expect(result.milestone).toEqual({ type: 'models', count: 2 })
+    expect(result.uniqueEmotionCount).toBe(3)
+    expect(result.modelsUsed).toBe(2)
+  })
+
+  it('tracks perModel counts correctly across multiple sessions and models', () => {
+    const sessions = [
+      makeSession({ modelId: 'wheel', results: [{ id: 'a', label: { ro: 'A', en: 'A' }, color: '#fff' }] }),
+      makeSession({ modelId: 'wheel', results: [{ id: 'b', label: { ro: 'B', en: 'B' }, color: '#fff' }] }),
+      makeSession({ modelId: 'somatic', results: [{ id: 'a', label: { ro: 'A', en: 'A' }, color: '#aaa' }, { id: 'c', label: { ro: 'C', en: 'C' }, color: '#bbb' }] }),
+    ]
+
+    const result = computeVocabulary(sessions)
+
+    expect(result.perModel['wheel']).toBe(2)
+    expect(result.perModel['somatic']).toBe(2)
+    expect(result.uniqueEmotionCount).toBe(3) // a, b, c all active across models
+  })
+
+  it('limits topActiveEmotions to at most 15 entries', () => {
+    const sessions = Array.from({ length: 20 }, (_, i) => ({
+      id: `emo-${i}`,
+      modelId: 'wheel',
+      selections: [],
+      results: [{ id: `emo-${i}`, label: { ro: `r${i}`, en: `e${i}` }, color: '#fff' }],
+      crisisTier: 'none' as const,
+    }))
+
+    const result = computeVocabulary(sessions)
+
+    expect(result.topActiveEmotions.length).toBe(15)
+  })
 })
