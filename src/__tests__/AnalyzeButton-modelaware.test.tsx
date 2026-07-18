@@ -34,4 +34,14 @@ describe('AnalyzeButton model-aware text — dimension-specific guidance', () =>
     renderButton({ disabled: false, modelId: MODEL_IDS.SOMATIC })
     expect(screen.getByRole('button', { name: 'Analyze' })).toBeInTheDocument()
   })
+
+  it('shows Analyze when enabled with dimensional model', () => {
+    renderButton({ disabled: false, modelId: MODEL_IDS.DIMENSIONAL })
+    expect(screen.getByRole('button', { name: 'Analyze' })).toBeInTheDocument()
+  })
+
+  it('shows Analyze when enabled with somatic model', () => {
+    renderButton({ disabled: false, modelId: MODEL_IDS.SOMATIC })
+    expect(screen.getByRole('button', { name: 'Analyze' })).toBeInTheDocument()
+  })
 })
