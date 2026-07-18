@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { Bubble } from '../components/Bubble'
 import type { BaseEmotion } from '../models/types'
 import { LanguageProvider } from '../context/LanguageContext'
+import { storage } from '../data/storage'
 
 const mockEmotion: BaseEmotion = {
   id: 'joy',
@@ -52,6 +53,14 @@ describe('Bubble', () => {
 
     const button = screen.getByRole('button', { name: /joy/i })
     expect(button.className).toContain('text-sm')
+  })
+
+  it('renders Romanian label when locale is ro', () => {
+    const onClick = vi.fn()
+    storage.set('language', 'ro')
+    renderWithProviders(<Bubble emotion={mockEmotion} onClick={onClick} />)
+
+    expect(screen.getByRole('button', { name: /bucurie/i })).toBeInTheDocument()
   })
 
   it('falls back to English label when primary language missing', () => {
