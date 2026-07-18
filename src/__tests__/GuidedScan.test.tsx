@@ -207,6 +207,35 @@ describe('GuidedScan', () => {
       const progressBar = document.querySelector('.bg-indigo-500.rounded-full')
       expect(progressBar).toBeInTheDocument()
     })
+
+    it('triggers pause phase when intensity is high', () => {
+      renderGuidedScan()
+      skipCentering()
+
+      fireEvent.click(screen.getByText('Tension'))
+      fireEvent.click(screen.getByText('Strong'))
+
+      expect(
+        screen.getByText(/strong tension in your head/i)
+      ).toBeInTheDocument()
+      expect(screen.getByText('Ready to continue')).toBeInTheDocument()
+    })
+
+    it('resumes scan after pause phase', () => {
+      renderGuidedScan()
+      skipCentering()
+
+      fireEvent.click(screen.getByText('Tension'))
+      fireEvent.click(screen.getByText('Strong'))
+
+      expect(
+        screen.getByText(/strong tension in your head/i)
+      ).toBeInTheDocument()
+
+      fireEvent.click(screen.getByText('Ready to continue'))
+
+      expect(screen.getByText('Jaw')).toBeInTheDocument()
+    })
   })
 
   describe('completion', () => {
