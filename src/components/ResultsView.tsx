@@ -135,7 +135,9 @@ export function ResultsView({
       </div>
 
       {!requiresTier4Acknowledge && (
-        <div className="pt-1 space-y-1.5">
+        <>
+          <hr className="border-gray-700/50 my-2" />
+          <div className="pt-1 space-y-1.5">
           {aiLink !== '#' ? (
             <a
               href={aiLink}
@@ -209,6 +211,7 @@ export function ResultsView({
             {microDisclaimerLabel}
           </p>
         </div>
+        </>
       )}
     </motion.div>
   )
