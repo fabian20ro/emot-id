@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { emotionCatalog, getCanonicalEmotion } from '../models/catalog'
-import { HIGH_DISTRESS_IDS, TIER3_COMBOS, TIER4_COMBOS } from '../models/distress'
+import { HIGH_DISTRESS_IDS, TIER3_COMBOS, TIER4_COMBOS, getCrisisTier } from '../models/distress'
 
 describe('Catalog integrity', () => {
   it('has no empty IDs', () => {
@@ -132,5 +132,37 @@ describe('Catalog integrity', () => {
       expect(e, `HIGH_DISTRESS_IDS references '${id}' missing from catalog`).toBeDefined()
       expect(e?.distressTier).toBe('high')
     }
+  })
+
+  it('all TIER3/TIER4 combo members are in HIGH_DISTRESS_IDS', () => {
+    for (const [a, b] of TIER3_COMBOS) {
+      expect(HIGH_DISTRESS_IDS.has(a), `TIER3 member '${a}' not high-distress`).toBe(true)
+      expect(HIGH_DISTRESS_IDS.has(b), `TIER3 member '${b}' not high-distress`).toBe(true)
+    }
+    for (const [a, b, c] of TIER4_COMBOS) {
+      expect(HIGH_DISTRESS_IDS.has(a), `TIER4 member '${a}' not high-distress`).toBe(true)
+      expect(HIGH_DISTRESS_IDS.has(b), `TIER4 member '${b}' not high-distress`).toBe(true)
+      expect(HIGH_DISTRESS_IDS.has(c), `TIER4 member '${c}' not high-distress`).toBe(true)
+    }
+  })
+
+  it('getCrisisTier returns none for empty input', () => {
+    expect(getCrisisTier([])).toBe('none')
+  })
+
+  it('getCrisisTier returns tier1 for single high-distress', () => {
+    const sample = Array.from(HIGH_DISTRESS_IDS)[0]
+    if (!sample) return
+    expect(getCrisisTier([sample])).toBe('tier1')
+  })
+
+  it('getCrisisTier detects tier4 from TIER4_COMBOS input', () => {
+    const triple = TIER4_COMBOS[0]
+    expect(getCrisisTier(Array.from(triple))).toBe('tier4')
+  })
+
+  it('HIGH_DISTRESS_IDS size matches catalog high-tier count', () => {
+    const highCount = Object.values(emotionCatalog).filter((e) => e.distressTier === 'high').length
+    expect(HIGH_DISTRESS_IDS.size).toBe(highCount)
   })
 })
