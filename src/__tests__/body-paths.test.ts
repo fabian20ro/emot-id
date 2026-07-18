@@ -136,9 +136,10 @@ describe('bodyRegionPaths', () => {
         expect(lx, `${region.id} label x`).toBeGreaterThanOrEqual(dBox.maxX)
       }
 
-      // Labels should sit vertically within the region's range ± generous margin
+      // Labels should sit vertically within the viewBox range ± generous margin
+      const [,, , vbHeight] = VIEWBOX.split(' ').map(Number)
       const minY = Math.min(dBox.minY, 0)
-      const maxY = Math.max(dBox.maxY, 450)
+      const maxY = Math.max(dBox.maxY, vbHeight)
       expect(ly, `${region.id} label y`).toBeGreaterThanOrEqual(minY - 25)
       expect(ly, `${region.id} label y`).toBeLessThanOrEqual(maxY + 25)
     }
