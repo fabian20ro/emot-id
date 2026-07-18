@@ -39,4 +39,24 @@ describe('ModalShell ARIA references', () => {
     })
     consoleWarn.mockRestore()
   })
+
+  it('sets dialog role and aria-labelledby on the panel', () => {
+    render(
+      <ModalShell
+        onClose={() => {}}
+        labelledBy="modal-title"
+        describedBy="modal-description"
+        panelClassName={panelClassName}
+      >
+        <h2 id="modal-title">Title</h2>
+        <p id="modal-description">Description</p>
+      </ModalShell>,
+    )
+
+    const panel = document.querySelector(`.${panelClassName}`) as HTMLElement
+    expect(panel).toHaveAttribute('role', 'dialog')
+    expect(panel).toHaveAttribute('aria-modal', 'true')
+    expect(panel).toHaveAttribute('aria-labelledby', 'modal-title')
+    expect(panel).toHaveAttribute('aria-describedby', 'modal-description')
+  })
 })
