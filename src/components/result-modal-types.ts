@@ -4,18 +4,21 @@ export type ReflectionState = 'results' | 'reflection' | 'warmClose' | 'followUp
 export type ReflectionAnswer = 'yes' | 'partly' | 'no' | null
 export type InterventionResponse = 'better' | 'same' | 'worse' | null
 
+/** Required keys for each intervention offer type */
+const OFFER_KEY_MAP: Record<string, string> = {
+  breathing: 'offerBreathing',
+  savoring: 'offerSavoring',
+  curiosity: 'offerCuriosity',
+}
+
 export function getInterventionOfferText(
   type: 'breathing' | 'savoring' | 'curiosity',
   t: Record<string, string>
 ): string {
-  switch (type) {
-    case 'breathing':
-      return t.offerBreathing ?? 'Would you like to try something calming?'
-    case 'savoring':
-      return t.offerSavoring ?? 'Take a moment to savor this?'
-    case 'curiosity':
-      return t.offerCuriosity ?? 'What might these feelings be telling you?'
-  }
+  const key = OFFER_KEY_MAP[type]
+  return t[key] ?? (t as Record<string, unknown>)['offerBreathing'] as string | undefined ??
+    t.offerCuriosity ??
+    'What might these feelings be telling you?'
 }
 
 export interface ResultModalProps {
