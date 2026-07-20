@@ -74,6 +74,7 @@ export function AnalyzeButton({ disabled, onClick, modelId, selectionCount = 0, 
       whileTap={disabled ? {} : { scale: 0.98 }}
       onClick={onClick}
       disabled={disabled}
+      aria-disabled={!modelReady || disabled}
       aria-label={ariaLabel}
       className={`w-full py-2.5 px-6 rounded-xl font-semibold text-base shadow-lg transition-all ${buttonClasses}`}>
       {disabled ? displayText : label}

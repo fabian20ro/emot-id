@@ -104,6 +104,26 @@ describe('dimensional data', () => {
       expect(result).toHaveLength(0)
     })
 
+    it('findNearest with empty emotion set returns empty array', () => {
+      const result = findNearest(0, 0, {}, 5)
+      expect(result).toHaveLength(0)
+    })
+
+    it('findNearest when count exceeds available emotions returns all available', () => {
+      const smallSet: Record<string, DimensionalEmotion> = {}
+      for (const e of emotions.slice(0, 3)) {
+        smallSet[e.id] = e
+      }
+      const result = findNearest(0, 0, smallSet, 10)
+      expect(result.length).toBe(3)
+    })
+
+    it('findNearest results contain no duplicate IDs', () => {
+      const result = findNearest(-0.5, 0.2, dimensionalModel.allEmotions as Record<string, DimensionalEmotion>, 10)
+      const ids = result.map((e) => e.id)
+      expect(new Set(ids).size).toBe(ids.length)
+    })
+
     it('findNearest(1, 1) returns an emotion with high positive valence and arousal', () => {
       const result = findNearest(1, 1, dimensionalModel.allEmotions as Record<string, DimensionalEmotion>, 1)
       // The returned emotion should be close to (1,1) — at minimum both axes positive

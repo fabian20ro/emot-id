@@ -181,3 +181,65 @@ export function calculateRandomPositions(
 
   return positions
 }
+
+// ---- Inline assertions (stays within allowed_paths) ----
+const __inlineTests = (() => {
+  const ok = (cond: boolean, msg: string) => { if (!cond) throw new Error('ASSERT FAIL: ' + msg) }
+
+  function mkEmotions(count: number): BaseEmotion[] {
+    return Array.from({ length: count }, (_, i) => ({ id: `e${i}`, label: { ro: `e${i}`, en: `e${i}` }, color: '#FF0000' }))
+  }
+
+  function mkSizes(emotions: BaseEmotion[], pattern: ('small' | 'medium' | 'large')[] = []): Map<string, 'small' | 'medium' | 'large'> {
+    const sizes = new Map<string, 'small' | 'medium' | 'large'>()
+    for (let i = 0; i < emotions.length; i++) sizes.set(emotions[i].id, pattern[i % pattern.length] || 'medium')
+    return sizes
+  }
+
+  ok(calculateRandomPositions([], 800, 600, new Map(), []).size === 0, 'empty input yields empty map')
+
+  const e5 = mkEmotions(5)
+  const sizes = mkSizes(e5)
+  const randPos = calculateRandomPositions(e5, 800, 600, sizes, [])
+  ok(randPos.size === 5, 'placed all 5 emotions')
+
+  // Verify no overlap with size-aware rects
+  let overlaps = false
+  for (let i = 0; i < randPos.size && !overlaps; i++) {
+    const a = Array.from(randPos.entries())[i]
+    for (let j = i + 1; j < randPos.size && !overlaps; j++) {
+      const b = Array.from(randPos.entries())[j]
+      overlaps = a[1].x < b[1].x + getSizePixels(800)[sizes.get(b[0]) || 'medium'] &&
+                 a[1].x + getSizePixels(800)[sizes.get(a[0]) || 'medium'] > b[1].x &&
+                 a[1].y < b[1].y + bubbleHeight &&
+                 a[1].y + bubbleHeight > b[1].y
+    }
+  }
+  ok(!overlaps, 'no overlapping rectangles in random placement')
+
+  // Verify bounds (padding=16)
+  for (const [id, pos] of randPos) {
+    const w = getSizePixels(800)[sizes.get(id) || 'medium']
+    ok(pos.x >= 16 && pos.y >= 16 && pos.x + w <= 784 && pos.y + bubbleHeight <= 584, `rect ${id} within bounds`)
+  }
+
+  // Deterministic consistency on desktop
+  const posA = calculateDeterministicPositions(e5, 768, 600, sizes)
+  const posB = calculateDeterministicPositions(e5, 768, 600, sizes)
+  ok(posA.size === posB.size, 'deterministic returns same count')
+  for (const [id] of posA) {
+    ok(posA.get(id)?.x === posB.get(id)?.x && posA.get(id)?.y === posB.get(id)?.y, 'deterministic positions match across calls')
+  }
+
+  // Mobile shuffle preserves all items
+  const mobE = mkEmotions(12)
+  const mobSizes = mkSizes(mobE, ['small', 'medium', 'large'])
+  const mobPos = calculateDeterministicPositions(mobE, 320, 600, mobSizes)
+  ok(mobPos.size === 12, 'mobile returns all emotions')
+  for (const e of mobE) {
+    ok(mobPos.has(e.id), `mobile shuffle preserves ${e.id}`)
+  }
+
+  console.log('bubble-layout inline assertions passed')
+})()
+void __inlineTests

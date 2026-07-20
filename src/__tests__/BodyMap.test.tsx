@@ -189,6 +189,22 @@ describe('BodyMap', () => {
     expect(screen.getByText('Take a breath. Notice your body.')).toBeInTheDocument()
   })
 
+  it('does not open SensationPicker when clicking region during guided scan', async () => {
+    const user = userEvent.setup()
+    renderBodyMap()
+
+    // Enter guided mode — this sets both isGuidedMode and guidedActive
+    await user.click(screen.getByText('Guided scan'))
+    expect(document.querySelector('[data-testid="bodymap-canvas"]')).toBeInTheDocument()
+
+    // Click a region while in guided mode
+    const chestPath = document.querySelector('[data-region="chest"]')!
+    await user.click(chestPath)
+
+    // Picker should NOT appear — region click is gated during guided scan
+    expect(screen.queryByText('Tension')).not.toBeInTheDocument()
+  })
+
   it('wraps mode toggle in radiogroup for screen readers', () => {
     renderBodyMap()
     const container = document.querySelector('[role="radiogroup"]')
