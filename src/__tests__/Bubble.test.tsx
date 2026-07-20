@@ -52,7 +52,9 @@ describe('Bubble', () => {
     renderWithProviders(<Bubble emotion={mockEmotion} onClick={onClick} size="small" />)
 
     const button = screen.getByRole('button', { name: /joy/i })
-    expect(button.className).toContain('text-sm')
+    // text-xs is unique to small; text-sm appears on medium too, so that alone is not failure-specific.
+    expect(button.className).toContain('text-xs')
+    expect(button.className).not.toContain('text-lg')
   })
 
   it('renders Romanian label when locale is ro', () => {
