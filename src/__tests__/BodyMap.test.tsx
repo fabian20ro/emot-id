@@ -212,6 +212,22 @@ describe('BodyMap', () => {
     expect(container!.getAttribute('aria-label')).toBe('Body map mode')
   })
 
+  it('closes SensationPicker when dismiss-picker event is dispatched', async () => {
+    const user = userEvent.setup()
+    renderBodyMap()
+
+    // Open the picker via region click
+    const chestPath = document.querySelector('[data-region="chest"]')!
+    await user.click(chestPath)
+    expect(screen.getByText('Tension')).toBeInTheDocument()
+
+    // Simulate external dismiss event (e.g. settings menu opens)
+    window.dispatchEvent(new CustomEvent('emot-id:dismiss-picker'))
+
+    // Picker should be gone — sensation buttons no longer visible
+    expect(screen.queryByText('Mild')).not.toBeInTheDocument()
+  })
+
   it('renders mode toggle buttons as radios with correct aria-checked in free mode', () => {
     renderBodyMap()
     const [freeBtn, guidedBtn] = document.querySelectorAll('[role="radio"]') as NodeListOf<HTMLButtonElement>
