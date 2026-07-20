@@ -26,6 +26,7 @@ interface ValenceSection {
 
 interface SomaticSection {
   somaticTitle?: string
+  somaticRegion?: string
 }
 
 interface NudgeSection {
