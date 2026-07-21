@@ -58,9 +58,20 @@ export function getGranularityLabel(id: string, language: GranularityLanguage): 
   return normalizeLabel(label, language)
 }
 
+export type GranularityValidationError = 'missing_entry' | 'missing_ro' | 'missing_en'
+
 export function isGranularityOptionValid(option: GranularityOption): boolean {
+  return getGranularityValidationStatus(option).status === 'valid'
+}
+
+export function getGranularityValidationStatus(
+  option: GranularityOption,
+): { status: 'valid' } | { status: 'invalid'; reason: GranularityValidationError } {
   const entry = PLUTCHIK_LABELS[option.id]
-  return Boolean(entry?.label?.ro && entry?.label?.en)
+  if (!entry) return { status: 'invalid', reason: 'missing_entry' }
+  if (!entry.label?.ro) return { status: 'invalid', reason: 'missing_ro' }
+  if (!entry.label?.en) return { status: 'invalid', reason: 'missing_en' }
+  return { status: 'valid' }
 }
 
 export function getValidGranularitySets(sets: GranularitySet[] = GRANULARITY_SETS): GranularitySet[] {
