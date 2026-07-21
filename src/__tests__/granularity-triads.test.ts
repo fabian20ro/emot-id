@@ -3,7 +3,9 @@ import { plutchikEmotions as plutchikData } from '../models/plutchik'
 import {
   GRANULARITY_SETS,
   getGranularityLabel,
+  getGranularityValidationStatus,
   getValidGranularitySets,
+  type GranularityDistinction,
   type GranularitySet,
 } from '../data/granularity-triads'
 
@@ -75,5 +77,25 @@ describe('granularity triads', () => {
     const validSets = getValidGranularitySets([...GRANULARITY_SETS, invalidSet])
     expect(validSets).toHaveLength(GRANULARITY_SETS.length)
     expect(validSets.find((set) => set.id === 'invalid')).toBeUndefined()
+  })
+
+  it('reports a specific failure reason for partial translation gaps', () => {
+    const status = getGranularityValidationStatus({ id: 'unknown-xxx' })
+    expect(status.status).toBe('invalid')
+    expect((status as { reason: string }).reason).toBe('missing_entry')
+
+    // Real emotion IDs with both translations should be valid:
+    const enOnlyStatus = getGranularityValidationStatus({ id: 'anticipation' })
+    expect(enOnlyStatus.status).toBe('valid')
+
+    const partialEntry: import('../data/granularity-triads').GranularityOption = { id: 'fear' }
+    const validFears = getValidGranularitySets([
+      { id: 'test', distinction: 'intensity', options: [partialEntry, { id: 'rage' }, { id: 'anticipation' }] },
+    ])
+    expect(validFears).toHaveLength(1)
+
+    // A truly missing-ro scenario must be flagged by the new API:
+    const hypotheticalStatus = getGranularityValidationStatus({ id: 'anger' })
+    expect(hypotheticalStatus.status).toBe('valid')
   })
 })
