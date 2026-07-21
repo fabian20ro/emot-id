@@ -167,4 +167,17 @@ describe('bodyRegionPaths', () => {
       }
     }
   })
+
+  it('anchor y falls within the visible path geometry ±5px', () => {
+    for (const region of bodyRegionPaths) {
+      const dBox = getBoundingBox(region.d)
+      const anchorY = region.anchor.y
+
+      expect(
+        anchorY,
+        `${region.id} anchor y should sit on or inside the path`,
+      ).toBeLessThanOrEqual(dBox.maxY + 5)
+      expect(anchorY).toBeGreaterThanOrEqual(dBox.minY - 5)
+    }
+  })
 })
