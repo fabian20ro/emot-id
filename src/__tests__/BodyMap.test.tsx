@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { BodyMap } from '../components/BodyMap'
 import { LanguageProvider } from '../context/LanguageContext'
 import type { SomaticRegion, SomaticSelection } from '../models/somatic/types'
+import type { SensationType } from '../models/somatic/types'
 
 function makeRegion(id: string, label: string): SomaticRegion {
   return {
@@ -216,15 +217,17 @@ describe('BodyMap', () => {
     const user = userEvent.setup()
     renderBodyMap()
 
-    // Open the picker via region click
+    // Open the picker via region click.
     const chestPath = document.querySelector('[data-region="chest"]')!
     await user.click(chestPath)
     expect(screen.getByText('Tension')).toBeInTheDocument()
+    expect(screen.getByText('Warmth')).toBeInTheDocument()
 
-    // Simulate external dismiss event (e.g. settings menu opens)
+    // Simulate external dismiss event (e.g. settings menu opens).
     window.dispatchEvent(new CustomEvent('emot-id:dismiss-picker'))
 
-    // Picker should be gone — sensation buttons no longer visible
+    // Picker should be gone — sensation buttons no longer visible in the DOM.
+    await screen.findByText('Tension').catch(() => {})
     expect(screen.queryByText('Mild')).not.toBeInTheDocument()
   })
 
@@ -261,5 +264,36 @@ describe('BodyMap', () => {
     // selectionMap filters out selections without selectedSensation (line 34-36 of BodyMap.tsx).
     // The region still renders with isSelected=false, but aria-pressed may be null if not explicitly set.
     expect(['false', null]).toContain(chestPath.getAttribute('aria-pressed'))
+  })
+
+  it('closes SensationPicker when dismiss-picker event is dispatched by external listener', async () => {
+    const user = userEvent.setup()
+    renderBodyMap()
+
+    // Open the picker via region click.
+    const chestPath = document.querySelector('[data-region="chest"]')!
+    await user.click(chestPath)
+    expect(screen.getByText('Tension')).toBeInTheDocument()
+
+    // Simulate external dismiss event dispatched by another component (e.g. settings menu).
+    window.dispatchEvent(new CustomEvent('emot-id:dismiss-picker'))
+
+    // Picker should be gone — sensation buttons no longer visible in the DOM.
+    expect(screen.queryByText('Mild')).not.toBeInTheDocument()
+  })
+
+  it('treats selections with empty string selectedSensation as invalid', () => {
+    const chestRegion = makeRegion('chest', 'Chest')
+    const emptySelection: SomaticSelection & { selectedSensation?: SensationType } = {
+      ...chestRegion,
+      id: 'chest',
+      // Empty-string sensation — falsy after guard check; cast around literal-tuple.
+      selectedSensation: '' as unknown as SensationType,
+      selectedIntensity: 1 as const,
+    }
+    renderBodyMap({ selections: [emptySelection] })
+
+    const chestPath = document.querySelector('[data-region="chest"]')!
+    expect(chestPath.getAttribute('aria-pressed')).toBe(null)
   })
 })
