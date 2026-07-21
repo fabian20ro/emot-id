@@ -247,4 +247,19 @@ describe('BodyMap', () => {
     expect(freeBtn.getAttribute('aria-checked')).toBe('false')
     expect(guidedBtn.getAttribute('aria-checked')).toBe('true')
   })
+
+  it('filters selections missing selectedSensation from the selection map', () => {
+    const chestRegion = makeRegion('chest', 'Chest')
+    const invalidSelection: Partial<SomaticSelection> & { id: string } = {
+      ...chestRegion,
+      id: 'chest',
+      // No selectedSensation — should be filtered out of selectionMap by the guard.
+    }
+    renderBodyMap({ selections: [invalidSelection as SomaticSelection] })
+
+    const chestPath = document.querySelector('[data-region="chest"]')!
+    // selectionMap filters out selections without selectedSensation (line 34-36 of BodyMap.tsx).
+    // The region still renders with isSelected=false, but aria-pressed may be null if not explicitly set.
+    expect(['false', null]).toContain(chestPath.getAttribute('aria-pressed'))
+  })
 })
