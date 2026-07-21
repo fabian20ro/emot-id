@@ -217,15 +217,17 @@ describe('BodyMap', () => {
     const user = userEvent.setup()
     renderBodyMap()
 
-    // Open the picker via region click
+    // Open the picker via region click.
     const chestPath = document.querySelector('[data-region="chest"]')!
     await user.click(chestPath)
     expect(screen.getByText('Tension')).toBeInTheDocument()
+    expect(screen.getByText('Warmth')).toBeInTheDocument()
 
-    // Simulate external dismiss event (e.g. settings menu opens)
+    // Simulate external dismiss event (e.g. settings menu opens).
     window.dispatchEvent(new CustomEvent('emot-id:dismiss-picker'))
 
-    // Picker should be gone — sensation buttons no longer visible
+    // Picker should be gone — sensation buttons no longer visible in the DOM.
+    await screen.findByText('Tension').catch(() => {})
     expect(screen.queryByText('Mild')).not.toBeInTheDocument()
   })
 
