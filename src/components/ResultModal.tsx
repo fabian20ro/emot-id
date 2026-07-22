@@ -5,6 +5,7 @@ import { useFocusTrap } from '../hooks/useFocusTrap'
 import { synthesize } from '../models/synthesis'
 import { getCrisisTier, type CrisisTier } from '../models/distress'
 import { getOppositeAction } from '../data/opposite-action'
+import { buildGoogleAiSearchUrl } from '../utils/google-ai-search'
 import { getModelBridge } from './model-bridges'
 import { MicroIntervention, getInterventionType } from './MicroIntervention'
 import { ModalShell } from './ModalShell'
@@ -108,17 +109,7 @@ export function ResultModal({
 
   const getAILink = () => {
     if (!allowExternalAI || results.length === 0) return '#'
-    const names = results.map((r) => r.label[language])
-    const conjunction = language === 'ro' ? ' si ' : ' and '
-    const emotionStr =
-      names.length <= 1
-        ? names[0]
-        : names.slice(0, -1).join(', ') + conjunction + names[names.length - 1]
-
-    const template =
-      results.length >= 2 ? analyzeT.aiPromptMultiple : analyzeT.aiPrompt
-    const query = encodeURIComponent(template.replace('{emotions}', emotionStr))
-    return `https://www.google.com/search?udm=50&q=${query}`
+    return buildGoogleAiSearchUrl(results, language, analyzeT) ?? '#'
   }
 
   const handleReflection = (answer: 'yes' | 'partly' | 'no') => {

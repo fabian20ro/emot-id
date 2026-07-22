@@ -14,13 +14,21 @@
 
 ## Architecture & Design Decisions
 
+**[2026-07-22]** Preserve the external AI handoff contract during result-screen migrations — `allowExternalAI` gates a Google Search AI Mode link using `udm=50`; the existing localized `aiPrompt`/`aiPromptMultiple` templates receive only selected emotion names. Do not replace this with an API integration or alter query semantics without explicit product intent.
+
 **[2026-02-07]** Planning drift occurs when priority docs are inferred instead of read — Re-read `ANALYSIS.md` before ordering work. Quote exact section IDs/phase numbers when mapping priorities. Treat planning docs as authoritative artifacts.
 
 **[2026-02-07]** Mobile clipping/overlap issues come from weak height constraints — Enforce explicit parent-child height chains (`h-full`, `min-h-0`) and normal-flow layout. Prefer structural sizing fixes over hardcoded transforms. Keep touch targets >=44px (>=48px for dense chip rows).
 
 **[2026-02-24]** Emotion seed data includes deliberate non-obvious corrections — Preserve these unless explicitly revalidated: Plutchik `nostalgia = [serenity, sadness]`, Plutchik `compassion = [trust, sadness]`, duplicate `aggressiveness` stays replaced by `ruthlessness`, wheel uses `overwhelmed` instead of non-emotion label `busy`, and the dimensional model keeps extra unpleasant-calm emotions to avoid quadrant sparsity.
 
+**[2026-07-22]** Begin with experience, not theory selection — On mobile, asking users to choose an emotion model before describing their state adds cognitive load at the moment capacity may be lowest. Start with words, body, placement, or uncertainty; expose named models later as optional tools.
+
+**[2026-07-22]** Rehaul presentation around one shared safety boundary — Route-specific screens may own input state and reuse different model engines, but all completion must converge through the same crisis evaluation, temporal escalation, reflection, and persistence controller. This enables independent UI replacement without safety drift.
+
 ## Code Patterns & Pitfalls
+
+**[2026-07-22]** Fixed mobile shells need explicit grid areas and scroll reset — Conditional rows such as offline banners can shift auto-placed content and push navigation outside the viewport. Name shell grid areas, keep the content row `minmax(0, 1fr)`, and reset the internal content scroller whenever the destination changes.
 
 **[2026-02-07]** Temporary script format must match module mode — `.js` + `require(...)` fails in `"type": "module"` repos. Use `.cjs` for CommonJS temporary scripts. Always check `package.json` module type before writing temp scripts.
 
@@ -29,6 +37,8 @@
 **[2026-06-19]** Catalog regeneration must preserve curated copy — Model overlays primarily own topology and colors; they are not complete translation sources. `scripts/extract-catalog.cjs` must merge existing non-empty labels, descriptions, and needs, and support the current somatic `contextDescription`/`contextNeeds` schema before rewriting catalog JSON.
 
 ## Testing & Quality
+
+**[2026-07-22]** Theme colors need paired semantic foreground and background tokens — Reusing white text on a lightened dark-theme accent produced a 2.03:1 contrast ratio. Validate computed foreground/background contrast in real browser states, including overlays and post-action screens, rather than checking token values alone.
 
 **[2026-02-07]** Preference tests become flaky when bypassing storage facade — Direct `localStorage` writes did not align with app read path. Mock/assert through `storage.get()` for behavior tests. Keep direct `localStorage` assertions for storage-layer tests only.
 

@@ -1,265 +1,218 @@
 import { test, expect } from '@playwright/test'
+import { completeQuick, finishReflection, openApp, openArrival } from './helpers'
 
-test.describe('Onboarding', () => {
-  test('completes 4-step onboarding flow', async ({ page }) => {
+test.describe('First run and shell', () => {
+  test('completes onboarding without selecting a theory', async ({ page }) => {
     await page.goto('/')
-    await expect(page.getByRole('dialog')).toBeVisible()
-    await expect(page.getByText('This is an exploration, not a test')).toBeVisible()
-
-    // Step through all 4 screens
+    await expect(page.getByRole('dialog')).toContainText(/exploration, not a test/i)
     await page.getByRole('button', { name: 'Next' }).click()
-    await expect(page.getByText('Every emotion has a purpose')).toBeVisible()
-
+    await expect(page.getByRole('dialog')).toContainText(/every emotion has a purpose/i)
     await page.getByRole('button', { name: 'Next' }).click()
-    await expect(page.getByText('Choose your way in')).toBeVisible()
-
-    await page.getByRole('button', { name: 'Next' }).click()
-    await expect(page.getByText('About this app')).toBeVisible()
-
+    await expect(page.getByRole('heading', { name: 'Privacy & data' })).toBeVisible()
+    await expect(page.getByRole('dialog')).not.toContainText(/Plutchik|Emotion Wheel/)
     await page.getByRole('button', { name: 'Get started' }).click()
-    await expect(page.getByRole('dialog')).not.toBeVisible()
+    await expect(page.getByTestId('today-screen')).toBeVisible()
   })
 
-  test('can skip onboarding', async ({ page }) => {
-    await page.goto('/')
-    await expect(page.getByRole('dialog')).toBeVisible()
+  test('navigates Today, Explore, Journal and supports browser Back', async ({ page }) => {
+    await openApp(page)
+    await page.getByRole('button', { name: 'Start a check-in' }).click()
+    await expect(page.getByTestId('arrival-screen')).toBeVisible()
+    await page.goBack()
+    await expect(page.getByTestId('today-screen')).toBeVisible()
 
-    await page.getByRole('button', { name: 'Skip' }).click()
-    await expect(page.getByRole('dialog')).not.toBeVisible()
-  })
-})
-
-test.describe('Model navigation', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-    // Skip onboarding via localStorage
-    await page.evaluate(() => localStorage.setItem('emot-id-onboarded', 'true'))
-    await page.reload()
-    await page.waitForLoadState('networkidle')
+    await page.getByRole('button', { name: 'Explore' }).click()
+    await expect(page.getByTestId('explore-screen')).toBeVisible()
+    await page.getByRole('button', { name: 'Journal', exact: true }).click()
+    await expect(page.getByTestId('journal-screen')).toBeVisible()
   })
 
-  test('switches between all 4 models via ModelBar', async ({ page }) => {
-    const modelBar = page.locator('div.flex.gap-1')
+  test('switches language and shows offline state', async ({ page, context }) => {
+    await openApp(page)
+    await page.getByRole('button', { name: 'Settings' }).click()
+    await page.getByRole('button', { name: 'RO' }).click()
+    await expect(page.getByRole('heading', { name: 'Setări' })).toBeVisible()
+    await page.getByRole('button', { name: 'Înapoi' }).click()
+    await expect(page.getByRole('button', { name: 'Astăzi' })).toBeVisible()
 
-    // Default model should be visible (Plutchik or Body Map)
-    await expect(page.getByText('Your selections')).toBeVisible()
-
-    // Click each model tab and verify it loads
-    const tabs = modelBar.locator('button')
-    const count = await tabs.count()
-    expect(count).toBe(4)
-
-    for (let i = 0; i < count; i++) {
-      await tabs.nth(i).click()
-      // Each model should show the selection bar — toBeVisible waits up to default timeout
-      await expect(page.getByText('Your selections')).toBeVisible()
-    }
-  })
-
-  test('header shows app title', async ({ page }) => {
-    await expect(page.getByText('Emot-ID')).toBeVisible()
-    await expect(page.getByText('Identify your emotions')).toBeVisible()
+    await context.setOffline(true)
+    await expect(page.getByRole('status')).toContainText(/offline/i)
+    await context.setOffline(false)
   })
 })
 
-test.describe('Settings menu', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-    await page.evaluate(() => localStorage.setItem('emot-id-onboarded', 'true'))
-    await page.reload()
-    await page.waitForLoadState('networkidle')
+test.describe('Primary check-in routes', () => {
+  test.beforeEach(async ({ page }) => openApp(page))
+
+  test('quick feeling reaches Meaning + Need and saves to Journal', async ({ page }) => {
+    await completeQuick(page, 'anxiety')
+    await expect(page.getByRole('heading', { name: 'What may be here' })).toBeVisible()
+    await expect(page.getByText(/best judge of what fits/i)).toBeVisible()
+    await page.getByRole('button', { name: 'Yes' }).click()
+    await finishReflection(page)
+
+    await page.getByRole('button', { name: 'Journal', exact: true }).click()
+    await expect(page.getByTestId('journal-screen')).toContainText(/anxiety/i)
+    await page.getByRole('button', { name: /open reflection: anxiety/i }).click()
+    await expect(page.getByTestId('session-detail-screen')).toContainText(/yes/i)
   })
 
-  test('opens and closes settings menu', async ({ page }) => {
-    await page.locator('header button').first().click()
-    await expect(page.getByText('LANGUAGE')).toBeVisible()
-    await expect(page.getByText('MODEL')).toBeVisible()
-    await expect(page.getByText('SOUND EFFECTS')).toBeVisible()
-
-    // Close via Escape (backdrop intercepts click on close button)
-    await page.keyboard.press('Escape')
-    await expect(page.getByText('LANGUAGE')).not.toBeVisible()
+  test('does not persist when local saving is disabled', async ({ page }) => {
+    await page.getByRole('button', { name: 'Settings' }).click()
+    await page.getByRole('button', { name: 'Privacy & data' }).click()
+    await page.getByRole('switch', { name: 'Save completed check-ins' }).click()
+    await page.getByRole('button', { name: 'Back' }).click()
+    await page.getByRole('button', { name: 'Back' }).click()
+    await completeQuick(page, 'joy')
+    await finishReflection(page)
+    await page.getByRole('button', { name: 'Journal', exact: true }).click()
+    await expect(page.getByText('No saved reflections yet')).toBeVisible()
   })
 
-  test('switches language to Romanian and back', async ({ page }) => {
-    await page.locator('header button').first().click()
-    await page.getByRole('button', { name: 'Romana' }).click()
-    await expect(page.getByText('Selectiile tale')).toBeVisible()
+  test('Body Compass collects region, sensation, intensity and reflects', async ({ page }) => {
+    await openArrival(page)
+    await page.getByTestId('arrival-body').click()
+    await expect(page.getByTestId('body-screen')).toBeVisible()
+    expect(await page.locator('.app-content').evaluate((element) => element.scrollTop)).toBe(0)
+    await page.getByRole('button', { name: 'Front', exact: true }).click()
 
-    // Switch back
-    await page.locator('header button').first().click()
-    await page.getByRole('button', { name: 'English' }).click()
-    await expect(page.getByText('Your selections')).toBeVisible()
+    await page.locator('[data-region="chest"]').first().click({ force: true })
+    const picker = page.getByRole('dialog')
+    await expect(picker).toBeVisible()
+    await picker.locator('.grid button').first().click()
+    await picker.getByRole('button', { name: /moderate/i }).click()
+    await page.getByRole('button', { name: 'See what might fit' }).click()
+    await expect(page.getByTestId('reflection-screen')).toBeVisible()
   })
 
-  test('shows privacy notice', async ({ page }) => {
-    await page.locator('header button').first().click()
-
-    // Privacy headline should be visible
-    await expect(page.getByText('Your data stays on this device')).toBeVisible()
-
-    // Click InfoButton to see full privacy detail
-    const privacyBtn = page.getByRole('button', { name: /data stays on this device/i })
-    await privacyBtn.click()
-    await expect(page.getByText('IndexedDB')).toBeVisible()
-    await expect(page.getByText('Nothing is sent to any server')).toBeVisible()
+  test('Affect Map reveals suggestions after placement', async ({ page }) => {
+    await openArrival(page)
+    await page.getByTestId('arrival-affect').click()
+    const plot = page.getByTestId('dimensional-plot-container').locator('svg')
+    await expect(plot).toBeVisible()
+    const box = await plot.boundingBox()
+    expect(box).not.toBeNull()
+    await plot.click({ position: { x: box!.width * 0.7, y: box!.height * 0.25 }, force: true })
+    await expect(page.getByTestId('affect-readout')).toBeVisible()
+    const tray = page.getByTestId('dimensional-suggestion-tray')
+    await tray.locator('button').first().click()
+    await page.getByRole('button', { name: 'Reflect on these words' }).click()
+    await expect(page.getByTestId('reflection-screen')).toBeVisible()
   })
 
-  test('shows disclaimer via InfoButton', async ({ page }) => {
-    await page.locator('header button').first().click()
-
-    const disclaimerBtn = page.getByRole('button', { name: /disclaimer/i })
-    await disclaimerBtn.click()
-    await expect(page.getByText('not a diagnostic tool')).toBeVisible()
-  })
-})
-
-test.describe('Emotion Wheel model', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-    await page.evaluate(() => localStorage.setItem('emot-id-onboarded', 'true'))
-    await page.reload()
-    await page.waitForLoadState('networkidle')
-
-    // Navigate to Emotion Wheel
-    const tabs = page.locator('div.flex.gap-1 button')
-    await tabs.filter({ hasText: /Emotion Wheel|Wheel/i }).first().click()
-    await page.waitForTimeout(500)
+  test('Word Ladder moves broad to precise and reflects', async ({ page }) => {
+    await openArrival(page)
+    await page.getByTestId('arrival-words').click()
+    await page.getByRole('listitem').first().click()
+    await page.getByRole('listitem').first().click()
+    await page.getByRole('listitem').first().click()
+    await expect(page.locator('.route-action button')).toBeEnabled()
+    await page.locator('.route-action button').click()
+    await expect(page.getByTestId('reflection-screen')).toBeVisible()
   })
 
-  test('shows bubbles and allows selection', async ({ page }) => {
-    // Emotion Wheel shows top-level categories
-    const bubbles = page.locator('button[aria-label]').filter({ hasText: /.+/ })
-    const count = await bubbles.count()
-    expect(count).toBeGreaterThan(0)
-
-    // Click first visible bubble
-    await bubbles.first().click({ force: true })
-    await page.waitForTimeout(300)
-
-    // Selection bar should update
-    await expect(page.getByText('No selection')).not.toBeVisible()
-  })
-})
-
-test.describe('Plutchik model', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-    await page.evaluate(() => localStorage.setItem('emot-id-onboarded', 'true'))
-    await page.reload()
-    await page.waitForLoadState('networkidle')
-
-    // Navigate to Plutchik
-    const tabs = page.locator('div.flex.gap-1 button')
-    await tabs.filter({ hasText: /Plutchik/i }).first().click()
-    await page.waitForTimeout(500)
-  })
-
-  test('shows 8 primary emotions', async ({ page }) => {
-    // Plutchik has 8 primary emotions: joy, trust, fear, surprise, sadness, disgust, anger, anticipation
-    // Rendered as "Happy", "Trusting", etc. in English
-    const bubbles = page.locator('button[tabindex="0"]').filter({ hasText: /.+/ })
+  test('Plutchik remains available through Explore', async ({ page }) => {
+    await page.getByRole('button', { name: 'Explore' }).click()
+    await page.getByTestId('explore-plutchik').click()
+    const bubbles = page.locator('.model-stage button[tabindex="0"]')
     await expect(bubbles.first()).toBeVisible()
-
-    // Should see hint text
-    await expect(page.getByText(/tap an emotion/i)).toBeVisible()
-  })
-
-  test('selecting two emotions shows dyad combo', async ({ page }) => {
-    // Select first two visible bubbles using force:true to bypass overlap
-    const bubbles = page.locator('button[tabindex="0"]').filter({ hasText: /.+/ })
-
-    await bubbles.nth(0).click({ force: true })
-    const analyzeBtn = page.getByRole('button', { name: /analyze/i })
-    await expect(analyzeBtn).toBeEnabled()
-    await bubbles.nth(1).click({ force: true })
-    await expect(analyzeBtn).toBeEnabled()
-
-    // Analyze button should be enabled (text may vary by language)
-  })
-})
-
-test.describe('Analyze flow', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-    await page.evaluate(() => localStorage.setItem('emot-id-onboarded', 'true'))
-    await page.reload()
-    await page.waitForLoadState('networkidle')
-
-    // Navigate to Emotion Wheel for reliable selection
-    const tabs = page.locator('div.flex.gap-1 button')
-    await tabs.filter({ hasText: /Emotion Wheel|Wheel/i }).first().click()
-    await page.waitForTimeout(500)
-  })
-
-  test('analyze button is disabled with no selections', async ({ page }) => {
-    const analyzeBtn = page.getByRole('button', { name: /select an emotion/i })
-    await expect(analyzeBtn).toBeDisabled()
-  })
-
-  test('selecting and analyzing opens result modal', async ({ page }) => {
-    // Click a bubble to select
-    const bubbles = page.locator('button[aria-label]').filter({ hasText: /.+/ })
-    await bubbles.first().click({ force: true })
-    await page.waitForTimeout(400)
-
-    // Click analyze
-    const analyzeBtn = page.getByRole('button', { name: /analyze/i })
-    await expect(analyzeBtn).toBeEnabled()
-    await analyzeBtn.click()
-    await page.waitForTimeout(500)
-
-    // Result modal should appear
-    await expect(page.getByRole('dialog')).toBeVisible()
-    await expect(page.getByText(/for self-exploration/i)).toBeVisible()
+    const stageBox = await page.locator('.model-stage').boundingBox()
+    let selected = 0
+    for (let index = 0; index < await bubbles.count() && selected < 2; index++) {
+      const box = await bubbles.nth(index).boundingBox()
+      if (!box || !stageBox) continue
+      const fullyVisible = box.x >= stageBox.x && box.y >= stageBox.y
+        && box.x + box.width <= stageBox.x + stageBox.width
+        && box.y + box.height <= Math.min(stageBox.y + stageBox.height, page.viewportSize()!.height)
+      if (fullyVisible) {
+        await bubbles.nth(index).click({ force: true })
+        selected++
+      }
+    }
+    expect(selected).toBe(2)
+    await expect(page.locator('.route-action button')).toBeEnabled()
   })
 })
 
-test.describe('"I don\'t know" flow', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-    await page.evaluate(() => {
-      localStorage.setItem('emot-id-onboarded', 'true')
-      // Dismiss all hints so "I don't know" button appears
-      localStorage.setItem('emot-id-hint-plutchik', 'true')
-      localStorage.setItem('emot-id-hint-wheel', 'true')
-      localStorage.setItem('emot-id-hint-somatic', 'true')
-      localStorage.setItem('emot-id-hint-dimensional', 'true')
-    })
+test.describe('Safety behavior through the UI', () => {
+  test('tier 4 support is first and gates reflection details', async ({ page }) => {
+    await openApp(page)
+    await page.evaluate(() => localStorage.setItem('emot-id-allow-external-ai', 'true'))
     await page.reload()
-    await page.waitForLoadState('networkidle')
-  })
+    await openArrival(page)
+    await page.getByTestId('arrival-words').click()
 
-  test('shows "I don\'t know" button and opens modal', async ({ page }) => {
-    const btn = page.getByText("I don't know what I'm feeling")
-    await expect(btn).toBeVisible()
-    await btn.click()
-    await page.waitForTimeout(300)
+    const choose = async (name: RegExp) => page.locator('.word-options > button').filter({ hasText: name }).first().click()
 
-    // DontKnowModal should appear with model suggestions
-    await expect(page.getByRole('dialog')).toBeVisible()
+    await choose(/^sad/i)
+    await choose(/^despair/i)
+    await page.locator('.word-path-actions > button').first().click()
+
+    await choose(/^sad/i)
+    await choose(/^depressed/i)
+    await choose(/^empty/i)
+
+    await choose(/^fearful/i)
+    await choose(/^weak/i)
+    await choose(/^worthless/i)
+
+    await page.locator('.route-action button').click()
+    const alert = page.getByRole('alert')
+    await expect(alert).toBeVisible()
+    await expect(page.locator('.emotion-heading')).not.toBeVisible()
+    await expect(page.getByRole('link', { name: 'Explore with AI' })).toHaveCount(0)
+    await expect(page.getByRole('button', { name: /understand.*show my reflection/i })).toBeVisible()
+
+    const alertBox = await alert.boundingBox()
+    const ackBox = await page.getByRole('button', { name: /understand.*show my reflection/i }).boundingBox()
+    expect(alertBox!.y).toBeLessThan(ackBox!.y)
+
+    await page.getByRole('button', { name: /understand.*show my reflection/i }).click()
+    await expect(page.locator('.emotion-heading')).toContainText(/despair/i)
+    await expect(page.getByRole('link', { name: 'Explore with AI' })).toBeVisible()
   })
 })
 
-test.describe('Accessibility', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-    await page.evaluate(() => localStorage.setItem('emot-id-onboarded', 'true'))
+test.describe('Privacy and support destinations', () => {
+  test('activates the existing Google AI Mode link without changing its query', async ({ page }) => {
+    await openApp(page)
+    await completeQuick(page, 'anxiety')
+    await expect(page.getByRole('link', { name: 'Explore with AI' })).toHaveCount(0)
+    await expect(page.getByText(/external AI search is off/i)).toBeVisible()
+
+    await page.getByRole('button', { name: 'Settings' }).click()
+    await page.getByRole('button', { name: 'Privacy & data' }).click()
+    const aiSwitch = page.getByRole('switch', { name: 'Allow external AI search links' })
+    await aiSwitch.click()
+    await expect(aiSwitch).toBeChecked()
+    await page.getByRole('button', { name: 'Back' }).click()
+    await page.getByRole('button', { name: 'Back' }).click()
+
+    const link = page.getByRole('link', { name: 'Explore with AI' })
+    await expect(link).toBeVisible()
+    await expect(link).toHaveAttribute('target', '_blank')
+    const href = await link.getAttribute('href')
+    const url = new URL(href!)
+    expect(url.origin + url.pathname).toBe('https://www.google.com/search')
+    expect(url.searchParams.get('udm')).toBe('50')
+    expect(url.searchParams.get('q')).toBe(
+      'I feel anxiety. What does this emotion mean and how can I understand it better?',
+    )
+
     await page.reload()
-    await page.waitForLoadState('networkidle')
+    await completeQuick(page, 'joy')
+    await expect(page.getByRole('link', { name: 'Explore with AI' })).toBeVisible()
   })
 
-  test('has proper aria-live region for selection count', async ({ page }) => {
-    const liveRegion = page.locator('[aria-live="polite"]')
-    await expect(liveRegion).toBeAttached()
-  })
-
-  test('onboarding dialog has aria-modal', async ({ page }) => {
-    // Clear onboarding flag to re-trigger
-    await page.evaluate(() => localStorage.removeItem('emot-id-onboarded'))
-    await page.reload()
-
-    const dialog = page.getByRole('dialog')
-    await expect(dialog).toHaveAttribute('aria-modal', 'true')
+  test('settings separates privacy and support from product navigation', async ({ page }) => {
+    await openApp(page)
+    await page.getByRole('button', { name: 'Settings' }).click()
+    await page.getByRole('button', { name: 'Dark' }).click()
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+    await page.getByRole('button', { name: 'Privacy & data' }).click()
+    await expect(page.getByTestId('privacy-screen')).toContainText(/no account, analytics, or cloud sync/i)
+    await page.getByRole('button', { name: 'Back' }).click()
+    await page.getByRole('button', { name: 'Support' }).click()
+    await expect(page.getByTestId('support-screen')).toContainText('116 123')
   })
 })

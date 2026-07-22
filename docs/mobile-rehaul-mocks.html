@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emot-ID Mobile Rehaul Mocks</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-synthesis: none;
+      --ink: #17211f;
+      --muted: #5f6b67;
+      --paper: #f5f7f4;
+      --surface: #ffffff;
+      --line: #d9dfda;
+      --teal: #197a71;
+      --teal-soft: #d9eeea;
+      --coral: #c9584d;
+      --coral-soft: #f6dfdc;
+      --blue: #3267a8;
+      --blue-soft: #dee9f6;
+      --mustard: #9a6d11;
+      --mustard-soft: #f5e9c8;
+      --violet: #67568c;
+      --violet-soft: #e9e4f2;
+      --danger: #9d3535;
+      --shadow: 0 18px 50px rgba(21, 35, 31, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: #e9eeea;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+    button { font: inherit; letter-spacing: 0; }
+    .page {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      padding: 36px 24px 64px;
+    }
+    .intro {
+      max-width: 920px;
+      margin: 0 auto 32px;
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0 0 10px; font-size: 32px; line-height: 1.12; }
+    .intro p { margin: 0; max-width: 760px; color: var(--muted); line-height: 1.6; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 36px 24px;
+      align-items: start;
+    }
+    .concept { min-width: 0; }
+    .concept-copy {
+      width: 393px;
+      max-width: 100%;
+      margin: 0 auto 12px;
+    }
+    .concept-copy h2 { margin: 0; font-size: 18px; line-height: 1.25; }
+    .concept-copy p { margin: 5px 0 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
+    .phone {
+      position: relative;
+      width: 393px;
+      height: 852px;
+      max-width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 8px solid #18201e;
+      border-radius: 34px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .phone::before {
+      content: "";
+      position: absolute;
+      z-index: 20;
+      top: 8px;
+      left: 50%;
+      width: 84px;
+      height: 22px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: #18201e;
+    }
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      padding-top: 26px;
+      background: var(--paper);
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 18px 4px;
+      color: #33413d;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .appbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 58px;
+      padding: 8px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { font-size: 17px; font-weight: 800; }
+    .subbrand { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; font-weight: 500; }
+    .icon-btn {
+      display: inline-grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 18px;
+    }
+    .content {
+      flex: 1;
+      min-height: 0;
+      padding: 20px 18px;
+      overflow: hidden;
+    }
+    .kicker { margin: 0 0 8px; color: var(--teal); font-size: 13px; font-weight: 800; }
+    .screen h3 { margin: 0; font-size: 27px; line-height: 1.14; }
+    .lede { margin: 10px 0 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+    .privacy {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      color: #4e5d58;
+      font-size: 12px;
+    }
+    .privacy-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+    .route-list { display: grid; gap: 10px; margin-top: 28px; }
+    .route {
+      display: grid;
+      grid-template-columns: 42px 1fr 20px;
+      gap: 12px;
+      align-items: center;
+      min-height: 76px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      text-align: left;
+    }
+    .route-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--teal-soft);
+      color: var(--teal);
+      font-weight: 900;
+    }
+    .route strong { display: block; font-size: 16px; }
+    .route small { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; line-height: 1.35; }
+    .chev { color: var(--muted); font-size: 20px; }
+    .bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      min-height: 74px;
+      padding: 7px 10px 13px;
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,0.96);
+    }
+    .nav-item {
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 3px;
+      min-height: 52px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .nav-symbol { font-size: 18px; line-height: 1; }
+    .nav-item.active { color: var(--teal); }
+    .primary {
+      min-height: 56px;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--ink);
+      color: white;
+      font-weight: 800;
+    }
+    .secondary {
+      min-height: 48px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .screen-action { padding: 12px 18px 18px; background: var(--paper); }
+
+    /* Body Compass */
+    .step-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .step-row span { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .steps { display: flex; gap: 5px; }
+    .steps i { display: block; width: 28px; height: 4px; border-radius: 4px; background: #d4dad6; }
+    .steps i.active { background: var(--coral); }
+    .body-stage {
+      position: relative;
+      height: 390px;
+      margin-top: 16px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: #eef2ef;
+    }
+    .figure {
+      position: absolute;
+      left: 50%;
+      top: 38px;
+      width: 104px;
+      height: 304px;
+      transform: translateX(-50%);
+    }
+    .figure-head { position: absolute; left: 34px; width: 36px; height: 42px; border-radius: 48%; background: #c7d2cd; }
+    .figure-torso { position: absolute; top: 48px; left: 18px; width: 68px; height: 112px; border-radius: 28px 28px 18px 18px; background: #c7d2cd; }
+    .figure-arm { position: absolute; top: 58px; width: 18px; height: 132px; border-radius: 12px; background: #c7d2cd; }
+    .figure-arm.left { left: 0; transform: rotate(4deg); }
+    .figure-arm.right { right: 0; transform: rotate(-4deg); }
+    .figure-leg { position: absolute; top: 154px; width: 27px; height: 146px; border-radius: 15px; background: #c7d2cd; }
+    .figure-leg.left { left: 23px; }
+    .figure-leg.right { right: 23px; }
+    .body-focus {
+      position: absolute;
+      top: 93px;
+      left: 50%;
+      width: 64px;
+      height: 64px;
+      transform: translateX(-50%);
+      border: 3px solid var(--coral);
+      border-radius: 50%;
+      background: rgba(201,88,77,0.18);
+    }
+    .body-label {
+      position: absolute;
+      top: 98px;
+      right: 18px;
+      width: 105px;
+      padding: 8px 10px;
+      border-left: 3px solid var(--coral);
+      background: white;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+    .body-label strong { display: block; font-size: 13px; }
+    .toggle { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 8px; background: white; }
+    .toggle span { padding: 7px 12px; border-radius: 6px; color: var(--muted); font-size: 12px; }
+    .toggle .on { background: var(--ink); color: white; }
+    .sensation-row { display: flex; gap: 8px; margin-top: 14px; }
+    .sensation { flex: 1; min-height: 44px; border: 1px solid var(--line); border-radius: 8px; background: white; color: var(--muted); font-size: 12px; }
+    .sensation.active { border-color: var(--coral); background: var(--coral-soft); color: #7c302b; font-weight: 800; }
+
+    /* Affect Map */
+    .map-wrap { margin-top: 18px; }
+    .affect-map {
+      position: relative;
+      height: 410px;
+      margin: 0 12px;
+      border: 1px solid #bdc7c1;
+      border-radius: 8px;
+      background: white;
+    }
+    .axis-x, .axis-y { position: absolute; background: #aeb9b3; }
+    .axis-x { left: 0; right: 0; top: 50%; height: 1px; }
+    .axis-y { top: 0; bottom: 0; left: 50%; width: 1px; }
+    .quad { position: absolute; width: 50%; height: 50%; opacity: 0.55; }
+    .q1 { top: 0; right: 0; background: #f8eed2; border-radius: 0 8px 0 0; }
+    .q2 { top: 0; left: 0; background: #f7e2df; border-radius: 8px 0 0 0; }
+    .q3 { left: 0; bottom: 0; background: #e7e5f0; border-radius: 0 0 0 8px; }
+    .q4 { right: 0; bottom: 0; background: #dfeeea; border-radius: 0 0 8px 0; }
+    .anchor { position: absolute; z-index: 2; color: #43514c; font-size: 12px; font-weight: 800; }
+    .anchor.top { top: 10px; left: 50%; transform: translateX(-50%); }
+    .anchor.bottom { bottom: 10px; left: 50%; transform: translateX(-50%); }
+    .anchor.left { top: 50%; left: 8px; transform: translateY(-50%); }
+    .anchor.right { top: 50%; right: 8px; transform: translateY(-50%); }
+    .target {
+      position: absolute;
+      z-index: 3;
+      top: 31%;
+      left: 37%;
+      width: 54px;
+      height: 54px;
+      transform: translate(-50%, -50%);
+      border: 4px solid white;
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 0 0 0 2px var(--coral), 0 6px 16px rgba(120,45,40,0.2);
+    }
+    .target::after { content: ""; position: absolute; inset: 18px; border-radius: 50%; background: white; }
+    .readout {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      font-size: 13px;
+    }
+    .readout strong { color: var(--coral); }
+
+    /* Word Ladder */
+    .path { display: flex; align-items: center; gap: 7px; margin-top: 16px; color: var(--muted); font-size: 12px; }
+    .path strong { color: var(--ink); }
+    .family-list { display: grid; gap: 8px; margin-top: 18px; }
+    .family {
+      display: grid;
+      grid-template-columns: 8px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 59px;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+    }
+    .family-bar { width: 8px; height: 38px; border-radius: 4px; background: var(--blue); }
+    .family strong { font-size: 15px; }
+    .family small { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .family.selected { border-color: var(--blue); background: var(--blue-soft); }
+    .branches { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .branches-label { margin-bottom: 9px; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .branch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .branch { min-height: 48px; border: 1px solid #b9cbe0; border-radius: 8px; background: white; color: #244e7d; font-weight: 700; }
+    .branch.active { background: var(--blue); color: white; }
+    .compare { margin-top: 12px; color: var(--blue); font-size: 12px; font-weight: 800; }
+
+    /* Meaning + Need */
+    .result-screen { background: #f8f5f1; }
+    .result-screen .appbar { border-bottom-color: #ddd8d1; }
+    .result-summary { padding: 18px; background: var(--ink); color: white; }
+    .result-summary .kicker { color: #9bd2ca; }
+    .result-summary h3 { font-size: 24px; }
+    .result-summary p { margin: 8px 0 0; color: #d4dfdb; font-size: 14px; line-height: 1.45; }
+    .fit-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 14px; }
+    .fit { min-height: 42px; border: 1px solid #71807b; border-radius: 8px; background: transparent; color: white; font-size: 12px; }
+    .fit.active { border-color: #9bd2ca; background: #275e58; }
+    .insight-band { padding: 17px 18px; border-bottom: 1px solid #ddd8d1; }
+    .insight-band h4 { margin: 0; font-size: 14px; }
+    .insight-band p { margin: 7px 0 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
+    .need-options { display: grid; gap: 8px; margin-top: 12px; }
+    .need {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 9px 11px;
+      border: 1px solid #d7c9b6;
+      border-radius: 8px;
+      background: white;
+      text-align: left;
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .need-mark { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 50%; background: var(--mustard-soft); color: var(--mustard); }
+    .result-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 8px; padding: 12px 18px 18px; }
+
+    /* Daily Thread */
+    .thread-head { padding: 18px 18px 4px; }
+    .thread-head h3 { font-size: 25px; }
+    .quick-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-top: 18px; }
+    .mood {
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 5px;
+      min-height: 72px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .mood-dot { width: 24px; height: 24px; border-radius: 50%; background: var(--teal-soft); border: 6px solid var(--teal); }
+    .mood:nth-child(2) .mood-dot { background: var(--mustard-soft); border-color: var(--mustard); }
+    .mood:nth-child(3) .mood-dot { background: var(--coral-soft); border-color: var(--coral); }
+    .mood:nth-child(4) .mood-dot { background: var(--violet-soft); border-color: var(--violet); }
+    .thread-section { padding: 18px; border-top: 1px solid var(--line); }
+    .section-title { display: flex; justify-content: space-between; align-items: center; }
+    .section-title h4 { margin: 0; font-size: 14px; }
+    .section-title span { color: var(--teal); font-size: 12px; font-weight: 800; }
+    .thread-card { margin-top: 10px; padding: 13px 14px; border-left: 4px solid var(--teal); background: white; }
+    .thread-card strong { display: block; font-size: 15px; }
+    .thread-card p { margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.4; }
+    .trend { position: relative; height: 96px; margin-top: 12px; border-bottom: 1px solid var(--line); }
+    .trend-line { position: absolute; left: 6px; right: 6px; top: 43px; height: 3px; transform: rotate(-4deg); background: var(--teal); }
+    .trend-point { position: absolute; width: 12px; height: 12px; border: 3px solid white; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 1px var(--teal); }
+    .tp1 { left: 9%; top: 54px; } .tp2 { left: 31%; top: 47px; } .tp3 { left: 54%; top: 45px; } .tp4 { left: 78%; top: 31px; }
+    .days { display: flex; justify-content: space-between; margin-top: 78px; color: var(--muted); font-size: 10px; }
+
+    /* Adaptive route */
+    .adaptive-card { margin-top: 20px; padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: white; }
+    .adaptive-card .small { margin: 0; color: var(--muted); font-size: 12px; }
+    .adaptive-card h4 { margin: 5px 0 0; font-size: 18px; }
+    .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 16px; }
+    .choice {
+      min-height: 110px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      text-align: left;
+    }
+    .choice-mark { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 50%; background: var(--teal-soft); color: var(--teal); font-weight: 900; }
+    .choice strong { display: block; margin-top: 10px; font-size: 14px; }
+    .choice small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; line-height: 1.35; }
+    .support-link { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--danger); font-size: 12px; font-weight: 800; }
+
+    @media (max-width: 1260px) {
+      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 860px) {
+      .page { padding: 24px 12px 48px; }
+      .gallery { grid-template-columns: 1fr; gap: 30px; }
+      .phone { width: min(393px, 100%); }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="intro">
+      <p class="eyebrow">Emot-ID mobile rehaul</p>
+      <h1>Six mixable interaction directions</h1>
+      <p>One visual system; different ways into emotional awareness. Theory remains available, but the first screen begins with experience, not model selection.</p>
+    </header>
+
+    <section class="gallery" aria-label="Mobile rehaul concepts">
+      <article class="concept" id="arrival">
+        <div class="concept-copy">
+          <h2>1. Arrival</h2>
+          <p>Low-pressure entry: words, body, or uncertainty.</p>
+        </div>
+        <div class="phone">
+          <div class="screen">
+            <div class="status-row"><span>9:41</span><span>Private on this device</span></div>
+            <header class="appbar">
+              <div><span class="brand">Emot-ID</span><span class="subbrand">A place to notice, not perform</span></div>
+              <button class="icon-btn" aria-label="Settings">•••</button>
+            </header>
+            <div class="content">
+              <p class="kicker">Right now</p>
+              <h3>How would you like to begin?</h3>
+              <p class="lede">You do not need the exact word. Start with whatever feels easiest.</p>
+              <div class="privacy"><span class="privacy-dot"></span><span>Nothing leaves this device unless you choose to share it.</span></div>
+              <div class="route-list">
+                <button class="route"><span class="route-mark">Aa</span><span><strong>I have some words</strong><small>Start broad, then make the feeling more precise.</small></span><span class="chev">›</span></button>
+                <button class="route"><span class="route-mark">○</span><span><strong>I notice it in my body</strong><small>Begin with pressure, warmth, tension, or numbness.</small></span><span class="chev">›</span></button>
+                <button class="route"><span class="route-mark">?</span><span><strong>I am not sure yet</strong><small>Use a simple map or a few gentle prompts.</small></span><span class="chev">›</span></button>
+              </div>
+            </div>
+            <nav class="bottom-nav" aria-label="Primary navigation">
+              <button class="nav-item active"><span class="nav-symbol">●</span><span>Check in</span></button>
+              <button class="nav-item"><span class="nav-symbol">◇</span><span>Explore</span></button>
+              <button class="nav-item"><span class="nav-symbol">≡</span><span>Journal</span></button>
+            </nav>
+          </div>
+        </div>
+      </article>
+
+      <article class="concept" id="body-compass">
+        <div class="concept-copy">
+          <h2>2. Body Compass</h2>
+          <p>Interoception first; emotion labels later.</p>
+        </div>
+        <div class="phone">
+          <div class="screen">
+            <div class="status-row"><span>9:41</span><span>Body route</span></div>
+            <header class="appbar">
+              <button class="icon-btn" aria-label="Back">‹</button>
+              <span class="brand">Notice the sensation</span>
+              <button class="icon-btn" aria-label="Help">?</button>
+            </header>
+            <div class="content">
+              <div class="step-row"><div class="steps"><i class="active"></i><i></i><i></i></div><span>1 of 3</span></div>
+              <h3>Where do you notice it first?</h3>
+              <p class="lede">Choose one area. This does not have to explain the whole feeling.</p>
+              <div class="step-row" style="margin-top:14px;margin-bottom:0"><span>Tap a region</span><div class="toggle"><span class="on">Front</span><span>Back</span></div></div>
+              <div class="body-stage">
+                <div class="figure"><span class="figure-head"></span><span class="figure-torso"></span><span class="figure-arm left"></span><span class="figure-arm right"></span><span class="figure-leg left"></span><span class="figure-leg right"></span><span class="body-focus"></span></div>
+                <div class="body-label"><strong>Chest</strong>Selected region</div>
+              </div>
+              <div class="sensation-row"><button class="sensation active">Tight</button><button class="sensation">Heavy</button><button class="sensation">Warm</button><button class="sensation">Numb</button></div>
+            </div>
+            <div class="screen-action"><button class="primary" style="width:100%">Continue to intensity</button></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="concept" id="affect-map">
+        <div class="concept-copy">
+          <h2>3. Affect Map</h2>
+          <p>Continuous placement; labels only after choosing.</p>
+        </div>
+        <div class="phone">
+          <div class="screen">
+            <div class="status-row"><span>9:41</span><span>Place it</span></div>
+            <header class="appbar">
+              <button class="icon-btn" aria-label="Back">‹</button>
+              <span class="brand">Emotional space</span>
+              <button class="icon-btn" aria-label="Information">i</button>
+            </header>
+            <div class="content">
+              <h3>Place how it feels</h3>
+              <p class="lede">Move the point. Approximate is enough.</p>
+              <div class="map-wrap">
+                <div class="affect-map">
+                  <span class="quad q1"></span><span class="quad q2"></span><span class="quad q3"></span><span class="quad q4"></span>
+                  <span class="axis-x"></span><span class="axis-y"></span>
+                  <span class="anchor top">Activated</span><span class="anchor bottom">Settled</span><span class="anchor left">Unpleasant</span><span class="anchor right">Pleasant</span>
+                  <span class="target" aria-label="Current position"></span>
+                </div>
+                <div class="readout"><span>Your placement</span><strong>unpleasant + activated</strong></div>
+              </div>
+            </div>
+            <div class="screen-action"><button class="primary" style="width:100%">See words that may fit</button></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="concept" id="word-ladder">
+        <div class="concept-copy">
+          <h2>4. Word Ladder</h2>
+          <p>Broad family to precise word, with nearby comparisons.</p>
+        </div>
+        <div class="phone">
+          <div class="screen">
+            <div class="status-row"><span>9:41</span><span>Find the word</span></div>
+            <header class="appbar">
+              <button class="icon-btn" aria-label="Back">‹</button>
+              <span class="brand">Name what is here</span>
+              <button class="icon-btn" aria-label="Search">⌕</button>
+            </header>
+            <div class="content">
+              <p class="kicker">Start broad</p>
+              <h3>Which family feels closest?</h3>
+              <p class="lede">You can choose more than one or go back at any time.</p>
+              <div class="path"><strong>Feeling</strong><span>›</span><strong>Heavy</strong><span>›</span><span>more precise</span></div>
+              <div class="family-list">
+                <div class="family selected"><span class="family-bar"></span><span><strong>Heavy</strong><small>low energy, loss, distance</small></span><span class="chev">›</span></div>
+                <div class="family"><span class="family-bar" style="background:var(--coral)"></span><span><strong>On edge</strong><small>activated, threatened, tense</small></span><span class="chev">›</span></div>
+                <div class="family"><span class="family-bar" style="background:var(--mustard)"></span><span><strong>Open</strong><small>connected, energized, warm</small></span><span class="chev">›</span></div>
+              </div>
+              <div class="branches">
+                <div class="branches-label">What kind of heavy?</div>
+                <div class="branch-grid"><button class="branch active">sad</button><button class="branch">lonely</button><button class="branch">disappointed</button><button class="branch">numb</button></div>
+                <div class="compare">Compare nearby words →</div>
+              </div>
+            </div>
+            <div class="screen-action"><button class="primary" style="width:100%">This feels closest</button></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="concept" id="meaning-need">
+        <div class="concept-copy">
+          <h2>5. Meaning + Need</h2>
+          <p>Function, need, and agency before long explanations.</p>
+        </div>
+        <div class="phone">
+          <div class="screen result-screen">
+            <div class="status-row"><span>9:41</span><span>Your reflection</span></div>
+            <header class="appbar"><button class="icon-btn" aria-label="Close">×</button><span class="brand">What may fit</span><button class="icon-btn" aria-label="Save">＋</button></header>
+            <div class="result-summary">
+              <p class="kicker">A possible reading</p>
+              <h3>Sadness with overwhelm</h3>
+              <p>Part of you may be slowing down around a loss while another part is carrying more than feels manageable.</p>
+              <div class="fit-row"><button class="fit">Not really</button><button class="fit active">Somewhat</button><button class="fit">Very much</button></div>
+            </div>
+            <div class="insight-band">
+              <h4>What these feelings may be doing</h4>
+              <p>Sadness makes room to process what mattered. Overwhelm signals that pressure needs to come down.</p>
+            </div>
+            <div class="insight-band" style="flex:1">
+              <h4>What might help right now</h4>
+              <div class="need-options">
+                <button class="need"><span class="need-mark">1</span><span>Reduce one demand</span></button>
+                <button class="need"><span class="need-mark">2</span><span>Ask for company or support</span></button>
+                <button class="need"><span class="need-mark">3</span><span>Take two quiet minutes</span></button>
+              </div>
+              <div class="support-link">Need immediate support? See options</div>
+            </div>
+            <div class="result-actions"><button class="secondary">More context</button><button class="primary">Choose a next step</button></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="concept" id="daily-thread">
+        <div class="concept-copy">
+          <h2>6. Daily Thread</h2>
+          <p>Recommended shell: continuity without streak pressure.</p>
+        </div>
+        <div class="phone">
+          <div class="screen">
+            <div class="status-row"><span>9:41</span><span>Wednesday</span></div>
+            <header class="appbar">
+              <div><span class="brand">Good evening</span><span class="subbrand">Nothing to complete. Just notice.</span></div>
+              <button class="icon-btn" aria-label="Settings">•••</button>
+            </header>
+            <div class="content" style="padding:0;overflow:hidden">
+              <section class="thread-head">
+                <p class="kicker">A quick arrival</p>
+                <h3>What is closest right now?</h3>
+                <div class="quick-strip">
+                  <button class="mood"><span class="mood-dot"></span><span>settled</span></button>
+                  <button class="mood"><span class="mood-dot"></span><span>open</span></button>
+                  <button class="mood"><span class="mood-dot"></span><span>on edge</span></button>
+                  <button class="mood"><span class="mood-dot"></span><span>heavy</span></button>
+                </div>
+              </section>
+              <section class="thread-section">
+                <div class="section-title"><h4>Continue a thread</h4><span>Journal</span></div>
+                <div class="thread-card"><strong>Overwhelmed · yesterday</strong><p>You noted that fewer demands and a quiet evening might help. Check in again or leave it here.</p></div>
+              </section>
+              <section class="thread-section">
+                <div class="section-title"><h4>Your recent range</h4><span>Past 7 days</span></div>
+                <div class="trend"><span class="trend-line"></span><span class="trend-point tp1"></span><span class="trend-point tp2"></span><span class="trend-point tp3"></span><span class="trend-point tp4"></span><div class="days"><span>Thu</span><span>Sat</span><span>Mon</span><span>Wed</span></div></div>
+              </section>
+            </div>
+            <nav class="bottom-nav" aria-label="Primary navigation">
+              <button class="nav-item active"><span class="nav-symbol">●</span><span>Today</span></button>
+              <button class="nav-item"><span class="nav-symbol">◇</span><span>Explore</span></button>
+              <button class="nav-item"><span class="nav-symbol">≡</span><span>Journal</span></button>
+            </nav>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

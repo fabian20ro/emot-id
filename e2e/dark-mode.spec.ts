@@ -1,0 +1,92 @@
+import { test, expect, type Page } from '@playwright/test'
+import { expectAccessibleTextContrast } from './contrast'
+import { completeQuick, openApp, openArrival } from './helpers'
+
+async function expectDarkScreen(page: Page, state: string) {
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  await expectAccessibleTextContrast(page, state)
+  const overflow = await page.locator('body').evaluate((body) => body.scrollWidth - body.clientWidth)
+  expect(overflow, `${state} overflows horizontally`).toBeLessThanOrEqual(1)
+}
+
+test.describe('Dark mode accessibility', () => {
+  test.beforeEach(async ({ page }) => openApp(page, { theme: 'dark' }))
+
+  test('keeps shell, routes, and utility screens readable', async ({ page, context }) => {
+    await expectDarkScreen(page, 'Today')
+    await context.setOffline(true)
+    await expect(page.getByRole('status')).toBeVisible()
+    await expectDarkScreen(page, 'Today offline')
+    await context.setOffline(false)
+
+    await openArrival(page)
+    await expectDarkScreen(page, 'Arrival')
+
+    await page.getByTestId('arrival-words').click()
+    await expectDarkScreen(page, 'Word Ladder')
+    await page.locator('.screen-back').click()
+
+    await page.getByTestId('arrival-affect').click()
+    await expectDarkScreen(page, 'Affect Map')
+    const plot = page.getByTestId('dimensional-plot-container').locator('svg')
+    const plotBox = await plot.boundingBox()
+    await plot.click({ position: { x: plotBox!.width * 0.65, y: plotBox!.height * 0.3 }, force: true })
+    await expect(page.getByTestId('dimensional-suggestion-tray')).toBeVisible()
+    await expectDarkScreen(page, 'Affect Map suggestions')
+    await page.getByRole('button', { name: 'Back' }).click()
+
+    await page.getByTestId('arrival-body').click()
+    await expectDarkScreen(page, 'Body Compass')
+    await page.locator('[data-region="chest"]').first().click({ force: true })
+    await expect(page.getByRole('dialog')).toBeVisible()
+    await expectDarkScreen(page, 'Body Compass sensation picker')
+    await page.getByRole('button', { name: 'Nothing here' }).click()
+    await page.locator('.screen-back').click()
+    await page.locator('.screen-back').click()
+
+    await page.getByRole('button', { name: 'Explore' }).click()
+    await expectDarkScreen(page, 'Explore')
+    await page.getByRole('button', { name: /practice emotional vocabulary/i }).click()
+    await expect(page.getByRole('dialog')).toBeVisible()
+    await expectDarkScreen(page, 'Granularity practice')
+    await page.getByRole('button', { name: 'Close' }).click()
+    await page.getByRole('button', { name: 'Journal', exact: true }).click()
+    await expectDarkScreen(page, 'Journal')
+    await page.getByRole('button', { name: 'Unpack a moment' }).click()
+    await expect(page.getByRole('dialog')).toBeVisible()
+    await expectDarkScreen(page, 'Unpack a moment')
+    await page.getByRole('button', { name: 'Close' }).click()
+
+    await page.getByRole('button', { name: 'Settings' }).click()
+    await expectDarkScreen(page, 'Settings')
+    await page.getByRole('button', { name: 'Privacy & data' }).click()
+    await expectDarkScreen(page, 'Privacy & data')
+    await page.getByRole('button', { name: 'Back' }).click()
+    await page.getByRole('button', { name: 'Support' }).click()
+    await expectDarkScreen(page, 'Support')
+  })
+
+  test('keeps reflection and next-step content readable', async ({ page }) => {
+    await completeQuick(page, 'anxiety')
+    await expectDarkScreen(page, 'Reflection')
+    await page.getByRole('button', { name: 'Partly' }).click()
+    await expectDarkScreen(page, 'Reflection fit selection')
+    await page.getByRole('button', { name: 'Try one small step' }).click()
+    await expectDarkScreen(page, 'Next step')
+  })
+})
+
+test('keeps returning-user onboarding readable in dark mode', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.removeItem('emot-id-onboarded')
+    localStorage.setItem('emot-id-language', 'en')
+    localStorage.setItem('emot-id-theme', 'dark')
+  })
+  await page.goto('/')
+  await expect(page.getByRole('dialog')).toBeVisible()
+  await expectDarkScreen(page, 'Onboarding step 1')
+  await page.getByRole('button', { name: 'Next' }).click()
+  await expectDarkScreen(page, 'Onboarding step 2')
+  await page.getByRole('button', { name: 'Next' }).click()
+  await expectDarkScreen(page, 'Onboarding step 3')
+})

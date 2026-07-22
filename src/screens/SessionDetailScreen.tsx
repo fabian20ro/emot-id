@@ -1,0 +1,23 @@
+import { useLanguage } from '../context/LanguageContext'
+import { ScreenHeader } from '../components/ScreenHeader'
+import type { Session } from '../data/types'
+
+export function SessionDetailScreen({ session, onBack }: { session?: Session; onBack: () => void }) {
+  const { language, section } = useLanguage()
+  const t = section('sessionDetail')
+  if (!session) return <div className="screen"><ScreenHeader title={t.title} onBack={onBack} /><p className="muted">{t.older}</p></div>
+
+  const fitLabels = { yes: section('reflectionScreen').yes, partly: section('reflectionScreen').partly, no: section('reflectionScreen').no }
+  return (
+    <div className="screen" data-testid="session-detail-screen">
+      <ScreenHeader title={t.title} onBack={onBack} lede={new Intl.DateTimeFormat(language, { dateStyle: 'long', timeStyle: 'short' }).format(session.timestamp)} />
+      <dl className="detail-list">
+        <div><dt>{t.felt}</dt><dd>{session.results.map((r) => r.label[language]).join(', ')}</dd></div>
+        {session.reflectionAnswer && <div><dt>{t.fit}</dt><dd>{fitLabels[session.reflectionAnswer]}</dd></div>}
+        {session.selectedNeed && <div><dt>{t.need}</dt><dd>{session.selectedNeed}</dd></div>}
+        {session.nextStep && <div><dt>{t.step}</dt><dd>{session.nextStep}</dd></div>}
+      </dl>
+      {!session.selectedNeed && !session.nextStep && <p className="muted text-sm">{t.older}</p>}
+    </div>
+  )
+}

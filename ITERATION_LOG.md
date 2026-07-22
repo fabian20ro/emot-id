@@ -33,8 +33,6 @@ Each entry should follow this structure:
 **Insight:** After config files already exist, setup work should behave like a maintenance migration, not a reset. Preserve durable lessons; only move them to the right layer.
 **Promoted to Lessons Learned:** Yes
 
----
-
 ### [2026-03-16] Periodic maintenance audit of agent config files
 
 **Context:** Applied SETUP_AI_AGENT_CONFIG.md periodic maintenance protocol to audit all config files against the research-backed guide.
@@ -412,6 +410,34 @@ Each entry should follow this structure:
 
 <!-- New entries go above this line, most recent first -->
 
+### [2026-07-22] Implement mobile experience rehaul
+
+**Context:** Implemented the approved Daily Thread, Arrival, route-based check-in, and Meaning + Need rehaul with repeatable browser verification.
+**What happened:**
+- Replaced model-first global navigation and modal orchestration with Today/Explore/Journal, typed destinations, screen-based Back behavior, and revised onboarding without theory choice.
+- Added Body Compass, progressive Affect Map, Word Ladder, Plutchik Explore access, crisis-first Meaning + Need reflection, next-step choice, Journal/session detail, split Settings/Privacy/Support, local patterns, and light/dark themes.
+- Preserved existing model engines, bilingual catalog, additive IndexedDB sessions, save-disabled behavior, offline operation, and deterministic direct/temporal crisis evaluation.
+- Replaced legacy E2E assumptions with 34 Playwright cases covering all primary routes, tier-4 gating through real UI input, persistence, browser Back, language, offline state, and geometry at 360x800, 393x742, and 430x932 in Mobile Safari and Mobile Chrome.
+**Outcome:** Success. `npm run check` passes with 736 tests; `npm run test:e2e` passes all 34 cases.
+**Insight:** Named grid areas and route-triggered scroll reset are required when optional chrome and internally scrolling screens share a fixed mobile shell.
+**Promoted to Lessons Learned:** Yes
+
+---
+
+### [2026-07-22] Plan mobile rehaul implementation
+
+**Context:** Converted the approved six-concept mobile rehaul into an implementation blueprint grounded in the current component, model, persistence, i18n, and crisis-safety architecture.
+**What happened:**
+- Mapped every mock to reusable current assets and explicit product, interaction, data, and presentation gaps.
+- Defined the target Today/Explore/Journal information architecture and the required full screens, secondary screens, and transient sheets.
+- Specified a typed navigator, shared check-in contract, additive session metadata, and one route-independent safety boundary.
+- Broke delivery into 25 reviewable slices and three releases, each with scoped files and verification gates.
+**Outcome:** Success. `docs/mobile-rehaul-implementation-plan.md` is ready to guide implementation.
+**Insight:** A screen rehaul can preserve safety-critical domain engines when routes own input state and one shared controller owns completion, crisis evaluation, reflection, and persistence.
+**Promoted to Lessons Learned:** Yes
+
+---
+
 ### [2026-05-16] Restore settings crisis copy keys
 
 **Context:** `npm run build` failed in `src/components/SettingsMenu.tsx` because the `menu` i18n section no longer exposed `crisisSupport` and `crisisDetail`, while the component still referenced them.
@@ -475,3 +501,45 @@ Each entry should follow this structure:
 **Outcome:** Success — valid modal contracts stay quiet; genuine missing references still warn.
 **Insight:** DOM-reference validation for portal children must run after commit, not during render.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-22] Mobile UX and psychological rehaul concepts
+
+**Context:** Audited the current mobile app and developed six mixable rehaul directions through mobile UX, accessibility, affective-science, and emotional-safety lenses.
+**What happened:**
+- Inspected onboarding, all four model surfaces, settings, quick check-in, and results at `393 x 742`.
+- Documented strengths, structural problems, psychological risks, and a recommended experience-first information architecture.
+- Created six standalone mobile mocks: Arrival, Body Compass, Affect Map, Word Ladder, Meaning + Need, and Daily Thread.
+- Verified six rendered phone frames, page geometry, text fit, horizontal overflow, and control dimensions.
+**Outcome:** Success. Review, mix-and-match matrix, final recommendation, interactive gallery, and preview images are available under `docs/`.
+**Insight:** Theory-first navigation creates avoidable choice pressure; the models work better as adaptive tools behind an experience-first entry.
+**Promoted to Lessons Learned:** Yes
+
+---
+
+### [2026-07-22] Restore external AI handoff in mobile Reflection
+
+**Context:** The mobile rehaul preserved the external-AI consent setting but dropped the gated Google AI Mode link when replacing `ResultModal` with `ReflectionScreen`.
+**What happened:**
+- Extracted the existing localized URL construction into one shared helper without changing prompt, conjunction, encoding, or `udm=50` behavior.
+- Wired `allowExternalAI` into Reflection and restored the external link after consent, including tier-4 pre-acknowledgement gating.
+- Added exact single/multiple-language URL tests and a full Playwright activation/back/persistence journey.
+- Manually verified the rendered link at `393x742` and inspected its final encoded URL through Playwright.
+**Outcome:** Success. `npm run check` passes with 739 tests; `npm run test:e2e` passes all 36 cases in Mobile Safari and Mobile Chrome.
+**Insight:** Screen migrations must inventory consent-gated exits and other cross-cutting behaviors, not only visible result content.
+**Promoted to Lessons Learned:** Yes
+
+---
+
+### [2026-07-22] Gate deploys with Playwright and repair dark contrast
+
+**Context:** The mobile migration lacked a GitHub Actions browser gate, and several light-theme foreground assumptions made dark-mode actions and guidance difficult to read.
+**What happened:**
+- Added Chromium and WebKit Playwright installation, execution, and failure-report upload before GitHub Pages deployment.
+- Added semantic foreground/background token pairs for accent, warning, need, disabled, and danger states.
+- Added computed browser contrast checks across primary screens, route states, portaled overlays, onboarding, and reflection completion.
+- Manually inspected Today and Next Step at `393x742` in dark mode.
+**Outcome:** Success. `npm run check` passes 739 tests; `npm run test:e2e` passes all 42 Mobile Safari and Mobile Chrome cases.
+**Insight:** Dark themes need paired semantic color tokens plus stateful browser checks; palette-level review alone misses rendered contrast failures.
+**Promoted to Lessons Learned:** Yes

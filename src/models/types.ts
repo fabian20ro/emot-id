@@ -41,6 +41,7 @@ export interface VisualizationProps {
   sizes: Map<string, 'small' | 'medium' | 'large'>
   selections?: BaseEmotion[]
   topInset?: number
+  progressive?: boolean
 }
 
 export interface EmotionModel<E extends BaseEmotion = BaseEmotion> {

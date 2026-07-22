@@ -16,6 +16,9 @@ export interface Session {
   crisisTier: CrisisTier
   reflectionAnswer?: 'yes' | 'partly' | 'no'
   interventionResponse?: 'better' | 'same' | 'worse'
+  entryRoute?: 'quick' | 'body' | 'affect' | 'words' | 'plutchik'
+  selectedNeed?: string
+  nextStep?: string
 }
 
 export interface ChainAnalysisEntry {

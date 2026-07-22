@@ -12,7 +12,7 @@ interface BodyMapProps extends VisualizationProps {
   selections?: SomaticSelection[]
 }
 
-function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMapProps) {
+function BodyMapBase({ emotions, onSelect, onDeselect, selections = [], progressive = false }: BodyMapProps) {
   const { language, section } = useLanguage()
   const somaticT = section('somatic')
 
@@ -20,6 +20,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
   const [highlightedRegionId, setHighlightedRegionId] = useState<string | null>(null)
   const [isGuidedMode, setIsGuidedMode] = useState(false)
   const [guidedActive, setGuidedActive] = useState(false)
+  const [bodySide, setBodySide] = useState<'front' | 'back'>('front')
 
   // Dismiss picker when settings menu opens (J.6)
   useEffect(() => {
@@ -111,11 +112,23 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
 
   const activeRegion = activeRegionId ? regionMap.get(activeRegionId) : null
   const RIGHT_LABEL_NUDGE = 12
+  const visiblePaths = useMemo(() => {
+    if (!progressive) return bodyRegionPaths
+    const backIds = new Set(['upper-back', 'lower-back'])
+    const frontIds = new Set(['jaw', 'throat', 'chest', 'stomach'])
+    return bodyRegionPaths.filter((path) => bodySide === 'back' ? !frontIds.has(path.id) : !backIds.has(path.id))
+  }, [bodySide, progressive])
 
   return (
     <div data-testid="bodymap-root" className="h-full min-h-0 w-full flex flex-col items-center p-1 sm:p-4">
       {/* Mode toggle */}
       <div className="flex items-center gap-2 mb-1" role="radiogroup" aria-label="Body map mode">
+        {progressive && (
+          <div className="flex rounded-lg border border-gray-600 p-0.5 mr-1" aria-label={language === 'ro' ? 'Partea corpului' : 'Body side'}>
+            <button type="button" className={`min-h-[40px] px-3 rounded-md text-xs ${bodySide === 'front' ? 'bg-teal-700 text-white' : 'text-gray-400'}`} onClick={() => setBodySide('front')}>{language === 'ro' ? 'Față' : 'Front'}</button>
+            <button type="button" className={`min-h-[40px] px-3 rounded-md text-xs ${bodySide === 'back' ? 'bg-teal-700 text-white' : 'text-gray-400'}`} onClick={() => setBodySide('back')}>{language === 'ro' ? 'Spate' : 'Back'}</button>
+          </div>
+        )}
         <button
           onClick={() => { setIsGuidedMode(false); setGuidedActive(false) }}
           role="radio"
@@ -167,7 +180,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
 
           <g>
             {/* Back-facing regions first, then front-facing */}
-            {[...bodyRegionPaths].sort((a, b) => {
+            {[...visiblePaths].sort((a, b) => {
               const isBackA = a.id === 'upper-back' || a.id === 'lower-back'
               const isBackB = b.id === 'upper-back' || b.id === 'lower-back'
               return isBackA === isBackB ? 0 : isBackA ? -1 : 1
@@ -190,7 +203,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [] }: BodyMa
             })}
 
             {/* Label bubbles with arrows */}
-            {bodyRegionPaths.map((path) => {
+            {visiblePaths.map((path) => {
               const region = regionMap.get(path.id)
               if (!region) return null
               const label = region.label[language]

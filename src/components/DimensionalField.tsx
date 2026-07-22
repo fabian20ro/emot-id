@@ -14,7 +14,7 @@ function toPixel(value: number): number {
   return PADDING + ((value + 1) / 2) * INNER
 }
 
-function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] }: VisualizationProps) {
+function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [], progressive = false }: VisualizationProps) {
   const { language, section } = useLanguage()
   const dimensionalT = section('dimensional')
   const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 639px)').matches
@@ -33,7 +33,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
     () => new Set(selections.map((s) => s.id)),
     [selections]
   )
-  const showAxisLabels = !isMobile || !hasInteracted
+  const showAxisLabels = progressive || !isMobile || !hasInteracted
 
   // Compute label y-offsets with collision avoidance
   const labelOffsets = useMemo(() => {
@@ -65,10 +65,11 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
 
   const svgRef = useRef<SVGSVGElement>(null)
   const [crosshair, setCrosshair] = useState<{ x: number; y: number } | null>(null)
+  const [placement, setPlacement] = useState<{ valence: number; arousal: number } | null>(null)
   const [suggestions, setSuggestions] = useState<DimensionalEmotion[]>([])
 
-  const handleFieldClick = useCallback(
-    (e: React.MouseEvent<SVGSVGElement>) => {
+  const placeFromClientPoint = useCallback(
+    (clientX: number, clientY: number) => {
       const svg = svgRef.current
       if (!svg) return
 
@@ -76,17 +77,22 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
       const rect = svg.getBoundingClientRect()
       const scaleX = FIELD_SIZE / rect.width
       const scaleY = FIELD_SIZE / rect.height
-      const px = (e.clientX - rect.left) * scaleX
-      const py = (e.clientY - rect.top) * scaleY
+      const px = (clientX - rect.left) * scaleX
+      const py = (clientY - rect.top) * scaleY
 
       const valence = Math.max(-1, Math.min(1, ((px - PADDING) / INNER) * 2 - 1))
       const arousal = Math.max(-1, Math.min(1, -(((py - PADDING) / INNER) * 2 - 1)))
 
       setCrosshair({ x: px, y: py })
+      setPlacement({ valence, arousal })
       setSuggestions(findNearest(valence, arousal, emotionMap, 3))
     },
     [emotionMap]
   )
+
+  const handleFieldClick = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
+    placeFromClientPoint(e.clientX, e.clientY)
+  }, [placeFromClientPoint])
 
   const handleSuggestionClick = useCallback(
     (emotion: DimensionalEmotion) => {
@@ -127,6 +133,9 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
             viewBox={`0 0 ${FIELD_SIZE} ${FIELD_SIZE}`}
             className="w-full h-full"
             onClick={handleFieldClick}
+            onPointerMove={(event) => {
+              if (event.buttons === 1) placeFromClientPoint(event.clientX, event.clientY)
+            }}
             style={{ cursor: 'crosshair' }}
           >
           {/* Background grid */}
@@ -175,6 +184,8 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
             const py = toPixel(-emotion.arousal) // Invert: top = intense
             const isSelected = selectedIds.has(emotion.id)
 
+            if (progressive && !isSelected) return null
+
             return (
               <g
                 key={emotion.id}
@@ -207,7 +218,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 />
-                <text
+                {(!progressive || hasInteracted || isSelected) && <text
                   x={px}
                   y={labelOffsets.get(emotion.id) ?? (py - (isSelected ? 22 : 16))}
                   fill={isSelected ? '#fff' : 'rgba(156, 163, 175, 0.7)'}
@@ -219,7 +230,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
                   paintOrder="stroke"
                 >
                   {emotion.label[language]}
-                </text>
+                </text>}
               </g>
             )
           })}
@@ -246,6 +257,14 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
           </svg>
         </div>
 
+        {placement && (
+          <p data-testid="affect-readout" className="text-xs text-gray-300 text-center mt-1 mb-0">
+            {language === 'ro'
+              ? `${placement.arousal >= 0 ? 'energie mai ridicată' : 'energie mai calmă'}, ${placement.valence >= 0 ? 'mai plăcut' : 'mai neplăcut'}`
+              : `${placement.arousal >= 0 ? 'higher energy' : 'calmer energy'}, ${placement.valence >= 0 ? 'more pleasant' : 'more unpleasant'}`}
+          </p>
+        )}
+
         {/* Suggestion chips — rendered below the plot (no overlap). */}
         {suggestions.length > 0 && (
           <motion.div
@@ -270,7 +289,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [] 
               </button>
             ))}
             <button
-              onClick={() => { setCrosshair(null); setSuggestions([]) }}
+              onClick={() => { setCrosshair(null); setPlacement(null); setSuggestions([]) }}
               className="px-4 py-3 min-h-[48px] min-w-[48px] rounded-full text-sm text-gray-400 hover:text-gray-200 bg-gray-800 transition-colors"
             >
               ✕

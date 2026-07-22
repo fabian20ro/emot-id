@@ -1,18 +1,13 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Onboarding } from '../components/Onboarding'
 import { LanguageProvider } from '../context/LanguageContext'
-import { getAvailableModels } from '../models/registry'
 import { storage } from '../data/storage'
 
 function renderOnboarding(onComplete = vi.fn()) {
   return {
-    ...render(
-      <LanguageProvider>
-        <Onboarding onComplete={onComplete} />
-      </LanguageProvider>
-    ),
+    ...render(<LanguageProvider><Onboarding onComplete={onComplete} /></LanguageProvider>),
     onComplete,
   }
 }
@@ -20,357 +15,72 @@ function renderOnboarding(onComplete = vi.fn()) {
 let setItemSpy: ReturnType<typeof vi.spyOn>
 
 beforeEach(() => {
+  window.localStorage.clear()
+  window.localStorage.setItem(storage.KEYS.language, 'en')
   setItemSpy = vi.spyOn(window.localStorage, 'setItem')
-  setItemSpy.mockClear()
 })
 
-afterEach(() => {
-  setItemSpy.mockRestore()
-})
+afterEach(() => setItemSpy.mockRestore())
 
 describe('Onboarding', () => {
-  it('renders the first screen with exploration message', () => {
+  it('frames the experience as exploration rather than a test', () => {
     renderOnboarding()
+    expect(screen.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
     expect(screen.getByText(/not a test/i)).toBeInTheDocument()
   })
 
-  it('advances to the second screen on next', async () => {
+  it('moves through purpose and local privacy in three steps', async () => {
     const user = userEvent.setup()
     renderOnboarding()
 
     await user.click(screen.getByRole('button', { name: /next/i }))
-
     expect(screen.getByText(/every emotion has a purpose/i)).toBeInTheDocument()
-  })
-
-  it('advances to the third screen on next', async () => {
-    const user = userEvent.setup()
-    renderOnboarding()
 
     await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-
-    expect(screen.getByText(/choose your way in/i)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /privacy & data/i })).toBeInTheDocument()
+    expect(document.querySelectorAll('[data-step]')).toHaveLength(3)
   })
 
-  it('calls onComplete and sets localStorage on final next', async () => {
+  it('completes without requiring a model choice', async () => {
     const user = userEvent.setup()
     const { onComplete } = renderOnboarding()
-
-    // Advance through all 4 screens.
-    await user.click(screen.getByRole('button', { name: /next/i }))
     await user.click(screen.getByRole('button', { name: /next/i }))
     await user.click(screen.getByRole('button', { name: /next/i }))
 
-    // Pick a real model id from the registry (not hardcoded).
-    const models = getAvailableModels()
-    expect(models.length).toBeGreaterThan(0)
-    const targetModel = models[0]
+    const finish = screen.getByRole('button', { name: /get started/i })
+    expect(finish).toBeEnabled()
+    await user.click(finish)
 
-    await user.click(screen.getByRole('button', { name: new RegExp(targetModel.name.en, 'i') }))
-    await user.click(screen.getByRole('button', { name: /get started/i }))
-
-    expect(onComplete).toHaveBeenCalledTimes(1)
-    expect(onComplete).toHaveBeenCalledWith(targetModel.id)
+    expect(onComplete).toHaveBeenCalledWith(null)
     expect(setItemSpy).toHaveBeenCalledWith(storage.KEYS.onboarded, 'true')
   })
 
-  it('persists onboarded flag via storage.get after completion', async () => {
-    vi.spyOn(storage, 'get').mockImplementation((key: string) => {
-      if (key === storage.KEYS.onboarded) return 'true'
-      if (key === 'simpleLanguage') return null
-      if (key === 'language') return 'en'
-      return null
-    })
-
+  it('does not expose model names or a skip action', async () => {
     const user = userEvent.setup()
-    renderOnboarding()
-
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-
-    const models = getAvailableModels()
-    expect(models.length).toBeGreaterThan(0)
-    await user.click(screen.getByRole('button', { name: new RegExp(models[0].name.en, 'i') }))
-    await user.click(screen.getByRole('button', { name: /get started/i }))
-
-    expect(storage.get(storage.KEYS.onboarded)).toBe('true')
-  })
-
-  it('keeps get started disabled until a model is selected on last screen', async () => {
-    const user = userEvent.setup()
-    renderOnboarding()
-
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-
-    const getStarted = screen.getByRole('button', { name: /get started/i })
-    expect(getStarted).toBeDisabled()
-  })
-
-  it('onComplete receives the clicked model id, not a hardcoded value', async () => {
-    const user = userEvent.setup()
-    const { onComplete } = renderOnboarding()
-
-    // Advance to last screen where models are selectable.
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-
-    // Pick a real model id from the registry (not hardcoded).
-    const models = getAvailableModels()
-    expect(models.length).toBeGreaterThan(0)
-    const targetModel = models[models.length - 1] // last registered model
-
-    await user.click(screen.getByRole('button', { name: new RegExp(targetModel.name.en, 'i') }))
-    await user.click(screen.getByRole('button', { name: /get started/i }))
-
-    expect(onComplete).toHaveBeenCalledTimes(1)
-    expect(onComplete).toHaveBeenCalledWith(targetModel.id)
-  })
-
-  it('writes "emot-id-onboarded" with prefix when completing onboarding', async () => {
-    const user = userEvent.setup()
-    renderOnboarding()
-
-    // Advance through all screens.
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-
-    const models = getAvailableModels()
-    expect(models.length).toBeGreaterThan(0)
-    await user.click(screen.getByRole('button', { name: new RegExp(models[0].name.en, 'i') }))
-    await user.click(screen.getByRole('button', { name: /get started/i }))
-
-    // Verify the storage key includes the emot-id- prefix.
-    const calls = setItemSpy.mock.calls
-    const onboardedCall = calls.find(
-      call => call[0] === 'emot-id-onboarded' && call[1] === 'true',
-    )
-    expect(onboardedCall).toBeDefined()
-  })
-
-  it('blocks final next when no model is selected, even on click', async () => {
-    const user = userEvent.setup()
-    const { onComplete } = renderOnboarding()
-
-    // Advance to last screen but do not select any model
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-
-    const getStarted = screen.getByRole('button', { name: /get started/i })
-    expect(getStarted).toBeDisabled()
-
-    // Attempt to click despite being disabled (e.g. via keyboard or programmatic trigger)
-    await user.click(getStarted)
-
-    // Step must remain at the last screen — gating is deterministic, not just spy-dependent.
-    const dots = document.querySelectorAll('[data-step]')
-    expect(dots[3]).toHaveClass('bg-indigo-400')
-
-    // No completion callback fires when model is unselected and Get Started is clicked.
-    expect(onComplete).not.toHaveBeenCalled()
-  })
-
-  it('enables Get Started after selecting any available model', async () => {
-    const user = userEvent.setup()
-    renderOnboarding()
-
-    // Advance to the last screen where models are selectable.
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-
-    const getStarted = screen.getByRole('button', { name: /get started/i })
-    expect(getStarted).toBeDisabled()
-
-    // Pick a real model id from the registry (not hardcoded).
-    const models = getAvailableModels()
-    expect(models.length).toBeGreaterThan(0)
-    await user.click(screen.getByRole('button', { name: new RegExp(models[0].name.en, 'i') }))
-
-    expect(getStarted).not.toBeDisabled()
-  })
-
-  it('does not render a skip button', () => {
     renderOnboarding()
     expect(screen.queryByRole('button', { name: /skip/i })).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    await user.click(screen.getByRole('button', { name: /next/i }))
+    expect(screen.queryByText(/Plutchik/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Emotion Wheel/i)).not.toBeInTheDocument()
   })
 
-  it('selecting one model deselects any previously selected model on last screen', async () => {
+  it('supports Back without losing the flow', async () => {
     const user = userEvent.setup()
     renderOnboarding()
-
-    // Advance to the last screen where models are selectable.
+    expect(screen.queryByRole('button', { name: /back/i })).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-
-    // Pick two distinct models from the registry.
-    const models = getAvailableModels()
-    expect(models.length).toBeGreaterThanOrEqual(2)
-    const firstModel = models[0]
-    const secondModel = models[1]
-
-    await user.click(screen.getByRole('button', { name: new RegExp(firstModel.name.en, 'i') }))
-
-    // Only one model button should carry the active indicator styling.
-    const firstButton = screen.getByRole('button', { name: new RegExp(firstModel.name.en, 'i') })
-    expect(firstButton.className).toMatch(/indigo/)
-    expect(screen.getByRole('button', { name: new RegExp(secondModel.name.en, 'i') }).className).not.toMatch(/indigo/)
-
-    await user.click(screen.getByRole('button', { name: new RegExp(secondModel.name.en, 'i') }))
-
-    // Now exactly one model button should carry the active styling — and it must be the second.
-    expect(firstButton.className).not.toMatch(/indigo/)
-    const selectedSecond = screen.getByRole('button', { name: new RegExp(secondModel.name.en, 'i') })
-    expect(selectedSecond.className).toMatch(/indigo/)
-
-    const getStarted = screen.getByRole('button', { name: /get started/i })
-    expect(getStarted).not.toBeDisabled()
-  })
-
-  it('shows step indicators for 4 screens', () => {
-    renderOnboarding()
-    // 4 step dots (including disclaimer screen)
-    const dots = document.querySelectorAll('[data-step]')
-    expect(dots.length).toBe(4)
-  })
-
-  it('renders back button when navigating backwards to earlier screen', async () => {
-    const user = userEvent.setup()
-    renderOnboarding()
-
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    expect(screen.getByText(/every emotion has a purpose/i)).toBeInTheDocument()
-
     await user.click(screen.getByRole('button', { name: /back/i }))
     expect(screen.getByText(/not a test/i)).toBeInTheDocument()
   })
 
-  it('renders simplified body text when simpleLanguage is true', () => {
-    vi.spyOn(storage, 'get').mockImplementation((key: string) => {
-      if (key === 'simpleLanguage') return 'true'
-      if (key === 'language') return 'en'
-      if (key === 'onboarded') return null
-      return null
-    })
-
-    renderOnboarding()
-
-    // Under simple language, the simplified body should be shown instead of regular.
-    expect(screen.getByText(/be curious/i)).toBeInTheDocument()
-  })
-
-  it('renders model descriptions on the last screen', async () => {
+  it('can set Romanian before completion', async () => {
     const user = userEvent.setup()
     renderOnboarding()
-
     await user.click(screen.getByRole('button', { name: /next/i }))
     await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-
-    // A model description should be visible on the last screen.
-    const models = getAvailableModels()
-    expect(models.length).toBeGreaterThan(0)
-
-    // Verify at least one model's description text appears in the rendered output.
-    const firstModelDesc = models[0].description.en
-    expect(document.body.textContent).toContain(firstModelDesc)
-  })
-
-  it('each screen renders unique title and body text (no duplicate copy across steps)', async () => {
-    const user = userEvent.setup()
-    renderOnboarding()
-
-    // Collect displayed texts on the first screen.
-    const step1Texts: string[] = screen.getAllByText(/.+/i).map(el => el.textContent ?? '').filter(Boolean)
-    const seenContent = new Set<string>()
-
-    for (const t of step1Texts) {
-      if (!/^(next|back|get started)$/i.test(t)) seenContent.add(t)
-    }
-
-    for (let i = 0; i < 3; i++) {
-      await user.click(screen.getByRole('button', { name: /next/i }))
-
-      // Every content text on a later screen must be unique across all screens — not just compared back to step 1.
-      const currentTexts = screen.getAllByText(/.+/i).map(el => el.textContent ?? '').filter(Boolean)
-      for (const t of currentTexts) {
-        if (/^(next|back|get started)$/i.test(t)) continue // navigation labels repeat intentionally
-        expect(
-          seenContent.has(t),
-          `'${t}' was already displayed on a previous screen — content text must be unique across all steps`
-        ).toBe(false)
-      }
-
-      // There must be at least one new content element unique to this step.
-      const newOnes = currentTexts.filter(
-        t => !seenContent.has(t) && !/^(next|back|get started)$/i.test(t),
-      )
-      expect(newOnes.length, `screen ${i + 2} should introduce at least one unique content text`).toBeGreaterThan(0)
-
-      // Record all new content texts from this screen for future uniqueness checks.
-      currentTexts.forEach(t => { if (!/^(next|back|get started)$/i.test(t)) seenContent.add(t) })
-    }
-  })
-
-  it('shows back button on screens 2 and 3 (not on screen 1 or last)', async () => {
-    const user = userEvent.setup()
-    renderOnboarding()
-
-    // No back button on first screen
-    expect(screen.queryByRole('button', { name: /back/i })).not.toBeInTheDocument()
-
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
-
-    // Screen 3 must also have a back button.
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
-
-    // Last screen still has the back button (navigation never removes it once shown).
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    expect(screen.getByRole('button', { name: /back/i })).toBeInTheDocument()
-  })
-
-  it('renders without crashing when no models are available (isolated mock)', async () => {
-    // Use vi.doMock() which is NOT hoisted by Vitest — only applies at call time.
-    // Combined with resetModules + dynamic import, this gives true per-test isolation.
-    vi.resetModules()
-
-    vi.doMock('../models/registry', () => ({
-      getAvailableModels: () => [],
-    }))
-
-    const user = userEvent.setup()
-
-    // Dynamic import after doMock — picks up the mocked module here.
-    const { Onboarding } = await import('../components/Onboarding')
-    const { LanguageProvider } = await import('../context/LanguageContext')
-
-    render(
-      <LanguageProvider>
-        <Onboarding onComplete={vi.fn()} />
-      </LanguageProvider>
-    )
-
-    // Advance to the last screen where model selection occurs.
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-    await user.click(screen.getByRole('button', { name: /next/i }))
-
-    // The "choose your starting model" prompt should still appear.
-    expect(screen.getByText(/choose your starting model/i)).toBeInTheDocument()
-
-    // Get Started remains disabled because no model was selected (empty registry).
-    const getStarted = screen.getByRole('button', { name: /get started/i })
-    expect(getStarted).toBeDisabled()
-
-    vi.restoreAllMocks()
+    await user.click(screen.getByRole('button', { name: 'Română' }))
+    expect(screen.getByRole('button', { name: /începeți/i })).toBeInTheDocument()
+    expect(setItemSpy).toHaveBeenCalledWith(storage.KEYS.language, 'ro')
   })
 })

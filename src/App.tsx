@@ -1,449 +1,204 @@
-import { useState, useCallback, useRef, useMemo, useEffect, Suspense } from 'react'
-import { AnimatePresence, MotionConfig } from 'framer-motion'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { MotionConfig } from 'framer-motion'
+import { AppShell } from './components/AppShell'
 import { Onboarding } from './components/Onboarding'
-import { Header } from './components/Header'
-import { SettingsMenu } from './components/SettingsMenu'
-import { SelectionBar } from './components/SelectionBar'
-import { AnalyzeButton } from './components/AnalyzeButton'
-import { ResultModal } from './components/ResultModal'
-import { DontKnowModal } from './components/DontKnowModal'
-import { UndoToast } from './components/UndoToast'
-import { SessionHistory } from './components/SessionHistory'
-import { QuickCheckIn, QUICK_MODEL_ID } from './components/QuickCheckIn'
 import { GranularityTraining } from './components/GranularityTraining'
 import { ChainAnalysis } from './components/ChainAnalysis'
-import { VisualizationErrorBoundary } from './components/VisualizationErrorBoundary'
-import { FirstInteractionHint } from './components/FirstInteractionHint'
-import { WheelBreadcrumb } from './components/WheelBreadcrumb'
-import { ModelVisualization } from './components/ModelVisualization'
-import { useSound } from './hooks/useSound'
-import { useEmotionModel } from './hooks/useEmotionModel'
-import { useModelSelection } from './hooks/useModelSelection'
-import { useHintState } from './hooks/useHintState'
+import { TodayScreen } from './screens/TodayScreen'
+import { ArrivalScreen } from './screens/ArrivalScreen'
+import { ModelCheckInScreen } from './screens/ModelCheckInScreen'
+import { ReflectionScreen } from './screens/ReflectionScreen'
+import { ExploreScreen } from './screens/ExploreScreen'
+import { JournalScreen } from './screens/JournalScreen'
+import { SessionDetailScreen } from './screens/SessionDetailScreen'
+import { SettingsScreen } from './screens/SettingsScreen'
+import { PrivacyDataScreen } from './screens/PrivacyDataScreen'
+import { SupportScreen } from './screens/SupportScreen'
+import { useAppNavigation } from './hooks/useAppNavigation'
 import { useSessionHistory } from './hooks/useSessionHistory'
 import { useChainAnalysis } from './hooks/useChainAnalysis'
 import { useReminders } from './hooks/useReminders'
+import { useSound } from './hooks/useSound'
 import { useLanguage } from './context/LanguageContext'
-import { MODEL_IDS } from './models/constants'
 import { storage } from './data/storage'
 import { getCrisisTier } from './models/distress'
-import { hasTemporalCrisisPattern } from './data/temporal-crisis'
-import type { BaseEmotion, AnalysisResult, ModelState } from './models/types'
-import type { Session, SerializedSelection } from './data/types'
+import { escalateCrisisTier, hasTemporalCrisisPattern } from './data/temporal-crisis'
+import type { AnalysisResult, BaseEmotion } from './models/types'
+import type { CheckInCompletion, CheckInRoute, AppTab } from './navigation/types'
+import type { SerializedSelection, Session } from './data/types'
 
 export default function App() {
-  const { language, section } = useLanguage()
-  const dontKnowT = section('dontKnow')
-  const offlineT = section('offline')
+  const { section } = useLanguage()
+  const navigation = useAppNavigation()
+  const [showOnboarding, setShowOnboarding] = useState(() => storage.get('onboarded') !== 'true')
+  const [isOffline, setIsOffline] = useState(() => typeof navigator !== 'undefined' && !navigator.onLine)
+  const [completion, setCompletion] = useState<CheckInCompletion | null>(null)
+  const [reflectionSaved, setReflectionSaved] = useState(false)
 
-  const [showOnboarding, setShowOnboarding] = useState(() => {
-    return storage.get('onboarded') !== 'true'
-  })
-  const [isOffline, setIsOffline] = useState(() => {
-    if (typeof navigator === 'undefined') return false
-    return !navigator.onLine
-  })
-
-  const { modelId, switchModel } = useModelSelection()
-
-  const {
-    modelReady,
-    selections,
-    modelState,
-    visibleEmotions,
-    sizes,
-    combos,
-    handleSelect: modelSelect,
-    handleDeselect: modelDeselect,
-    handleClear: modelClear,
-    handleBreadcrumbSelect: modelBreadcrumbSelect,
-    breadcrumbPath,
-    restore,
-    analyze,
-  } = useEmotionModel(modelId)
-
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [showQuickCheckIn, setShowQuickCheckIn] = useState(false)
-  const [showGranularityTraining, setShowGranularityTraining] = useState(false)
-  const [showChainAnalysis, setShowChainAnalysis] = useState(false)
-  const [analysisSource, setAnalysisSource] = useState<'model' | 'quick'>('model')
-  const [analysisResults, setAnalysisResults] = useState<AnalysisResult[]>([])
-  const [modalSelections, setModalSelections] = useState<BaseEmotion[]>([])
-  const [showDontKnow, setShowDontKnow] = useState(false)
-  const [showUndoToast, setShowUndoToast] = useState(false)
-  const undoSnapshotRef = useRef<{ selections: BaseEmotion[]; state: ModelState } | null>(null)
-  const { playSound, muted, setMuted } = useSound()
-
-  // Menu state owned by App so SettingsMenu can render at top level via portal
-  const [menuOpen, setMenuOpen] = useState(false)
-
-  const toggleMenu = useCallback(() => {
-    setMenuOpen((prev) => {
-      const next = !prev
-      if (next) window.dispatchEvent(new Event('emot-id:dismiss-picker'))
-      return next
-    })
-  }, [])
-
-  const closeMenu = useCallback(() => {
-    setMenuOpen(false)
-  }, [])
-
-  const { showHint, dismissHint } = useHintState(modelId)
   const { sessions, loading: sessionsLoading, save: saveSession, clearAll: clearAllSessions, exportJSON: exportSessionsJSON } = useSessionHistory()
   const { entries: chainEntries, loading: chainLoading, save: saveChainEntry, clearAll: clearAllChains } = useChainAnalysis()
-  const [showHistory, setShowHistory] = useState(false)
-
-  const settingsT = section('settings')
+  const { muted, setMuted } = useSound()
+  const [saveSessions, setSaveSessions] = useState(() => storage.get('saveSessions') !== 'false')
+  const [allowExternalAI, setAllowExternalAI] = useState(() => storage.get('allowExternalAI') === 'true')
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => storage.get('theme') === 'dark' ? 'dark' : 'light')
   const remindersT = section('reminders')
+  const { dailyReminderEnabled, reminderPermission, reminderSupported, handleDailyReminderChange } = useReminders(remindersT)
 
-  const [saveSessions, setSaveSessions] = useState(() => {
-    return storage.get('saveSessions') !== 'false'
-  })
-  const [allowExternalAI, setAllowExternalAI] = useState(() => {
-    return storage.get('allowExternalAI') === 'true'
-  })
-
-  const handleSaveSessionsChange = useCallback((save: boolean) => {
-    storage.set('saveSessions', String(save))
-    setSaveSessions(save)
-    if (!save && sessions.length > 0) {
-      const msg = settingsT.deleteExistingSessions ?? 'Delete existing sessions?'
-      if (window.confirm(msg)) {
-        clearAllSessions()
-      }
+  useEffect(() => {
+    const online = () => setIsOffline(false)
+    const offline = () => setIsOffline(true)
+    window.addEventListener('online', online)
+    window.addEventListener('offline', offline)
+    return () => {
+      window.removeEventListener('online', online)
+      window.removeEventListener('offline', offline)
     }
-  }, [clearAllSessions, sessions.length, settingsT])
-
-  const handleAllowExternalAIChange = useCallback((allow: boolean) => {
-    storage.set('allowExternalAI', String(allow))
-    setAllowExternalAI(allow)
-  }, [])
-
-  const {
-    dailyReminderEnabled,
-    reminderPermission,
-    reminderSupported,
-    handleDailyReminderChange,
-  } = useReminders(remindersT)
-
-  const handleSelect = useCallback(
-    (emotion: BaseEmotion) => {
-      if (showHint) dismissHint()
-      playSound('select')
-      navigator.vibrate?.(10)
-      modelSelect(emotion)
-    },
-    [playSound, modelSelect, showHint, dismissHint],
-  )
-
-  const handleDeselect = useCallback(
-    (emotion: BaseEmotion) => {
-      if (showHint) dismissHint()
-      playSound('deselect')
-      modelDeselect(emotion)
-    },
-    [playSound, modelDeselect, showHint, dismissHint],
-  )
-
-  const handleClear = useCallback(() => {
-    if (selections.length === 0) return
-    undoSnapshotRef.current = { selections, state: modelState }
-    playSound('deselect')
-    modelClear()
-    setShowUndoToast(true)
-  }, [selections, modelState, playSound, modelClear])
-
-  const handleBreadcrumbSelect = useCallback(
-    (emotion: BaseEmotion) => {
-      if (showHint) dismissHint()
-      playSound('select')
-      navigator.vibrate?.(10)
-      modelBreadcrumbSelect(emotion)
-    },
-    [playSound, modelBreadcrumbSelect, showHint, dismissHint],
-  )
-
-  const handleUndo = useCallback(() => {
-    const snapshot = undoSnapshotRef.current
-    if (snapshot) {
-      restore(snapshot.selections, snapshot.state)
-      undoSnapshotRef.current = null
-    }
-    setShowUndoToast(false)
-  }, [restore])
-
-  const dismissUndo = useCallback(() => {
-    undoSnapshotRef.current = null
-    setShowUndoToast(false)
-  }, [])
-
-  const shouldEscalateCrisis = useMemo(
-    () => hasTemporalCrisisPattern(sessions),
-    [sessions],
-  )
-
-  const analyzeEmotions = useCallback(() => {
-    if (selections.length === 0) return
-    const results = analyze()
-    setAnalysisSource('model')
-    setModalSelections(selections)
-    setAnalysisResults(results)
-    setIsModalOpen(true)
-  }, [selections, analyze])
-
-  const handleQuickCheckInComplete = useCallback((quickSelections: BaseEmotion[], quickResults: AnalysisResult[]) => {
-    setShowQuickCheckIn(false)
-    setAnalysisSource('quick')
-    setModalSelections(quickSelections)
-    setAnalysisResults(quickResults)
-    setIsModalOpen(true)
   }, [])
 
   useEffect(() => {
-    const handleOnline = () => setIsOffline(false)
-    const handleOffline = () => setIsOffline(true)
-    window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
-    return () => {
-      window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
-    }
+    document.documentElement.dataset.theme = theme
+    storage.set('theme', theme)
+  }, [theme])
+
+  const setSaving = useCallback((enabled: boolean) => {
+    storage.set('saveSessions', String(enabled))
+    setSaveSessions(enabled)
   }, [])
 
-  // Early return: render only onboarding when not yet completed (once per device lifetime)
-  if (showOnboarding) {
-    return (
-      <MotionConfig reducedMotion="user">
-        <div className="h-dvh overflow-hidden flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
-          <Onboarding onComplete={(selectedModelId) => {
-            if (selectedModelId) {
-              switchModel(selectedModelId)
-            }
-            setShowOnboarding(false)
-          }} />
-        </div>
-      </MotionConfig>
-    )
-  }
+  const setExternalAI = useCallback((enabled: boolean) => {
+    storage.set('allowExternalAI', String(enabled))
+    setAllowExternalAI(enabled)
+  }, [])
 
-  const handleSessionComplete = ({
-    reflectionAnswer,
-    interventionResponse,
-  }: {
-    reflectionAnswer: 'yes' | 'partly' | 'no' | null
-    interventionResponse: 'better' | 'same' | 'worse' | null
-  }) => {
-    if (analysisResults.length === 0 || !saveSessions) return
-    const sourceSelections = modalSelections.length > 0 ? modalSelections : selections
-    const serialized: SerializedSelection[] = sourceSelections.map((s) => {
-      const base: SerializedSelection = { emotionId: s.id, label: s.label }
-      // Preserve somatic extras for heat map tracking
-      if ('selectedSensation' in s && 'selectedIntensity' in s) {
-        base.extras = {
-          sensationType: (s as { selectedSensation: string }).selectedSensation,
-          intensity: (s as { selectedIntensity: number }).selectedIntensity,
+  const startRoute = useCallback((route: Exclude<CheckInRoute, 'quick'>) => {
+    setCompletion(null)
+    setReflectionSaved(false)
+    navigation.navigate({ name: 'check-in', route })
+  }, [navigation])
+
+  const complete = useCallback((route: CheckInRoute, modelId: string, selections: BaseEmotion[], results: AnalysisResult[]) => {
+    if (selections.length === 0 || results.length === 0) return
+    const baseTier = getCrisisTier(results.map((result) => result.id))
+    const crisisTier = escalateCrisisTier(baseTier, sessions)
+    setCompletion({
+      route,
+      modelId,
+      selections,
+      results,
+      crisisTier,
+      temporalEscalation: hasTemporalCrisisPattern(sessions) && crisisTier !== baseTier,
+    })
+    setReflectionSaved(false)
+    navigation.navigate({ name: 'reflection' })
+  }, [navigation, sessions])
+
+  const completeQuick = useCallback((selection: BaseEmotion, result: AnalysisResult) => {
+    complete('quick', 'quick-check-in', [selection], [result])
+  }, [complete])
+
+  const saveReflection = useCallback((detail: { reflectionAnswer?: 'yes' | 'partly' | 'no'; selectedNeed?: string; nextStep?: string }) => {
+    if (!completion || !saveSessions || reflectionSaved) return
+    const serialized: SerializedSelection[] = completion.selections.map((selection) => {
+      const item: SerializedSelection = { emotionId: selection.id, label: selection.label }
+      if ('selectedSensation' in selection && 'selectedIntensity' in selection) {
+        item.extras = {
+          sensationType: (selection as BaseEmotion & { selectedSensation: string }).selectedSensation,
+          intensity: (selection as BaseEmotion & { selectedIntensity: number }).selectedIntensity,
         }
       }
-      return base
+      return item
     })
     const session: Session = {
       id: crypto.randomUUID(),
       timestamp: Date.now(),
-      modelId: analysisSource === 'quick' ? QUICK_MODEL_ID : modelId,
+      modelId: completion.modelId,
+      entryRoute: completion.route,
       selections: serialized,
-      results: analysisResults,
-      crisisTier: getCrisisTier(analysisResults.map((r) => r.id)),
-      reflectionAnswer: reflectionAnswer ?? undefined,
-      interventionResponse: interventionResponse ?? undefined,
+      results: completion.results,
+      crisisTier: getCrisisTier(completion.results.map((result) => result.id)),
+      reflectionAnswer: detail.reflectionAnswer,
+      selectedNeed: detail.selectedNeed,
+      nextStep: detail.nextStep,
     }
-    saveSession(session)
+    void saveSession(session)
+    setReflectionSaved(true)
+  }, [completion, reflectionSaved, saveSession, saveSessions])
+
+  const returnToday = useCallback(() => {
+    setCompletion(null)
+    setReflectionSaved(false)
+    navigation.reset({ name: 'today' })
+  }, [navigation])
+
+  const exportData = useCallback(() => {
+    void exportSessionsJSON().then((json) => {
+      const blob = new Blob([json], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const anchor = document.createElement('a')
+      anchor.href = url
+      anchor.download = 'emot-id-sessions.json'
+      anchor.click()
+      URL.revokeObjectURL(url)
+    })
+  }, [exportSessionsJSON])
+
+  const destination = navigation.destination
+  const activeTab: AppTab | null = destination.name === 'today' || destination.name === 'explore' || destination.name === 'journal' ? destination.name : null
+  const showTabs = destination.name === 'today' || destination.name === 'explore' || destination.name === 'journal' || destination.name === 'arrival'
+
+  const content = useMemo(() => {
+    switch (destination.name) {
+      case 'today':
+        return <TodayScreen sessions={sessions} saveSessions={saveSessions} onStart={() => navigation.navigate({ name: 'arrival' })} onQuickComplete={completeQuick} onOpenJournal={() => navigation.reset({ name: 'journal' })} />
+      case 'arrival':
+        return <ArrivalScreen onBack={navigation.back} onChoose={startRoute} />
+      case 'check-in':
+        return <ModelCheckInScreen route={destination.route} onBack={navigation.back} onComplete={(modelId, selections, results) => complete(destination.route, modelId, selections, results)} />
+      case 'reflection':
+        return completion
+          ? <ReflectionScreen completion={completion} saveSessions={saveSessions} allowExternalAI={allowExternalAI} onBack={navigation.back} onSave={saveReflection} onReturn={returnToday} />
+          : <TodayScreen sessions={sessions} saveSessions={saveSessions} onStart={() => navigation.navigate({ name: 'arrival' })} onQuickComplete={completeQuick} onOpenJournal={() => navigation.reset({ name: 'journal' })} />
+      case 'explore':
+        return <ExploreScreen onChoose={startRoute} onPractice={() => navigation.navigate({ name: 'granularity' })} />
+      case 'journal':
+        return <JournalScreen sessions={sessions} loading={sessionsLoading} saveSessions={saveSessions} onOpenSession={(sessionId) => navigation.navigate({ name: 'session', sessionId })} onOpenChain={() => navigation.navigate({ name: 'chain' })} />
+      case 'session':
+        return <SessionDetailScreen session={sessions.find((session) => session.id === destination.sessionId)} onBack={navigation.back} />
+      case 'settings':
+        return <SettingsScreen soundMuted={muted} dailyReminderEnabled={dailyReminderEnabled} reminderSupported={reminderSupported && reminderPermission !== 'denied'} theme={theme} onBack={navigation.back} onSoundChange={setMuted} onReminderChange={(enabled) => void handleDailyReminderChange(enabled)} onThemeChange={setTheme} onOpenPrivacy={() => navigation.navigate({ name: 'privacy' })} onOpenSupport={() => navigation.navigate({ name: 'support' })} />
+      case 'privacy':
+        return <PrivacyDataScreen saveSessions={saveSessions} allowExternalAI={allowExternalAI} onBack={navigation.back} onSaveSessionsChange={setSaving} onExternalAIChange={setExternalAI} onExport={exportData} onClear={() => void clearAllSessions()} />
+      case 'support':
+        return <SupportScreen onBack={navigation.back} />
+      case 'granularity':
+        return <GranularityTraining isOpen onClose={navigation.back} />
+      case 'chain':
+        return <ChainAnalysis isOpen onClose={navigation.back} entries={chainEntries} loading={chainLoading} onSave={saveChainEntry} onClearAll={clearAllChains} />
+      default:
+        return null
+    }
+  }, [allowExternalAI, chainEntries, chainLoading, clearAllChains, clearAllSessions, complete, completeQuick, completion, dailyReminderEnabled, destination, exportData, handleDailyReminderChange, muted, navigation, reminderPermission, reminderSupported, returnToday, saveChainEntry, saveReflection, saveSessions, sessions, sessionsLoading, setExternalAI, setMuted, setSaving, startRoute, theme])
+
+  if (showOnboarding) {
+    return (
+      <MotionConfig reducedMotion="user">
+        <Onboarding onComplete={() => setShowOnboarding(false)} />
+      </MotionConfig>
+    )
   }
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="h-dvh overflow-hidden flex flex-col bg-gradient-to-br from-gray-900 to-gray-800">
-      <Header
-        menuOpen={menuOpen}
-        onMenuToggle={toggleMenu}
-        modelId={modelId}
-        onModelChange={switchModel}
-      />
-
-      {isOffline && (
-        <div className="shrink-0 px-4 py-2 text-xs text-amber-200 bg-amber-900/30 border-y border-amber-700/40 text-center">
-          {offlineT.message ?? 'You are offline. Emot-ID is using cached content on this device.'}
-        </div>
-      )}
-
-      <SettingsMenu
-        isOpen={menuOpen}
-        onClose={closeMenu}
-        modelId={modelId}
-        onModelChange={switchModel}
-        soundMuted={muted}
-        onSoundMutedChange={setMuted}
-        saveSessions={saveSessions}
-        onSaveSessionsChange={handleSaveSessionsChange}
-        allowExternalAI={allowExternalAI}
-        onAllowExternalAIChange={handleAllowExternalAIChange}
-        dailyReminderEnabled={dailyReminderEnabled}
-        reminderSupported={reminderSupported}
-        reminderPermission={reminderPermission}
-        onDailyReminderChange={handleDailyReminderChange}
-        onOpenHistory={() => setShowHistory(true)}
-        onOpenGranularity={() => setShowGranularityTraining(true)}
-        onOpenChainAnalysis={() => setShowChainAnalysis(true)}
-      />
-
-      <SelectionBar
-        selections={selections}
-        combos={combos}
-        onDeselect={handleDeselect}
-        onClear={handleClear}
-      />
-
-      <VisualizationErrorBoundary key={modelId} onReset={modelClear} language={language}>
-        <div className="relative flex-1 min-h-0">
-          {/* Floating hint overlay — inside visualization area to avoid stacking above */}
-          <AnimatePresence>
-            {showHint && !showOnboarding && selections.length === 0 && (
-              <div className="absolute inset-x-0 top-2 z-[var(--z-dropdown)] flex justify-center pointer-events-none">
-                <FirstInteractionHint modelId={modelId} />
-              </div>
-            )}
-          </AnimatePresence>
-
-          <AnimatePresence>
-            {modelId === MODEL_IDS.WHEEL && breadcrumbPath.length > 0 && (
-              <WheelBreadcrumb
-                path={breadcrumbPath}
-                onSelect={handleBreadcrumbSelect}
-              />
-            )}
-          </AnimatePresence>
-
-          {modelId && (
-            <Suspense
-              fallback={
-                <div className="h-full w-full flex items-center justify-center text-sm text-gray-500">
-                  {section('app').subtitle ?? 'Loading...'}
-                </div>
-              }
-            >
-              <ModelVisualization
-                modelId={modelId}
-                emotions={visibleEmotions}
-                onSelect={handleSelect}
-                onDeselect={handleDeselect}
-                sizes={sizes}
-                selections={selections}
-                topInset={modelId === MODEL_IDS.WHEEL && breadcrumbPath.length > 0 ? 48 : 0}
-              />
-            </Suspense>
-          )}
-        </div>
-      </VisualizationErrorBoundary>
-
-      {/* Bottom bar: analyze + "I don't know" */}
-      <div className="shrink-0 px-4 py-1.5 max-w-md mx-auto w-full bg-gray-900/80 backdrop-blur-sm border-t border-gray-700/50 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
-        <AnalyzeButton
-          disabled={!modelReady || selections.length === 0}
-          onClick={analyzeEmotions}
-          modelId={modelId}
-          selectionCount={selections.length}
-          modelReady={modelReady}
-        />
-          {selections.length === 0 && (
-            <button
-              type="button"
-              onClick={() => setShowQuickCheckIn(true)}
-              className="mt-2 w-full min-h-[44px] px-4 py-2 rounded-xl border border-indigo-500/50 text-indigo-200 hover:bg-indigo-600/20 transition-colors text-sm font-medium"
-            >
-              {section('quickCheckIn').title ?? 'Quick check-in'}
-            </button>
-          )}
-        {/* "I don't know" — compact text link, hidden on somatic and while hint visible */}
-        {selections.length === 0 && !showHint && modelId !== MODEL_IDS.SOMATIC && (
-          <button
-            type="button"
-            onClick={() => setShowDontKnow(true)}
-            className="block mx-auto mt-1 px-4 py-2 text-xs text-gray-500 hover:text-gray-300 transition-colors"
-          >
-            {dontKnowT.link ?? "I don't know what I'm feeling"}
-          </button>
-        )}
-      </div>
-
-      <ResultModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onExploreMore={analysisSource === 'quick' ? undefined : handleClear}
-        onSwitchModel={switchModel}
-        onSessionComplete={handleSessionComplete}
-        escalateCrisis={shouldEscalateCrisis}
-        currentModelId={analysisSource === 'quick' ? undefined : modelId}
-        allowExternalAI={allowExternalAI}
-        selections={modalSelections}
-        results={analysisResults}
-      />
-
-      <QuickCheckIn
-        isOpen={showQuickCheckIn}
-        onClose={() => setShowQuickCheckIn(false)}
-        onComplete={handleQuickCheckInComplete}
-      />
-
-      <GranularityTraining
-        isOpen={showGranularityTraining}
-        onClose={() => setShowGranularityTraining(false)}
-      />
-
-      <ChainAnalysis
-        isOpen={showChainAnalysis}
-        onClose={() => setShowChainAnalysis(false)}
-        entries={chainEntries}
-        loading={chainLoading}
-        onSave={saveChainEntry}
-        onClearAll={clearAllChains}
-      />
-
-      <AnimatePresence>
-        {showDontKnow && (
-          <DontKnowModal
-            onSelectModel={switchModel}
-            onClose={() => setShowDontKnow(false)}
-          />
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        <UndoToast
-          visible={showUndoToast}
-          onUndo={handleUndo}
-          onDismiss={dismissUndo}
-        />
-      </AnimatePresence>
-
-      {/* Accessible live region for screen readers */}
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        {showUndoToast && selections.length === 0
-          ? (language === 'ro' ? 'Nicio emoție selectată.' : 'No emotions selected.')
-          : selections.length > 0
-            ? `${selections.length} ${selections.length === 1 ? 'emotion' : 'emotions'} selected: ${selections.map(s => language === 'ro' ? s.label.ro : s.label.en).join(', ')}`
-            : ''}
-      </div>
-
-      <SessionHistory
-        isOpen={showHistory}
-        onClose={() => setShowHistory(false)}
-        sessions={sessions}
-        loading={sessionsLoading}
-        onClearAll={clearAllSessions}
-        onExportJSON={exportSessionsJSON}
-      />
-
-    </div>
+      <AppShell
+        activeTab={activeTab}
+        isOffline={isOffline}
+        showTabs={showTabs}
+        screenKey={`${destination.name}:${destination.name === 'check-in' ? destination.route : destination.name === 'session' ? destination.sessionId : ''}`}
+        onTabChange={(tab) => navigation.reset({ name: tab })}
+        onOpenSettings={() => navigation.navigate({ name: 'settings' })}
+      >
+        {content}
+      </AppShell>
     </MotionConfig>
   )
 }
