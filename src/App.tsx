@@ -7,6 +7,7 @@ import { ChainAnalysis } from './components/ChainAnalysis'
 import { TodayScreen } from './screens/TodayScreen'
 import { ArrivalScreen } from './screens/ArrivalScreen'
 import { ModelCheckInScreen } from './screens/ModelCheckInScreen'
+import { BodyCompassScreen } from './screens/BodyCompassScreen'
 import { ReflectionScreen } from './screens/ReflectionScreen'
 import { ExploreScreen } from './screens/ExploreScreen'
 import { JournalScreen } from './screens/JournalScreen'
@@ -153,7 +154,9 @@ export default function App() {
       case 'arrival':
         return <ArrivalScreen onBack={navigation.back} onChoose={startRoute} />
       case 'check-in':
-        return <ModelCheckInScreen route={destination.route} onBack={navigation.back} onComplete={(modelId, selections, results) => complete(destination.route, modelId, selections, results)} />
+        return destination.route === 'body'
+          ? <BodyCompassScreen onBack={navigation.back} onComplete={(modelId, selections, results) => complete('body', modelId, selections, results)} />
+          : <ModelCheckInScreen route={destination.route} onBack={navigation.back} onComplete={(modelId, selections, results) => complete(destination.route, modelId, selections, results)} />
       case 'reflection':
         return completion
           ? <ReflectionScreen completion={completion} saveSessions={saveSessions} allowExternalAI={allowExternalAI} onBack={navigation.back} onSave={saveReflection} onReturn={returnToday} />

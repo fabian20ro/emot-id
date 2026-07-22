@@ -1,6 +1,6 @@
 # Mobile Rehaul Implementation Plan
 
-Status: implemented July 22, 2026. Verified by `npm run check` and 34 repeatable
+Status: implemented July 22, 2026. Verified by `npm run check` and 48 repeatable
 Playwright cases across Mobile Safari and Mobile Chrome.
 
 Target: move the current model-first mobile UI to the approved Daily Thread shell,
@@ -82,7 +82,7 @@ from Today, Reflection, Settings, and every crisis state.
 | First-run onboarding | Set expectations, privacy, language, and optional local saving | `Onboarding.tsx` | Replace model-choice final step |
 | Today | Calm home, quick strip, recent thread, start button | `QuickCheckIn.tsx`, session repo | New |
 | Arrival | Choose words, body, placement, or guided uncertainty | `DontKnowModal.tsx` | New full screen |
-| Body Compass | Region -> sensation -> intensity -> possible words | `BodyMap.tsx`, pickers, `GuidedScan.tsx` | Recompose |
+| Body Compass | Region -> sensation -> intensity -> possible words | `BodyMap.tsx`, `GuidedScan.tsx` | Implemented staged route |
 | Affect Map | Place a point, read dimensions, then reveal suggestions | `DimensionalField.tsx` | Recompose |
 | Word Ladder | Broad family -> branch -> precise word | Wheel model, `WheelBreadcrumb.tsx` | New presentation |
 | Meaning + Need | Tentative synthesis, fit check, function, need | `ResultModal.tsx`, `ResultsView.tsx` | Recompose as screen |
@@ -600,6 +600,8 @@ the deployed app usable. Translation-only slices update both locales together.
 **Verify:** old/new fixture round trips; no destructive migration.
 
 ### Slice 13: Build Body Compass
+
+**Status:** Complete July 22, 2026.
 
 **Files**
 
