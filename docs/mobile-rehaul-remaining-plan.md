@@ -1,6 +1,6 @@
 # Remaining Mobile Migration Plan
 
-Status: prioritized after the interruption guard and Word Ladder extraction, July 23, 2026.
+Status: prioritized after completing Word Ladder, July 23, 2026.
 
 ## Completed Since Last Update
 
@@ -17,6 +17,8 @@ Status: prioritized after the interruption guard and Word Ladder extraction, Jul
   discard route-local work; screen Back and crisis support remain available.
 - Extracted `WordLadderScreen`, added exact one-level hierarchy Back, selectable ancestor levels,
   removable selections, semantic list controls, and bilingual browser coverage.
+- Added optional user-driven comparison between the selected word and one unranked sibling from
+  the same visible level, using existing catalog descriptions and neutral wording.
 
 ## Constraints
 
@@ -33,15 +35,15 @@ Settings is hidden during check-in and Reflection. Back remains the explicit exi
 stays in the Reflection content, and preferences are changed only after leaving the workflow.
 No draft persistence or navigation-state framework was added.
 
-## P1: Finish Word Ladder
+## Completed: Word Ladder
 
 The inline ladder is now `WordLadderScreen`; it preserves the Wheel analyzer, keeps hierarchy
 history local, returns one level at a time, and allows any visited ancestor or precise leaf to be
-selected. Remaining work: a small nearby-word comparison using existing catalog descriptions.
-Do not build a similarity graph or recommender.
+selected. Selection-time context retains that exact sibling level for optional comparison without
+calculating similarity or changing the model contract.
 
-**Tests:** broad and precise completion, hierarchy Back, comparison in both languages, dark
-contrast, mobile bounds, and shared crisis completion.
+**Tests:** broad and precise completion, hierarchy Back, English and Romanian comparison, keyboard
+selection, dark contrast, mobile bounds, no-overlap geometry, and shared crisis completion.
 
 ## P2: Make Needs User-Selectable
 
@@ -107,18 +109,20 @@ Back/edit/remove/add-another paths; no change to somatic scoring or shared crisi
 
 ## Recommended Sequence
 
-1. Finish P1 Word Ladder comparison without changing the model contract.
-2. P2 selectable needs: restores agency in Reflection.
-3. P3 Guide Me: reduce uncertainty without speculative intelligence.
-4. P4 Journal trust, then P5 legacy removal.
-5. P6 hardening continuously, with the full matrix before release.
+1. P2 selectable needs: restores agency in Reflection.
+2. P3 Guide Me: reduce uncertainty without speculative intelligence.
+3. P4 Journal trust, then P5 legacy removal.
+4. P6 hardening continuously, with the full matrix before release.
 
 ## Recommended Next Update
 
-Finish P1 with one constrained comparison slice:
+Implement P2 as a Reflection-only state change:
 
-1. Retain the visible sibling level at the moment a word is selected; do not calculate similarity.
-2. Let the user choose one sibling to compare with the selection.
-3. Show the two existing catalog descriptions together with neutral "may fit" wording.
-4. Cover broad and precise comparisons in English and Romanian, dark contrast, keyboard use, and
-   mobile bounds. Then begin P2 in a separate iteration.
+1. Reuse the current deduplicated inferred-needs list; add no needs taxonomy or mapping layer.
+2. Preselect the only need when exactly one exists. When several exist, let the user explicitly
+   choose one or leave the choice empty.
+3. Persist only that selection through the existing optional `selectedNeed` field.
+4. Keep crisis acknowledgement ahead of all Reflection controls and preserve save-disabled
+   behavior.
+5. Verify zero/one/multiple needs, English and Romanian, keyboard operation, session detail,
+   export, and tier-4 gating before changing any next-step logic.

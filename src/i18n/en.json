@@ -382,11 +382,17 @@
     "lede": "Start broad. You may stop at any level when a word feels close enough.",
     "path": "Your path",
     "choose": "Use my current choice",
-    "compare": "Nearby meaning",
+    "compare": "Compare nearby words",
     "level": "Choose one direction",
     "selected": "Selected words",
     "backLevel": "Back one level",
-    "useWord": "Use {word}"
+    "useWord": "Use {word}",
+    "hideComparison": "Hide comparison",
+    "compareHint": "Choose one word from the same level. The descriptions may help; neither word has to fit.",
+    "compareWith": "Compare with {word}",
+    "compareNote": "Notice which description, if either, feels closer.",
+    "comparisonLabel": "{selected} and {other}",
+    "noDescription": "No description is available for this word yet."
   },
   "plutchik": {
     "eyebrow": "Plutchik Wheel",

@@ -623,3 +623,25 @@ production build. `npm run test:e2e` passes all 66 Mobile Safari and Mobile Chro
 **Insight:** For a short deterministic hierarchy, route-local state snapshots provide reliable
 one-level Back without changing the model contract or introducing a shared wizard abstraction.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-23] Add user-driven Word Ladder comparison
+
+**Context:** The extracted ladder could select broad and precise words but offered no focused way
+to distinguish a choice from nearby words without restarting the hierarchy.
+**What happened:**
+- Captured the exact visible sibling set when an ancestor or leaf was selected; no similarity
+  score, ranking, graph, or analyzer change was introduced.
+- Added an optional bilingual comparison disclosure where the user chooses one sibling and sees
+  both existing catalog descriptions with neutral, non-diagnostic wording.
+- Preserved direct completion without comparison and cleared comparison state with its selection.
+- Replaced the sticky completion action with normal-flow placement after manual `393x742`
+  inspection found it covering the second row of comparison choices.
+- Added broad, precise, Romanian, dark-contrast, keyboard, mobile-overflow, and no-overlap unit and
+  Playwright coverage.
+**Outcome:** Success. `npm run check` passes 756 tests, translation audit, lint, TypeScript, and
+production build. `npm run test:e2e` passes all 68 Mobile Safari and Mobile Chrome cases.
+**Insight:** Capturing the visible sibling set at selection time supports honest comparison without
+inventing a similarity model; explanation can remain user-directed and deterministic.
+**Promoted to Lessons Learned:** No

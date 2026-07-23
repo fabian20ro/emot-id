@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { ArrowLeft, Check, ChevronRight, RotateCcw, X } from 'lucide-react'
+import { useState, type CSSProperties } from 'react'
+import { ArrowLeft, ArrowLeftRight, Check, ChevronRight, RotateCcw, X } from 'lucide-react'
 import { ScreenHeader } from '../components/ScreenHeader'
 import { useLanguage } from '../context/LanguageContext'
 import { useEmotionModel } from '../hooks/useEmotionModel'
@@ -16,8 +16,14 @@ interface LadderEmotion extends BaseEmotion {
 }
 
 interface LadderSnapshot {
+  emotions: BaseEmotion[]
   selections: BaseEmotion[]
   state: ModelState
+}
+
+interface ComparisonContext {
+  selected: BaseEmotion
+  siblings: BaseEmotion[]
 }
 
 function hasChildren(emotion: BaseEmotion): emotion is LadderEmotion {
@@ -31,12 +37,30 @@ export function WordLadderScreen({ onBack, onComplete }: WordLadderScreenProps) 
   const model = useEmotionModel(MODEL_IDS.WHEEL)
   const [path, setPath] = useState<BaseEmotion[]>([])
   const [history, setHistory] = useState<LadderSnapshot[]>([])
+  const [comparisonContext, setComparisonContext] = useState<ComparisonContext | null>(null)
+  const [comparison, setComparison] = useState<BaseEmotion | null>(null)
+  const [comparisonOpen, setComparisonOpen] = useState(false)
+
+  const prepareComparison = (selected: BaseEmotion, level: BaseEmotion[]) => {
+    setComparisonContext({
+      selected,
+      siblings: level.filter((emotion) => emotion.id !== selected.id),
+    })
+    setComparison(null)
+    setComparisonOpen(false)
+  }
 
   const select = (emotion: BaseEmotion) => {
     if (hasChildren(emotion)) {
-      setHistory((current) => [...current, { selections: model.selections, state: model.modelState }])
+      setHistory((current) => [...current, {
+        emotions: model.visibleEmotions,
+        selections: model.selections,
+        state: model.modelState,
+      }])
       setPath((current) => [...current, emotion])
+      setComparisonOpen(false)
     } else {
+      prepareComparison(emotion, model.visibleEmotions)
       setHistory([])
       setPath([])
     }
@@ -44,7 +68,9 @@ export function WordLadderScreen({ onBack, onComplete }: WordLadderScreenProps) 
   }
 
   const choosePathLevel = (index: number) => {
-    model.handleBreadcrumbSelect(path[index])
+    const selected = path[index]
+    prepareComparison(selected, history[index]?.emotions ?? [])
+    model.handleBreadcrumbSelect(selected)
     setHistory([])
     setPath([])
   }
@@ -61,6 +87,18 @@ export function WordLadderScreen({ onBack, onComplete }: WordLadderScreenProps) 
     model.handleClear()
     setHistory([])
     setPath([])
+    setComparisonContext(null)
+    setComparison(null)
+    setComparisonOpen(false)
+  }
+
+  const deselect = (emotion: BaseEmotion) => {
+    model.handleDeselect(emotion)
+    if (comparisonContext?.selected.id === emotion.id) {
+      setComparisonContext(null)
+      setComparison(null)
+      setComparisonOpen(false)
+    }
   }
 
   const finish = () => {
@@ -110,7 +148,7 @@ export function WordLadderScreen({ onBack, onComplete }: WordLadderScreenProps) 
             </div>
             <div>
               {model.selections.map((emotion) => (
-                <button type="button" key={emotion.id} onClick={() => model.handleDeselect(emotion)}>
+                <button type="button" key={emotion.id} onClick={() => deselect(emotion)}>
                   <i style={{ background: emotion.color }} aria-hidden="true" />
                   {emotion.label[language]}
                   <X size={15} aria-hidden="true" />
@@ -118,6 +156,67 @@ export function WordLadderScreen({ onBack, onComplete }: WordLadderScreenProps) 
               ))}
             </div>
           </section>
+        )}
+
+        {path.length === 0 && comparisonContext && comparisonContext.siblings.length > 0 && (
+          <>
+            <button
+              type="button"
+              className="secondary-button word-compare-toggle"
+              aria-expanded={comparisonOpen}
+              onClick={() => setComparisonOpen((open) => !open)}
+            >
+              <ArrowLeftRight size={18} aria-hidden="true" />
+              {comparisonOpen ? t.hideComparison : t.compare}
+            </button>
+            {comparisonOpen && (
+              <section className="word-compare" aria-labelledby="word-compare-title">
+                <h2 id="word-compare-title">{t.compare}</h2>
+                <p>{t.compareHint}</p>
+                <div className="word-compare-options">
+                  {comparisonContext.siblings.map((sibling) => (
+                    <button
+                      type="button"
+                      key={sibling.id}
+                      aria-pressed={comparison?.id === sibling.id}
+                      aria-label={t.compareWith.replace('{word}', sibling.label[language])}
+                      onClick={() => setComparison(sibling)}
+                    >
+                      <i style={{ background: sibling.color }} aria-hidden="true" />
+                      {sibling.label[language]}
+                    </button>
+                  ))}
+                </div>
+                {comparison && (
+                  <>
+                    <p className="word-compare-note">{t.compareNote}</p>
+                    <div
+                      className="word-compare-result"
+                      role="group"
+                      aria-label={t.comparisonLabel
+                        .replace('{selected}', comparisonContext.selected.label[language])
+                        .replace('{other}', comparison.label[language])}
+                    >
+                      {[comparisonContext.selected, comparison].map((emotion) => (
+                        <article key={emotion.id} style={{ '--emotion-color': emotion.color } as CSSProperties}>
+                          <h3>{emotion.label[language]}</h3>
+                          <p>{emotion.description?.[language] ?? t.noDescription}</p>
+                        </article>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </section>
+            )}
+          </>
+        )}
+
+        {model.selections.length > 0 && (
+          <div className="route-action">
+            <button type="button" className="primary-button" disabled={!model.modelReady} onClick={finish}>
+              {t.choose}<ChevronRight size={19} aria-hidden="true" />
+            </button>
+          </div>
         )}
 
         <ul className="word-options" aria-label={t.level}>
@@ -135,14 +234,6 @@ export function WordLadderScreen({ onBack, onComplete }: WordLadderScreenProps) 
           ))}
         </ul>
       </div>
-
-      {model.selections.length > 0 && (
-        <div className="route-action">
-          <button type="button" className="primary-button" disabled={!model.modelReady} onClick={finish}>
-            {t.choose}<ChevronRight size={19} aria-hidden="true" />
-          </button>
-        </div>
-      )}
     </div>
   )
 }

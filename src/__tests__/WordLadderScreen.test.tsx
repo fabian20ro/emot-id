@@ -56,6 +56,7 @@ describe('WordLadderScreen', () => {
 
     const selected = screen.getByRole('region', { name: 'Selected words' })
     expect(within(selected).getByRole('button', { name: /happy/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Compare nearby words' })).toHaveAttribute('aria-expanded', 'false')
     await user.click(screen.getByRole('button', { name: 'Use my current choice' }))
 
     expect(onComplete).toHaveBeenCalledTimes(1)
@@ -75,7 +76,42 @@ describe('WordLadderScreen', () => {
     const selected = screen.getByRole('region', { name: 'Selected words' })
     await user.click(within(selected).getByRole('button', { name: /energized/i }))
     expect(screen.queryByRole('region', { name: 'Selected words' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Compare nearby words' })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Use my current choice' })).not.toBeInTheDocument()
+  })
+
+  it('compares a broad selection with a user-chosen word from the same level', async () => {
+    const user = userEvent.setup()
+    renderScreen()
+
+    await user.click(screen.getByRole('button', { name: 'Happy' }))
+    await user.click(screen.getByRole('button', { name: 'Playful' }))
+    await user.click(screen.getByRole('button', { name: 'Use Happy' }))
+    await user.click(screen.getByRole('button', { name: 'Compare nearby words' }))
+
+    expect(screen.queryByRole('button', { name: 'Compare with Happy' })).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Compare with Sad' }))
+
+    const comparison = screen.getByRole('group', { name: 'Happy and Sad' })
+    expect(within(comparison).getByRole('heading', { name: 'Happy' })).toBeInTheDocument()
+    expect(within(comparison).getByRole('heading', { name: 'Sad' })).toBeInTheDocument()
+    expect(within(comparison).getAllByText(/\S+/).length).toBeGreaterThan(2)
+    expect(screen.getByText('Notice which description, if either, feels closer.')).toBeInTheDocument()
+  })
+
+  it('compares a precise leaf only with its visible siblings', async () => {
+    const user = userEvent.setup()
+    renderScreen()
+
+    await user.click(screen.getByRole('button', { name: 'Happy' }))
+    await user.click(screen.getByRole('button', { name: 'Playful' }))
+    await user.click(screen.getByRole('button', { name: 'Energized' }))
+    await user.click(screen.getByRole('button', { name: 'Compare nearby words' }))
+
+    expect(screen.getByRole('button', { name: 'Compare with Cheeky' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Compare with Sad' })).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Compare with Cheeky' }))
+    expect(screen.getByRole('group', { name: 'Energized and Cheeky' })).toBeInTheDocument()
   })
 
   it('localizes hierarchy controls in Romanian', async () => {
@@ -86,5 +122,11 @@ describe('WordLadderScreen', () => {
     await user.click(screen.getByRole('button', { name: 'Fericit' }))
     expect(screen.getByRole('button', { name: /folosiți fericit/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Înapoi cu un nivel' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Folosiți Fericit' }))
+    await user.click(screen.getByRole('button', { name: 'Comparați cuvinte apropiate' }))
+    await user.click(screen.getByRole('button', { name: 'Comparați cu Trist' }))
+    expect(screen.getByRole('group', { name: 'Fericit și Trist' })).toBeInTheDocument()
+    expect(screen.getByText('Observați care descriere, dacă vreuna, pare mai apropiată.')).toBeInTheDocument()
   })
 })

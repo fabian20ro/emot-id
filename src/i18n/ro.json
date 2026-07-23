@@ -382,11 +382,17 @@
     "lede": "Începeți general. Vă puteți opri la orice nivel când un cuvânt este suficient de apropiat.",
     "path": "Calea voastră",
     "choose": "Folosiți alegerea curentă",
-    "compare": "Sens apropiat",
+    "compare": "Comparați cuvinte apropiate",
     "level": "Alegeți o direcție",
     "selected": "Cuvinte alese",
     "backLevel": "Înapoi cu un nivel",
-    "useWord": "Folosiți {word}"
+    "useWord": "Folosiți {word}",
+    "hideComparison": "Ascundeți comparația",
+    "compareHint": "Alegeți un cuvânt de la același nivel. Descrierile pot ajuta; niciun cuvânt nu trebuie să se potrivească.",
+    "compareWith": "Comparați cu {word}",
+    "compareNote": "Observați care descriere, dacă vreuna, pare mai apropiată.",
+    "comparisonLabel": "{selected} și {other}",
+    "noDescription": "Nu există încă o descriere pentru acest cuvânt."
   },
   "plutchik": {
     "eyebrow": "Roata Plutchik",
