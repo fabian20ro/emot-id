@@ -48,6 +48,7 @@ test.describe('Primary check-in routes', () => {
     await completeQuick(page, 'anxiety')
     await expect(page.getByRole('heading', { name: 'What may be here' })).toBeVisible()
     await expect(page.getByText(/best judge of what fits/i)).toBeVisible()
+    await expect(page.getByRole('button', { name: 'grounding, breath, and present focus' })).toHaveAttribute('aria-pressed', 'true')
     await page.getByRole('button', { name: 'Yes' }).click()
     await finishReflection(page)
 
@@ -55,6 +56,7 @@ test.describe('Primary check-in routes', () => {
     await expect(page.getByTestId('journal-screen')).toContainText(/anxiety/i)
     await page.getByRole('button', { name: /open reflection: anxiety/i }).click()
     await expect(page.getByTestId('session-detail-screen')).toContainText(/yes/i)
+    await expect(page.getByTestId('session-detail-screen')).toContainText('grounding, breath, and present focus')
   })
 
   test('does not persist when local saving is disabled', async ({ page }) => {
@@ -157,6 +159,7 @@ test.describe('Safety behavior through the UI', () => {
     const alert = page.getByRole('alert')
     await expect(alert).toBeVisible()
     await expect(page.locator('.emotion-heading')).not.toBeVisible()
+    await expect(page.getByRole('group', { name: 'What feels most needed right now?' })).toHaveCount(0)
     await expect(page.getByRole('link', { name: 'Explore with AI' })).toHaveCount(0)
     await expect(page.getByRole('button', { name: /understand.*show my reflection/i })).toBeVisible()
 
@@ -166,6 +169,7 @@ test.describe('Safety behavior through the UI', () => {
 
     await page.getByRole('button', { name: /understand.*show my reflection/i }).click()
     await expect(page.locator('.emotion-heading')).toContainText(/despair/i)
+    await expect(page.getByRole('group', { name: 'What feels most needed right now?' })).toBeVisible()
     await expect(page.getByRole('link', { name: 'Explore with AI' })).toBeVisible()
   })
 })

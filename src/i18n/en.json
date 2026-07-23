@@ -414,6 +414,8 @@
     "no": "Not really",
     "function": "What it may be doing",
     "need": "What you may need",
+    "needPrompt": "What feels most needed right now?",
+    "needHint": "Keep the suggestion that fits best, or leave this open.",
     "nextStep": "Try one small step",
     "done": "Done for now",
     "more": "More context",

@@ -23,19 +23,22 @@ export function ReflectionScreen({ completion, saveSessions, allowExternalAI, on
   const { language, section } = useLanguage()
   const t = section('reflectionScreen')
   const analyzeT = section('analyze')
+  const results = completion.results
+  const needs = useMemo(
+    () => [...new Set(results.map((result) => result.needs?.[language]).filter((need): need is string => Boolean(need)))],
+    [language, results],
+  )
   const [fit, setFit] = useState<Fit | undefined>()
+  const [selectedNeed, setSelectedNeed] = useState<string | undefined>(() => needs.length === 1 ? needs[0] : undefined)
   const [tier4Acknowledged, setTier4Acknowledged] = useState(false)
   const [showStep, setShowStep] = useState(false)
   const [finished, setFinished] = useState(false)
   const [nextStep, setNextStep] = useState<string | undefined>()
-  const results = completion.results
   const synthesis = useMemo(() => synthesize(results, language), [results, language])
   const emotionNames = results.map((result) => result.label[language]).join(language === 'ro' ? ', ' : ', ')
   const briefSynthesis = language === 'ro'
     ? `${emotionNames} ar putea face parte din ceea ce este aici. Voi puteți aprecia cel mai bine ce se potrivește.`
     : `${emotionNames} may be part of what is here. You are the best judge of what fits.`
-  const needs = [...new Set(results.map((result) => result.needs?.[language]).filter((need): need is string => Boolean(need)))]
-  const selectedNeed = needs[0]
   const oppositeAction = getOppositeAction(results.map((result) => result.id), language)
   const defaultStep = language === 'ro'
     ? 'Opriți-vă pentru trei respirații lente și observați ce se schimbă.'
@@ -103,8 +106,28 @@ export function ReflectionScreen({ completion, saveSessions, allowExternalAI, on
             </div>
           </fieldset>
 
-          {selectedNeed && (
-            <section className="meaning-block need-block"><Lightbulb size={21} aria-hidden="true" /><div><h2>{t.need}</h2><p>{selectedNeed}</p></div></section>
+          {needs.length > 0 && (
+            <fieldset className="need-choice">
+              <legend><Lightbulb size={19} aria-hidden="true" />{t.needPrompt}</legend>
+              <p>{t.needHint}</p>
+              <div>
+                {needs.map((need) => {
+                  const active = selectedNeed === need
+                  return (
+                    <button
+                      type="button"
+                      key={need}
+                      className={active ? 'is-active' : ''}
+                      aria-pressed={active}
+                      onClick={() => setSelectedNeed(active ? undefined : need)}
+                    >
+                      <span className="need-choice-mark" aria-hidden="true">{active && <Check size={16} />}</span>
+                      <span>{need}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </fieldset>
           )}
 
           <button type="button" className="primary-button mt-4" onClick={() => setShowStep(true)}>{t.nextStep}</button>

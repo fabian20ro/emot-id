@@ -688,3 +688,27 @@ tests, translation audits, lint, TypeScript, and production build. `npm run test
 **Insight:** Layout relationships must be sampled atomically when an interaction can trigger
 scrolling or animation; a retry around stale coordinates does not make the assertion deterministic.
 **Promoted to Lessons Learned:** Yes
+
+---
+
+### [2026-07-23] Make Reflection needs user-selectable
+
+**Context:** Reflection automatically saved the first inferred need, removing user agency when
+several emotion results suggested different needs.
+**What happened:**
+- Reused the existing localized, deduplicated needs list as Reflection-local single-select state.
+- Preselected exactly one inferred need; left multiple suggestions unselected; allowed the active
+  choice to be cleared.
+- Added compact bilingual controls with stable 50px targets and semantic pressed state while
+  preserving next-step behavior and the shared save boundary.
+- Verified the selected need in Journal detail and JSON export, with tier-4 controls remaining
+  completely absent before acknowledgement.
+- Added focused unit coverage plus a keyboard-driven multi-need Playwright journey across WebKit
+  and Chromium.
+**Outcome:** Success. `npm run check` passes 73 files and 762 tests, translation audits, lint,
+TypeScript, and production build. `npm run test:e2e` passes all 70 Mobile Safari and Mobile Chrome
+cases. Manual `393x742` inspection confirmed wrapped copy, selection state, and actions remain in
+normal flow without overlap.
+**Insight:** Optional inferred content should preserve agency explicitly: safe defaults for one
+suggestion, no hidden ranking when several suggestions compete, and a reversible choice.
+**Promoted to Lessons Learned:** No

@@ -414,6 +414,8 @@
     "no": "Nu prea",
     "function": "Ce ar putea face",
     "need": "De ce ați putea avea nevoie",
+    "needPrompt": "De ce simțiți că aveți cea mai mare nevoie acum?",
+    "needHint": "Păstrați sugestia care se potrivește cel mai bine sau lăsați întrebarea deschisă.",
     "nextStep": "Încercați un pas mic",
     "done": "Gata pentru acum",
     "more": "Mai mult context",

@@ -19,6 +19,8 @@ Status: prioritized after completing Word Ladder, July 23, 2026.
   removable selections, semantic list controls, and bilingual browser coverage.
 - Added optional user-driven comparison between the selected word and one unranked sibling from
   the same visible level, using existing catalog descriptions and neutral wording.
+- Made inferred needs user-selectable in Reflection: one need starts selected, while multiple
+  suggestions require an explicit optional choice that persists into Journal and JSON export.
 
 ## Constraints
 
@@ -45,14 +47,16 @@ calculating similarity or changing the model contract.
 **Tests:** broad and precise completion, hierarchy Back, English and Romanian comparison, keyboard
 selection, dark contrast, mobile bounds, no-overlap geometry, and shared crisis completion.
 
-## P2: Make Needs User-Selectable
+## Completed: Make Needs User-Selectable
 
-Reflection currently saves the first inferred need. Present the small deduplicated need set as a
-single-select control and persist the existing optional `selectedNeed` field. Keep suggested next
-steps derived from the chosen need only where current mappings already exist.
+Reflection now presents the deduplicated inferred-needs set as a removable single-select control.
+Exactly one need starts selected; multiple needs start empty. The existing optional `selectedNeed`
+field carries the choice through the shared save boundary into Journal detail and JSON export.
+No taxonomy, mapping layer, or next-step behavior changed.
 
-**Tests:** no need, one need, multiple needs, save-disabled behavior, session detail, export, and
-tier-4 gating.
+**Tests:** no need, one need, deduplicated multiple needs, keyboard selection, clearing,
+save-disabled behavior, English/Romanian copy, session detail, JSON export, dark contrast, mobile
+bounds, and tier-4 gating.
 
 ## P3: Make Guide Me Deterministic
 
@@ -109,20 +113,21 @@ Back/edit/remove/add-another paths; no change to somatic scoring or shared crisi
 
 ## Recommended Sequence
 
-1. P2 selectable needs: restores agency in Reflection.
-2. P3 Guide Me: reduce uncertainty without speculative intelligence.
-3. P4 Journal trust, then P5 legacy removal.
-4. P6 hardening continuously, with the full matrix before release.
+1. P3 Guide Me: reduce uncertainty without speculative intelligence.
+2. P4 Journal trust, then P5 legacy removal.
+3. P6 hardening continuously, with the full matrix before release.
 
 ## Recommended Next Update
 
-Implement P2 as a Reflection-only state change:
+Implement P3 inside `ArrivalScreen` with local state and one exported pure decision function:
 
-1. Reuse the current deduplicated inferred-needs list; add no needs taxonomy or mapping layer.
-2. Preselect the only need when exactly one exists. When several exist, let the user explicitly
-   choose one or leave the choice empty.
-3. Persist only that selection through the existing optional `selectedNeed` field.
-4. Keep crisis acknowledgement ahead of all Reflection controls and preserve save-disabled
-   behavior.
-5. Verify zero/one/multiple needs, English and Romanian, keyboard operation, session detail,
-   export, and tier-4 gating before changing any next-step logic.
+1. First ask whether a body sensation is clear enough to locate. A clear yes returns Body; a
+   no/not-yet answer reveals one second question.
+2. Ask whether the feeling can be placed by energy and pleasantness without naming it. Yes returns
+   Affect; otherwise offer broad Words.
+3. Keep an explicit return to the standard route list at both questions. Do not persist answers,
+   inspect history, score uncertainty, or reorder route cards.
+4. Keep the current `onChoose` navigation contract. No new route, generic wizard, state machine,
+   or shared questionnaire abstraction.
+5. Unit-test every decision-table path. Playwright-test Back, keyboard operation, Romanian copy,
+   direct route handoff, mobile bounds, and choosing no answer.

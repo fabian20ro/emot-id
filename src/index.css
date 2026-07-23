@@ -430,12 +430,19 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .fit-check > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
 .fit-check button { min-height: 48px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-raised); color: var(--ink-muted); }
 .fit-check button.is-active { border-color: var(--teal); background: var(--teal-soft); color: var(--teal); font-weight: 700; }
+.need-choice { margin: 0 0 18px; padding: 12px; border: 1px solid var(--need-line); border-radius: 8px; background: var(--surface-raised); }
+.need-choice legend { max-width: 100%; padding: 0 4px; color: var(--ink); font-size: 14px; font-weight: 750; display: inline-flex; align-items: center; gap: 7px; }
+.need-choice legend svg { flex: 0 0 auto; color: var(--mustard); }
+.need-choice > p { margin: 1px 0 11px; color: var(--ink-muted); font-size: 12px; line-height: 1.4; }
+.need-choice > div { display: grid; gap: 8px; }
+.need-choice button { width: 100%; min-height: 50px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-soft); color: var(--ink); display: grid; grid-template-columns: 22px minmax(0, 1fr); align-items: center; gap: 8px; text-align: left; line-height: 1.35; overflow-wrap: anywhere; }
+.need-choice button.is-active { border-color: var(--mustard); background: var(--mustard-soft); color: var(--need-ink); font-weight: 700; }
+.need-choice-mark { width: 22px; height: 22px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; }
+.need-choice button.is-active .need-choice-mark { border-color: var(--mustard); background: var(--mustard); color: var(--surface-raised); }
 .meaning-block { margin: 10px 0; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-raised); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 11px; }
 .meaning-block svg { color: var(--coral); margin-top: 2px; }
 .meaning-block h2 { margin: 0; font-size: 14px; }
 .meaning-block p { margin: 5px 0 0; color: var(--ink-muted); font-size: 14px; line-height: 1.45; }
-.need-block { background: var(--mustard-soft); border-color: var(--need-line); }
-.need-block svg { color: var(--mustard); }
 .more-context { margin-top: 12px; border-block: 1px solid var(--line); padding: 7px 0; }
 .more-context summary { min-height: 48px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-weight: 680; }
 .more-context p { color: var(--ink-muted); font-size: 14px; line-height: 1.5; }
