@@ -543,3 +543,18 @@ Each entry should follow this structure:
 **Outcome:** Success. `npm run check` passes 739 tests; `npm run test:e2e` passes all 42 Mobile Safari and Mobile Chrome cases.
 **Insight:** Dark themes need paired semantic color tokens plus stateful browser checks; palette-level review alone misses rendered contrast failures.
 **Promoted to Lessons Learned:** Yes
+
+---
+
+### [2026-07-22] Build the staged Body Compass route
+
+**Context:** Implemented the highest-priority route slice after committing and pushing the mobile rehaul baseline.
+**What happened:**
+- Committed and pushed baseline `3c3bea1`; GitHub Pages run 29952930349 passed its Chromium and WebKit Playwright steps before deployment.
+- Added route-local Area, Sensation, Intensity, and Review states while preserving the shared App completion and crisis boundary.
+- Reused the lazy BodyMap, somatic scoring, and optional Guided Scan; added same-region replacement for safe review edits.
+- Added bilingual copy, compact semantic body controls, edit/remove/add/skip paths, and removed sticky-action map occlusion.
+- Added focused unit coverage and six dedicated browser cases across Mobile Safari and Mobile Chrome.
+**Outcome:** Success. `npm run check` passes 743 tests; `npm run test:e2e` passes all 48 cases. Manual 393x742 checks covered every Body Compass stage and dark rendering.
+**Insight:** Prefer accessible SVG region controls over coordinate clicks in browser tests; overlapping paths make coordinate targets semantically ambiguous. Utility navigation currently unmounts route-local drafts, so interruption policy should precede the next feature slice.
+**Promoted to Lessons Learned:** No

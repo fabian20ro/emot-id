@@ -57,6 +57,15 @@ describe('somaticModel.onSelect', () => {
     expect(r3.newState.visibleEmotionIds.get('test-emotion')).toBe(3)
   })
 
+  it('replaces an existing selection for the same body region', () => {
+    const previous = { ...mockEmotion, selectedSensation: 'tension', selectedIntensity: 1 } as SomaticRegion
+    const replacement = { ...mockEmotion, selectedSensation: 'warmth', selectedIntensity: 3 } as SomaticRegion
+
+    const result = somaticModel.onSelect(replacement, somaticModel.initialState, [previous])
+
+    expect(result.newSelections).toEqual([replacement])
+  })
+
   it('should not include deselected emotion in visible state', () => {
     const initialState: ModelState = {
       visibleEmotionIds: new Map([['test-emotion', 1]]),

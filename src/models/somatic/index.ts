@@ -44,7 +44,7 @@ export const somaticModel: EmotionModel<SomaticRegion> = {
   onSelect(
     emotion: SomaticRegion,
     state: ModelState,
-    _selections: SomaticRegion[]
+    selections: SomaticRegion[]
   ): SelectionEffect {
     const nextVisible = new Map(state.visibleEmotionIds);
     nextVisible.set(emotion.id, (nextVisible.get(emotion.id) ?? 0) + 1);
@@ -54,6 +54,7 @@ export const somaticModel: EmotionModel<SomaticRegion> = {
         visibleEmotionIds: nextVisible,
         currentGeneration: state.currentGeneration + 1,
       },
+      newSelections: [...selections.filter((selection) => selection.id !== emotion.id), emotion],
     }
   },
 

@@ -10,9 +10,10 @@ import type { SomaticRegion, SomaticSelection, SensationType } from '../models/s
 /** Extended VisualizationProps with selections for body map */
 interface BodyMapProps extends VisualizationProps {
   selections?: SomaticSelection[]
+  onRegionActivate?: (region: SomaticRegion) => void
 }
 
-function BodyMapBase({ emotions, onSelect, onDeselect, selections = [], progressive = false }: BodyMapProps) {
+function BodyMapBase({ emotions, onSelect, onDeselect, selections = [], progressive = false, onRegionActivate }: BodyMapProps) {
   const { language, section } = useLanguage()
   const somaticT = section('somatic')
 
@@ -51,6 +52,14 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [], progress
     (regionId: string) => {
       if (guidedActive) return
 
+      const region = regionMap.get(regionId)
+      if (!region) return
+
+      if (onRegionActivate) {
+        onRegionActivate(region)
+        return
+      }
+
       if (selectionMap.has(regionId)) {
         const existingSelection = selectionMap.get(regionId)
         if (existingSelection) onDeselect(existingSelection)
@@ -59,7 +68,7 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [], progress
 
       setActiveRegionId(regionId)
     },
-    [guidedActive, onDeselect, selectionMap]
+    [guidedActive, onDeselect, onRegionActivate, regionMap, selectionMap]
   )
 
   const handleSensationSelect = useCallback(
@@ -121,38 +130,31 @@ function BodyMapBase({ emotions, onSelect, onDeselect, selections = [], progress
 
   return (
     <div data-testid="bodymap-root" className="h-full min-h-0 w-full flex flex-col items-center p-1 sm:p-4">
-      {/* Mode toggle */}
-      <div className="flex items-center gap-2 mb-1" role="radiogroup" aria-label="Body map mode">
+      <div className="body-map-toolbar">
         {progressive && (
-          <div className="flex rounded-lg border border-gray-600 p-0.5 mr-1" aria-label={language === 'ro' ? 'Partea corpului' : 'Body side'}>
-            <button type="button" className={`min-h-[40px] px-3 rounded-md text-xs ${bodySide === 'front' ? 'bg-teal-700 text-white' : 'text-gray-400'}`} onClick={() => setBodySide('front')}>{language === 'ro' ? 'Față' : 'Front'}</button>
-            <button type="button" className={`min-h-[40px] px-3 rounded-md text-xs ${bodySide === 'back' ? 'bg-teal-700 text-white' : 'text-gray-400'}`} onClick={() => setBodySide('back')}>{language === 'ro' ? 'Spate' : 'Back'}</button>
+          <div className="body-map-toggle body-side-toggle" role="group" aria-label={somaticT.bodySide}>
+            <button type="button" className={bodySide === 'front' ? 'is-active' : ''} onClick={() => setBodySide('front')}>{language === 'ro' ? 'Față' : 'Front'}</button>
+            <button type="button" className={bodySide === 'back' ? 'is-active' : ''} onClick={() => setBodySide('back')}>{language === 'ro' ? 'Spate' : 'Back'}</button>
           </div>
         )}
-        <button
-          onClick={() => { setIsGuidedMode(false); setGuidedActive(false) }}
-          role="radio"
-          aria-checked={!isGuidedMode}
-          className={`min-h-[44px] text-sm px-4 py-2 rounded-full transition-colors ${
-            !isGuidedMode
-              ? 'bg-indigo-600 text-white'
-              : 'bg-gray-800 text-gray-400 hover:text-gray-200'
-          }`}
-        >
-          {somaticT.freeMode ?? 'Free selection'}
-        </button>
-        <button
-          onClick={() => { setIsGuidedMode(true); startGuidedScan() }}
-          role="radio"
-          aria-checked={isGuidedMode}
-          className={`min-h-[44px] text-sm px-4 py-2 rounded-full transition-colors ${
-            isGuidedMode
-              ? 'bg-indigo-600 text-white'
-              : 'bg-gray-800 text-gray-400 hover:text-gray-200'
-          }`}
-        >
-          {somaticT.guidedMode ?? 'Guided scan'}
-        </button>
+        <div className="body-map-toggle body-mode-toggle" role="radiogroup" aria-label={somaticT.bodyMode}>
+          <button
+            onClick={() => { setIsGuidedMode(false); setGuidedActive(false) }}
+            role="radio"
+            aria-checked={!isGuidedMode}
+            className={!isGuidedMode ? 'is-active' : ''}
+          >
+            {somaticT.freeMode ?? 'Free selection'}
+          </button>
+          <button
+            onClick={() => { setIsGuidedMode(true); startGuidedScan() }}
+            role="radio"
+            aria-checked={isGuidedMode}
+            className={isGuidedMode ? 'is-active' : ''}
+          >
+            {somaticT.guidedMode ?? 'Guided scan'}
+          </button>
+        </div>
       </div>
 
       <div

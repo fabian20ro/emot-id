@@ -8,7 +8,7 @@ interface IntensityPickerProps {
   variant: 'detailed' | 'compact'
 }
 
-const INTENSITY_LABELS: Record<1 | 2 | 3, { ro: string; en: string; anchor: { ro: string; en: string } }> = {
+export const INTENSITY_LABELS: Record<1 | 2 | 3, { ro: string; en: string; anchor: { ro: string; en: string } }> = {
   1: { ro: 'Ușoară', en: 'Mild', anchor: { ro: 'abia perceptibilă', en: 'barely noticeable' } },
   2: { ro: 'Moderată', en: 'Moderate', anchor: { ro: 'clar prezentă', en: 'clearly present' } },
   3: { ro: 'Puternică', en: 'Strong', anchor: { ro: 'greu de ignorat', en: 'hard to ignore' } },
@@ -93,4 +93,3 @@ export function IntensityPicker({
     </div>
   )
 }
-

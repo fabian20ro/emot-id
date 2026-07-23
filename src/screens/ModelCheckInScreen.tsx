@@ -9,13 +9,12 @@ import type { AnalysisResult, BaseEmotion } from '../models/types'
 import type { CheckInRoute } from '../navigation/types'
 
 interface ModelCheckInScreenProps {
-  route: Exclude<CheckInRoute, 'quick'>
+  route: Exclude<CheckInRoute, 'quick' | 'body'>
   onBack: () => void
   onComplete: (modelId: string, selections: BaseEmotion[], results: AnalysisResult[]) => void
 }
 
 const MODEL_BY_ROUTE = {
-  body: MODEL_IDS.SOMATIC,
   affect: MODEL_IDS.DIMENSIONAL,
   words: MODEL_IDS.WHEEL,
   plutchik: MODEL_IDS.PLUTCHIK,
@@ -25,14 +24,11 @@ export function ModelCheckInScreen({ route, onBack, onComplete }: ModelCheckInSc
   const { language, section } = useLanguage()
   const modelId = MODEL_BY_ROUTE[route]
   const model = useEmotionModel(modelId)
-  const bodyT = section('bodyCompass')
   const affectT = section('affectMap')
   const wordsT = section('wordLadder')
   const exploreT = section('exploreScreen')
 
-  const copy = route === 'body'
-    ? { eyebrow: bodyT.eyebrow, title: bodyT.title, lede: bodyT.lede, step: bodyT.step, action: bodyT.continue }
-    : route === 'affect'
+  const copy = route === 'affect'
       ? { eyebrow: affectT.eyebrow, title: affectT.title, lede: affectT.lede, step: affectT.step, action: affectT.continue }
       : route === 'words'
         ? { eyebrow: wordsT.eyebrow, title: wordsT.title, lede: wordsT.lede, step: wordsT.level, action: wordsT.choose }
