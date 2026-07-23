@@ -199,6 +199,76 @@ describe('DimensionalField', () => {
     expect(tray.className).not.toContain('absolute')
   })
 
+  it('places the state with arrow keys and exposes a live readout', () => {
+    renderField({ progressive: true })
+    const field = screen.getByRole('group', { name: 'Energy and pleasantness map' })
+
+    expect(field).toHaveAttribute('tabindex', '0')
+    expect(field).toHaveAttribute(
+      'aria-describedby',
+      'dimensional-instructions dimensional-keyboard-instructions',
+    )
+
+    fireEvent.keyDown(field, { key: 'ArrowLeft' })
+    fireEvent.keyDown(field, { key: 'ArrowUp' })
+
+    expect(screen.getByRole('status')).toHaveTextContent('more energy, more unpleasant')
+    expect(screen.getByTestId('dimensional-suggestion-tray')).toBeInTheDocument()
+    expect(document.querySelectorAll('g[role="button"]')).toHaveLength(3)
+  })
+
+  it('ignores unrelated keys and clamps keyboard placement to the field', () => {
+    renderField()
+    const field = screen.getByRole('group', { name: 'Energy and pleasantness map' })
+
+    fireEvent.keyDown(field, { key: 'Enter' })
+    expect(screen.queryByTestId('dimensional-suggestion-tray')).not.toBeInTheDocument()
+
+    for (let index = 0; index < 8; index++) {
+      fireEvent.keyDown(field, { key: 'ArrowRight' })
+      fireEvent.keyDown(field, { key: 'ArrowDown' })
+    }
+
+    expect(screen.getByRole('status')).toHaveTextContent('less energy, more pleasant')
+    const crosshair = document.querySelector('[data-testid="dimensional-plot-container"] circle[r="3"]')
+    expect(crosshair).toHaveAttribute('cx', '470')
+    expect(crosshair).toHaveAttribute('cy', '470')
+  })
+
+  it('does not smooth-scroll suggestions when reduced motion is requested', () => {
+    const originalMatchMedia = window.matchMedia
+    const originalScrollIntoView = Element.prototype.scrollIntoView
+    const scrollIntoView = vi.fn()
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: (query: string) => ({
+        matches: query === '(prefers-reduced-motion: reduce)',
+        media: query,
+        onchange: null,
+        addListener: () => {},
+        removeListener: () => {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+      }),
+    })
+    Element.prototype.scrollIntoView = scrollIntoView
+
+    try {
+      renderField()
+      fireEvent.keyDown(screen.getByRole('group', { name: 'Energy and pleasantness map' }), {
+        key: 'ArrowRight',
+      })
+      expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest', behavior: 'auto' })
+    } finally {
+      Object.defineProperty(window, 'matchMedia', {
+        writable: true,
+        value: originalMatchMedia,
+      })
+      Element.prototype.scrollIntoView = originalScrollIntoView
+    }
+  })
+
   it('reveals nearby emotion pins after placement in progressive mode', () => {
     renderField({ progressive: true })
     const svg = document.querySelector('svg') as SVGSVGElement

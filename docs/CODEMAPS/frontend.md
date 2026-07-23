@@ -1,6 +1,6 @@
 # Frontend Codemap
 
-**Last Updated:** 2026-07-23
+**Last Updated:** 2026-07-24
 
 ## Component Tree
 
@@ -56,6 +56,9 @@ activation; the map owns no sensation, intensity, guided-flow, or scoring state.
 Labels use a greedy sort-and-bump algorithm (sort by y then x, bump by `MIN_GAP=14` when labels overlap within 40px horizontal proximity, clamp to viewBox bounds). Text halo via `paintOrder="stroke"` for readability in dense areas.
 
 Suggestion chips render in a normal-flow tray below the plot (not overlay) to avoid obscuring dots.
+Pointer placement and arrow-key placement share `placeAt`, so both update the crosshair, live
+directional readout, and same three nearest suggestions. The focusable SVG exposes localized
+nonvisual keyboard instructions and a visible semantic focus ring.
 
 ### SelectionBar Reserved Height
 

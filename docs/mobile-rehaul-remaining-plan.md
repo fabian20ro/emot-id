@@ -1,6 +1,6 @@
 # Remaining Mobile Migration Plan
 
-Status: presentation migration complete; Guided Scan decision and P6 remain, July 24, 2026.
+Status: P6 complete; Guided Scan product decision remains, July 24, 2026.
 
 ## Completed Since Last Update
 
@@ -138,30 +138,45 @@ decision: either expose it as a route-local Body Compass mode with the same stag
 it with `GuidedScanPhases`, `IntensityPicker`, constants, and dedicated tests. Do not restore an
 overlay inside the region map.
 
-## P6: Release Hardening
+## Completed: P6 Release Hardening
 
-- Romanian journey matrix for all primary routes.
-- Keyboard-only, focus restoration, reduced motion, offline, and save-disabled coverage.
-- Crisis fixture matrix through Quick, Body, Affect, Words, and Plutchik.
-- Mobile geometry at 360x800, 393x742, and 430x932 plus one desktop sanity viewport.
-- Keep Chromium and WebKit Playwright green in GitHub Actions before deployment.
+The Affect field now supports arrow-key placement through the same nearest-emotion path as pointer
+placement. Its focusable SVG has localized nonvisual instructions, a visible focus ring, and a live
+energy/pleasantness readout. No alternate model state or accessibility framework was added.
+
+The browser release matrix now covers:
+
+- Romanian Quick, Body, Affect, Words, Plutchik, Journal, Privacy, and tier-4 journeys.
+- Keyboard-only activation and completion through every primary input route and Reflection.
+- Portaled destructive-confirmation trapping, wrapping, Escape close, and trigger focus restoration.
+- Reduced motion, offline/reconnected state, save-disabled persistence behavior, and one 1280x800
+  desktop sanity viewport.
+- Deterministic support-boundary fixtures through Quick, Body, Affect, Words, and Plutchik,
+  including tier-4 pre-acknowledgment gating.
+- Existing mobile geometry at 360x800, 393x742, and 430x932 in both configured browser engines.
+
+Generated Playwright report/result directories are excluded from lint and Git so independently
+started developer checks cannot race with Playwright cleanup.
+
+**Verification:** `npm run check` passes 67 files and 628 tests, translation audits, TypeScript,
+lint, and production build. `npm run test:e2e` passes all 130 Mobile Safari and Mobile Chrome
+cases. Manual desktop light/dark inspection confirmed the Affect focus ring, readout, suggestions,
+and constrained field remain visible without clipping.
 
 ## Recommended Sequence
 
-1. P6 release hardening.
-2. Explicit Guided Scan keep/delete decision before release.
+1. Explicit Guided Scan keep/delete decision before release.
+2. Run the unchanged full release matrix after that decision.
 
 ## Recommended Next Update
 
-Start P6 with the highest-risk release matrix, without adding new architecture:
+Resolve the isolated Guided Scan boundary:
 
-1. Add Romanian Playwright journeys for Quick, Body, Affect, Words, Plutchik, Journal, Privacy,
-   and tier-4 support. Reuse current helpers and fixtures.
-2. Add one desktop sanity viewport and keyboard-only journeys for the primary route chooser,
-   each input route, Reflection, Settings, and destructive confirmation.
-3. Verify reduced motion, offline transitions, save-disabled behavior, and focus restoration using
-   current browser APIs; add no preference framework or generic accessibility harness.
-4. Expand deterministic crisis fixtures through each completion route while keeping one shared
-   assertion helper for gating and post-acknowledgment content.
-5. Keep the full Chromium/WebKit matrix green in GitHub Actions, then make the separate Guided Scan
-   keep/delete decision from product evidence rather than preserving it by inertia.
+1. Decide whether Guided Scan has a concrete release entry point and distinct user value beyond
+   the staged Body Compass.
+2. If retained, expose it as a route-local Body Compass mode using the existing screen shell; keep
+   it out of `BodyRegionMap` and do not add a generic wizard.
+3. If no release entry point is justified, delete `GuidedScan`, `GuidedScanPhases`,
+   `IntensityPicker`, unused constants/copy, and their dedicated tests.
+4. Re-run `npm run check` and all 130 Playwright cases after the decision, updating counts only for
+   intentional test removal or additions.

@@ -1,6 +1,6 @@
 # Architecture Codemap
 
-**Last Updated:** 2026-07-23
+**Last Updated:** 2026-07-24
 
 ## Component Tree
 
@@ -39,6 +39,8 @@ provides focus trapping. Migrated workflows render as screens, not dialogs.
 Tier1-3 show crisis support alongside the reflection workflow. Only tier4
 pre-acknowledgment gates the rest of reflection behind an acknowledgment wall.
 Do not reintroduce binary suppression; the graduated model is intentional.
+Playwright exercises this shared boundary through Quick, Body, Affect, Words,
+and Plutchik completion rather than testing only one route.
 
 ### Model Loading Strategy
 

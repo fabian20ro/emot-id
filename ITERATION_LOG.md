@@ -816,3 +816,28 @@ picker dialogs, guided-scan orchestration, and SVG presentation in one generic v
 after viewBox scaling. Pair computed contrast with rendered-size and edge-clipping inspection at
 the actual constrained viewport.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-24] Complete P6 release hardening
+
+**Context:** The migrated routes had broad smoke coverage but no explicit bilingual, keyboard,
+desktop, reduced-motion, or cross-route crisis release matrix. Affect placement was pointer-only.
+**What happened:**
+- Added arrow-key Affect placement through the existing nearest-emotion path, with localized
+  nonvisual instructions, visible focus, and a live energy/pleasantness readout.
+- Added Romanian journeys for Quick, Body, Affect, Words, Plutchik, Journal, Privacy, and tier-4
+  safety behavior.
+- Added keyboard-only primary-route completion, destructive-dialog focus restoration, reduced
+  motion, offline recovery, save-disabled behavior, and 1280x800 desktop checks.
+- Added one shared crisis-boundary assertion exercised through Quick, Body, Affect, Words, and
+  Plutchik, preserving tier-4 acknowledgment gating.
+- Excluded Playwright output directories from lint and Git after concurrent local checks exposed a
+  generated-directory cleanup race.
+- Manually inspected the focused Affect field in desktop light and dark themes.
+**Outcome:** Success. `npm run check` passes 67 files and 628 tests. `npm run test:e2e` passes all
+130 Mobile Safari and Mobile Chrome cases. The production build and bilingual audits pass.
+**Insight:** A release matrix can expose inaccessible input semantics even when individual child
+suggestions are keyboard-operable; test full route completion by input modality, not isolated
+buttons. Generated test directories should also be excluded from repository-wide static scans.
+**Promoted to Lessons Learned:** No

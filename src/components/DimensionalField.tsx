@@ -9,6 +9,7 @@ import type { DimensionalEmotion } from '../models/dimensional/types'
 const FIELD_SIZE = 500
 const PADDING = 30
 const INNER = FIELD_SIZE - PADDING * 2
+const KEYBOARD_STEP = 0.2
 
 function toPixel(value: number): number {
   // Map -1..+1 to PADDING..FIELD_SIZE-PADDING
@@ -73,15 +74,25 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
 
   useEffect(() => {
     if (suggestions.length === 0) return
-    suggestionTrayRef.current?.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' })
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    suggestionTrayRef.current?.scrollIntoView?.({ block: 'nearest', behavior })
   }, [suggestions])
+
+  const placeAt = useCallback(
+    (valence: number, arousal: number) => {
+      setHasInteracted(true)
+      setCrosshair({ x: toPixel(valence), y: toPixel(-arousal) })
+      setPlacement({ valence, arousal })
+      setSuggestions(findNearest(valence, arousal, emotionMap, 3))
+    },
+    [emotionMap]
+  )
 
   const placeFromClientPoint = useCallback(
     (clientX: number, clientY: number) => {
       const svg = svgRef.current
       if (!svg) return
 
-      setHasInteracted(true)
       const rect = svg.getBoundingClientRect()
       const scaleX = FIELD_SIZE / rect.width
       const scaleY = FIELD_SIZE / rect.height
@@ -90,17 +101,31 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
 
       const valence = Math.max(-1, Math.min(1, ((px - PADDING) / INNER) * 2 - 1))
       const arousal = Math.max(-1, Math.min(1, -(((py - PADDING) / INNER) * 2 - 1)))
-
-      setCrosshair({ x: px, y: py })
-      setPlacement({ valence, arousal })
-      setSuggestions(findNearest(valence, arousal, emotionMap, 3))
+      placeAt(valence, arousal)
     },
-    [emotionMap]
+    [placeAt]
   )
 
   const handleFieldClick = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
     placeFromClientPoint(e.clientX, e.clientY)
   }, [placeFromClientPoint])
+
+  const handleFieldKeyDown = useCallback((event: React.KeyboardEvent<SVGSVGElement>) => {
+    const delta = {
+      ArrowLeft: { valence: -KEYBOARD_STEP, arousal: 0 },
+      ArrowRight: { valence: KEYBOARD_STEP, arousal: 0 },
+      ArrowUp: { valence: 0, arousal: KEYBOARD_STEP },
+      ArrowDown: { valence: 0, arousal: -KEYBOARD_STEP },
+    }[event.key]
+    if (!delta) return
+
+    event.preventDefault()
+    const current = placement ?? { valence: 0, arousal: 0 }
+    placeAt(
+      Math.max(-1, Math.min(1, current.valence + delta.valence)),
+      Math.max(-1, Math.min(1, current.arousal + delta.arousal)),
+    )
+  }, [placeAt, placement])
 
   const handleSuggestionClick = useCallback(
     (emotion: DimensionalEmotion) => {
@@ -129,8 +154,11 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
 
   return (
     <div className="dimensional-field">
-      <p className="dimensional-instructions">
+      <p id="dimensional-instructions" className="dimensional-instructions">
         {dimensionalT.instructions}
+      </p>
+      <p id="dimensional-keyboard-instructions" className="sr-only">
+        {dimensionalT.keyboardInstructions}
       </p>
       <div className="dimensional-content">
         <div data-testid="dimensional-plot-container" className="dimensional-plot">
@@ -138,9 +166,12 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
             ref={svgRef}
             viewBox={`0 0 ${FIELD_SIZE} ${FIELD_SIZE}`}
             className="dimensional-plot-svg"
-            role="img"
+            role="group"
+            tabIndex={0}
             aria-label={dimensionalT.fieldLabel}
+            aria-describedby="dimensional-instructions dimensional-keyboard-instructions"
             onClick={handleFieldClick}
+            onKeyDown={handleFieldKeyDown}
             onPointerMove={(event) => {
               if (event.buttons === 1) placeFromClientPoint(event.clientX, event.clientY)
             }}
@@ -262,7 +293,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
         </div>
 
         {placement && (
-          <p data-testid="affect-readout" className="affect-readout">
+          <p data-testid="affect-readout" className="affect-readout" role="status">
             {`${placement.arousal >= 0 ? dimensionalT.readoutMoreEnergy : dimensionalT.readoutLessEnergy}, ${placement.valence >= 0 ? dimensionalT.readoutPleasant : dimensionalT.readoutUnpleasant}`}
           </p>
         )}

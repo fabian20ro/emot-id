@@ -158,6 +158,7 @@
   },
   "dimensional": {
     "instructions": "Localizați-vă starea folosind energia și caracterul plăcut",
+    "keyboardInstructions": "Folosiți tastele săgeată pentru a muta poziția pe hartă după energie și caracterul plăcut.",
     "fieldLabel": "Hartă a energiei și caracterului plăcut",
     "unpleasant": "Neplăcut",
     "pleasant": "Plăcut",

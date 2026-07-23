@@ -158,6 +158,7 @@
   },
   "dimensional": {
     "instructions": "Locate your state using energy and pleasantness",
+    "keyboardInstructions": "Use the arrow keys to move the placement across energy and pleasantness.",
     "fieldLabel": "Energy and pleasantness map",
     "unpleasant": "Unpleasant",
     "pleasant": "Pleasant",
