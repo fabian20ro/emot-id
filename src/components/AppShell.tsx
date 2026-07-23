@@ -9,6 +9,7 @@ interface AppShellProps {
   isOffline: boolean
   showTabs?: boolean
   screenKey: string
+  showSettings?: boolean
   onTabChange: (tab: AppTab) => void
   onOpenSettings: () => void
 }
@@ -18,6 +19,7 @@ export function AppShell({
   children,
   isOffline,
   showTabs = true,
+  showSettings = true,
   screenKey,
   onTabChange,
   onOpenSettings,
@@ -43,15 +45,17 @@ export function AppShell({
           <strong className="app-wordmark">Emot-ID</strong>
           <span className="app-kicker">{navT.private}</span>
         </div>
-        <button
-          type="button"
-          className="icon-button"
-          onClick={onOpenSettings}
-          aria-label={navT.settings}
-          title={navT.settings}
-        >
-          <Settings size={21} aria-hidden="true" />
-        </button>
+        {showSettings && (
+          <button
+            type="button"
+            className="icon-button"
+            onClick={onOpenSettings}
+            aria-label={navT.settings}
+            title={navT.settings}
+          >
+            <Settings size={21} aria-hidden="true" />
+          </button>
+        )}
       </header>
 
       {isOffline && <div className="offline-strip" role="status">{navT.offline}</div>}

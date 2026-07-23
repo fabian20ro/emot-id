@@ -383,7 +383,10 @@
     "path": "Your path",
     "choose": "Use my current choice",
     "compare": "Nearby meaning",
-    "level": "Choose one direction"
+    "level": "Choose one direction",
+    "selected": "Selected words",
+    "backLevel": "Back one level",
+    "useWord": "Use {word}"
   },
   "plutchik": {
     "eyebrow": "Plutchik Wheel",

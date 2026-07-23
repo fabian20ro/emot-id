@@ -24,6 +24,9 @@ test.describe('Dark mode accessibility', () => {
 
     await page.getByTestId('arrival-words').click()
     await expectDarkScreen(page, 'Word Ladder')
+    await page.getByRole('button', { name: 'Happy' }).click()
+    await expectDarkScreen(page, 'Word Ladder path')
+    await page.getByRole('button', { name: 'Back one level' }).click()
     await page.locator('.screen-back').click()
 
     await page.getByTestId('arrival-affect').click()

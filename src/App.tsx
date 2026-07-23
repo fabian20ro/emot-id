@@ -8,6 +8,7 @@ import { TodayScreen } from './screens/TodayScreen'
 import { ArrivalScreen } from './screens/ArrivalScreen'
 import { ModelCheckInScreen } from './screens/ModelCheckInScreen'
 import { BodyCompassScreen } from './screens/BodyCompassScreen'
+import { WordLadderScreen } from './screens/WordLadderScreen'
 import { ReflectionScreen } from './screens/ReflectionScreen'
 import { ExploreScreen } from './screens/ExploreScreen'
 import { JournalScreen } from './screens/JournalScreen'
@@ -156,6 +157,8 @@ export default function App() {
       case 'check-in':
         return destination.route === 'body'
           ? <BodyCompassScreen onBack={navigation.back} onComplete={(modelId, selections, results) => complete('body', modelId, selections, results)} />
+          : destination.route === 'words'
+            ? <WordLadderScreen onBack={navigation.back} onComplete={(modelId, selections, results) => complete('words', modelId, selections, results)} />
           : <ModelCheckInScreen route={destination.route} onBack={navigation.back} onComplete={(modelId, selections, results) => complete(destination.route, modelId, selections, results)} />
       case 'reflection':
         return completion
@@ -196,6 +199,7 @@ export default function App() {
         activeTab={activeTab}
         isOffline={isOffline}
         showTabs={showTabs}
+        showSettings={destination.name !== 'check-in' && destination.name !== 'reflection'}
         screenKey={`${destination.name}:${destination.name === 'check-in' ? destination.route : destination.name === 'session' ? destination.sessionId : ''}`}
         onTabChange={(tab) => navigation.reset({ name: tab })}
         onOpenSettings={() => navigation.navigate({ name: 'settings' })}

@@ -107,9 +107,10 @@ test.describe('Primary check-in routes', () => {
   test('Word Ladder moves broad to precise and reflects', async ({ page }) => {
     await openArrival(page)
     await page.getByTestId('arrival-words').click()
-    await page.getByRole('listitem').first().click()
-    await page.getByRole('listitem').first().click()
-    await page.getByRole('listitem').first().click()
+    const options = page.getByRole('list', { name: 'Choose one direction' })
+    await options.getByRole('button').first().click()
+    await options.getByRole('button').first().click()
+    await options.getByRole('button').first().click()
     await expect(page.locator('.route-action button')).toBeEnabled()
     await page.locator('.route-action button').click()
     await expect(page.getByTestId('reflection-screen')).toBeVisible()
@@ -137,11 +138,11 @@ test.describe('Safety behavior through the UI', () => {
     await openArrival(page)
     await page.getByTestId('arrival-words').click()
 
-    const choose = async (name: RegExp) => page.locator('.word-options > button').filter({ hasText: name }).first().click()
+    const choose = async (name: RegExp) => page.getByRole('list', { name: 'Choose one direction' }).getByRole('button', { name }).click()
 
     await choose(/^sad/i)
     await choose(/^despair/i)
-    await page.locator('.word-path-actions > button').first().click()
+    await page.getByRole('button', { name: 'Use Despair' }).click()
 
     await choose(/^sad/i)
     await choose(/^depressed/i)
@@ -152,6 +153,7 @@ test.describe('Safety behavior through the UI', () => {
     await choose(/^worthless/i)
 
     await page.locator('.route-action button').click()
+    await expect(page.getByRole('button', { name: 'Settings' })).toHaveCount(0)
     const alert = page.getByRole('alert')
     await expect(alert).toBeVisible()
     await expect(page.locator('.emotion-heading')).not.toBeVisible()
@@ -183,6 +185,8 @@ test.describe('Privacy and support destinations', () => {
       'I feel anxiety. What does this emotion mean and how can I understand it better?',
     )
 
+    await page.getByRole('button', { name: 'Back' }).click()
+    await expect(page.getByTestId('today-screen')).toBeVisible()
     await page.getByRole('button', { name: 'Settings' }).click()
     await page.getByRole('button', { name: 'Privacy & data' }).click()
     const aiSwitch = page.getByRole('switch', { name: 'Allow external AI search links' })

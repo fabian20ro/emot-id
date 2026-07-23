@@ -1,6 +1,6 @@
 # Remaining Mobile Migration Plan
 
-Status: prioritized after the guided-workflow screen migration, July 23, 2026.
+Status: prioritized after the interruption guard and Word Ladder extraction, July 23, 2026.
 
 ## Completed Since Last Update
 
@@ -13,6 +13,10 @@ Status: prioritized after the guided-workflow screen migration, July 23, 2026.
 - Replaced the reachable Emotional Vocabulary and Unpack a Moment modal windows with normal routed
   screens. Their model/data behavior remains local and unchanged.
 - Replaced abstract Today copy with a direct question and concrete next choices in both languages.
+- Removed Settings from active check-ins and Reflection so utility navigation cannot silently
+  discard route-local work; screen Back and crisis support remain available.
+- Extracted `WordLadderScreen`, added exact one-level hierarchy Back, selectable ancestor levels,
+  removable selections, semantic list controls, and bilingual browser coverage.
 
 ## Constraints
 
@@ -23,21 +27,18 @@ Status: prioritized after the guided-workflow screen migration, July 23, 2026.
 - No backend, AI API, React Router, generic wizard/state machine, datastore rewrite, or broad design-system project.
 - Every user-facing copy change updates English and Romanian together.
 
-## P0: Protect In-Progress Check-Ins
+## Completed: Protect In-Progress Check-Ins
 
-**Problem:** Opening Settings unmounts the active route and discards its local draft.
-
-**Smallest useful change:** Hide the Settings entry during check-in and Reflection. Keep Back as
-the explicit exit. Do not add resumable draft persistence until product requirements demand it.
-
-**Tests:** active routes expose no utility interruption; Back remains available; crisis Support
-remains reachable; tab and browser navigation behavior stays deterministic.
+Settings is hidden during check-in and Reflection. Back remains the explicit exit, tier-4 support
+stays in the Reflection content, and preferences are changed only after leaving the workflow.
+No draft persistence or navigation-state framework was added.
 
 ## P1: Finish Word Ladder
 
-Extract the inline ladder into `WordLadderScreen`. Preserve the Wheel hierarchy and analyzer.
-Add one-level-at-a-time Back, selection at any level, and a nearby-word comparison using existing
-catalog descriptions or granularity triads. Do not build a similarity graph or recommender.
+The inline ladder is now `WordLadderScreen`; it preserves the Wheel analyzer, keeps hierarchy
+history local, returns one level at a time, and allows any visited ancestor or precise leaf to be
+selected. Remaining work: a small nearby-word comparison using existing catalog descriptions.
+Do not build a similarity graph or recommender.
 
 **Tests:** broad and precise completion, hierarchy Back, comparison in both languages, dark
 contrast, mobile bounds, and shared crisis completion.
@@ -106,19 +107,18 @@ Back/edit/remove/add-another paths; no change to somatic scoring or shared crisi
 
 ## Recommended Sequence
 
-1. P0 interruption guard: small, high-confidence data-loss prevention.
-2. P1 Word Ladder: largest remaining primary-route UX gap.
-3. P2 selectable needs: restores agency in Reflection.
-4. P3 Guide Me: reduce uncertainty without speculative intelligence.
-5. P4 Journal trust, then P5 legacy removal.
-6. P6 hardening continuously, with the full matrix before release.
+1. Finish P1 Word Ladder comparison without changing the model contract.
+2. P2 selectable needs: restores agency in Reflection.
+3. P3 Guide Me: reduce uncertainty without speculative intelligence.
+4. P4 Journal trust, then P5 legacy removal.
+5. P6 hardening continuously, with the full matrix before release.
 
 ## Recommended Next Update
 
-Implement P0 and the first cohesive P1 slice:
+Finish P1 with one constrained comparison slice:
 
-1. Hide Settings during active check-ins and Reflection; verify Back and crisis Support access.
-2. Extract the current inline Word Ladder without changing its model contract.
-3. Add explicit one-level Back and selection at any visible level.
-4. Defer nearby-word comparison until the extracted flow is browser-stable; do not add a graph,
-   recommender, or shared wizard abstraction.
+1. Retain the visible sibling level at the moment a word is selected; do not calculate similarity.
+2. Let the user choose one sibling to compare with the selection.
+3. Show the two existing catalog descriptions together with neutral "may fit" wording.
+4. Cover broad and precise comparisons in English and Romanian, dark contrast, keyboard use, and
+   mobile bounds. Then begin P2 in a separate iteration.

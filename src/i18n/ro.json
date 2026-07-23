@@ -383,7 +383,10 @@
     "path": "Calea voastră",
     "choose": "Folosiți alegerea curentă",
     "compare": "Sens apropiat",
-    "level": "Alegeți o direcție"
+    "level": "Alegeți o direcție",
+    "selected": "Cuvinte alese",
+    "backLevel": "Înapoi cu un nivel",
+    "useWord": "Folosiți {word}"
   },
   "plutchik": {
     "eyebrow": "Roata Plutchik",

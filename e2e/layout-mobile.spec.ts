@@ -56,8 +56,11 @@ for (const viewport of viewports) {
       await expect(tray).toBeVisible()
       const trayBox = await tray.boundingBox()
       expect(trayBox!.y).toBeGreaterThanOrEqual(plotBox!.y + plotBox!.height - 1)
-      const actionBox = await page.locator('.route-action').boundingBox()
-      expect(actionBox!.y).toBeGreaterThanOrEqual(trayBox!.y + trayBox!.height - 1)
+      await expect.poll(async () => {
+        const settledTrayBox = await tray.boundingBox()
+        const actionBox = await page.locator('.route-action').boundingBox()
+        return actionBox!.y - (settledTrayBox!.y + settledTrayBox!.height)
+      }).toBeGreaterThanOrEqual(-1)
       await expect(tray.locator('.dimensional-suggestion-chip').first()).toBeInViewport()
       await expectNoHorizontalOverflow(page)
     })

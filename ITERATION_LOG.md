@@ -602,3 +602,24 @@ production build. `npm run test:e2e` passes all 60 Mobile Safari and Mobile Chro
 **Insight:** Multi-step mobile exercises need normal screen navigation, not nested modal context.
 Audit reachability before spending migration effort on legacy modules with no active callers.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-23] Protect check-ins and extract Word Ladder
+
+**Context:** Settings could unmount active check-ins and lose local work, while Word Ladder still
+lived inside the generic model screen without hierarchy Back or accessible level selection.
+**What happened:**
+- Committed and pushed the prior migration as `17a7d05` before starting this slice.
+- Hid Settings during check-in and Reflection while preserving explicit Back and tier-4 support.
+- Extracted `WordLadderScreen` with route-local snapshots, exact one-level Back, selectable visited
+  levels, removable selections, and the unchanged Wheel analyzer/completion boundary.
+- Replaced buttons forced to `role="listitem"` with semantic lists and named buttons.
+- Added bilingual unit and Playwright journeys; manually inspected the flow at `393x742` and
+  removed a premature sticky completion action that covered options.
+- Stabilized the Affect geometry assertion by waiting for its existing entrance animation.
+**Outcome:** Success. `npm run check` passes 754 tests, translation audit, lint, TypeScript, and
+production build. `npm run test:e2e` passes all 66 Mobile Safari and Mobile Chrome cases.
+**Insight:** For a short deterministic hierarchy, route-local state snapshots provide reliable
+one-level Back without changing the model contract or introducing a shared wizard abstraction.
+**Promoted to Lessons Learned:** No
