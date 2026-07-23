@@ -1,22 +1,21 @@
 # Architecture Codemap
 
-**Last Updated:** 2026-02-26
+**Last Updated:** 2026-07-23
 
 ## Component Tree
 
 ```
-main.tsx → StrictMode > LanguageProvider > App
-                                           |
-       +--------+------------+-------------+-------------+---------------+------------+--------------+--------------+--------------+
-       |        |            |             |             |               |            |              |              |              |
-     Header  SettingsMenu*  SelectionBar  AnalyzeButton  Visualization**  ResultModal  DontKnowModal  UndoToast  SessionHistory  ChainAnalysis
-         |  |         |
- MenuButton ModelBar  InfoButton[]
+main.tsx -> StrictMode > LanguageProvider > App
+                                             |
+              AppShell -> active screen selected by useAppNavigation
+                 |
+     Today / Arrival / Check-in / Reflection / Explore / Journal
+       / Session detail / Settings / Privacy / Support / Practice
 ```
 
-`*` SettingsMenu renders via `createPortal(…, document.body)` — a sibling of the main layout div, not a child of Header.
-
-`**` Visualization is resolved at runtime from the model registry.
+Check-in rendering is split by route: affect and Plutchik share
+`ModelCheckInScreen`; words use `WordLadderScreen`; body uses
+`BodyCompassScreen`. Visualizations are resolved from the model registry.
 
 ## Non-Obvious Patterns
 
@@ -26,13 +25,16 @@ BodyMap intercepts the deselect path. When a selected region is clicked, it call
 
 ### Portal Requirement for Fixed Overlays
 
-All `position: fixed` overlays must use `createPortal(content, document.body)` to escape parent stacking contexts. WebKit's `backdrop-filter` creates new stacking contexts that trap z-indexed children — this was the root cause of the Phase K stabilization where SettingsMenu rendered but was invisible behind content.
+All `position: fixed` overlays must use `createPortal(content, document.body)` to escape parent stacking contexts. WebKit's `backdrop-filter` creates new stacking contexts that can trap z-indexed children behind content.
 
-Currently portaled to body: **SettingsMenu**, **InfoButton**. Other overlays use `ModalShell` which handles layering internally.
+Active fixed dialogs use `ModalShell`, which portals to `document.body` and
+provides focus trapping. Migrated workflows render as screens, not dialogs.
 
 ### Graduated Crisis Access
 
-Tier1-3 show crisis banner alongside all features (AI link, opposite action, micro-interventions). Only tier4 pre-acknowledgment gates features behind an acknowledgment wall. Do not reintroduce binary suppression — the graduated model is intentional.
+Tier1-3 show crisis support alongside the reflection workflow. Only tier4
+pre-acknowledgment gates the rest of reflection behind an acknowledgment wall.
+Do not reintroduce binary suppression; the graduated model is intentional.
 
 ### Model Loading Strategy
 

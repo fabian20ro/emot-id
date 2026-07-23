@@ -6,15 +6,6 @@
   "offline": {
     "message": "Sunteți offline. Emot-ID folosește conținutul salvat local pe acest dispozitiv."
   },
-  "menu": {
-    "model": "Model",
-    "language": "Limbă",
-    "languageRo": "Română",
-    "languageEn": "Engleză",
-    "crisisSupport": "Ai nevoie de sprijin?",
-    "crisisDetail": "Sunați la 116 123 (gratuit, 24/7) sau vizitează findahelpline.com",
-    "disclaimer": "Declinarea responsabilității"
-  },
   "selectionBar": {
     "title": "Selecțiile tale",
     "empty": "Nicio selecție",
@@ -34,32 +25,6 @@
     "aiWarning": "Aceasta va căuta informații generale online. Rezultatele nu înlocuiesc sprijinul profesional.",
     "externalAIDisabled": "Căutarea AI externă este oprită. O puteți activa din Setări."
   },
-  "modal": {
-    "close": "Închide",
-    "title": "Rezultatul analizei",
-    "noCombinations": "Nu s-au găsit combinații din selecțiile voastre",
-    "combinationsFound": "S-au găsit combinații",
-    "showDescription": "Arătați descrierea",
-    "needsLabel": "Această emoție necesită adesea",
-    "matchStrengthLabel": "Potrivire",
-    "readMore": "Doriți să citiți mai mult despre aceasta?",
-    "a11yTitle": "Dialog rezultate analiză",
-    "moreInfoTitle": "Mai multe informații",
-    "moreInfoAria": "Arătați mai multe informații",
-    "noExtraInfo": "Nu există informații suplimentare pentru acest rezultat."
-  },
-  "reflection": {
-    "prompt": "Rezonează cu experiența voastră?",
-    "yes": "Da",
-    "partly": "În parte",
-    "no": "Nu prea",
-    "followUp": "Doriți să explorați mai departe?",
-    "backToModel": "Înapoi la explorare",
-    "stayHere": "Este în regulă pentru moment",
-    "notQuiteValidation": "Experiența voastră trăită este cel mai bun ghid. Etichetele emoționale sunt aproximări — ceea ce simțiți este real și valid.",
-    "tryDifferentModel": "Încercați un alt model",
-    "warmClose": "Luați un moment cu acest lucru. Sentimentele voastre sunt valide."
-  },
   "crisis": {
     "tier1": "Dacă ceea ce simțiți pare copleșitor, sprijinul este disponibil. Nu trebuie să treceți prin asta singuri.",
     "tier2": "Se pare că treceți printr-o perioadă dificilă. Nu trebuie să mergeți singuri prin aceasta.",
@@ -72,11 +37,6 @@
     "disclaimer": "Dacă sunteți în pericol iminent, vă rugăm să contactați serviciile de urgență.",
     "groundingTitle": "O tehnică rapidă de ancorare (5-4-3-2-1)",
     "groundingBody": "Numește 5 lucruri pe care le vezi, 4 pe care le poți atinge, 3 pe care le auzi, 2 pe care le miroși, 1 pe care îl guști. Acest lucru ajută la aducerea atenției în momentul prezent."
-  },
-  "disclaimer": {
-    "title": "Despre această aplicație",
-    "text": "Această aplicație susține conștientizarea emoțională. Nu este un instrument de diagnostic și nu înlocuiește sprijinul profesional de sănătate mintală. Dacă treceți printr-o perioadă de stres, vă rugăm să contactați un profesionist calificat.",
-    "label": "Declinare de responsabilitate"
   },
   "onboarding": {
     "screen1Title": "Aceasta este o explorare, nu un test",
@@ -96,23 +56,6 @@
     "selectModel": "Alegeți modelul de pornire",
     "getStarted": "Începeți"
   },
-  "results": {
-    "microDisclaimer": "Pentru auto-explorare, nu pentru diagnostic"
-  },
-  "settings": {
-    "title": "Setări",
-    "soundLabel": "Sunet",
-    "soundOn": "Pornește",
-    "soundOff": "Oprește",
-    "saveSessionsLabel": "Salvează sesiunile",
-    "saveSessionsOn": "Pornește",
-    "saveSessionsOff": "Oprește",
-    "deleteExistingSessions": "Ștergeți sesiunile existente?",
-    "allowExternalAI": "Linkuri AI externe",
-    "allowExternalAIOn": "Pornește",
-    "allowExternalAIOff": "Oprește",
-    "allowExternalAIHint": "Când este activată, deschiderea linkurilor AI trimite emoțiile selectate către Căutarea Google."
-  },
   "reminders": {
     "label": "Memento zilnic",
     "on": "Pornește",
@@ -122,49 +65,11 @@
     "notificationTitle": "Este timpul pentru un check-in emoțional rapid",
     "notificationBody": "Luați 30 de secunde pentru a observa ce simțiți."
   },
-  "simpleLanguage": {
-    "label": "Limbaj simplu",
-    "on": "Pornește",
-    "off": "Oprește",
-    "hint": "Folosiți formulări mai scurte și mai ușor de înțeles.",
-    "reflectionPrompt": "Se potrivește cu ceea ce simțiți?",
-    "reflectionFollowUp": "Doriți să explorați mai departe?",
-    "reflectionWarmClose": "Luați o pauză aici. Ceea ce simțiți contează.",
-    "modelDescriptions": {
-      "somatic": "Începeți cu senzațiile corporale.",
-      "wheel": "Alegeți cuvinte emoționale de la general la specific.",
-      "plutchik": "Explorați cum se combină emoțiile.",
-      "dimensional": "Plasați starea pe axele plăcere/neplăcere și intensitate."
-    }
-  },
-  "bridges": {
-    "somaticFromCognitive": "Unde observați aceasta în corpul vostru?",
-    "cognitiveFromSomatic": "Puteți numi emoția mai precis?",
-    "cognitiveFromDimensional": "Doriți să explorați cum se numește această stare?",
-    "trySomatic": "Încercați Harta Corpului",
-    "tryWheel": "Încercați Roata Emoțiilor",
-    "tryPlutchik": "Încercați Plutchik",
-    "tryDimensional": "Încercați Spațiul Emoțional",
-    "dimensionalFromCognitive": "Cât de intens și cât de plăcut sau neplăcut este?",
-    "somaticFromDimensional": "Unde simțiți aceasta în corpul vostru?",
-    "dimensionalFromSomatic": "Cât de plăcută și intensă este această senzație?",
-    "pleasantEmbodiment": "Unde simțiți acea căldură? Luați un moment pentru a observa."
-  },
   "firstHint": {
     "somatic": "Atingeți zona unde observați o senzație",
     "wheel": "Atingeți o emoție care rezonează cu voi",
     "plutchik": "Atingeți o emoție pentru a vedea cum se conectează",
     "dimensional": "Atingeți unde simțiți că se află starea voastră"
-  },
-  "dontKnow": {
-    "link": "Nu știu ce simt",
-    "normalization": "Multor oameni le este greu să numească ceea ce simt — este normal și este o abilitate care se dezvoltă cu practica.",
-    "title": "Este în regulă — iată două moduri de a începe",
-    "bodyOption": "Începeți cu corpul",
-    "bodyDesc": "Observați mai întâi senzațiile fizice",
-    "dimensionalOption": "Începeți cu plăcut/neplăcut",
-    "dimensionalDesc": "Localizați-vă starea pe o scară simplă",
-    "close": "Închide"
   },
   "somatic": {
     "pickSensation": "Ce simțiți aici?",
@@ -192,38 +97,6 @@
     "numbnessFlooding": "Corpul vostru s-ar putea să încerce să vă protejeze acum. Doriți să încercați un exercițiu de ancorare înainte de a continua?",
     "numbnessGrounding": "Încercați ancorarea",
     "numbnessContinue": "Continuați scanarea"
-  },
-  "intervention": {
-    "interventionTitle": "Un moment pentru voi",
-    "interventionDismiss": "Continuați",
-    "offer": "Doriți să faceți o pauză?",
-    "breathIn": "Inspirați...",
-    "breathHold": "Țineți...",
-    "breathOut": "Expirați...",
-    "savorStep1": "Închideți ochii pentru un moment.",
-    "savorStep2": "Reamintiți-vă situația care a adus această stare.",
-    "savorStep3": "Observați unde o simțiți în corp.",
-    "savorStep4": "Inspirați și lăsați-o să se extindă.",
-    "curiosityPrompt": "Ce ar putea să vă transmită aceste emoții? Luați un moment să vă întrebați fără a avea nevoie de un răspuns.",
-    "offerBreathing": "Doriți să încercați ceva care calmează?",
-    "offerSavoring": "Luați un moment să savurați această stare?",
-    "offerCuriosity": "Ce ar putea să vă transmită aceste sentimente?",
-    "checkPrompt": "Cum vă simțiți acum?",
-    "checkBetter": "Mai bine",
-    "checkSame": "La fel",
-    "checkWorse": "Mai rău",
-    "worseValidation": "Aceasta este o informație importantă. Unele exerciții nu funcționează pentru toți. Experiența voastră este validă.",
-    "yes": "Da",
-    "noThanks": "Nu, mulțumesc"
-  },
-  "infoButton": {
-    "close": "Închide"
-  },
-  "quickCheckIn": {
-    "title": "Check-in rapid",
-    "prompt": "Ce descrie modul în care vă simțiți acum?",
-    "done": "Gata",
-    "close": "Închide"
   },
   "granularity": {
     "eyebrow": "Exercițiu de vocabular",
@@ -281,11 +154,6 @@
     "save": "Salvează analiza",
     "done": "Gata",
     "close": "Închide"
-  },
-  "privacy": {
-    "headline": "Viața voastră emoțională este profund personală. De aceea, Emot-ID păstrează totul pe dispozitivul vostru.",
-    "title": "Confidențialitate",
-    "detail": "Toate datele voastre — selecțiile de emoții, istoricul sesiunilor, hărțile corporale și preferințele — sunt stocate local pe dispozitivul vostru folosind IndexedDB și localStorage. Nimic nu este trimis către niciun server. Nu există analize, conturi sau sincronizare în cloud. Puteți șterge toate datele oricând din Sesiuni anterioare."
   },
   "dimensional": {
     "instructions": "Localizați-vă starea folosind energia și caracterul plăcut",

@@ -53,8 +53,8 @@ test('Romanian values should be different from English values', () => {
   checkDifferences(en, ro);
 });
 
-test('Critical sections (crisis, disclaimer) must have distinct Romanian translations', () => {
-  const criticalSections = ['crisis', 'disclaimer', 'privacy'] as const;
+test('Critical safety and privacy sections must have distinct Romanian translations', () => {
+  const criticalSections = ['crisis', 'supportScreen', 'privacyData'] as const;
 
   for (const section of criticalSections) {
     const enSection = en[section] as Record<string, string>;

@@ -29,9 +29,9 @@ describe('i18n completeness', () => {
     expect(missingInRo, 'Keys in EN but missing in RO').toEqual([])
   })
 
-  it('both have menu.language key', () => {
-    expect(roKeys).toContain('menu.language')
-    expect(enKeys).toContain('menu.language')
+  it('both have the active settings language key', () => {
+    expect(roKeys).toContain('settingsScreen.language')
+    expect(enKeys).toContain('settingsScreen.language')
   })
 
   it('both have dimensional.instructions key', () => {

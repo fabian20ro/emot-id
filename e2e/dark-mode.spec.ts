@@ -72,11 +72,14 @@ test.describe('Dark mode accessibility', () => {
     await page.getByRole('button', { name: 'Back' }).click()
 
     await page.getByRole('button', { name: 'Settings' }).click()
+    await expect(page.getByRole('dialog')).toHaveCount(0)
     await expectDarkScreen(page, 'Settings')
     await page.getByRole('button', { name: 'Privacy & data' }).click()
+    await expect(page.getByRole('dialog')).toHaveCount(0)
     await expectDarkScreen(page, 'Privacy & data')
     await page.getByRole('button', { name: 'Back' }).click()
     await page.getByRole('button', { name: 'Support' }).click()
+    await expect(page.getByRole('dialog')).toHaveCount(0)
     await expectDarkScreen(page, 'Support')
   })
 

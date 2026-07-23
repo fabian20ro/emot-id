@@ -16,7 +16,7 @@ interface LanguageContextType {
   simpleLanguage: boolean
   setSimpleLanguage: (enabled: boolean) => void
   t: Strings
-  /** Type-safe section accessor: `section('reflection')` returns `Strings['reflection']` */
+  /** Type-safe section accessor: `section('today')` returns `Strings['today']` */
   section: <K extends StringSection>(key: K) => Strings[K]
 }
 

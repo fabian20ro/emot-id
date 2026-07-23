@@ -6,15 +6,6 @@
   "offline": {
     "message": "You are offline. Emot-ID is using cached content on this device."
   },
-  "menu": {
-    "model": "Model",
-    "language": "Language",
-    "languageRo": "Romanian",
-    "languageEn": "English",
-    "crisisSupport": "Need support?",
-    "crisisDetail": "Call 116 123 (Romania, free, 24/7) or visit findahelpline.com",
-    "disclaimer": "Disclaimer"
-  },
   "selectionBar": {
     "title": "Your selections",
     "empty": "No selection",
@@ -34,32 +25,6 @@
     "aiWarning": "This will search for general information online. Results are not a substitute for professional support.",
     "externalAIDisabled": "External AI search is off. You can enable it in Settings."
   },
-  "modal": {
-    "close": "Close",
-    "title": "Analysis result",
-    "noCombinations": "No combinations found from your selections",
-    "combinationsFound": "Found combinations",
-    "showDescription": "Show description",
-    "needsLabel": "This emotion often needs",
-    "matchStrengthLabel": "Match",
-    "readMore": "Would you like to read more about this?",
-    "a11yTitle": "Analysis results dialog",
-    "moreInfoTitle": "More context",
-    "moreInfoAria": "Show more context",
-    "noExtraInfo": "No extra context available for this result."
-  },
-  "reflection": {
-    "prompt": "Does this resonate with your experience?",
-    "yes": "Yes",
-    "partly": "Somewhat",
-    "no": "Not really",
-    "followUp": "Would you like to explore further?",
-    "backToModel": "Go back and explore",
-    "stayHere": "That's okay for now",
-    "notQuiteValidation": "Your felt experience is the best guide. Emotion labels are approximations — what you feel is real and valid.",
-    "tryDifferentModel": "Try a different model",
-    "warmClose": "Take a moment with this. Your feelings are valid."
-  },
   "crisis": {
     "tier1": "If what you're feeling feels overwhelming, support is available. You don't have to navigate this alone.",
     "tier2": "It sounds like you may be going through a difficult time. You don't have to go through it alone.",
@@ -72,11 +37,6 @@
     "disclaimer": "If you are in immediate danger, please call emergency services.",
     "groundingTitle": "A quick grounding technique (5-4-3-2-1)",
     "groundingBody": "Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste. This helps bring your attention to the present moment."
-  },
-  "disclaimer": {
-    "title": "About this app",
-    "text": "This app supports emotional self-awareness. It is not a diagnostic tool and does not replace professional mental health support. If you are experiencing distress, please reach out to a qualified professional.",
-    "label": "Disclaimer"
   },
   "onboarding": {
     "screen1Title": "This is an exploration, not a test",
@@ -96,23 +56,6 @@
     "selectModel": "Choose your starting model",
     "getStarted": "Get started"
   },
-  "results": {
-    "microDisclaimer": "For self-exploration, not diagnosis"
-  },
-  "settings": {
-    "title": "Settings",
-    "soundLabel": "Sound",
-    "soundOn": "On",
-    "soundOff": "Off",
-    "saveSessionsLabel": "Save sessions",
-    "saveSessionsOn": "On",
-    "saveSessionsOff": "Off",
-    "deleteExistingSessions": "Delete existing sessions?",
-    "allowExternalAI": "External AI links",
-    "allowExternalAIOn": "On",
-    "allowExternalAIOff": "Off",
-    "allowExternalAIHint": "When enabled, opening AI links sends your selected emotions to Google Search."
-  },
   "reminders": {
     "label": "Daily reminder",
     "on": "On",
@@ -122,49 +65,11 @@
     "notificationTitle": "Time for a quick emotional check-in",
     "notificationBody": "Take 30 seconds to notice what you feel."
   },
-  "simpleLanguage": {
-    "label": "Simple language",
-    "on": "On",
-    "off": "Off",
-    "hint": "Use shorter wording and simpler descriptions.",
-    "reflectionPrompt": "Does this fit how you feel?",
-    "reflectionFollowUp": "Do you want to explore more?",
-    "reflectionWarmClose": "Pause here for a moment. What you feel matters.",
-    "modelDescriptions": {
-      "somatic": "Notice body sensations first.",
-      "wheel": "Pick feeling words from broad to specific.",
-      "plutchik": "Explore how emotions mix together.",
-      "dimensional": "Place your state on the pleasantness and intensity axes."
-    }
-  },
-  "bridges": {
-    "somaticFromCognitive": "Where do you notice this in your body?",
-    "cognitiveFromSomatic": "Can you name the emotion more precisely?",
-    "cognitiveFromDimensional": "Want to explore what this feeling is called?",
-    "trySomatic": "Try the Body Map",
-    "tryWheel": "Try the Emotion Wheel",
-    "tryPlutchik": "Try Plutchik's Wheel",
-    "tryDimensional": "Try the Emotional Space",
-    "dimensionalFromCognitive": "How intense and how pleasant or unpleasant is this?",
-    "somaticFromDimensional": "Where do you feel this in your body?",
-    "dimensionalFromSomatic": "How pleasant and intense is this sensation?",
-    "pleasantEmbodiment": "Where do you feel that warmth? Take a moment to notice."
-  },
   "firstHint": {
     "somatic": "Tap where you notice a sensation",
     "wheel": "Tap an emotion that resonates with you",
     "plutchik": "Tap an emotion to see how it connects",
     "dimensional": "Tap where your state feels located"
-  },
-  "dontKnow": {
-    "link": "I don't know what I'm feeling",
-    "normalization": "Many people find it hard to name what they feel — this is normal and a skill that develops with practice.",
-    "title": "That's okay — here are two ways to start",
-    "bodyOption": "Start with your body",
-    "bodyDesc": "Notice physical sensations first",
-    "dimensionalOption": "Start with pleasantness",
-    "dimensionalDesc": "Locate your state on a simple scale",
-    "close": "Close"
   },
   "somatic": {
     "pickSensation": "What do you feel here?",
@@ -192,38 +97,6 @@
     "numbnessFlooding": "Your body may be trying to protect you right now. Would you like to try a grounding exercise before continuing?",
     "numbnessGrounding": "Try grounding",
     "numbnessContinue": "Continue scanning"
-  },
-  "intervention": {
-    "interventionTitle": "A moment for you",
-    "interventionDismiss": "Continue",
-    "offer": "Would you like to pause for a moment?",
-    "breathIn": "Breathe in...",
-    "breathHold": "Hold...",
-    "breathOut": "Breathe out...",
-    "savorStep1": "Close your eyes for a moment.",
-    "savorStep2": "Recall the situation that brought this feeling.",
-    "savorStep3": "Notice where you feel it in your body.",
-    "savorStep4": "Breathe and let it expand.",
-    "curiosityPrompt": "What might these emotions be telling you? Take a moment to wonder without needing an answer.",
-    "offerBreathing": "Would you like to try something calming?",
-    "offerSavoring": "Take a moment to savor this?",
-    "offerCuriosity": "What might these feelings be telling you?",
-    "checkPrompt": "How do you feel now?",
-    "checkBetter": "Better",
-    "checkSame": "About the same",
-    "checkWorse": "Worse",
-    "worseValidation": "That's important information. Some exercises don't work for everyone. Your experience is valid.",
-    "yes": "Yes",
-    "noThanks": "No thanks"
-  },
-  "infoButton": {
-    "close": "Close"
-  },
-  "quickCheckIn": {
-    "title": "Quick check-in",
-    "prompt": "What describes how you feel right now?",
-    "done": "Done",
-    "close": "Close"
   },
   "granularity": {
     "eyebrow": "Word practice",
@@ -281,11 +154,6 @@
     "save": "Save chain",
     "done": "Done",
     "close": "Close"
-  },
-  "privacy": {
-    "headline": "Your emotional life is deeply personal. That's why Emot-ID keeps everything on your device.",
-    "title": "Privacy",
-    "detail": "All your data — emotion selections, session history, body maps, and preferences — is stored locally on your device using IndexedDB and localStorage. Nothing is sent to any server. There are no analytics, no accounts, and no cloud sync. You can delete all data anytime from Past Sessions."
   },
   "dimensional": {
     "instructions": "Locate your state using energy and pleasantness",

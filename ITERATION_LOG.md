@@ -765,3 +765,28 @@ Manual `393x742` light/dark inspection confirmed an opaque, bounded dialog with 
 **Insight:** A trustworthy local-data boundary needs one explicit inventory of every persistence
 surface; display localization can stay separate from stable raw records and schema migration.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-23] Remove unreachable legacy presentation
+
+**Context:** P5 required deleting the modal-era UI after the routed mobile migration, while
+preserving active compatibility, safety, and deferred Body Compass boundaries.
+**What happened:**
+- Traced runtime and test importers for Quick Check-in, result, history, settings, uncertainty,
+  info, intervention, and sessions-only export surfaces.
+- Deleted 15 unreachable production files and 9 dedicated test files; retained active journal
+  analytics, repositories, modal/focus infrastructure, crisis logic, and Body Compass code.
+- Removed 13 dead bilingual translation namespaces and updated translation contracts to cover
+  active Settings, Support, and Privacy screens.
+- Updated codemaps and added explicit zero-dialog browser assertions for Settings, Privacy, and
+  Support.
+- Compared production output before and after deletion.
+**Outcome:** Success. `npm run check` passes 68 files and 637 tests. `npm run test:e2e` passes all
+80 Mobile Safari and Mobile Chrome cases. Manual 393x742 dark inspection passed. Main CSS dropped
+81.70 -> 65.20 kB (gzip 14.69 -> 12.41); main JS dropped 473.84 -> 463.19 kB (gzip 151.89 ->
+148.87).
+**Insight:** Import-graph deletion should distinguish similarly named active hooks from dead
+components and retain compatibility APIs only when an independent active test or runtime caller
+defines their contract.
+**Promoted to Lessons Learned:** No

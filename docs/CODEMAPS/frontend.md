@@ -1,35 +1,35 @@
 # Frontend Codemap
 
-**Last Updated:** 2026-02-26
+**Last Updated:** 2026-07-23
 
 ## Component Tree
 
 ```
 App (src/App.tsx)
  +-- Onboarding                   # 4-screen overlay (shown once)
- +-- Header                       # 48px merged row
- |    +-- MenuButton              # Animated hamburger
- |    +-- ModelBar (inline)       # Model tab bar
- +-- SettingsMenu*                # Bottom sheet drawer (portal to body)
- +-- AnalyzeButton                # Gradient CTA with selection count
- +-- QuickCheckIn                 # 30-second curated emotion grid
- +-- GranularityTraining          # Practice mode for emotion discrimination
- +-- ChainAnalysis                # DBT worksheet mode
- +-- SelectionBar                 # Horizontal scroll strip with clear/undo
- +-- FirstInteractionHint         # Per-model hint
- +-- VisualizationErrorBoundary
+ +-- AppShell                     # Persistent header, content, bottom tabs
+ +-- TodayScreen                  # Quick emotions and recent reflection
+ +-- ArrivalScreen                # Route chooser
+ +-- ModelCheckInScreen           # Affect map and Plutchik flows
  |    +-- Visualization**
- |         +-- BubbleField        # For plutchik, wheel
- |         +-- BodyMap            # For somatic
- |         +-- DimensionalField   # For dimensional
- +-- ResultModal                  # Analysis results orchestrator
- |    +-- ResultsView / ReflectionView / WarmCloseView / FollowUpView
- |    +-- CrisisBanner            # Tiered crisis banner
- |    +-- MicroIntervention       # Post-analysis exercises
- +-- DontKnowModal / UndoToast / SessionHistory
+ |         +-- BubbleField        # Plutchik
+ |         +-- DimensionalField   # Affect map
+ +-- WordLadderScreen             # Hierarchical emotion vocabulary
+ +-- BodyCompassScreen            # Somatic route
+ |    +-- BodyMap                 # Lazy-loaded body visualization
+ +-- ReflectionScreen             # Results, crisis support, needs, next step
+ +-- ExploreScreen                # Route and practice entry points
+ +-- JournalScreen                # Sessions, summaries, chain entry
+ +-- SessionDetailScreen          # Saved reflection details
+ +-- SettingsScreen               # Preferences
+ +-- PrivacyDataScreen            # Storage, export, destructive confirmation*
+ +-- SupportScreen                # Crisis and product boundaries
+ +-- GranularityTraining          # Full-screen practice flow
+ +-- ChainAnalysis                # Full-screen DBT worksheet
 ```
 
-`*` Portal to body. `**` Dynamic via registry, lazy-loaded inside `Suspense`.
+`*` Confirmation uses `ModalShell`, portaled to `document.body` with focus trapping.
+`**` Visualization resolved by model registry; BodyMap stays lazy-loaded.
 
 ## Non-Obvious Behaviors
 

@@ -1,6 +1,6 @@
 # Emotion Models Codemap
 
-**Last Updated:** 2026-02-27
+**Last Updated:** 2026-07-23
 **Location:** `src/models/`
 
 ## Architecture: Catalog + Overlays
@@ -39,11 +39,14 @@ BaseEmotion { id, label, description?, needs?, color, intensity? }
 
 ### Catalog is the single source of truth
 
-`distress.ts` derives HIGH_DISTRESS_IDS from catalog entries with `distressTier: 'high'` (no hardcoded sets). QuickCheckIn resolves directly from catalog (no model scanning).
+`distress.ts` derives distress tiers from catalog entries (no hardcoded sets).
+The Today quick-start emotions also resolve directly from the catalog.
 
 ### Model overlay colors override canonical colors
 
-The canonical color is used for cross-model contexts (Quick Check-in, session history). Each model overlay provides its own color for model-specific visualizations.
+The canonical color is used for cross-model contexts such as Today and the
+journal. Each model overlay provides its own color for model-specific
+visualizations.
 
 ### Somatic `contextDescription` is not duplication
 

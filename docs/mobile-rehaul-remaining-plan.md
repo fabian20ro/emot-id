@@ -1,6 +1,6 @@
 # Remaining Mobile Migration Plan
 
-Status: prioritized after completing Journal data trust, July 23, 2026.
+Status: P5 complete; Body Compass presentation and P6 remain, July 23, 2026.
 
 ## Completed Since Last Update
 
@@ -27,6 +27,8 @@ Status: prioritized after completing Journal data trust, July 23, 2026.
   the same visible level, using existing catalog descriptions and neutral wording.
 - Made inferred needs user-selectable in Reflection: one need starts selected, while multiple
   suggestions require an explicit optional choice that persists into Journal and JSON export.
+- Removed the unreachable modal-era Quick Check-in, results, history, settings, uncertainty,
+  intervention, and sessions-only export presentation after tracing every production caller.
 
 ## Constraints
 
@@ -89,13 +91,20 @@ uses the existing body portal and focus trap.
 mutation during viewing, EN/RO body display, empty/loading/error states, focus restoration, dark
 contrast, and mobile dialog bounds.
 
-## P5: Finish Explore and Remove Legacy Presentation
+## Completed: Finish Explore and Remove Legacy Presentation
 
-Plutchik has a route-specific wheel, Explore has meaningful route descriptions, and vocabulary
-practice now uses a normal screen. The remaining dark modal components (`QuickCheckIn`,
-`ResultModal`, `SessionHistory`, `SettingsMenu`, `DontKnowModal`, and their `InfoButton` content)
-are not reachable from the current App shell. Delete them only after an import-graph audit confirms
-that tests and compatibility exports are their only callers. Do not restyle dead code.
+The import graph confirmed that `QuickCheckIn`, `ResultModal`, `SessionHistory`, `SettingsMenu`,
+`DontKnowModal`, and their private result/intervention/toggle/info/export helpers had no production
+route. Their dedicated tests and 13 unused translation namespaces were deleted with them.
+
+Active journal analytics, session repository compatibility, `ModalShell`, focus trapping, crisis
+logic, model analyzers, and the entire Body Compass dependency tree remain. Codemaps now describe
+the routed screen architecture instead of the removed modal shell.
+
+**Verification:** `npm run check` passes 68 files and 637 tests. `npm run test:e2e` passes all 80
+Mobile Safari and Mobile Chrome cases, including explicit zero-dialog checks for migrated utility
+screens. Manual 393x742 dark inspection confirmed readable, bounded Today and delete-confirmation
+states. Main CSS fell from 81.70 to 65.20 kB and main JS from 473.84 to 463.19 kB.
 
 ## Deferred Body Compass Presentation Slice
 
@@ -127,23 +136,22 @@ Back/edit/remove/add-another paths; no change to somatic scoring or shared crisi
 
 ## Recommended Sequence
 
-1. P5 legacy removal after an import-graph audit.
-2. Deferred Body Compass presentation only after active legacy code is removed.
-3. P6 hardening continuously, with the full matrix before release.
+1. Deferred Body Compass presentation, now that active legacy code is removed.
+2. P6 hardening continuously, with the full matrix before release.
 
 ## Recommended Next Update
 
-Implement P5 as deletion of unreachable legacy presentation, not a restyling project:
+Implement the first Body Compass presentation slice without changing its staged workflow:
 
-1. Build an import graph for `QuickCheckIn`, `ResultModal`, `SessionHistory`, `SettingsMenu`,
-   `DontKnowModal`, and legacy `InfoButton` modal content. Separate active production callers from
-   tests and compatibility exports.
-2. Delete a component only when `App` and every active route have no runtime path to it. Remove its
-   dedicated tests, styles, and exports in the same change; keep shared helpers still used by active
-   screens.
-3. Do not migrate BodyMap, SensationPicker fallback, GuidedScan, or compact IntensityPicker in this
-   slice. Record their remaining callers for the deferred Body Compass phase.
-4. Remove obsolete sessions-only export UI only if the import graph confirms it is unreachable;
-   retain repository functions that still provide explicit compatibility coverage.
-5. Run the full route, dialog-count, dark-mode, bundle, and Playwright matrix. Compare the production
-   bundle before and after so deletion produces a measurable result without behavior changes.
+1. Extract only the region SVG and hit-area behavior into `BodyRegionMap`; keep route orchestration,
+   sensation, intensity, review, scoring, and crisis completion unchanged.
+2. Add semantic body-map tokens for light/dark fills, strokes, selected regions, and labels. Preserve
+   the current front/back paths and expanded hit areas exactly.
+3. Switch `BodyCompassScreen` to the extracted map and verify Area -> Sensation -> Intensity ->
+   Review, Back, edit, remove, side switching, and add-another behavior before deleting anything.
+4. Audit `BodyMap` callers after the switch. Remove its internal `SensationPicker` fallback and
+   compact `IntensityPicker` only if no production caller remains; otherwise record the boundary.
+5. Keep Guided Scan unchanged and separate. Its product placement needs a distinct decision and
+   should not expand this visual refactor.
+6. Run model/scoring unit tests, the full check, Body Compass Playwright at all three mobile sizes,
+   dark computed contrast, keyboard activation, and the shared crisis completion journey.
