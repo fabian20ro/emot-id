@@ -712,3 +712,56 @@ normal flow without overlap.
 **Insight:** Optional inferred content should preserve agency explicitly: safe defaults for one
 suggestion, no hidden ranking when several suggestions compete, and a reversible choice.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-23] Make Guide Me deterministic
+
+**Context:** Arrival's Guide Me option only reordered the same route cards, so it did not reduce
+uncertainty or provide a meaningful recommendation.
+**What happened:**
+- Replaced route reordering with two concrete questions about locating a body signal and roughly
+  placing a feeling without naming it.
+- Added a pure decision function for Body, Affect, and Words handoffs; answers remain local and are
+  never persisted, scored, or inferred from history.
+- Made Back move exactly one question and kept an explicit return to all starting points on both
+  questions, with no forced answer.
+- Added matched English and Romanian copy, stable 92px choice controls, and dark-contrast/mobile
+  bounds coverage.
+- Added unit tests for every decision path and Playwright journeys for keyboard navigation,
+  Romanian copy, Back, and direct handoff to all three routes.
+- Ran repository-wide lint/check and Playwright serially after a parallel attempt exposed a
+  transient `test-results` directory race between ESLint traversal and Playwright cleanup.
+**Outcome:** Success. `npm run check` passes 74 files and 775 tests, translation audits, TypeScript,
+and production build. `npm run test:e2e` passes all 76 Mobile Safari and Mobile Chrome cases.
+Manual `393x742` inspection confirmed both questions fit without overlap or horizontal overflow.
+**Insight:** A short, auditable signal-availability sequence can reduce route-selection load without
+personalization, diagnosis, persistence, or a generic questionnaire abstraction.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-23] Strengthen Journal data trust
+
+**Context:** Journal displayed raw body IDs, detail omitted body signals, and Privacy export/delete
+covered sessions but silently excluded chain exercises and preferences.
+**What happened:**
+- Centralized somatic sensation, intensity, and region display labels while preserving raw stored
+  IDs and the existing session schema.
+- Localized Journal body patterns and detail, showing body signals, selected need, and next step
+  without mutating records; added explicit loading, error, and empty states.
+- Added a versioned full-data export with fresh IndexedDB reads for sessions and chain entries plus
+  resolved preferences and dynamic hint state.
+- Made delete clear both IndexedDB stores and reset preferences/hints while preserving onboarding
+  completion; synchronized the active UI to default settings.
+- Replaced `window.confirm` with an opaque, portaled, focus-trapped confirmation. Manual inspection
+  caught and removed panel opacity during entrance animation because underlying controls briefly
+  showed through.
+- Added unit and Playwright coverage for old records, no-mutation rendering, EN/RO labels,
+  downloaded JSON contents, delete/reload, focus restoration, dark contrast, and mobile bounds.
+**Outcome:** Success. `npm run check` passes 77 files and 786 tests, translation audits, TypeScript,
+and production build. `npm run test:e2e` passes all 80 Mobile Safari and Mobile Chrome cases.
+Manual `393x742` light/dark inspection confirmed an opaque, bounded dialog with no overlap.
+**Insight:** A trustworthy local-data boundary needs one explicit inventory of every persistence
+surface; display localization can stay separate from stable raw records and schema migration.
+**Promoted to Lessons Learned:** No

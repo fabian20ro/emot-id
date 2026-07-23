@@ -1,9 +1,15 @@
 # Remaining Mobile Migration Plan
 
-Status: prioritized after completing Word Ladder, July 23, 2026.
+Status: prioritized after completing Journal data trust, July 23, 2026.
 
 ## Completed Since Last Update
 
+- Localized stored body-region and sensation IDs at display time, completed Journal body/need/step
+  detail, and added explicit loading/error/empty states without mutating old records.
+- Replaced sessions-only export/delete with versioned full-data behavior covering sessions, chain
+  entries, preferences, and dynamic hints; destructive confirmation is now portaled and focus-trapped.
+- Replaced Guide Me route reordering with two concrete, deterministic questions that hand off
+  directly to Body, Affect, or Words while preserving an explicit no-answer return.
 - Repaired Affect Map placement: nearby words now appear as visible pins and persistent controls in
   normal flow, outside sticky-action overlap.
 - Replaced Plutchik's generic bubble scatter with a stable eight-emotion wheel, two-choice gating,
@@ -58,22 +64,30 @@ No taxonomy, mapping layer, or next-step behavior changed.
 save-disabled behavior, English/Romanian copy, session detail, JSON export, dark contrast, mobile
 bounds, and tier-4 gating.
 
-## P3: Make Guide Me Deterministic
+## Completed: Make Guide Me Deterministic
 
-Replace route reordering with at most two concrete questions about the clearest available signal.
-Use a pure decision table that returns Body, Affect, or Words. No personalization engine, scoring,
-history-based inference, or new persistence.
+Guide Me now asks whether a body signal can be located, then only when needed asks whether the
+feeling can be placed without a name. A pure decision function returns Body, Affect, or Words.
+Answers remain local and disposable; Back moves exactly one question, and every question offers
+the unchanged standard route list without forcing an answer.
 
-**Tests:** every answer path, keyboard operation, Back, Romanian copy, and no forced answer.
+**Tests:** every decision path, direct handoff to all three routes, keyboard operation, exact Back,
+Romanian copy, dark contrast, mobile bounds, and no forced answer.
 
-## P4: Strengthen Journal Data Trust
+## Completed: Strengthen Journal Data Trust
 
-Localize serialized body-region and sensation display, show selected needs and next steps in
-session detail, and include chain entries/preferences in export and delete behavior. Confirmation
-dialogs remain portaled and focus-trapped.
+Raw body-region and sensation IDs remain unchanged in stored records and exports; a shared somatic
+display helper localizes them in Journal patterns and detail. Detail also shows selected needs and
+next steps when present while old records retain a clear fallback.
 
-**Tests:** old record compatibility, complete export/delete, no data mutation during viewing, and
-empty/loading/error states.
+Export now uses a versioned envelope with a fresh repository read of sessions and chain entries plus
+a resolved preference snapshot. Delete clears both IndexedDB stores, resets persisted preferences
+and dynamic hint state, and preserves only non-preference onboarding completion. Its confirmation
+uses the existing body portal and focus trap.
+
+**Tests:** old record compatibility, complete export/delete and reload, preference reset, no data
+mutation during viewing, EN/RO body display, empty/loading/error states, focus restoration, dark
+contrast, and mobile dialog bounds.
 
 ## P5: Finish Explore and Remove Legacy Presentation
 
@@ -113,21 +127,23 @@ Back/edit/remove/add-another paths; no change to somatic scoring or shared crisi
 
 ## Recommended Sequence
 
-1. P3 Guide Me: reduce uncertainty without speculative intelligence.
-2. P4 Journal trust, then P5 legacy removal.
+1. P5 legacy removal after an import-graph audit.
+2. Deferred Body Compass presentation only after active legacy code is removed.
 3. P6 hardening continuously, with the full matrix before release.
 
 ## Recommended Next Update
 
-Implement P3 inside `ArrivalScreen` with local state and one exported pure decision function:
+Implement P5 as deletion of unreachable legacy presentation, not a restyling project:
 
-1. First ask whether a body sensation is clear enough to locate. A clear yes returns Body; a
-   no/not-yet answer reveals one second question.
-2. Ask whether the feeling can be placed by energy and pleasantness without naming it. Yes returns
-   Affect; otherwise offer broad Words.
-3. Keep an explicit return to the standard route list at both questions. Do not persist answers,
-   inspect history, score uncertainty, or reorder route cards.
-4. Keep the current `onChoose` navigation contract. No new route, generic wizard, state machine,
-   or shared questionnaire abstraction.
-5. Unit-test every decision-table path. Playwright-test Back, keyboard operation, Romanian copy,
-   direct route handoff, mobile bounds, and choosing no answer.
+1. Build an import graph for `QuickCheckIn`, `ResultModal`, `SessionHistory`, `SettingsMenu`,
+   `DontKnowModal`, and legacy `InfoButton` modal content. Separate active production callers from
+   tests and compatibility exports.
+2. Delete a component only when `App` and every active route have no runtime path to it. Remove its
+   dedicated tests, styles, and exports in the same change; keep shared helpers still used by active
+   screens.
+3. Do not migrate BodyMap, SensationPicker fallback, GuidedScan, or compact IntensityPicker in this
+   slice. Record their remaining callers for the deferred Body Compass phase.
+4. Remove obsolete sessions-only export UI only if the import graph confirms it is unreachable;
+   retain repository functions that still provide explicit compatibility coverage.
+5. Run the full route, dialog-count, dark-mode, bundle, and Playwright matrix. Compare the production
+   bundle before and after so deletion produces a measurable result without behavior changes.

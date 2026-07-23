@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { useFocusTrap } from '../hooks/useFocusTrap'
 import { IntensityPicker } from './IntensityPicker'
 import { ModalShell } from './ModalShell'
+import { SENSATION_CONFIG } from '../models/somatic/display'
 import type { SensationType } from '../models/somatic/types'
 
 interface SensationPickerProps {
@@ -11,18 +12,6 @@ interface SensationPickerProps {
   availableSensations: SensationType[]
   onSelect: (sensation: SensationType, intensity: 1 | 2 | 3) => void
   onCancel: () => void
-}
-
-const SENSATION_CONFIG: Record<SensationType, { icon: string; label: { ro: string; en: string } }> = {
-  tension: { icon: '⫸', label: { ro: 'Tensiune', en: 'Tension' } },
-  warmth: { icon: '◉', label: { ro: 'Căldură', en: 'Warmth' } },
-  heaviness: { icon: '▼', label: { ro: 'Greutate', en: 'Heaviness' } },
-  lightness: { icon: '△', label: { ro: 'Ușurință', en: 'Lightness' } },
-  tingling: { icon: '✧', label: { ro: 'Furnicături', en: 'Tingling' } },
-  numbness: { icon: '○', label: { ro: 'Amorțeală', en: 'Numbness' } },
-  churning: { icon: '◎', label: { ro: 'Răscolire', en: 'Churning' } },
-  pressure: { icon: '⊛', label: { ro: 'Presiune', en: 'Pressure' } },
-  constriction: { icon: '⊘', label: { ro: 'Constrictie', en: 'Constriction' } },
 }
 
 type PickerStep = 'sensation' | 'intensity'
@@ -168,5 +157,3 @@ export function SensationPicker({
     </AnimatePresence>
   )
 }
-
-export { SENSATION_CONFIG }

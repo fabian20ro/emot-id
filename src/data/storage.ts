@@ -16,6 +16,33 @@ const KEYS = {
 
 type StorageKey = keyof typeof KEYS
 
+export interface PreferenceSnapshot {
+  model: string | null
+  language: 'ro' | 'en'
+  soundMuted: boolean
+  saveSessions: boolean
+  dimensionalAxisHintSeen: boolean
+  dailyReminderEnabled: boolean
+  dailyReminderLastSentAt: number | null
+  simpleLanguage: boolean
+  allowExternalAI: boolean
+  theme: 'light' | 'dark'
+  dismissedHints: string[]
+}
+
+const PREFERENCE_KEYS: StorageKey[] = [
+  'model',
+  'language',
+  'soundMuted',
+  'saveSessions',
+  'dimensionalAxisHintSeen',
+  'dailyReminderEnabled',
+  'dailyReminderLastSentAt',
+  'simpleLanguage',
+  'allowExternalAI',
+  'theme',
+]
+
 function getStorage(): Storage | null {
   if (typeof window !== 'undefined' && window.localStorage) {
     return window.localStorage
@@ -42,6 +69,58 @@ function set(key: StorageKey, value: string): void {
   }
 }
 
+function getPreferenceSnapshot(): PreferenceSnapshot {
+  const reminderTimestamp = Number(get('dailyReminderLastSentAt'))
+  const local = getStorage()
+  const dismissedHints: string[] = []
+  if (local) {
+    try {
+      for (let index = 0; index < local.length; index++) {
+        const key = local.key(index)
+        if (key?.startsWith(`${PREFIX}hint-`) && local.getItem(key) === 'true') {
+          dismissedHints.push(key.slice(`${PREFIX}hint-`.length))
+        }
+      }
+    } catch {
+      // localStorage unavailable
+    }
+  }
+  return {
+    model: get('model'),
+    language: get('language') === 'ro' ? 'ro' : 'en',
+    soundMuted: get('soundMuted') === 'true',
+    saveSessions: get('saveSessions') !== 'false',
+    dimensionalAxisHintSeen: get('dimensionalAxisHintSeen') === 'true',
+    dailyReminderEnabled: get('dailyReminderEnabled') === 'true',
+    dailyReminderLastSentAt: Number.isFinite(reminderTimestamp) && reminderTimestamp > 0 ? reminderTimestamp : null,
+    simpleLanguage: get('simpleLanguage') === 'true',
+    allowExternalAI: get('allowExternalAI') !== 'false',
+    theme: get('theme') === 'dark' ? 'dark' : 'light',
+    dismissedHints: dismissedHints.sort(),
+  }
+}
+
+function resetPreferences(): void {
+  const local = getStorage()
+  if (!local) return
+  const keysToRemove: string[] = PREFERENCE_KEYS.map((key) => KEYS[key])
+  try {
+    for (let index = 0; index < local.length; index++) {
+      const key = local.key(index)
+      if (key?.startsWith(`${PREFIX}hint-`)) keysToRemove.push(key)
+    }
+  } catch {
+    // localStorage unavailable
+  }
+  for (const key of keysToRemove) {
+    try {
+      local.removeItem(key)
+    } catch {
+      // localStorage unavailable
+    }
+  }
+}
+
 function isHintDismissed(modelId: string): boolean {
   try {
     return getStorage()?.getItem(`${PREFIX}hint-${modelId}`) === 'true'
@@ -62,6 +141,8 @@ export const storage = {
   KEYS,
   get,
   set,
+  getPreferenceSnapshot,
+  resetPreferences,
   isHintDismissed,
   dismissHint,
 } as const

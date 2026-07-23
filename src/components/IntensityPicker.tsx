@@ -1,17 +1,12 @@
 import { motion } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
+import { INTENSITY_LABELS } from '../models/somatic/display'
 
 interface IntensityPickerProps {
   sensationIcon: string
   sensationLabel: { ro: string; en: string }
   onPick: (intensity: 1 | 2 | 3) => void
   variant: 'detailed' | 'compact'
-}
-
-export const INTENSITY_LABELS: Record<1 | 2 | 3, { ro: string; en: string; anchor: { ro: string; en: string } }> = {
-  1: { ro: 'Ușoară', en: 'Mild', anchor: { ro: 'abia perceptibilă', en: 'barely noticeable' } },
-  2: { ro: 'Moderată', en: 'Moderate', anchor: { ro: 'clar prezentă', en: 'clearly present' } },
-  3: { ro: 'Puternică', en: 'Strong', anchor: { ro: 'greu de ignorat', en: 'hard to ignore' } },
 }
 
 function IntensityDots({ level }: { level: number }) {

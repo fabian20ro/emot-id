@@ -339,11 +339,20 @@
     "affectHint": "Use energy and pleasantness when words are not available.",
     "unsure": "Guide me",
     "unsureHint": "Begin with one simple choice and see what becomes clearer.",
-    "unsureTitle": "Which signal is clearest right now?",
-    "unsureBody": "A body sensation is often easier under stress. If not, placing the feeling does not require a name.",
-    "tryBody": "I notice something in my body",
-    "tryAffect": "I can place the feeling",
-    "tryWords": "I can try broad words"
+    "guideEyebrow": "One step at a time",
+    "guideBodyTitle": "Can you point to where you feel something in your body?",
+    "guideBodyHint": "A general area is enough. You do not need to know what it means yet.",
+    "guideBodyYes": "Yes, I can point to an area",
+    "guideBodyYesHint": "Start with the location and describe the sensation.",
+    "guideBodyNotClear": "Not clearly",
+    "guideBodyNotClearHint": "Try placing the feeling without naming it.",
+    "guidePlacementTitle": "Can you roughly place the feeling?",
+    "guidePlacementHint": "Think about energy and pleasantness. No emotion word is needed.",
+    "guidePlacementYes": "Yes, I can place it",
+    "guidePlacementYesHint": "Use the map to choose an approximate position.",
+    "guideWords": "I need broad words first",
+    "guideWordsHint": "Start with a general feeling and narrow it down.",
+    "guideAllRoutes": "Show all starting points"
   },
   "bodyCompass": {
     "eyebrow": "Body Compass",
@@ -450,11 +459,15 @@
     "patterns": "Patterns you can notice",
     "recent": "Recent reflections",
     "unpack": "Unpack a moment",
-    "open": "Open reflection"
+    "open": "Open reflection",
+    "loading": "Loading saved reflections…",
+    "errorTitle": "Saved reflections could not be loaded",
+    "errorBody": "Your local data was not changed. Close and reopen the app to try again."
   },
   "sessionDetail": {
     "title": "Saved reflection",
     "felt": "What you named",
+    "bodySignals": "Body signals",
     "fit": "How it fit",
     "need": "Possible need",
     "step": "Next step",
@@ -482,8 +495,16 @@
     "external": "Allow external AI search links",
     "externalHint": "Opening one of these links sends selected words to Google Search.",
     "export": "Export my data",
-    "clear": "Delete all saved reflections",
-    "confirmClear": "Delete all saved reflections from this device? This cannot be undone."
+    "exporting": "Preparing export…",
+    "exportSuccess": "Your data export is ready.",
+    "clear": "Delete all local data",
+    "confirmTitle": "Delete all local data?",
+    "confirmClear": "This removes saved reflections, journal exercises, and preferences from this device. It cannot be undone.",
+    "confirmAction": "Delete everything",
+    "deleting": "Deleting…",
+    "cancel": "Cancel",
+    "clearSuccess": "Local data was deleted and preferences were reset.",
+    "dataError": "The action could not be completed. Reopen the app and try again."
   },
   "supportScreen": {
     "title": "Support",

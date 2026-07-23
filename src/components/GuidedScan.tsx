@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
-import { SENSATION_CONFIG } from './SensationPicker'
+import { SENSATION_CONFIG } from '../models/somatic/display'
 import { IntensityPicker } from './IntensityPicker'
 import { CenteringPhase, PausePhase, CompletionPhase } from './GuidedScanPhases'
 import {

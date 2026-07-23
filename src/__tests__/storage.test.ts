@@ -3,7 +3,8 @@ import { storage } from '../data/storage'
 
 describe('storage', () => {
   beforeEach(() => {
-    vi.clearAllMocks()
+    vi.restoreAllMocks()
+    window.localStorage.clear()
   })
 
   describe('get', () => {
@@ -92,6 +93,41 @@ describe('storage', () => {
     it('no two keys resolve to the same storage value', () => {
       const values = Object.values(storage.KEYS) as string[]
       expect(new Set(values).size).toBe(values.length)
+    })
+  })
+
+  describe('preferences', () => {
+    it('returns resolved defaults and stored values as a typed snapshot', () => {
+      storage.set('language', 'ro')
+      storage.set('soundMuted', 'true')
+      storage.set('allowExternalAI', 'false')
+      storage.set('theme', 'dark')
+      storage.set('dailyReminderLastSentAt', '42')
+      storage.dismissHint('somatic')
+
+      expect(storage.getPreferenceSnapshot()).toEqual(expect.objectContaining({
+        language: 'ro',
+        soundMuted: true,
+        saveSessions: true,
+        allowExternalAI: false,
+        theme: 'dark',
+        dailyReminderLastSentAt: 42,
+        dismissedHints: ['somatic'],
+      }))
+    })
+
+    it('removes preference keys but preserves onboarding state', () => {
+      storage.set('language', 'ro')
+      storage.set('theme', 'dark')
+      storage.set('onboarded', 'true')
+      storage.dismissHint('somatic')
+
+      storage.resetPreferences()
+
+      expect(storage.get('language')).toBeNull()
+      expect(storage.get('theme')).toBeNull()
+      expect(storage.get('onboarded')).toBe('true')
+      expect(storage.isHintDismissed('somatic')).toBe(false)
     })
   })
 })

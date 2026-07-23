@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
 import type { BaseEmotion, AnalysisResult } from '../models/types'
-import { SENSATION_CONFIG } from './SensationPicker'
+import { SENSATION_CONFIG } from '../models/somatic/display'
 import type { SomaticSelection } from '../models/somatic/types'
 
 function isSomaticSelection(e: BaseEmotion): e is SomaticSelection {

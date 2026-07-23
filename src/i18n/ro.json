@@ -339,11 +339,20 @@
     "affectHint": "Folosiți energia și caracterul plăcut când cuvintele nu sunt disponibile.",
     "unsure": "Ghidați-mă",
     "unsureHint": "Începeți cu o alegere simplă și vedeți ce devine mai clar.",
-    "unsureTitle": "Care semnal este cel mai clar acum?",
-    "unsureBody": "O senzație corporală este adesea mai accesibilă sub stres. Dacă nu, plasarea stării nu cere un nume.",
-    "tryBody": "Observ ceva în corp",
-    "tryAffect": "Pot plasa starea",
-    "tryWords": "Pot încerca termeni generali"
+    "guideEyebrow": "Pas cu pas",
+    "guideBodyTitle": "Puteți indica unde simțiți ceva în corp?",
+    "guideBodyHint": "Este suficientă o zonă aproximativă. Nu trebuie să știți încă ce înseamnă.",
+    "guideBodyYes": "Da, pot indica o zonă",
+    "guideBodyYesHint": "Începeți cu locul și descrieți senzația.",
+    "guideBodyNotClear": "Nu foarte clar",
+    "guideBodyNotClearHint": "Încercați să plasați starea fără să o numiți.",
+    "guidePlacementTitle": "Puteți plasa aproximativ starea?",
+    "guidePlacementHint": "Gândiți-vă la energie și la cât de plăcută este. Nu este necesar un nume pentru emoție.",
+    "guidePlacementYes": "Da, pot să o plasez",
+    "guidePlacementYesHint": "Folosiți harta pentru a alege o poziție aproximativă.",
+    "guideWords": "Am nevoie întâi de termeni generali",
+    "guideWordsHint": "Începeți cu o stare generală și restrângeți treptat.",
+    "guideAllRoutes": "Arătați toate punctele de pornire"
   },
   "bodyCompass": {
     "eyebrow": "Busola corporală",
@@ -450,11 +459,15 @@
     "patterns": "Tipare pe care le puteți observa",
     "recent": "Reflecții recente",
     "unpack": "Desfaceți un moment",
-    "open": "Deschideți reflecția"
+    "open": "Deschideți reflecția",
+    "loading": "Se încarcă reflecțiile salvate…",
+    "errorTitle": "Reflecțiile salvate nu au putut fi încărcate",
+    "errorBody": "Datele locale nu au fost modificate. Închideți și redeschideți aplicația pentru a încerca din nou."
   },
   "sessionDetail": {
     "title": "Reflecție salvată",
     "felt": "Ce ați numit",
+    "bodySignals": "Semnale corporale",
     "fit": "Cum s-a potrivit",
     "need": "Nevoie posibilă",
     "step": "Pasul următor",
@@ -482,8 +495,16 @@
     "external": "Permiteți legături externe de căutare AI",
     "externalHint": "Deschiderea unei astfel de legături trimite cuvintele selectate către Google Search.",
     "export": "Exportați datele",
-    "clear": "Ștergeți toate reflecțiile salvate",
-    "confirmClear": "Ștergeți toate reflecțiile salvate de pe acest dispozitiv? Acțiunea nu poate fi anulată."
+    "exporting": "Se pregătește exportul…",
+    "exportSuccess": "Exportul datelor este gata.",
+    "clear": "Ștergeți toate datele locale",
+    "confirmTitle": "Ștergeți toate datele locale?",
+    "confirmClear": "Această acțiune elimină reflecțiile salvate, exercițiile din jurnal și preferințele de pe acest dispozitiv. Nu poate fi anulată.",
+    "confirmAction": "Ștergeți tot",
+    "deleting": "Se șterge…",
+    "cancel": "Anulați",
+    "clearSuccess": "Datele locale au fost șterse, iar preferințele au fost resetate.",
+    "dataError": "Acțiunea nu a putut fi finalizată. Redeschideți aplicația și încercați din nou."
   },
   "supportScreen": {
     "title": "Sprijin",

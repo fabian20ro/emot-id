@@ -1,11 +1,10 @@
 import { lazy, Suspense, useState } from 'react'
 import { Check, ChevronRight, Pencil, Plus, Trash2 } from 'lucide-react'
-import { INTENSITY_LABELS } from '../components/IntensityPicker'
-import { SENSATION_CONFIG } from '../components/SensationPicker'
 import { ScreenHeader } from '../components/ScreenHeader'
 import { useLanguage } from '../context/LanguageContext'
 import { useEmotionModel } from '../hooks/useEmotionModel'
 import { MODEL_IDS } from '../models/constants'
+import { INTENSITY_LABELS, SENSATION_CONFIG } from '../models/somatic/display'
 import type { SomaticRegion, SomaticSelection, SensationType } from '../models/somatic/types'
 import type { AnalysisResult, BaseEmotion } from '../models/types'
 
