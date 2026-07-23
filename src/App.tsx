@@ -40,7 +40,7 @@ export default function App() {
   const { entries: chainEntries, loading: chainLoading, save: saveChainEntry, clearAll: clearAllChains } = useChainAnalysis()
   const { muted, setMuted } = useSound()
   const [saveSessions, setSaveSessions] = useState(() => storage.get('saveSessions') !== 'false')
-  const [allowExternalAI, setAllowExternalAI] = useState(() => storage.get('allowExternalAI') === 'true')
+  const [allowExternalAI, setAllowExternalAI] = useState(() => storage.get('allowExternalAI') !== 'false')
   const [theme, setTheme] = useState<'light' | 'dark'>(() => storage.get('theme') === 'dark' ? 'dark' : 'light')
   const remindersT = section('reminders')
   const { dailyReminderEnabled, reminderPermission, reminderSupported, handleDailyReminderChange } = useReminders(remindersT)

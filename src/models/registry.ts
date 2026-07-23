@@ -68,6 +68,11 @@ const BubbleFieldLazy = lazy(async () => {
   return { default: mod.BubbleField }
 })
 
+const PlutchikWheelLazy = lazy(async () => {
+  const mod = await import('../components/PlutchikWheel')
+  return { default: mod.PlutchikWheel }
+})
+
 const BodyMapLazy = lazy(async () => {
   const mod = await import('../components/BodyMap')
   return { default: mod.BodyMap as ComponentType<VisualizationProps> }
@@ -79,7 +84,7 @@ const DimensionalFieldLazy = lazy(async () => {
 })
 
 const visualizations: Record<ModelId, VisualizationComponent> = {
-  [MODEL_IDS.PLUTCHIK]: BubbleFieldLazy,
+  [MODEL_IDS.PLUTCHIK]: PlutchikWheelLazy,
   [MODEL_IDS.WHEEL]: BubbleFieldLazy,
   [MODEL_IDS.SOMATIC]: BodyMapLazy,
   [MODEL_IDS.DIMENSIONAL]: DimensionalFieldLazy,

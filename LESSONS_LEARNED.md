@@ -48,6 +48,8 @@
 
 **[2026-02-07]** Mobile visual fixes require measurement-backed validation — Repeated iterations result from unmeasured visual assumptions. Pair screenshots with scripted geometry checks at `393x742`. Capture before/after visuals and numeric bounds.
 
+**[2026-07-23]** Browser visibility is not viewport visibility — Playwright `toBeVisible()` passes for controls rendered below the viewport or behind a sticky action. For mobile flows that reveal controls, assert `toBeInViewport()` and compare bounding boxes against adjacent sticky or fixed UI.
+
 ## Performance & Infrastructure
 
 **[2026-02-07]** Browser automation can fail due to missing expected channel/runtime — Playwright MCP expected Chrome path unavailable. Verify runtime first, switch to local Playwright binaries if missing. Check browser availability before UI audits. Keep a fallback scripted audit path ready.

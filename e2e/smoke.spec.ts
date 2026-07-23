@@ -95,7 +95,11 @@ test.describe('Primary check-in routes', () => {
     await plot.click({ position: { x: box!.width * 0.7, y: box!.height * 0.25 }, force: true })
     await expect(page.getByTestId('affect-readout')).toBeVisible()
     const tray = page.getByTestId('dimensional-suggestion-tray')
-    await tray.locator('button').first().click()
+    const firstSuggestion = tray.locator('.dimensional-suggestion-chip').first()
+    await expect(firstSuggestion).toBeInViewport()
+    await firstSuggestion.click()
+    await expect(firstSuggestion).toHaveAttribute('aria-pressed', 'true')
+    await expect(tray).toBeVisible()
     await page.getByRole('button', { name: 'Reflect on these words' }).click()
     await expect(page.getByTestId('reflection-screen')).toBeVisible()
   })
@@ -111,25 +115,16 @@ test.describe('Primary check-in routes', () => {
     await expect(page.getByTestId('reflection-screen')).toBeVisible()
   })
 
-  test('Plutchik remains available through Explore', async ({ page }) => {
+  test('Plutchik combines two primary emotions in a stable wheel', async ({ page }) => {
     await page.getByRole('button', { name: 'Explore' }).click()
     await page.getByTestId('explore-plutchik').click()
-    const bubbles = page.locator('.model-stage button[tabindex="0"]')
-    await expect(bubbles.first()).toBeVisible()
-    const stageBox = await page.locator('.model-stage').boundingBox()
-    let selected = 0
-    for (let index = 0; index < await bubbles.count() && selected < 2; index++) {
-      const box = await bubbles.nth(index).boundingBox()
-      if (!box || !stageBox) continue
-      const fullyVisible = box.x >= stageBox.x && box.y >= stageBox.y
-        && box.x + box.width <= stageBox.x + stageBox.width
-        && box.y + box.height <= Math.min(stageBox.y + stageBox.height, page.viewportSize()!.height)
-      if (fullyVisible) {
-        await bubbles.nth(index).click({ force: true })
-        selected++
-      }
-    }
-    expect(selected).toBe(2)
+    const wheel = page.getByRole('group', { name: 'Eight primary emotions arranged as a wheel' })
+    await expect(wheel).toBeVisible()
+    await expect(page.getByTestId(/^plutchik-emotion-/)).toHaveCount(8)
+    await page.getByTestId('plutchik-emotion-joy').click()
+    await page.getByTestId('plutchik-emotion-trust').click()
+    await expect(page.getByTestId('plutchik-combination')).toContainText(/joy \+ trust.*love/i)
+    await expect(page.getByTestId('plutchik-emotion-anger')).toBeDisabled()
     await expect(page.locator('.route-action button')).toBeEnabled()
   })
 })
@@ -174,20 +169,9 @@ test.describe('Safety behavior through the UI', () => {
 })
 
 test.describe('Privacy and support destinations', () => {
-  test('activates the existing Google AI Mode link without changing its query', async ({ page }) => {
+  test('allows the existing Google AI Mode link by default and persists opt-out', async ({ page }) => {
     await openApp(page)
     await completeQuick(page, 'anxiety')
-    await expect(page.getByRole('link', { name: 'Explore with AI' })).toHaveCount(0)
-    await expect(page.getByText(/external AI search is off/i)).toBeVisible()
-
-    await page.getByRole('button', { name: 'Settings' }).click()
-    await page.getByRole('button', { name: 'Privacy & data' }).click()
-    const aiSwitch = page.getByRole('switch', { name: 'Allow external AI search links' })
-    await aiSwitch.click()
-    await expect(aiSwitch).toBeChecked()
-    await page.getByRole('button', { name: 'Back' }).click()
-    await page.getByRole('button', { name: 'Back' }).click()
-
     const link = page.getByRole('link', { name: 'Explore with AI' })
     await expect(link).toBeVisible()
     await expect(link).toHaveAttribute('target', '_blank')
@@ -199,9 +183,17 @@ test.describe('Privacy and support destinations', () => {
       'I feel anxiety. What does this emotion mean and how can I understand it better?',
     )
 
+    await page.getByRole('button', { name: 'Settings' }).click()
+    await page.getByRole('button', { name: 'Privacy & data' }).click()
+    const aiSwitch = page.getByRole('switch', { name: 'Allow external AI search links' })
+    await expect(aiSwitch).toBeChecked()
+    await aiSwitch.click()
+    await expect(aiSwitch).not.toBeChecked()
+
     await page.reload()
     await completeQuick(page, 'joy')
-    await expect(page.getByRole('link', { name: 'Explore with AI' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Explore with AI' })).toHaveCount(0)
+    await expect(page.getByText(/external AI search is off/i)).toBeVisible()
   })
 
   test('settings separates privacy and support from product navigation', async ({ page }) => {

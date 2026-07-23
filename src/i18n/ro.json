@@ -226,11 +226,13 @@
     "close": "Închide"
   },
   "granularity": {
-    "title": "Granularitate emoțională",
-    "prompt": "Care dintre acestea descrie cel mai bine ceea ce simțiți?",
-    "notSure": "Nu sunt sigur — toate se potrivesc",
+    "eyebrow": "Exercițiu de vocabular",
+    "title": "Observați diferențele",
+    "lede": "Comparați cuvinte apropiate pentru emoții. Nu există punctaj.",
+    "prompt": "Care cuvânt vi se pare cel mai apropiat?",
+    "notSure": "Nu știu încă — toate par potrivite",
     "practice": "Exersați granularitatea",
-    "progress": "Pasul {current}/{total}",
+    "progress": "Pasul {current} din {total}",
     "continue": "Continuați",
     "feedbackSelected": "Ați ales {emotion}. Dacă aceasta este cea mai apropiată de trăirea voastră, alegerea este validă.",
     "feedbackNotSure": "Este în regulă să nu fiți sigur. Nuanța emoțională se construiește prin practică.",
@@ -245,14 +247,18 @@
     "completedEncouragement": "Această abilitate crește prin repetiție, nu prin perfecțiune.",
     "summaryChosen": "{count} alegeri clare",
     "summaryNotSure": "{count} alegeri nesigure",
+    "clearLabel": "Alegeri clare",
+    "unsureLabel": "Alegeri nesigure",
     "restart": "Reîncepeți",
     "errorBody": "Seturile de practică nu sunt disponibile acum. Încercați din nou mai târziu.",
     "close": "Închide"
   },
   "chainAnalysis": {
     "menuLabel": "Analiza lanțului (DBT)",
-    "title": "Analiza lanțului",
-    "prompt": "Parcurgeți secvența pentru a înțelege ce s-a întâmplat și ce puteți încerca data viitoare.",
+    "eyebrow": "Exercițiu de jurnal",
+    "title": "Priviți un moment pas cu pas",
+    "prompt": "Parcurgeți pe rând ce s-a întâmplat. Răspunsurile scurte sunt suficiente.",
+    "progress": "Pasul {current} din {total}",
     "triggeringEvent": "Ce s-a întâmplat chiar înainte să înceapă?",
     "triggeringEventPlaceholder": "Exemplu: Am primit un mesaj de la manager.",
     "vulnerabilityFactors": "Ce v-a făcut mai vulnerabil astăzi?",
@@ -268,8 +274,9 @@
     "consequence": "Ce s-a întâmplat după acea acțiune?",
     "consequencePlaceholder": "Efecte pe termen scurt și pe termen lung.",
     "recent": "Analize recente",
-    "saved": "Analiza a fost salvată. Puteți observa tiparele în timp.",
-    "back": "Înapoi",
+    "savedTitle": "Salvat",
+    "saved": "Această reflecție este acum în jurnal.",
+    "back": "Pasul anterior",
     "next": "Înainte",
     "save": "Salvează analiza",
     "done": "Gata",
@@ -281,7 +288,18 @@
     "detail": "Toate datele voastre — selecțiile de emoții, istoricul sesiunilor, hărțile corporale și preferințele — sunt stocate local pe dispozitivul vostru folosind IndexedDB și localStorage. Nimic nu este trimis către niciun server. Nu există analize, conturi sau sincronizare în cloud. Puteți șterge toate datele oricând din Sesiuni anterioare."
   },
   "dimensional": {
-    "instructions": "Localizați-vă starea pe două axe: cât de plăcut sau neplăcut și cât de intens sau calm vă simțiți"
+    "instructions": "Localizați-vă starea folosind energia și caracterul plăcut",
+    "fieldLabel": "Hartă a energiei și caracterului plăcut",
+    "unpleasant": "Neplăcut",
+    "pleasant": "Plăcut",
+    "moreEnergy": "Mai multă energie",
+    "lessEnergy": "Mai puțină energie",
+    "readoutMoreEnergy": "mai multă energie",
+    "readoutLessEnergy": "mai puțină energie",
+    "readoutPleasant": "mai plăcut",
+    "readoutUnpleasant": "mai neplăcut",
+    "nearby": "Care cuvânt apropiat vi se potrivește cel mai bine?",
+    "clearPlacement": "Ștergeți plasarea"
   },
   "wheelBreadcrumb": {
     "label": "Calea de navigare a emoțiilor",
@@ -298,9 +316,9 @@
     "back": "Înapoi"
   },
   "today": {
-    "eyebrow": "Un moment pentru voi",
-    "title": "Cum ajungeți aici?",
-    "lede": "Începeți de unde vă este accesibilă atenția. Nu există o cale corectă.",
+    "eyebrow": "Acum",
+    "title": "Cum vă simțiți?",
+    "lede": "Alegeți starea cea mai apropiată de mai jos sau explorați-o mai în detaliu.",
     "checkIn": "Începeți o verificare",
     "quickTitle": "Un punct de pornire rapid",
     "quickPrompt": "Una dintre acestea poate fi suficient de apropiată pentru acum.",
@@ -367,6 +385,17 @@
     "compare": "Sens apropiat",
     "level": "Alegeți o direcție"
   },
+  "plutchik": {
+    "eyebrow": "Roata Plutchik",
+    "title": "Combinați două emoții",
+    "lede": "Alegeți două emoții primare. Relația este o posibilitate, nu un diagnostic.",
+    "step": "Alegeți două emoții",
+    "instructions": "Alegeți cele două emoții care vi se par cele mai apropiate.",
+    "fieldLabel": "Opt emoții primare dispuse într-o roată",
+    "selected": "selectate",
+    "combination": "Combinație posibilă",
+    "continue": "Reflectați la această combinație"
+  },
   "reflectionScreen": {
     "eyebrow": "O reflecție, nu un verdict",
     "title": "Ce ar putea fi aici",
@@ -395,7 +424,11 @@
     "words": "Găsiți un cuvânt mai precis",
     "plutchik": "Explorați combinațiile emoționale",
     "practice": "Exersați vocabularul emoțional",
-    "learn": "Teorie opțională"
+    "bodyHint": "Începeți cu locul unde apare o senzație.",
+    "affectHint": "Plasați o stare înainte de a încerca să o numiți.",
+    "wordsHint": "Treceți de la limbaj general la un cuvânt mai apropiat.",
+    "plutchikHint": "Alegeți două emoții și vedeți o combinație posibilă.",
+    "practiceHint": "Comparați cuvinte apropiate prin exemple scurte."
   },
   "journalScreen": {
     "eyebrow": "Jurnal",

@@ -26,13 +26,16 @@ export function ModelCheckInScreen({ route, onBack, onComplete }: ModelCheckInSc
   const model = useEmotionModel(modelId)
   const affectT = section('affectMap')
   const wordsT = section('wordLadder')
-  const exploreT = section('exploreScreen')
+  const plutchikT = section('plutchik')
 
   const copy = route === 'affect'
       ? { eyebrow: affectT.eyebrow, title: affectT.title, lede: affectT.lede, step: affectT.step, action: affectT.continue }
       : route === 'words'
         ? { eyebrow: wordsT.eyebrow, title: wordsT.title, lede: wordsT.lede, step: wordsT.level, action: wordsT.choose }
-        : { eyebrow: 'Plutchik', title: exploreT.plutchik, lede: section('app').subtitle, step: exploreT.learn, action: section('analyze').button }
+        : { eyebrow: plutchikT.eyebrow, title: plutchikT.title, lede: plutchikT.lede, step: plutchikT.step, action: plutchikT.continue }
+
+  const requiredSelections = route === 'plutchik' ? 2 : 1
+  const plutchikCombo = route === 'plutchik' ? model.combos[0] : undefined
 
   const finish = () => {
     const results = model.analyze()
@@ -40,7 +43,7 @@ export function ModelCheckInScreen({ route, onBack, onComplete }: ModelCheckInSc
   }
 
   return (
-    <div className="screen checkin-screen" data-testid={`${route}-screen`}>
+    <div className={`screen checkin-screen checkin-screen-${route}`} data-testid={`${route}-screen`}>
       <ScreenHeader onBack={onBack} eyebrow={copy.eyebrow} title={copy.title} lede={copy.lede} />
       <div className="checkin-step"><span>{copy.step}</span>{model.selections.length > 0 && <span><Check size={15} aria-hidden="true" />{model.selections.length}</span>}</div>
 
@@ -81,8 +84,17 @@ export function ModelCheckInScreen({ route, onBack, onComplete }: ModelCheckInSc
         </div>
       )}
 
+      {plutchikCombo && (
+        <div className="plutchik-combination" aria-live="polite" data-testid="plutchik-combination">
+          <span>{plutchikT.combination}</span>
+          <strong>{model.selections.slice(0, 2).map((selection) => selection.label[language]).join(' + ')}</strong>
+          <span aria-hidden="true">&#8594;</span>
+          <strong style={{ color: plutchikCombo.color }}>{plutchikCombo.label[language]}</strong>
+        </div>
+      )}
+
       <div className="route-action">
-        <button type="button" className="primary-button" disabled={!model.modelReady || model.selections.length === 0} onClick={finish}>
+        <button type="button" className="primary-button" disabled={!model.modelReady || model.selections.length < requiredSelections} onClick={finish}>
           {copy.action}<ChevronRight size={19} aria-hidden="true" />
         </button>
       </div>

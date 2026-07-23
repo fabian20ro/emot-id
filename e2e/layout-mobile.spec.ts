@@ -56,6 +56,31 @@ for (const viewport of viewports) {
       await expect(tray).toBeVisible()
       const trayBox = await tray.boundingBox()
       expect(trayBox!.y).toBeGreaterThanOrEqual(plotBox!.y + plotBox!.height - 1)
+      const actionBox = await page.locator('.route-action').boundingBox()
+      expect(actionBox!.y).toBeGreaterThanOrEqual(trayBox!.y + trayBox!.height - 1)
+      await expect(tray.locator('.dimensional-suggestion-chip').first()).toBeInViewport()
+      await expectNoHorizontalOverflow(page)
+    })
+
+    test('Plutchik wheel keeps all primary emotions in bounds', async ({ page }) => {
+      await openApp(page)
+      await page.getByRole('button', { name: 'Explore' }).click()
+      await page.getByTestId('explore-plutchik').click()
+
+      const stage = page.locator('.model-stage-plutchik')
+      const stageBox = await stage.boundingBox()
+      const emotions = page.locator('.plutchik-emotion')
+      await expect(emotions).toHaveCount(8)
+      for (let index = 0; index < await emotions.count(); index++) {
+        const box = await emotions.nth(index).boundingBox()
+        expect(box!.x).toBeGreaterThanOrEqual(stageBox!.x - 1)
+        expect(box!.x + box!.width).toBeLessThanOrEqual(stageBox!.x + stageBox!.width + 1)
+        expect(box!.height).toBeGreaterThanOrEqual(44)
+      }
+
+      await page.getByTestId('plutchik-emotion-joy').click()
+      await page.getByTestId('plutchik-emotion-trust').click()
+      await expect(page.getByTestId('plutchik-combination')).toBeVisible()
       await expectNoHorizontalOverflow(page)
     })
   })

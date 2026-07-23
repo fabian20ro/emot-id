@@ -91,8 +91,8 @@ describe('DimensionalField', () => {
     renderField()
     expect(screen.getByText('Pleasant')).toBeInTheDocument()
     expect(screen.getByText('Unpleasant')).toBeInTheDocument()
-    expect(screen.getByText('Intense')).toBeInTheDocument()
-    expect(screen.getByText('Calm')).toBeInTheDocument()
+    expect(screen.getByText('More energy')).toBeInTheDocument()
+    expect(screen.getByText('Less energy')).toBeInTheDocument()
   })
 
   it('keeps axis labels visible after interacting with the field', () => {
@@ -114,8 +114,8 @@ describe('DimensionalField', () => {
     fireEvent.click(svg, { clientX: 120, clientY: 200 })
     expect(screen.getByText('Pleasant')).toBeInTheDocument()
     expect(screen.getByText('Unpleasant')).toBeInTheDocument()
-    expect(screen.getByText('Intense')).toBeInTheDocument()
-    expect(screen.getByText('Calm')).toBeInTheDocument()
+    expect(screen.getByText('More energy')).toBeInTheDocument()
+    expect(screen.getByText('Less energy')).toBeInTheDocument()
   })
 
   it('hides axis labels on mobile after the first interaction', () => {
@@ -143,8 +143,8 @@ describe('DimensionalField', () => {
 
       expect(screen.queryByText('Pleasant')).not.toBeInTheDocument()
       expect(screen.queryByText('Unpleasant')).not.toBeInTheDocument()
-      expect(screen.queryByText('Intense')).not.toBeInTheDocument()
-      expect(screen.queryByText('Calm')).not.toBeInTheDocument()
+      expect(screen.queryByText('More energy')).not.toBeInTheDocument()
+      expect(screen.queryByText('Less energy')).not.toBeInTheDocument()
     } finally {
       restoreMatchMedia()
     }
@@ -197,6 +197,21 @@ describe('DimensionalField', () => {
     const tray = screen.getByTestId('dimensional-suggestion-tray')
     expect(tray).toBeInTheDocument()
     expect(tray.className).not.toContain('absolute')
+  })
+
+  it('reveals nearby emotion pins after placement in progressive mode', () => {
+    renderField({ progressive: true })
+    const svg = document.querySelector('svg') as SVGSVGElement
+    expect(document.querySelectorAll('g[role="button"]')).toHaveLength(0)
+
+    vi.spyOn(svg, 'getBoundingClientRect').mockReturnValue({
+      x: 0, y: 0, width: 300, height: 300,
+      top: 0, left: 0, right: 300, bottom: 300,
+      toJSON: () => ({}),
+    } as DOMRect)
+
+    fireEvent.click(svg, { clientX: 120, clientY: 220 })
+    expect(document.querySelectorAll('g[role="button"]')).toHaveLength(3)
   })
 
   it('uses 48px touch targets for suggestion chips', () => {
@@ -310,5 +325,6 @@ describe('DimensionalField', () => {
     fireEvent.click(sadChip)
 
     expect(mockOnSelect).toHaveBeenCalledWith(expect.objectContaining({ id: 'sad' }))
+    expect(screen.getByTestId('dimensional-suggestion-tray')).toBeInTheDocument()
   })
 })

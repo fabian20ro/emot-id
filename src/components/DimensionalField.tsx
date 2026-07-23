@@ -1,5 +1,6 @@
-import { memo, useState, useCallback, useMemo, useRef } from 'react'
+import { memo, useState, useCallback, useEffect, useMemo, useRef, type CSSProperties } from 'react'
 import { motion } from 'framer-motion'
+import { X } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { findNearest } from '../models/dimensional'
 import type { VisualizationProps } from '../models/types'
@@ -67,6 +68,13 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
   const [crosshair, setCrosshair] = useState<{ x: number; y: number } | null>(null)
   const [placement, setPlacement] = useState<{ valence: number; arousal: number } | null>(null)
   const [suggestions, setSuggestions] = useState<DimensionalEmotion[]>([])
+  const suggestionTrayRef = useRef<HTMLDivElement>(null)
+  const suggestedIds = useMemo(() => new Set(suggestions.map((suggestion) => suggestion.id)), [suggestions])
+
+  useEffect(() => {
+    if (suggestions.length === 0) return
+    suggestionTrayRef.current?.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' })
+  }, [suggestions])
 
   const placeFromClientPoint = useCallback(
     (clientX: number, clientY: number) => {
@@ -102,8 +110,6 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
       } else {
         onSelect(emotion)
       }
-      setCrosshair(null)
-      setSuggestions([])
     },
     [onSelect, onDeselect, selectedIds]
   )
@@ -122,16 +128,18 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
   )
 
   return (
-    <div className="h-full min-h-0 w-full flex flex-col items-center p-1 sm:p-4">
-      <p className="hidden sm:block text-xs text-gray-400 text-center mb-2 px-2">
+    <div className="dimensional-field">
+      <p className="dimensional-instructions">
         {dimensionalT.instructions}
       </p>
-      <div className="w-full max-w-2xl flex-1 min-h-0 flex flex-col items-center">
-        <div data-testid="dimensional-plot-container" className="w-full aspect-square max-h-full shrink-0">
+      <div className="dimensional-content">
+        <div data-testid="dimensional-plot-container" className="dimensional-plot">
           <svg
             ref={svgRef}
             viewBox={`0 0 ${FIELD_SIZE} ${FIELD_SIZE}`}
-            className="w-full h-full"
+            className="dimensional-plot-svg"
+            role="img"
+            aria-label={dimensionalT.fieldLabel}
             onClick={handleFieldClick}
             onPointerMove={(event) => {
               if (event.buttons === 1) placeFromClientPoint(event.clientX, event.clientY)
@@ -144,7 +152,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
             y={PADDING}
             width={INNER}
             height={INNER}
-            fill="rgba(55, 65, 81, 0.3)"
+            fill="var(--affect-field)"
             rx={8}
           />
 
@@ -152,28 +160,28 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
           <line
             x1={FIELD_SIZE / 2} y1={PADDING}
             x2={FIELD_SIZE / 2} y2={FIELD_SIZE - PADDING}
-            stroke="rgba(107, 114, 128, 0.3)" strokeWidth={1}
+            stroke="var(--affect-grid)" strokeWidth={1}
           />
           <line
             x1={PADDING} y1={FIELD_SIZE / 2}
             x2={FIELD_SIZE - PADDING} y2={FIELD_SIZE / 2}
-            stroke="rgba(107, 114, 128, 0.3)" strokeWidth={1}
+            stroke="var(--affect-grid)" strokeWidth={1}
           />
 
           {/* Axis labels */}
           {showAxisLabels && (
             <>
-              <text x={PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="start">
-                {language === 'ro' ? 'Neplacut' : 'Unpleasant'}
+              <text x={PADDING} y={FIELD_SIZE / 2 - 6} fill="var(--affect-axis)" fontSize={13} textAnchor="start">
+                {dimensionalT.unpleasant}
               </text>
-              <text x={FIELD_SIZE - PADDING} y={FIELD_SIZE / 2 - 6} fill="#9CA3AF" fontSize={13} textAnchor="end">
-                {language === 'ro' ? 'Placut' : 'Pleasant'}
+              <text x={FIELD_SIZE - PADDING} y={FIELD_SIZE / 2 - 6} fill="var(--affect-axis)" fontSize={13} textAnchor="end">
+                {dimensionalT.pleasant}
               </text>
-              <text x={FIELD_SIZE / 2} y={PADDING - 8} fill="#9CA3AF" fontSize={13} textAnchor="middle">
-                {language === 'ro' ? 'Intens' : 'Intense'}
+              <text x={FIELD_SIZE / 2} y={PADDING - 8} fill="var(--affect-axis)" fontSize={13} textAnchor="middle">
+                {dimensionalT.moreEnergy}
               </text>
-              <text x={FIELD_SIZE / 2} y={FIELD_SIZE - PADDING + 18} fill="#9CA3AF" fontSize={13} textAnchor="middle">
-                {language === 'ro' ? 'Calm' : 'Calm'}
+              <text x={FIELD_SIZE / 2} y={FIELD_SIZE - PADDING + 18} fill="var(--affect-axis)" fontSize={13} textAnchor="middle">
+                {dimensionalT.lessEnergy}
               </text>
             </>
           )}
@@ -183,8 +191,9 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
             const px = toPixel(emotion.valence)
             const py = toPixel(-emotion.arousal) // Invert: top = intense
             const isSelected = selectedIds.has(emotion.id)
+            const isSuggested = suggestedIds.has(emotion.id)
 
-            if (progressive && !isSelected) return null
+            if (progressive && !isSelected && !isSuggested) return null
 
             return (
               <g
@@ -204,7 +213,7 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
                   r={32}
                   fill="transparent"
                 />
-                <motion.circle
+                <circle
                   cx={px}
                   cy={py}
                   r={isSelected ? 14 : 11}
@@ -212,20 +221,15 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
                   fillOpacity={isSelected ? 0.9 : 0.6}
                   stroke={isSelected ? '#fff' : 'none'}
                   strokeWidth={isSelected ? 1.5 : 0}
-                  animate={{
-                    r: isSelected ? 14 : 11,
-                    fillOpacity: isSelected ? 0.9 : 0.6,
-                  }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 />
-                {(!progressive || hasInteracted || isSelected) && <text
+                {(!progressive || isSuggested || isSelected) && <text
                   x={px}
                   y={labelOffsets.get(emotion.id) ?? (py - (isSelected ? 22 : 16))}
-                  fill={isSelected ? '#fff' : 'rgba(156, 163, 175, 0.7)'}
+                  fill="var(--affect-label)"
                   fontSize={isSelected ? 12 : 11}
                   textAnchor="middle"
                   fontWeight={isSelected ? 'bold' : 'normal'}
-                  stroke="rgba(17, 24, 39, 0.8)"
+                  stroke="var(--affect-label-stroke)"
                   strokeWidth={isSelected ? 3 : 2}
                   paintOrder="stroke"
                 >
@@ -258,42 +262,43 @@ function DimensionalFieldBase({ emotions, onSelect, onDeselect, selections = [],
         </div>
 
         {placement && (
-          <p data-testid="affect-readout" className="text-xs text-gray-300 text-center mt-1 mb-0">
-            {language === 'ro'
-              ? `${placement.arousal >= 0 ? 'energie mai ridicată' : 'energie mai calmă'}, ${placement.valence >= 0 ? 'mai plăcut' : 'mai neplăcut'}`
-              : `${placement.arousal >= 0 ? 'higher energy' : 'calmer energy'}, ${placement.valence >= 0 ? 'more pleasant' : 'more unpleasant'}`}
+          <p data-testid="affect-readout" className="affect-readout">
+            {`${placement.arousal >= 0 ? dimensionalT.readoutMoreEnergy : dimensionalT.readoutLessEnergy}, ${placement.valence >= 0 ? dimensionalT.readoutPleasant : dimensionalT.readoutUnpleasant}`}
           </p>
         )}
 
-        {/* Suggestion chips — rendered below the plot (no overlap). */}
         {suggestions.length > 0 && (
           <motion.div
+            ref={suggestionTrayRef}
             data-testid="dimensional-suggestion-tray"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-2 w-full flex gap-2 flex-wrap justify-center px-2 pb-1"
+            className="dimensional-suggestion-tray"
           >
-            {suggestions.map((s) => (
+            <p>{dimensionalT.nearby}</p>
+            <div>
+              {suggestions.map((s) => (
+                <button
+                  type="button"
+                  key={s.id}
+                  data-testid={`dimensional-suggestion-chip-${s.id}`}
+                  aria-pressed={selectedIds.has(s.id)}
+                  onClick={() => handleSuggestionClick(s)}
+                  className="dimensional-suggestion-chip min-h-[48px]"
+                  style={{ '--emotion-color': s.color } as CSSProperties}
+                >
+                  {s.label[language]}
+                </button>
+              ))}
               <button
-                key={s.id}
-                data-testid={`dimensional-suggestion-chip-${s.id}`}
-                onClick={() => handleSuggestionClick(s)}
-                className="px-5 py-3 min-h-[48px] rounded-full text-sm font-medium transition-colors"
-                style={{
-                  backgroundColor: selectedIds.has(s.id) ? s.color : `${s.color}30`,
-                  color: selectedIds.has(s.id) ? '#000' : s.color,
-                  border: `1px solid ${s.color}60`,
-                }}
+                type="button"
+                aria-label={dimensionalT.clearPlacement}
+                onClick={() => { setCrosshair(null); setPlacement(null); setSuggestions([]) }}
+                className="dimensional-clear min-h-[48px]"
               >
-                {selectedIds.has(s.id) ? '✓ ' : ''}{s.label[language]}
+                <X size={19} aria-hidden="true" />
               </button>
-            ))}
-            <button
-              onClick={() => { setCrosshair(null); setPlacement(null); setSuggestions([]) }}
-              className="px-4 py-3 min-h-[48px] min-w-[48px] rounded-full text-sm text-gray-400 hover:text-gray-200 bg-gray-800 transition-colors"
-            >
-              ✕
-            </button>
+            </div>
           </motion.div>
         )}
       </div>

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { GranularityTraining } from '../components/GranularityTraining'
 import { LanguageProvider } from '../context/LanguageContext'
@@ -25,7 +25,7 @@ describe('GranularityTraining', () => {
   it('renders step progress and keeps continue disabled until a response is selected', () => {
     renderTraining()
 
-    expect(screen.getByText('Step 1/5')).toBeInTheDocument()
+    expect(screen.getByText('Step 1 of 5')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled()
   })
 
@@ -70,11 +70,11 @@ describe('GranularityTraining', () => {
     }
 
     expect(screen.getByText('Practice session completed')).toBeInTheDocument()
-    expect(screen.getByText('5 clear choices')).toBeInTheDocument()
-    expect(screen.getByText('0 unsure choices')).toBeInTheDocument()
+    expect(within(screen.getByText('Clear choices').closest('div')!).getByText('5')).toBeInTheDocument()
+    expect(within(screen.getByText('Unsure choices').closest('div')!).getByText('0')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Restart' }))
-    expect(screen.getByText('Step 1/5')).toBeInTheDocument()
+    expect(screen.getByText('Step 1 of 5')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled()
   })
 
@@ -97,14 +97,15 @@ describe('GranularityTraining', () => {
     }
 
     expect(screen.getByText('Practice session completed')).toBeInTheDocument()
-    expect(screen.getByText('4 clear choices')).toBeInTheDocument()
-    expect(screen.getByText('1 unsure choices')).toBeInTheDocument()
+    expect(within(screen.getByText('Clear choices').closest('div')!).getByText('4')).toBeInTheDocument()
+    expect(within(screen.getByText('Unsure choices').closest('div')!).getByText('1')).toBeInTheDocument()
   })
 
-  it('keeps modal accessibility semantics and close affordance', () => {
+  it('renders as a routed screen with a Back affordance', () => {
     renderTraining()
 
-    expect(screen.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
-    expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument()
+    expect(screen.getByTestId('granularity-screen')).toBeInTheDocument()
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
   })
 })

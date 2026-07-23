@@ -1,6 +1,18 @@
 # Remaining Mobile Migration Plan
 
-Status: prioritized after the Body Compass slice, July 22, 2026.
+Status: prioritized after the guided-workflow screen migration, July 23, 2026.
+
+## Completed Since Last Update
+
+- Repaired Affect Map placement: nearby words now appear as visible pins and persistent controls in
+  normal flow, outside sticky-action overlap.
+- Replaced Plutchik's generic bubble scatter with a stable eight-emotion wheel, two-choice gating,
+  and inline combination feedback while preserving the existing analyzer.
+- Replaced generic "Optional theory" subtitles with route-specific Explore descriptions.
+- Made external AI search links allowed by default while preserving an explicit user opt-out.
+- Replaced the reachable Emotional Vocabulary and Unpack a Moment modal windows with normal routed
+  screens. Their model/data behavior remains local and unchanged.
+- Replaced abstract Today copy with a direct question and concrete next choices in both languages.
 
 ## Constraints
 
@@ -58,9 +70,31 @@ empty/loading/error states.
 
 ## P5: Finish Explore and Remove Legacy Presentation
 
-Move model guides and practice into normal screens one route at a time. Keep Plutchik as an
-advanced workspace. Remove legacy sheets and unused orchestration only after parity tests prove
-each replacement.
+Plutchik has a route-specific wheel, Explore has meaningful route descriptions, and vocabulary
+practice now uses a normal screen. The remaining dark modal components (`QuickCheckIn`,
+`ResultModal`, `SessionHistory`, `SettingsMenu`, `DontKnowModal`, and their `InfoButton` content)
+are not reachable from the current App shell. Delete them only after an import-graph audit confirms
+that tests and compatibility exports are their only callers. Do not restyle dead code.
+
+## Deferred Body Compass Presentation Slice
+
+The current Body Compass Area -> Sensation -> Intensity -> Review flow is already screen-based.
+The remaining old visual style lives inside the shared `BodyMap` and its legacy fallback paths.
+
+1. Extract a presentation-only `BodyRegionMap` from `BodyMap`. It should receive regions,
+   selections, side, and `onRegionActivate`; no picker, guided-flow, or model orchestration state.
+2. Replace hardcoded gray/indigo SVG fills, strokes, and labels with semantic light/dark body-map
+   tokens. Preserve region hit paths and 44px-equivalent targets.
+3. Keep the existing Body Compass inline sensation and intensity steps. Once every active caller
+   uses `onRegionActivate`, remove the internal `SensationPicker` bottom-sheet fallback.
+4. Decide Guided Scan placement separately. If retained, make it a route-local Body Compass mode,
+   not an overlay inside the map. Do not combine this decision with the map color refactor.
+5. Remove compact `IntensityPicker` and old picker motion only after caller search and parity tests
+   show they are unused.
+
+**Verification:** front/back map at 360x800, 393x742, and 430x932; light/dark computed contrast;
+keyboard and screen-reader region activation; hit-path regression tests; Area -> Review completion;
+Back/edit/remove/add-another paths; no change to somatic scoring or shared crisis completion.
 
 ## P6: Release Hardening
 
@@ -78,3 +112,13 @@ each replacement.
 4. P3 Guide Me: reduce uncertainty without speculative intelligence.
 5. P4 Journal trust, then P5 legacy removal.
 6. P6 hardening continuously, with the full matrix before release.
+
+## Recommended Next Update
+
+Implement P0 and the first cohesive P1 slice:
+
+1. Hide Settings during active check-ins and Reflection; verify Back and crisis Support access.
+2. Extract the current inline Word Ladder without changing its model contract.
+3. Add explicit one-level Back and selection at any visible level.
+4. Defer nearby-word comparison until the extracted flow is browser-stable; do not add a graph,
+   recommender, or shared wizard abstraction.

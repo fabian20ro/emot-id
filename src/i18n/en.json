@@ -226,11 +226,13 @@
     "close": "Close"
   },
   "granularity": {
-    "title": "Emotional granularity",
-    "prompt": "Which of these best describes what you feel?",
+    "eyebrow": "Word practice",
+    "title": "Notice the difference",
+    "lede": "Compare similar feeling words. There is no score.",
+    "prompt": "Which word feels closest?",
     "notSure": "I'm not sure — they all fit",
     "practice": "Practice granularity",
-    "progress": "Step {current}/{total}",
+    "progress": "Step {current} of {total}",
     "continue": "Continue",
     "feedbackSelected": "You chose {emotion}. If that feels closest to your experience, your choice is valid.",
     "feedbackNotSure": "It's okay not to be sure. Emotional nuance develops with practice.",
@@ -245,14 +247,18 @@
     "completedEncouragement": "This skill grows through repetition, not perfection.",
     "summaryChosen": "{count} clear choices",
     "summaryNotSure": "{count} unsure choices",
+    "clearLabel": "Clear choices",
+    "unsureLabel": "Unsure choices",
     "restart": "Restart",
     "errorBody": "Practice sets are unavailable right now. Please try again later.",
     "close": "Close"
   },
   "chainAnalysis": {
     "menuLabel": "Chain analysis (DBT)",
-    "title": "Chain analysis",
-    "prompt": "Walk through the sequence to understand what happened and what to try next.",
+    "eyebrow": "Journal exercise",
+    "title": "Unpack a moment",
+    "prompt": "Walk through one situation, one step at a time. Short answers are enough.",
+    "progress": "Step {current} of {total}",
     "triggeringEvent": "What happened right before this started?",
     "triggeringEventPlaceholder": "Example: I got a message from my manager.",
     "vulnerabilityFactors": "What made you more vulnerable today?",
@@ -268,8 +274,9 @@
     "consequence": "What happened after that action?",
     "consequencePlaceholder": "Short-term and longer-term effects.",
     "recent": "Recent chains",
-    "saved": "Chain saved. You can review patterns over time.",
-    "back": "Back",
+    "savedTitle": "Saved",
+    "saved": "This reflection is now in your journal.",
+    "back": "Previous step",
     "next": "Next",
     "save": "Save chain",
     "done": "Done",
@@ -281,7 +288,18 @@
     "detail": "All your data — emotion selections, session history, body maps, and preferences — is stored locally on your device using IndexedDB and localStorage. Nothing is sent to any server. There are no analytics, no accounts, and no cloud sync. You can delete all data anytime from Past Sessions."
   },
   "dimensional": {
-    "instructions": "Locate your state on two axes: how pleasant or unpleasant and how intense or calm you feel"
+    "instructions": "Locate your state using energy and pleasantness",
+    "fieldLabel": "Energy and pleasantness map",
+    "unpleasant": "Unpleasant",
+    "pleasant": "Pleasant",
+    "moreEnergy": "More energy",
+    "lessEnergy": "Less energy",
+    "readoutMoreEnergy": "more energy",
+    "readoutLessEnergy": "less energy",
+    "readoutPleasant": "more pleasant",
+    "readoutUnpleasant": "more unpleasant",
+    "nearby": "Which nearby word feels closest?",
+    "clearPlacement": "Clear placement"
   },
   "wheelBreadcrumb": {
     "label": "Emotion navigation path",
@@ -298,9 +316,9 @@
     "back": "Back"
   },
   "today": {
-    "eyebrow": "A moment for you",
-    "title": "How are you arriving?",
-    "lede": "Start wherever your attention can reach. There is no right way in.",
+    "eyebrow": "Right now",
+    "title": "How are you feeling?",
+    "lede": "Choose the closest feeling below, or explore it in more detail.",
     "checkIn": "Start a check-in",
     "quickTitle": "A quick starting point",
     "quickPrompt": "One of these may be close enough for now.",
@@ -367,6 +385,17 @@
     "compare": "Nearby meaning",
     "level": "Choose one direction"
   },
+  "plutchik": {
+    "eyebrow": "Plutchik Wheel",
+    "title": "Combine two feelings",
+    "lede": "Choose two primary emotions. The relationship is a possibility, not a diagnosis.",
+    "step": "Choose two emotions",
+    "instructions": "Choose the two emotions that feel closest.",
+    "fieldLabel": "Eight primary emotions arranged as a wheel",
+    "selected": "selected",
+    "combination": "Possible combination",
+    "continue": "Reflect on this combination"
+  },
   "reflectionScreen": {
     "eyebrow": "A reflection, not a verdict",
     "title": "What may be here",
@@ -395,7 +424,11 @@
     "words": "Find a more precise word",
     "plutchik": "Explore emotion combinations",
     "practice": "Practice emotional vocabulary",
-    "learn": "Optional theory"
+    "bodyHint": "Start with where a sensation appears.",
+    "affectHint": "Place a state before trying to name it.",
+    "wordsHint": "Move from broad language to a closer word.",
+    "plutchikHint": "Choose two emotions and see a possible blend.",
+    "practiceHint": "Compare nearby words through short examples."
   },
   "journalScreen": {
     "eyebrow": "Journal",

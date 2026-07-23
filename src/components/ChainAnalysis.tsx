@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
-import { useFocusTrap } from '../hooks/useFocusTrap'
-import { ModalShell } from './ModalShell'
+import { ScreenHeader } from './ScreenHeader'
 import type { ChainAnalysisEntry } from '../data/types'
 
 type ChainFieldId =
@@ -56,7 +54,6 @@ export function ChainAnalysis({
   const { section, language } = useLanguage()
   const chainT = section('chainAnalysis')
   const historyT = section('history')
-  const focusTrapRef = useFocusTrap(isOpen, onClose)
   const [stepIndex, setStepIndex] = useState(0)
   const [fields, setFields] = useState<ChainFields>(EMPTY_FIELDS)
   const [saved, setSaved] = useState(false)
@@ -105,125 +102,64 @@ export function ChainAnalysis({
   const stepTitle = chainT[currentStep] ?? currentStep
   const stepPlaceholder = chainT[`${currentStep}Placeholder` as keyof typeof chainT] as string | undefined
 
+  if (!isOpen) return null
+
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <ModalShell
-          onClose={onClose}
-          focusTrapRef={focusTrapRef}
-          labelledBy="chain-analysis-title"
-          backdropClassName="fixed inset-0 z-[var(--z-backdrop)] bg-black/50 backdrop-blur-sm"
-          viewportClassName="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))]"
-          panelClassName="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-5 max-h-[90vh] overflow-y-auto"
-        >
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <h2 id="chain-analysis-title" className="text-lg font-semibold text-white">
-              {chainT.title ?? 'Chain analysis'}
-            </h2>
-            <button
-              onClick={onClose}
-              className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-100 hover:bg-gray-700/60 transition-colors"
-              aria-label={chainT.close ?? 'Close'}
-            >
-              ×
+    <div className="screen guided-screen" data-testid="chain-screen">
+      <ScreenHeader onBack={onClose} eyebrow={chainT.eyebrow} title={chainT.title ?? 'Unpack a moment'} lede={chainT.prompt} />
+
+      {!saved ? (
+        <section className="guided-step" aria-labelledby="chain-step-title">
+          <div className="guided-progress">
+            <span>{chainT.progress.replace('{current}', String(stepIndex + 1)).replace('{total}', String(STEPS.length))}</span>
+            <progress value={stepIndex + 1} max={STEPS.length} />
+          </div>
+          <label id="chain-step-title" className="guided-field-label" htmlFor="chain-step-input">{stepTitle}</label>
+          <textarea
+            id="chain-step-input"
+            value={fields[currentStep]}
+            onChange={(event) => {
+              const value = event.target.value
+              setFields((prev) => ({ ...prev, [currentStep]: value }))
+            }}
+            placeholder={stepPlaceholder ?? ''}
+            className="guided-textarea"
+          />
+          {error && <p className="guided-error" role="alert">{error}</p>}
+          <div className="guided-actions">
+            <button type="button" onClick={() => setStepIndex((prev) => Math.max(0, prev - 1))} disabled={stepIndex === 0} className="secondary-button">
+              {chainT.back ?? 'Previous step'}
+            </button>
+            <button type="button" onClick={() => { void handlePrimary() }} disabled={!canAdvance} className="primary-button">
+              {isLastStep ? (chainT.save ?? 'Save chain') : (chainT.next ?? 'Next')}
             </button>
           </div>
-
-          {!saved ? (
-            <>
-              <p className="text-sm text-gray-300 mb-3">
-                {chainT.prompt ?? 'Walk through the sequence to understand what happened and what to try next.'}
-              </p>
-              <p className="text-xs text-gray-500 mb-3">
-                {stepIndex + 1}/{STEPS.length}
-              </p>
-
-              <label className="text-sm text-gray-200 mb-1 block">
-                {stepTitle}
-              </label>
-              <textarea
-                value={fields[currentStep]}
-                onChange={(event) => {
-                  const value = event.target.value
-                  setFields((prev) => ({ ...prev, [currentStep]: value }))
-                }}
-                placeholder={stepPlaceholder ?? ''}
-                className="w-full min-h-[120px] rounded-xl border border-gray-700 bg-gray-900/60 px-3 py-2 text-sm text-gray-100 placeholder:text-gray-500 focus:outline-none focus:border-indigo-500"
-              />
-
-              {error && (
-                <p className="mt-2 text-xs text-red-400">{error}</p>
-              )}
-
-              <div className="mt-4 flex items-center gap-2">
-                <button
-                  onClick={() => setStepIndex((prev) => Math.max(0, prev - 1))}
-                  disabled={stepIndex === 0}
-                  className="min-h-[44px] px-4 py-2 rounded-xl border border-gray-700 text-sm text-gray-300 disabled:text-gray-600 disabled:border-gray-800"
-                >
-                  {chainT.back ?? 'Back'}
-                </button>
-                <div className="flex-1" />
-                <button
-                  onClick={() => { void handlePrimary() }}
-                  disabled={!canAdvance}
-                  className="min-h-[44px] px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-medium disabled:bg-gray-700 disabled:text-gray-400"
-                >
-                  {isLastStep ? (chainT.save ?? 'Save chain') : (chainT.next ?? 'Next')}
-                </button>
-              </div>
-            </>
-          ) : (
-            <div className="rounded-xl border border-green-700/40 bg-green-900/20 p-3 mb-3">
-              <p className="text-sm text-green-200">
-                {chainT.saved ?? 'Chain saved. You can review patterns over time.'}
-              </p>
-              <button
-                onClick={onClose}
-                className="mt-3 min-h-[44px] px-4 py-2 rounded-xl bg-green-700/60 text-green-50 text-sm font-medium"
-              >
-                {chainT.done ?? 'Done'}
-              </button>
-            </div>
-          )}
-
-          {!loading && recentEntries.length > 0 && (
-            <div className="mt-4 border-t border-gray-700 pt-3">
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                  {chainT.recent ?? 'Recent chains'}
-                </p>
-                <button
-                  onClick={() => { void onClearAll() }}
-                  className="min-h-[44px] px-2 text-xs text-red-300 hover:text-red-200"
-                >
-                  {historyT.clearAll ?? 'Clear all data'}
-                </button>
-              </div>
-              <div className="space-y-2">
-                {recentEntries.map((entry) => (
-                  <div key={entry.id} className="rounded-lg bg-gray-900/60 border border-gray-700 px-3 py-2">
-                    <p className="text-[11px] text-gray-500">
-                      {new Date(entry.timestamp).toLocaleString(language === 'ro' ? 'ro-RO' : 'en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </p>
-                    <p className="text-xs text-gray-300 mt-1">
-                      {entry.emotion}
-                    </p>
-                    <p className="text-[11px] text-gray-400 mt-0.5 truncate">
-                      {entry.consequence}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </ModalShell>
+        </section>
+      ) : (
+        <section className="guided-success" aria-live="polite">
+          <h2>{chainT.savedTitle}</h2>
+          <p>{chainT.saved ?? 'Chain saved. You can review patterns over time.'}</p>
+          <button type="button" onClick={onClose} className="primary-button">{chainT.done ?? 'Done'}</button>
+        </section>
       )}
-    </AnimatePresence>
+
+      {!loading && recentEntries.length > 0 && (
+        <section className="guided-recent" aria-labelledby="recent-chains-title">
+          <div className="guided-recent-heading">
+            <h2 id="recent-chains-title">{chainT.recent ?? 'Recent chains'}</h2>
+            <button type="button" onClick={() => { void onClearAll() }} className="text-button danger-text">{historyT.clearAll ?? 'Clear all data'}</button>
+          </div>
+          <div className="guided-recent-list">
+            {recentEntries.map((entry) => (
+              <div key={entry.id}>
+                <small>{new Date(entry.timestamp).toLocaleString(language === 'ro' ? 'ro-RO' : 'en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</small>
+                <strong>{entry.emotion}</strong>
+                <span>{entry.consequence}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
   )
 }

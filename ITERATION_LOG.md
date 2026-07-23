@@ -558,3 +558,47 @@ Each entry should follow this structure:
 **Outcome:** Success. `npm run check` passes 743 tests; `npm run test:e2e` passes all 48 cases. Manual 393x742 checks covered every Body Compass stage and dark rendering.
 **Insight:** Prefer accessible SVG region controls over coordinate clicks in browser tests; overlapping paths make coordinate targets semantically ambiguous. Utility navigation currently unmounts route-local drafts, so interruption policy should precede the next feature slice.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-23] Repair Affect Map and replace Plutchik presentation
+
+**Context:** The progressive Affect Map rendered nearby choices below the mobile viewport and
+behind its sticky action, Plutchik still used the generic bubble scatter, Explore repeated
+"Optional theory," and external AI links defaulted off.
+**What happened:**
+- Changed external AI links to default on while preserving an explicit stored opt-out and the
+  existing Google AI Mode query contract.
+- Reworked Affect Map geometry into normal flow, revealed three nearby emotion pins after
+  placement, kept choices visible after selection, and added theme-aware map tokens.
+- Added a deterministic eight-primary Plutchik wheel with two-choice gating and inline dyad
+  feedback while reusing the existing model analyzer.
+- Replaced generic Explore subtitles with route-specific bilingual copy.
+- Added unit tests plus Playwright viewport, overlap, wheel-bound, dark-contrast, combination,
+  exact-query, and preference-persistence coverage.
+**Outcome:** Success. `npm run check` passes 747 tests, translation audit, lint, TypeScript, and
+production build. `npm run test:e2e` passes all 54 Mobile Safari and Mobile Chrome cases.
+**Insight:** DOM visibility does not establish mobile reachability; revealed controls need viewport
+and adjacent-action geometry assertions.
+**Promoted to Lessons Learned:** Yes
+
+---
+
+### [2026-07-23] Move guided workflows out of legacy dialogs
+
+**Context:** Today used vague therapeutic language, while the active vocabulary and chain-analysis
+workflows still appeared as dark legacy modal windows inside the migrated mobile shell.
+**What happened:**
+- Replaced the Today prompt with direct, neutral bilingual language that names the task and next
+  action.
+- Converted vocabulary practice and chain analysis from modal overlays into route-level screens
+  with shared headers, progress, responsive controls, and semantic light/dark theme tokens.
+- Preserved workflow state and behavior while adding focused unit and Playwright coverage for
+  navigation, input retention, sizing, dialog absence, and exact English/Romanian copy.
+- Audited remaining legacy overlays and documented a presentation-only Body Compass migration
+  slice, including caller cleanup and visual/interaction verification.
+**Outcome:** Success. `npm run check` passes 747 tests, translation audit, lint, TypeScript, and
+production build. `npm run test:e2e` passes all 60 Mobile Safari and Mobile Chrome cases.
+**Insight:** Multi-step mobile exercises need normal screen navigation, not nested modal context.
+Audit reachability before spending migration effort on legacy modules with no active callers.
+**Promoted to Lessons Learned:** No

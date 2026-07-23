@@ -106,20 +106,20 @@ describe('ChainAnalysis', () => {
 
     // Step 0 (triggeringEvent): type and advance
     await user.type(screen.getByRole('textbox'), 'trigger')
-    expect(await screen.findByText(/1\/7/)).toBeInTheDocument()
+    expect(await screen.findByText('Step 1 of 7')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Next' }))
-    expect(await screen.findByText(/2\/7/)).toBeInTheDocument()
+    expect(await screen.findByText('Step 2 of 7')).toBeInTheDocument()
 
     // Step 1 (vulnerabilityFactors): type and advance to step 2
     await user.type(screen.getByRole('textbox'), 'sleep')
     await user.click(screen.getByRole('button', { name: 'Next' }))
-    expect(await screen.findByText(/3\/7/)).toBeInTheDocument()
+    expect(await screen.findByText('Step 3 of 7')).toBeInTheDocument()
 
     // Step 2 (promptingEvent): type content, then go Back — should return to step 1 with preserved text
     await user.type(screen.getByRole('textbox'), 'feedback')
 
-    const backBtn = screen.getByRole('button', { name: 'Back' })
+    const backBtn = screen.getByRole('button', { name: 'Previous step' })
     expect(backBtn).not.toBeDisabled()
     await user.click(backBtn)
 
@@ -133,7 +133,7 @@ describe('ChainAnalysis', () => {
     renderChain()
 
     // Initial state: Back must be disabled — cannot go before the first step
-    const backBtn = screen.getByRole('button', { name: 'Back' })
+    const backBtn = screen.getByRole('button', { name: 'Previous step' })
     expect(backBtn).toBeDisabled()
 
     // Type content so Next is enabled; advance to step 1
@@ -141,7 +141,7 @@ describe('ChainAnalysis', () => {
     await user.click(screen.getByRole('button', { name: 'Next' }))
 
     // After advancing, Back must be re-enabled
-    const updatedBackBtn = screen.getByRole('button', { name: 'Back' })
+    const updatedBackBtn = screen.getByRole('button', { name: 'Previous step' })
     expect(updatedBackBtn).not.toBeDisabled()
   })
 
@@ -165,12 +165,12 @@ describe('ChainAnalysis', () => {
     }
 
     await waitFor(() => {
-      expect(screen.getByText(/chain saved/i)).toBeInTheDocument()
+      expect(screen.getByText('This reflection is now in your journal.')).toBeInTheDocument()
       expect(screen.getByRole('button', { name: /done/i })).toBeVisible()
     })
   })
 
-  it('shows inline error when onSave fails and keeps the modal open on reopen', async () => {
+  it('shows an inline alert when saving fails and keeps the screen open', async () => {
     const user = userEvent.setup()
     const saveError = new Error('network timeout')
     const onSave = vi.fn().mockRejectedValue(saveError)
@@ -198,11 +198,11 @@ describe('ChainAnalysis', () => {
     await waitFor(() => {
       const errorEl = screen.getByText('network timeout')
       expect(errorEl).toBeInTheDocument()
-      expect(errorEl.className).toMatch(/red/)
+      expect(errorEl).toHaveAttribute('role', 'alert')
     })
 
-    // Modal stays open — success banner does NOT appear
-    expect(screen.queryByText(/chain saved/i)).not.toBeInTheDocument()
+    expect(screen.getByTestId('chain-screen')).toBeInTheDocument()
+    expect(screen.queryByText('This reflection is now in your journal.')).not.toBeInTheDocument()
   })
 
   it('does not render recent-chains section when no entries exist', () => {

@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../context/LanguageContext'
-import { useFocusTrap } from '../hooks/useFocusTrap'
 import {
   GRANULARITY_SETS,
   getGranularityLabel,
   getValidGranularitySets,
   type GranularityDistinction,
 } from '../data/granularity-triads'
-import { ModalShell } from './ModalShell'
+import { ScreenHeader } from './ScreenHeader'
 
 const DISTINCTION_FALLBACKS: Record<GranularityDistinction, string> = {
   intensity: 'These words can differ by emotional intensity, from mild to strong.',
@@ -54,8 +52,6 @@ export function GranularityTraining({ isOpen, onClose }: GranularityTrainingProp
     onClose()
   }, [onClose, resetSession])
 
-  const focusTrapRef = useFocusTrap(isOpen, handleClose)
-
   useEffect(() => {
     if (isOpen) resetSession()
   }, [isOpen, resetSession])
@@ -94,147 +90,71 @@ export function GranularityTraining({ isOpen, onClose }: GranularityTrainingProp
   const chosenCount = answers.filter((answer) => answer !== 'not-sure').length
   const notSureCount = answers.filter((answer) => answer === 'not-sure').length
 
+  if (!isOpen) return null
+
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <ModalShell
-          onClose={handleClose}
-          focusTrapRef={focusTrapRef}
-          labelledBy="granularity-title"
-          describedBy="granularity-body"
-          backdropClassName="fixed inset-0 z-[var(--z-backdrop)] bg-black/50 backdrop-blur-sm"
-          viewportClassName="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))]"
-          panelClassName="bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-5 max-h-[90vh] overflow-y-auto"
-        >
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <h2 id="granularity-title" className="text-lg font-semibold text-white">
-              {granularityT.title ?? 'Emotional granularity'}
-            </h2>
-            <button
-              onClick={handleClose}
-              className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-100 hover:bg-gray-700/60 transition-colors"
-              aria-label={granularityT.close ?? 'Close'}
-            >
-              ×
+    <div className="screen guided-screen" data-testid="granularity-screen">
+      <ScreenHeader
+        onBack={handleClose}
+        eyebrow={granularityT.eyebrow}
+        title={granularityT.title ?? 'Notice the difference'}
+        lede={granularityT.lede}
+      />
+
+      {totalSteps === 0 && (
+        <div className="soft-panel guided-empty" id="granularity-body">
+          <p>{granularityT.errorBody ?? 'Practice sets are unavailable right now. Please try again later.'}</p>
+          <button type="button" onClick={handleClose} className="primary-button">{granularityT.close ?? 'Close'}</button>
+        </div>
+      )}
+
+      {totalSteps > 0 && completed && (
+        <section className="guided-complete" id="granularity-body" aria-labelledby="granularity-complete-title">
+          <h2 id="granularity-complete-title">{granularityT.completedTitle ?? 'Practice complete'}</h2>
+          <p>{granularityT.completedBody ?? 'You practiced noticing subtle differences between similar emotions.'}</p>
+          <dl className="guided-summary">
+            <div><dt>{granularityT.clearLabel}</dt><dd>{chosenCount}</dd></div>
+            <div><dt>{granularityT.unsureLabel}</dt><dd>{notSureCount}</dd></div>
+          </dl>
+          <p className="muted">{granularityT.completedEncouragement ?? 'Emotional nuance grows through repetition, not perfection.'}</p>
+          <div className="guided-actions">
+            <button type="button" onClick={resetSession} className="secondary-button">{granularityT.restart ?? 'Restart'}</button>
+            <button type="button" onClick={handleClose} className="primary-button">{granularityT.close ?? 'Close'}</button>
+          </div>
+        </section>
+      )}
+
+      {totalSteps > 0 && !completed && currentSet && (
+        <section id="granularity-body" className="guided-step" aria-labelledby="granularity-prompt">
+          <div className="guided-progress">
+            <span>{formatTemplate(granularityT.progress ?? 'Step {current} of {total}', { current: String(stepIndex + 1), total: String(totalSteps) })}</span>
+            <progress value={stepIndex + 1} max={totalSteps} />
+          </div>
+          <h2 id="granularity-prompt">{granularityT.prompt ?? 'Which word feels closest?'}</h2>
+          <div className="guided-options">
+            {currentSet.options.map((option) => {
+              const active = currentAnswer === option.id
+              return (
+                <button type="button" key={option.id} onClick={() => setCurrentAnswer(option.id)} aria-pressed={active} className={`guided-option${active ? ' is-selected' : ''}`}>
+                  {getGranularityLabel(option.id, language)}
+                </button>
+              )
+            })}
+            <button type="button" onClick={() => setCurrentAnswer('not-sure')} aria-pressed={currentAnswer === 'not-sure'} className={`guided-option guided-unsure${currentAnswer === 'not-sure' ? ' is-selected' : ''}`}>
+              {granularityT.notSure ?? "I'm not sure — they all fit"}
             </button>
           </div>
-
-          {totalSteps === 0 && (
-            <div className="space-y-4" id="granularity-body">
-              <p className="text-sm text-gray-300">
-                {granularityT.errorBody ?? 'Practice sets are unavailable right now. Please try again later.'}
-              </p>
-              <button
-                onClick={handleClose}
-                className="w-full min-h-[44px] px-4 py-2 rounded-xl bg-gray-700 text-gray-100 font-medium hover:bg-gray-600 transition-colors"
-              >
-                {granularityT.close ?? 'Close'}
-              </button>
+          {currentAnswer && (
+            <div className="guided-feedback" role="status" aria-live="polite">
+              <strong>{feedbackLine1}</strong>
+              <p>{feedbackLine2}</p>
             </div>
           )}
-
-          {totalSteps > 0 && completed && (
-            <div className="space-y-4" id="granularity-body">
-              <p className="text-sm text-emerald-200 font-medium">
-                {granularityT.completedTitle ?? 'Practice session completed'}
-              </p>
-              <p className="text-sm text-gray-300">
-                {granularityT.completedBody ?? 'You practiced noticing subtle differences between similar emotions.'}
-              </p>
-
-              <div className="rounded-xl border border-gray-700 bg-gray-900/40 p-3 text-sm text-gray-200 space-y-1">
-                <p>
-                  {formatTemplate(granularityT.summaryChosen ?? '{count} clear choices', { count: String(chosenCount) })}
-                </p>
-                <p>
-                  {formatTemplate(granularityT.summaryNotSure ?? '{count} unsure choices', { count: String(notSureCount) })}
-                </p>
-              </div>
-
-              <p className="text-sm text-gray-300">
-                {granularityT.completedEncouragement ?? 'Emotional nuance grows through repetition, not perfection.'}
-              </p>
-
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={resetSession}
-                  className="min-h-[44px] px-4 py-2 rounded-xl border border-gray-600 text-gray-100 hover:bg-gray-700/40 transition-colors"
-                >
-                  {granularityT.restart ?? 'Restart'}
-                </button>
-                <button
-                  onClick={handleClose}
-                  className="min-h-[44px] px-4 py-2 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition-colors"
-                >
-                  {granularityT.close ?? 'Close'}
-                </button>
-              </div>
-            </div>
-          )}
-
-          {totalSteps > 0 && !completed && currentSet && (
-            <div id="granularity-body" className="space-y-3">
-              <p className="text-xs font-semibold tracking-wide text-gray-400 uppercase">
-                {formatTemplate(granularityT.progress ?? 'Step {current}/{total}', {
-                  current: String(stepIndex + 1),
-                  total: String(totalSteps),
-                })}
-              </p>
-
-              <p className="text-sm text-gray-300">
-                {granularityT.prompt ?? 'Which of these best describes what you feel?'}
-              </p>
-
-              <div className="space-y-2">
-                {currentSet.options.map((option) => {
-                  const active = currentAnswer === option.id
-                  return (
-                    <button
-                      key={option.id}
-                      onClick={() => setCurrentAnswer(option.id)}
-                      aria-pressed={active}
-                      className={`w-full min-h-[44px] px-4 py-2 rounded-xl text-left text-sm transition-colors border ${
-                        active
-                          ? 'bg-indigo-600/30 border-indigo-500 text-indigo-100'
-                          : 'bg-gray-700/40 border-gray-700 text-gray-200 hover:bg-gray-700/70'
-                      }`}
-                    >
-                      {getGranularityLabel(option.id, language)}
-                    </button>
-                  )
-                })}
-              </div>
-
-              <button
-                onClick={() => setCurrentAnswer('not-sure')}
-                aria-pressed={currentAnswer === 'not-sure'}
-                className={`w-full min-h-[44px] px-4 py-2 rounded-xl text-sm transition-colors border ${
-                  currentAnswer === 'not-sure'
-                    ? 'bg-gray-600/40 border-gray-500 text-gray-100'
-                    : 'bg-gray-700/30 border-gray-600 text-gray-300 hover:bg-gray-700/50'
-                }`}
-              >
-                {granularityT.notSure ?? "I'm not sure — they all fit"}
-              </button>
-
-              {currentAnswer && (
-                <div className="rounded-xl border border-indigo-500/40 bg-indigo-500/10 p-3 text-sm space-y-2" role="status" aria-live="polite">
-                  <p className="font-medium text-indigo-100">{feedbackLine1}</p>
-                  <p className="text-xs text-indigo-200/70 leading-relaxed">{feedbackLine2}</p>
-                </div>
-              )}
-
-              <button
-                onClick={handleContinue}
-                disabled={currentAnswer === null}
-                className="w-full min-h-[44px] px-4 py-2 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition-colors disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed"
-              >
-                {granularityT.continue ?? 'Continue'}
-              </button>
-            </div>
-          )}
-        </ModalShell>
+          <button type="button" onClick={handleContinue} disabled={currentAnswer === null} className="primary-button guided-primary">
+            {granularityT.continue ?? 'Continue'}
+          </button>
+        </section>
       )}
-    </AnimatePresence>
+    </div>
   )
 }
