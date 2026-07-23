@@ -50,6 +50,8 @@
 
 **[2026-07-23]** Browser visibility is not viewport visibility — Playwright `toBeVisible()` passes for controls rendered below the viewport or behind a sticky action. For mobile flows that reveal controls, assert `toBeInViewport()` and compare bounding boxes against adjacent sticky or fixed UI.
 
+**[2026-07-23]** Geometry assertions must use one current layout snapshot — Smooth scrolling and entrance animation made an Affect Map test compare pre-scroll plot coordinates with post-scroll tray coordinates. Measure every related rectangle synchronously inside one browser evaluation and poll the derived gaps; never retain page-relative bounds across an interaction that can scroll or animate.
+
 ## Performance & Infrastructure
 
 **[2026-02-07]** Browser automation can fail due to missing expected channel/runtime — Playwright MCP expected Chrome path unavailable. Verify runtime first, switch to local Playwright binaries if missing. Check browser availability before UI audits. Keep a fallback scripted audit path ready.

@@ -54,12 +54,18 @@ for (const viewport of viewports) {
       await plot.click({ position: { x: plotBox!.width * 0.5, y: plotBox!.height * 0.7 }, force: true })
       const tray = page.getByTestId('dimensional-suggestion-tray')
       await expect(tray).toBeVisible()
-      const trayBox = await tray.boundingBox()
-      expect(trayBox!.y).toBeGreaterThanOrEqual(plotBox!.y + plotBox!.height - 1)
       await expect.poll(async () => {
-        const settledTrayBox = await tray.boundingBox()
-        const actionBox = await page.locator('.route-action').boundingBox()
-        return actionBox!.y - (settledTrayBox!.y + settledTrayBox!.height)
+        return page.evaluate(() => {
+          const currentPlot = document.querySelector('[data-testid="dimensional-plot-container"] svg')
+          const currentTray = document.querySelector('[data-testid="dimensional-suggestion-tray"]')
+          const currentAction = document.querySelector('.route-action')
+          if (!currentPlot || !currentTray || !currentAction) return Number.NEGATIVE_INFINITY
+
+          const plotRect = currentPlot.getBoundingClientRect()
+          const trayRect = currentTray.getBoundingClientRect()
+          const actionRect = currentAction.getBoundingClientRect()
+          return Math.min(trayRect.top - plotRect.bottom, actionRect.top - trayRect.bottom)
+        })
       }).toBeGreaterThanOrEqual(-1)
       await expect(tray.locator('.dimensional-suggestion-chip').first()).toBeInViewport()
       await expectNoHorizontalOverflow(page)

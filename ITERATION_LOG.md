@@ -645,3 +645,46 @@ production build. `npm run test:e2e` passes all 68 Mobile Safari and Mobile Chro
 **Insight:** Capturing the visible sibling set at selection time supports honest comparison without
 inventing a similarity model; explanation can remain user-directed and deterministic.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-23] Diagnose red GitHub Actions state
+
+**Context:** Current `main` revision `58e279b` showed red Pages and Dependabot Actions runs after
+the Word Ladder comparison release.
+**What happened:**
+- Inspected current and prior Pages logs plus the uploaded Playwright screenshots.
+- Found one repeated Mobile Safari failure in the Affect Map geometry assertion; the test stores
+  the plot bounds before the component's smooth scroll, then compares them with tray bounds after
+  scrolling and during its entrance animation.
+- Confirmed the screenshots show the tray below the plot; translations, lint, 756 unit tests,
+  build, and the other 67 browser tests passed.
+- Separately found Dependabot unable to update vulnerable transitive `@babel/core` from `7.29.0`
+  to `7.29.6` because its resolver would downgrade `eslint-plugin-react-hooks` from `7.0.1`.
+**Outcome:** Diagnosis complete; no product code changed. Pages red is a deterministic test bug,
+not evidence of the depicted overlap. Dependabot needs an explicit dependency resolution change.
+The exact `393x742` Mobile Safari case passed three local repetitions outside the sandbox, confirming
+that the slower CI runner exposes timing sensitivity rather than a stable layout defect.
+**Insight:** Geometry assertions must remeasure both elements in the same polling callback after
+programmatic scrolling and entrance animation settle.
+**Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-23] Repair Pages CI and Babel security resolution
+
+**Context:** Approved the focused fixes after diagnosing the current Pages Playwright failure and
+the independent Dependabot security-update failure.
+**What happened:**
+- Replaced stale cross-interaction bounding boxes with one polled browser-side snapshot measuring
+  plot, suggestion tray, and action gaps synchronously.
+- Added an npm override for patched `@babel/core`; regenerated the lockfile at `7.29.7` without
+  downgrading `eslint-plugin-react-hooks@7.0.1`.
+- Verified the exact `393x742` Mobile Safari case three times before the change and the full suite
+  after it.
+**Outcome:** Success locally. Clean `npm ci` resolves patched Babel. `npm run check` passes 756
+tests, translation audits, lint, TypeScript, and production build. `npm run test:e2e` passes all
+68 Mobile Safari and Mobile Chrome cases.
+**Insight:** Layout relationships must be sampled atomically when an interaction can trigger
+scrolling or animation; a retry around stale coordinates does not make the assertion deterministic.
+**Promoted to Lessons Learned:** Yes
