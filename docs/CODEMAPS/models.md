@@ -32,7 +32,7 @@ BaseEmotion { id, label, description?, needs?, color, intensity? }
 |-------|---------|---------------|
 | **Plutchik** | 8 primaries spawn related emotions; selected pairs combine into dyads | BubbleField |
 | **Wheel** | 3-level hierarchical tree; drill down from general to specific | BubbleField |
-| **Somatic** | Identify emotions through physical body sensations; weighted signal scoring | BodyMap |
+| **Somatic** | Identify emotions through physical body sensations; weighted signal scoring | BodyRegionMap |
 | **Dimensional** | 2D valence × arousal field; click-to-place finds nearest emotions | DimensionalField |
 
 ## Non-Obvious Design Decisions

@@ -16,7 +16,7 @@ App (src/App.tsx)
  |         +-- DimensionalField   # Affect map
  +-- WordLadderScreen             # Hierarchical emotion vocabulary
  +-- BodyCompassScreen            # Somatic route
- |    +-- BodyMap                 # Lazy-loaded body visualization
+ |    +-- BodyRegionMap           # Lazy-loaded, presentation-only region map
  +-- ReflectionScreen             # Results, crisis support, needs, next step
  +-- ExploreScreen                # Route and practice entry points
  +-- JournalScreen                # Sessions, summaries, chain entry
@@ -29,7 +29,8 @@ App (src/App.tsx)
 ```
 
 `*` Confirmation uses `ModalShell`, portaled to `document.body` with focus trapping.
-`**` Visualization resolved by model registry; BodyMap stays lazy-loaded.
+`**` Generic visualizations resolve through the model registry. The somatic route owns
+`BodyRegionMap` directly because region activation must continue through its staged flow.
 
 ## Non-Obvious Behaviors
 
@@ -37,11 +38,18 @@ App (src/App.tsx)
 
 Mobile placement (<480px) uses deterministic wrapped-row layout with shuffled order each render to reduce positional bias. Vertical distribution evenly spaces rows (`idealSpacing = (availableVertical - totalContentHeight) / (rows - 1)`, capped at `bubbleHeight * 3`). Jitter scales with row spacing (`min(6, floor(rowSpacing * 0.15))`) for organic feel without overlap. Desktop uses random placement with collision detection.
 
-### BodyMap Height-Fit Rendering
+### BodyRegionMap Height-Fit Rendering
 
-BodyMap uses height-driven fit: root `h-full min-h-0 w-full`, SVG `h-full w-auto max-w-full`. This ensures the body remains fully visible in constrained mobile heights. If feet disappear, inspect the sizing chain via `data-testid="bodymap-root"` and `data-testid="bodymap-canvas"`.
+BodyRegionMap uses a stable `clamp(420px, 60dvh, 560px)` stage with a
+`minmax(0, 1fr)` map row. The SVG remains height-driven (`height: 100%`,
+`width: auto`, `max-width: 100%`) so the full front/back figure stays bounded
+while labels retain a readable scale. If feet disappear, inspect the sizing
+chain via `data-testid="bodymap-root"` and `data-testid="bodymap-canvas"`.
 
-Back regions are widened ~15px beyond front regions for visible/clickable slivers. Small regions (throat, jaw) have expanded `hitD` paths for robust touch targets.
+Back regions remain wider than front regions for visible/clickable slivers.
+Small regions such as throat and jaw retain expanded `hitD` paths. The route
+owns side state and receives complete `SomaticRegion` objects from map
+activation; the map owns no sensation, intensity, guided-flow, or scoring state.
 
 ### DimensionalField Label Collision
 

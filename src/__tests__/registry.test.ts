@@ -29,11 +29,11 @@ describe('model registry', () => {
     expect(getModel(MODEL_IDS.SOMATIC)).toBeDefined()
   })
 
-  it('returns visualization components for all model ids', () => {
+  it('keeps generic visualizations separate from the route-specific body flow', () => {
     expect(getVisualization(MODEL_IDS.PLUTCHIK)).toBeDefined()
     expect(getVisualization(MODEL_IDS.WHEEL)).toBeDefined()
-    expect(getVisualization(MODEL_IDS.SOMATIC)).toBeDefined()
     expect(getVisualization(MODEL_IDS.DIMENSIONAL)).toBeDefined()
+    expect(getVisualization(MODEL_IDS.SOMATIC)).toBeUndefined()
   })
 
   it('loadModel returns undefined for invalid model ids', async () => {

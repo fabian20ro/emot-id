@@ -1,5 +1,4 @@
 import { memo } from 'react'
-import { motion } from 'framer-motion'
 import type { SensationType } from '../models/somatic/types'
 
 interface BodyRegionProps {
@@ -10,7 +9,6 @@ interface BodyRegionProps {
   /** Accessible label for screen readers */
   label?: string
   isSelected: boolean
-  isHighlighted: boolean
   sensation?: SensationType
   intensity?: 1 | 2 | 3
   onClick: (regionId: string) => void
@@ -28,30 +26,24 @@ const SENSATION_COLORS: Record<SensationType, string> = {
   constriction: '#a855f7',
 }
 
-const BASE_COLOR = '#4b5563'
-const HIGHLIGHT_COLOR = '#6b7280'
-
 function BodyRegionBase({
   id,
   d,
   hitD,
   label,
   isSelected,
-  isHighlighted,
   sensation,
   intensity,
   onClick,
 }: BodyRegionProps) {
   function getFillColor(): string {
     if (isSelected && sensation) return SENSATION_COLORS[sensation]
-    if (isHighlighted) return HIGHLIGHT_COLOR
-    return BASE_COLOR
+    return 'var(--body-region-fill)'
   }
 
   function getFillOpacity(): number {
-    if (isSelected && intensity) return 0.3 + intensity * 0.2
-    if (isHighlighted) return 0.5
-    return 0.3
+    if (isSelected && intensity) return 0.5 + intensity * 0.15
+    return 1
   }
 
   const fillColor = getFillColor()
@@ -63,7 +55,7 @@ function BodyRegionBase({
       tabIndex={0}
       aria-label={label ?? id}
       aria-pressed={isSelected}
-      className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-blue-500"
+      className={`body-region${isSelected ? ' is-selected' : ''}`}
       onClick={() => onClick(id)}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(id) } }}
     >
@@ -76,25 +68,16 @@ function BodyRegionBase({
           data-region={`${id}-hit`}
         />
       )}
-      <motion.path
+      <path
         d={d}
         data-region={id}
         fill={fillColor}
         fillOpacity={fillOpacity}
-        stroke={isSelected ? fillColor : '#6b7280'}
-        strokeWidth={isSelected ? 1.5 : 0.5}
-        strokeOpacity={isSelected ? 0.8 : 0.3}
+        stroke={isSelected ? 'var(--body-region-selected-stroke)' : 'var(--body-region-stroke)'}
+        strokeWidth={isSelected ? 2 : 1}
+        strokeOpacity={1}
+        className="body-region-shape"
         style={{ pointerEvents: hitD ? 'none' : 'auto' }}
-        whileHover={{
-          fillOpacity: Math.min(fillOpacity + 0.15, 0.95),
-          strokeOpacity: 0.6,
-        }}
-        whileTap={{ scale: 0.97 }}
-        animate={{
-          fillOpacity,
-          fill: fillColor,
-        }}
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       />
     </g>
   )

@@ -48,6 +48,30 @@ describe('BodyCompassScreen', () => {
     expect(results.some((result) => result.id === 'anxiety')).toBe(true)
   })
 
+  it('switches body sides and activates a region by keyboard without an overlay', async () => {
+    const user = userEvent.setup()
+    renderScreen()
+    await screen.findByTestId('bodymap-root')
+
+    expect(screen.getByRole('button', { name: 'Front' })).toHaveAttribute('aria-pressed', 'true')
+    expect(document.querySelector('[data-region="chest"]')).toBeInTheDocument()
+    expect(document.querySelector('[data-region="upper-back"]')).not.toBeInTheDocument()
+
+    const sideSwitcher = screen.getByRole('group', { name: 'Body side' })
+    const backSide = within(sideSwitcher).getByRole('button', { name: 'Back', exact: true })
+    await user.click(backSide)
+    expect(backSide).toHaveAttribute('aria-pressed', 'true')
+    expect(document.querySelector('[data-region="upper-back"]')).toBeInTheDocument()
+    expect(document.querySelector('[data-region="chest"]')).not.toBeInTheDocument()
+
+    await user.click(within(sideSwitcher).getByRole('button', { name: 'Front' }))
+    const chest = screen.getByRole('button', { name: 'Chest' })
+    chest.focus()
+    await user.keyboard('{Enter}')
+    expect(screen.getByRole('heading', { name: 'What do you feel here?' })).toBeInTheDocument()
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
   it('supports step back and abandoning a draft without leaving the route', async () => {
     const user = userEvent.setup()
     const { onBack } = renderScreen()

@@ -6,13 +6,14 @@ import { useEmotionModel } from '../hooks/useEmotionModel'
 import { MODEL_IDS } from '../models/constants'
 import { INTENSITY_LABELS, SENSATION_CONFIG } from '../models/somatic/display'
 import type { SomaticRegion, SomaticSelection, SensationType } from '../models/somatic/types'
+import type { BodySide } from '../components/BodyRegionMap'
 import type { AnalysisResult, BaseEmotion } from '../models/types'
 
 type BodyStep = 'region' | 'sensation' | 'intensity' | 'review'
 
-const BodyMap = lazy(async () => {
-  const module = await import('../components/BodyMap')
-  return { default: module.BodyMap }
+const BodyRegionMap = lazy(async () => {
+  const module = await import('../components/BodyRegionMap')
+  return { default: module.BodyRegionMap }
 })
 
 interface BodyCompassScreenProps {
@@ -32,7 +33,9 @@ export function BodyCompassScreen({ onBack, onComplete }: BodyCompassScreenProps
   const [step, setStep] = useState<BodyStep>('region')
   const [activeRegion, setActiveRegion] = useState<SomaticRegion | null>(null)
   const [draftSensation, setDraftSensation] = useState<SensationType | null>(null)
+  const [bodySide, setBodySide] = useState<BodySide>('front')
   const selections = model.selections.filter(isSomaticSelection)
+  const regions = model.visibleEmotions as SomaticRegion[]
 
   const startRegion = (region: SomaticRegion) => {
     const existing = selections.find((selection) => selection.id === region.id)
@@ -117,15 +120,20 @@ export function BodyCompassScreen({ onBack, onComplete }: BodyCompassScreenProps
         <>
           <p className="body-stage-hint">{t.regionHint}</p>
           <div className="model-stage model-stage-body">
+            <div className="body-side-switch segmented" role="group" aria-label={somaticT.bodySide}>
+              <button type="button" className={bodySide === 'front' ? 'is-active' : ''} aria-pressed={bodySide === 'front'} onClick={() => setBodySide('front')}>
+                {somaticT.front}
+              </button>
+              <button type="button" className={bodySide === 'back' ? 'is-active' : ''} aria-pressed={bodySide === 'back'} onClick={() => setBodySide('back')}>
+                {somaticT.back}
+              </button>
+            </div>
             {model.modelReady ? (
               <Suspense fallback={<div className="model-loading">...</div>}>
-                <BodyMap
-                  emotions={model.visibleEmotions}
+                <BodyRegionMap
+                  regions={regions}
                   selections={selections}
-                  sizes={model.sizes}
-                  progressive
-                  onSelect={model.handleSelect}
-                  onDeselect={model.handleDeselect}
+                  side={bodySide}
                   onRegionActivate={startRegion}
                 />
               </Suspense>

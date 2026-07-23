@@ -790,3 +790,29 @@ preserving active compatibility, safety, and deferred Body Compass boundaries.
 components and retain compatibility APIs only when an independent active test or runtime caller
 defines their contract.
 **Promoted to Lessons Learned:** No
+
+---
+
+### [2026-07-24] Complete Body Compass presentation migration
+
+**Context:** The staged Body Compass still embedded a dark legacy map that owned side selection,
+picker dialogs, guided-scan orchestration, and SVG presentation in one generic visualizer.
+**What happened:**
+- Extracted a presentation-only `BodyRegionMap`; moved side state into `BodyCompassScreen` and kept
+  sensation, intensity, review, edit, removal, scoring, and completion at the route boundary.
+- Added paired light/dark map tokens and native SVG focus/hover behavior while preserving every
+  region path, expanded hit path, and sensation/intensity encoding.
+- Removed the unreachable generic `BodyMap`, `SensationPicker`, registry entry, and dedicated tests.
+- Retained `GuidedScan` and `IntensityPicker` unchanged with their existing tests pending a
+  separate keep/delete product decision.
+- Added direct region-map unit contracts plus cross-browser keyboard, SVG contrast, side filtering,
+  and 360x800/393x742/430x932 geometry coverage.
+- Manually inspected light and dark 393x742 screens; increased label scale and corrected an
+  edge-clipped long label found only in the rendered viewport.
+**Outcome:** Success. `npm run check` passes 67 files and 625 tests. `npm run test:e2e` passes all
+88 Mobile Safari and Mobile Chrome cases. Body route chunk: 23.30 -> 6.89 kB; CSS: 65.20 ->
+63.69 kB.
+**Insight:** Passing contrast ratios do not guarantee map legibility; SVG text can remain too small
+after viewBox scaling. Pair computed contrast with rendered-size and edge-clipping inspection at
+the actual constrained viewport.
+**Promoted to Lessons Learned:** No

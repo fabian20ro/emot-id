@@ -1,6 +1,6 @@
 # Remaining Mobile Migration Plan
 
-Status: P5 complete; Body Compass presentation and P6 remain, July 23, 2026.
+Status: presentation migration complete; Guided Scan decision and P6 remain, July 24, 2026.
 
 ## Completed Since Last Update
 
@@ -29,6 +29,8 @@ Status: P5 complete; Body Compass presentation and P6 remain, July 23, 2026.
   suggestions require an explicit optional choice that persists into Journal and JSON export.
 - Removed the unreachable modal-era Quick Check-in, results, history, settings, uncertainty,
   intervention, and sessions-only export presentation after tracing every production caller.
+- Replaced the mixed-responsibility Body Map with a route-owned staged flow and a
+  presentation-only, theme-aware `BodyRegionMap`.
 
 ## Constraints
 
@@ -106,25 +108,35 @@ Mobile Safari and Mobile Chrome cases, including explicit zero-dialog checks for
 screens. Manual 393x742 dark inspection confirmed readable, bounded Today and delete-confirmation
 states. Main CSS fell from 81.70 to 65.20 kB and main JS from 473.84 to 463.19 kB.
 
-## Deferred Body Compass Presentation Slice
+## Completed: Body Compass Presentation
 
-The current Body Compass Area -> Sensation -> Intensity -> Review flow is already screen-based.
-The remaining old visual style lives inside the shared `BodyMap` and its legacy fallback paths.
+`BodyCompassScreen` now owns side, region, sensation, intensity, review, edit, and removal state.
+Its lazy `BodyRegionMap` receives only regions, selections, side, and `onRegionActivate`; somatic
+input no longer pretends to fit the generic model-visualization contract.
 
-1. Extract a presentation-only `BodyRegionMap` from `BodyMap`. It should receive regions,
-   selections, side, and `onRegionActivate`; no picker, guided-flow, or model orchestration state.
-2. Replace hardcoded gray/indigo SVG fills, strokes, and labels with semantic light/dark body-map
-   tokens. Preserve region hit paths and 44px-equivalent targets.
-3. Keep the existing Body Compass inline sensation and intensity steps. Once every active caller
-   uses `onRegionActivate`, remove the internal `SensationPicker` bottom-sheet fallback.
-4. Decide Guided Scan placement separately. If retained, make it a route-local Body Compass mode,
-   not an overlay inside the map. Do not combine this decision with the map color refactor.
-5. Remove compact `IntensityPicker` and old picker motion only after caller search and parity tests
-   show they are unused.
+The SVG uses semantic light/dark surface, anatomy, connector, label, selected, and focus tokens.
+Front/back filtering, region paths, expanded hit paths, model scoring, and the Area -> Sensation ->
+Intensity -> Review workflow are unchanged. Native SVG paths replace motion-owned geometry for
+deterministic CSS-variable rendering and keyboard focus.
 
-**Verification:** front/back map at 360x800, 393x742, and 430x932; light/dark computed contrast;
-keyboard and screen-reader region activation; hit-path regression tests; Area -> Review completion;
-Back/edit/remove/add-another paths; no change to somatic scoring or shared crisis completion.
+The unreachable `BodyMap` orchestrator and `SensationPicker` sheet were deleted with their
+dedicated tests. `GuidedScan` and its compact `IntensityPicker` remain unchanged and tested, but
+are intentionally outside the active route until a separate product-placement decision.
+
+**Verification:** `npm run check` passes 67 files and 625 tests. `npm run test:e2e` passes all 88
+Mobile Safari and Mobile Chrome cases. Browser coverage measures front/back bounds at 360x800,
+393x742, and 430x932, SVG label contrast in both themes, keyboard activation, staged completion,
+Back/edit/remove/add-another behavior, shared crisis completion, and all non-body regressions.
+Manual 393x742 inspection caught and fixed undersized and edge-clipped labels; final light/dark
+screens have no console errors. The body route chunk fell from 23.30 kB (8.22 gzip) to 6.89 kB
+(2.98 gzip), and main CSS fell from 65.20 to 63.69 kB.
+
+## Deferred: Guided Scan Placement
+
+`GuidedScan` currently has no active route caller. Before release, make one explicit product
+decision: either expose it as a route-local Body Compass mode with the same staged shell, or delete
+it with `GuidedScanPhases`, `IntensityPicker`, constants, and dedicated tests. Do not restore an
+overlay inside the region map.
 
 ## P6: Release Hardening
 
@@ -136,22 +148,20 @@ Back/edit/remove/add-another paths; no change to somatic scoring or shared crisi
 
 ## Recommended Sequence
 
-1. Deferred Body Compass presentation, now that active legacy code is removed.
-2. P6 hardening continuously, with the full matrix before release.
+1. P6 release hardening.
+2. Explicit Guided Scan keep/delete decision before release.
 
 ## Recommended Next Update
 
-Implement the first Body Compass presentation slice without changing its staged workflow:
+Start P6 with the highest-risk release matrix, without adding new architecture:
 
-1. Extract only the region SVG and hit-area behavior into `BodyRegionMap`; keep route orchestration,
-   sensation, intensity, review, scoring, and crisis completion unchanged.
-2. Add semantic body-map tokens for light/dark fills, strokes, selected regions, and labels. Preserve
-   the current front/back paths and expanded hit areas exactly.
-3. Switch `BodyCompassScreen` to the extracted map and verify Area -> Sensation -> Intensity ->
-   Review, Back, edit, remove, side switching, and add-another behavior before deleting anything.
-4. Audit `BodyMap` callers after the switch. Remove its internal `SensationPicker` fallback and
-   compact `IntensityPicker` only if no production caller remains; otherwise record the boundary.
-5. Keep Guided Scan unchanged and separate. Its product placement needs a distinct decision and
-   should not expand this visual refactor.
-6. Run model/scoring unit tests, the full check, Body Compass Playwright at all three mobile sizes,
-   dark computed contrast, keyboard activation, and the shared crisis completion journey.
+1. Add Romanian Playwright journeys for Quick, Body, Affect, Words, Plutchik, Journal, Privacy,
+   and tier-4 support. Reuse current helpers and fixtures.
+2. Add one desktop sanity viewport and keyboard-only journeys for the primary route chooser,
+   each input route, Reflection, Settings, and destructive confirmation.
+3. Verify reduced motion, offline transitions, save-disabled behavior, and focus restoration using
+   current browser APIs; add no preference framework or generic accessibility harness.
+4. Expand deterministic crisis fixtures through each completion route while keeping one shared
+   assertion helper for gating and post-acknowledgment content.
+5. Keep the full Chromium/WebKit matrix green in GitHub Actions, then make the separate Guided Scan
+   keep/delete decision from product evidence rather than preserving it by inertia.

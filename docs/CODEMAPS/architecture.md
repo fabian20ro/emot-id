@@ -19,9 +19,13 @@ Check-in rendering is split by route: affect and Plutchik share
 
 ## Non-Obvious Patterns
 
-### Somatic Deselect Routing
+### Somatic Route Boundary
 
-BodyMap intercepts the deselect path. When a selected region is clicked, it calls `onDeselect(enrichedSelection)` with the `SomaticSelection` from its selection map, not `onSelect(plainRegion)`.
+`BodyRegionMap` is presentation-only and hands a complete `SomaticRegion` to
+`BodyCompassScreen`. The screen owns side, sensation, intensity, review, edit,
+and removal state, then sends enriched `SomaticSelection` objects through the
+shared model analyzer. Somatic is intentionally not registered as a generic
+`ModelVisualization`.
 
 ### Portal Requirement for Fixed Overlays
 

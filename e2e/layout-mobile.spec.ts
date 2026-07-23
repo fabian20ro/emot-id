@@ -92,5 +92,32 @@ for (const viewport of viewports) {
       await expect(page.getByTestId('plutchik-combination')).toBeVisible()
       await expectNoHorizontalOverflow(page)
     })
+
+    test('Body Compass map and side controls stay within the staged surface', async ({ page }) => {
+      await openApp(page)
+      await openArrival(page)
+      await page.getByTestId('arrival-body').click()
+
+      const stage = page.locator('.model-stage-body')
+      const svg = page.locator('.body-region-map-svg')
+      const stageBox = await stage.boundingBox()
+      const svgBox = await svg.boundingBox()
+      expect(stageBox).not.toBeNull()
+      expect(svgBox).not.toBeNull()
+      expect(svgBox!.x).toBeGreaterThanOrEqual(stageBox!.x - 1)
+      expect(svgBox!.x + svgBox!.width).toBeLessThanOrEqual(stageBox!.x + stageBox!.width + 1)
+      expect(svgBox!.y).toBeGreaterThanOrEqual(stageBox!.y - 1)
+      expect(svgBox!.y + svgBox!.height).toBeLessThanOrEqual(stageBox!.y + stageBox!.height + 1)
+
+      const sideButtons = page.locator('.body-side-switch button')
+      await expect(sideButtons).toHaveCount(2)
+      for (let index = 0; index < await sideButtons.count(); index++) {
+        expect((await sideButtons.nth(index).boundingBox())!.height).toBeGreaterThanOrEqual(44)
+      }
+      await expect(page.locator('[data-region]:not([data-region$="-hit"])')).toHaveCount(10)
+      await page.getByRole('button', { name: 'Back', exact: true }).nth(1).click()
+      await expect(page.locator('[data-region]:not([data-region$="-hit"])')).toHaveCount(8)
+      await expectNoHorizontalOverflow(page)
+    })
   })
 }

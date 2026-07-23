@@ -78,7 +78,7 @@ export const somaticModel: EmotionModel<SomaticRegion> = {
   },
 
   analyze(selections: SomaticRegion[]): AnalysisResult[] {
-    // Cast to SomaticSelection — the BodyMap component enriches selections
+    // Cast to SomaticSelection — BodyCompassScreen enriches region selections
     // with selectedSensation and selectedIntensity before they reach here
     const somaticSelections = selections as SomaticSelection[]
     return scoreSomaticSelections(somaticSelections)

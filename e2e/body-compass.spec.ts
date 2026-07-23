@@ -14,6 +14,34 @@ async function chooseChestSignal(page: Page) {
   await expect(page.getByTestId('body-signal-chest')).toContainText('Tension - Moderate')
 }
 
+async function expectBodyLabelContrast(page: Page, state: string) {
+  const ratios = await page.locator('[data-region-label]').evaluateAll((groups) => {
+    const parse = (value: string) => {
+      const channels = value.match(/\d+(?:\.\d+)?/g)?.slice(0, 3).map(Number)
+      return channels?.length === 3 ? channels : null
+    }
+    const luminance = (color: number[]) => color
+      .map((channel) => {
+        const normalized = channel / 255
+        return normalized <= 0.04045
+          ? normalized / 12.92
+          : ((normalized + 0.055) / 1.055) ** 2.4
+      })
+      .reduce((sum, channel, index) => sum + channel * [0.2126, 0.7152, 0.0722][index], 0)
+
+    return groups.map((group) => {
+      const foreground = parse(getComputedStyle(group.querySelector('text')!).fill)
+      const background = parse(getComputedStyle(group.querySelector('rect:last-of-type')!).fill)
+      if (!foreground || !background) return 0
+      const first = luminance(foreground)
+      const second = luminance(background)
+      return (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05)
+    })
+  })
+
+  expect(Math.min(...ratios), `${state} body label contrast`).toBeGreaterThanOrEqual(4.5)
+}
+
 test.describe('Body Compass staged route', () => {
   test.beforeEach(async ({ page }) => openApp(page))
 
@@ -34,6 +62,23 @@ test.describe('Body Compass staged route', () => {
     await page.getByRole('button', { name: 'See what might fit' }).click()
     await expect(page.getByTestId('reflection-screen')).toBeVisible()
     await expect(page.getByTestId('reflection-screen')).toContainText(/anxiety/i)
+  })
+
+  test('supports keyboard region activation and semantic light/dark map contrast', async ({ page }) => {
+    await openBodyCompass(page)
+    await expect(page.getByRole('dialog')).toHaveCount(0)
+    await expectBodyLabelContrast(page, 'light')
+
+    await page.locator('html').evaluate((element) => {
+      element.dataset.theme = 'dark'
+    })
+    await expectBodyLabelContrast(page, 'dark')
+
+    const chest = page.getByRole('button', { name: 'Chest' })
+    await chest.focus()
+    await page.keyboard.press('Enter')
+    await expect(page.getByRole('heading', { name: 'What do you feel here?' })).toBeVisible()
+    await expect(page.getByRole('dialog')).toHaveCount(0)
   })
 
   test('supports body side, step back, draft skip, and a no-signal exit', async ({ page }) => {
